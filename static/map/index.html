@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | LMXC</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/Buddlepackage.json", {onProgress: UnityProgress});
+    </script>
+    <style>
+      .footer{display: none;}
+      .webgl-content{width: 100vw; height: 100vh;}
+      #unityContainer{width: 100vw!important; height: 100vh!important;}
+    </style>
+  </head>
+  <body>
+    <div class="webgl-content">
+      <div id="unityContainer" style="width: 960px; height: 600px"></div>
+      <div class="footer">
+        <div class="webgl-logo"></div>
+        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
+        <div class="title">LMXC</div>
+      </div>
+    </div>
+    <script>
+      //沙锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷前锟剿凤拷锟斤拷
+      function InitFinished(){
+	  	  console.log('沙锟教硷拷锟斤拷锟斤拷锟?')
+        //top.InitFinished()
+      }
+      //沙锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷前锟剿凤拷锟斤拷
+      function SelectMark(markEnum, id){
+        console.log('选锟斤拷某锟斤拷锟斤拷锟斤拷')
+        console.log(markEnum)
+        console.log(id)
+        //top.SelectMark(markEnum, id)
+      }
+      //前锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷沙锟教凤拷锟斤拷
+      function SelectMarkById(id){
+        unityInstance.SendMessage("Net","SelectMarkById" , id);
+      }
+      //SelectMarkById("锟斤拷锟斤拷_936")
+    </script>
+  </body>
+</html>

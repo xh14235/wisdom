@@ -1,0 +1,57 @@
+/* 左侧切换 */
+.fade-enter{
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.fade-enter-active{
+  transition: all 0.3s ease-in;
+}
+.fade-leave-to{
+  transform: translateY(100%);
+  opacity: 0;
+}
+.fade-leave-active{
+  transition: all 0.3s ease-out;
+}
+/* 右侧切换 */
+.fadeRight-enter{
+  transform: translateX(100%);
+  opacity: 0;
+}
+.fadeRight-enter-active{
+  transition: all 0.3s ease-in;
+}
+.fadeRight-leave-to{
+  transform: translateY(100%);
+  opacity: 0;
+}
+.fadeRight-leave-active{
+  transition: all 0.3s ease-out;
+}
+/* 下拉框 */
+.slide-enter, .slide-leave-to{
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.slide-enter-active, .slide-leave-active{
+  transition: all 0.1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+/* 渐隐渐现 */
+.opacity-enter, .opacity-leave-to{
+  opacity: 0;
+}
+.opacity-enter-active, .opacity-leave-active{
+  transition: all 0.3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+/* 旋转 */
+.rotate{
+  animation: rotate 3s linear infinite
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

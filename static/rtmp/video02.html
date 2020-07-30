@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="./js/video-js.css">
+	<script src="./js/video.min.js"></script>
+	<script src="./js/videojs-contrib-hls.js"></script>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.video-box{
+			width: 100vw;
+			height: 100vh;
+			overflow: hidden;
+		}
+		.vjs-control-bar{
+			width: 0;
+			height: 0;
+			overflow: hidden;
+		}
+		.vjs-fullscreen-control{
+			position: fixed;
+			top: 0;
+			right: 0;
+			width: 24px;
+			height: 24px;
+			border: 0;
+			outline: 0;
+			overflow: hidden;
+			background: transparent;
+			font-size: 0;
+		}
+		.vjs-fullscreen-control::after{
+			content: "";
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 24px;
+			height: 24px;
+			background-image: url('./img/video-btn.png');
+			background-size: 100% 100%;
+		}
+	</style>
+</head>
+<body>
+	<video id="video2" class="video-box" width="100%" height="100%" controls>
+		<source src="rtmp://172.18.8.51:1935/live/video02">
+	</video>
+</body>
+<script>
+	var player = videojs('video2', {}, function(){console.log('videojs播放器初始化成功')});
+	player.play()
+</script>
+</html>
