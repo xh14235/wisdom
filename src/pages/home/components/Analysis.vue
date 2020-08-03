@@ -156,6 +156,7 @@ export default {
       this.anasecond1()
     },
     changeSelect31 (code) {
+      console.log(code)
       this.building31 = code.id
       this.compareBuilding1 = code.name
       this.anathird1()
@@ -321,6 +322,7 @@ export default {
         page: 1,
         size: 10
       }).then((res) => {
+        // console.log(res)
         this.datafirst.abnormalDetail = res.data
       })
     },
@@ -450,6 +452,7 @@ export default {
         color: [this.green],
         areaColor: false,
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.datasecond.echarts10 = {
@@ -462,6 +465,7 @@ export default {
         color: [this.green],
         areaColor: false,
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.datasecond.echarts11 = {
@@ -474,6 +478,7 @@ export default {
         color: [this.yellow],
         areaColor: false,
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.datasecond.echarts12 = {
@@ -486,6 +491,7 @@ export default {
         color: [this.yellow],
         areaColor: false,
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
     },

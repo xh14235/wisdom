@@ -50,7 +50,7 @@
             <span>{{parseInt(costList.UN_DIS_ELECTRICITY + costList.DIS_ELECTRICITY + costList.HOT_WATER + costList.COLD + costList.HOT).toLocaleString()}}</span>元
           </div>
           <img src="../../../assets/img/statistics-line.png" alt="">
-          <p>累计利润</p>
+          <p>累计消费</p>
         </div>
       </div>
       <div class="cost-list">
@@ -332,7 +332,7 @@ export default {
         background-size: 100% 100%
       img
         width: 3vw
-        height: 7.75vh
+        // height: 7.75vh
         vertical-align: bottom
       .desc
         display: flex
@@ -343,6 +343,10 @@ export default {
           width: 20px
           height: 20px
           margin-right: 5px
+          @media screen and (max-width: 1920px) {
+            width: 15px
+            height: 15px
+          }
     .list
       width: 14vh
       display: flex
@@ -354,6 +358,10 @@ export default {
         display: flex
         // justify-content: space-around
         align-items: center
+        img
+          @media screen and (max-width: 1920px) {
+            width: 15px
+          }
         span
           color: $green
 .common-echarts-wrapper
@@ -375,36 +383,57 @@ export default {
     border-top: 1px solid rgba(69, 79, 73, 1)
     border-bottom: 1px solid rgba(69, 79, 73, 1)
     .statistics-left
-      position: relative
-      width: 5.75vh
-      height: 5.75vh
-      .img-outer
-        position: absolute
+        position: relative
         width: 5.75vh
         height: 5.75vh
-        top: 0
-        left: 0
-      .img-inner
-        position: absolute
-        width: 2.5vh
-        height: 2.5vh
-        top: 50%
-        left: 50%
-        transform: translate(-1.25vh, -1.25vh)
-    .statistics-right
-      display: flex
-      flex-direction: column
-      justify-content: center
-      font-size: 14px
-      .statistics-num
-        span
-          font-size: 24px
-          font-weight: 600
-          color: $yellow
+        flex: 0 0 5.75vh
+        @media screen and (max-width: 1920px) {
+          width: 4vh
+          height: 4vh
+          flex: 0 0 4vh
+        }
+        .img-outer
+          position: absolute
+          width: 5.75vh
+          height: 5.75vh
+          top: 0
+          left: 0
+          @media screen and (max-width: 1920px) {
+            width: 4vh
+            height: 4vh
+          }
+        .img-inner
+          position: absolute
+          width: 2.5vh
+          height: 2.5vh
+          top: 50%
+          left: 50%
+          transform: translate(-1.25vh, -1.25vh)
+          @media screen and (max-width: 1920px)
+            width: 2vh
+            height: 2vh
+            transform: translate(-1vh, -1vh)
+      .statistics-right
+        display: flex
+        flex-direction: column
+        justify-content: center
+        font-size: 14px
+        img
+          width: 100%
+        @media screen and (max-width: 1920px)
+          font-size: 12px
+        .statistics-num
+          span
+            font-size: 24px
+            font-weight: 600
+            color: $yellow
+            @media screen and (max-width: 1920px)
+              font-size: 16px
   .cost-list
     flex: 0 0 12vw
     width: 12vw
     height: 8vh
+    padding: 10px 0
     border-top: 1px solid rgba(69, 79, 73, 1)
     border-bottom: 1px solid rgba(69, 79, 73, 1)
     display: flex
@@ -419,6 +448,11 @@ export default {
       justify-content: space-between
       align-items: center
       color: $lgreen
+      img
+        @media screen and (max-width: 1920px){
+          width: 7px
+          height: 7px
+        }
       .cost-num
         flex: 0 0 50%
         width: 50%

@@ -131,6 +131,8 @@ export default {
       background-image: url('~@/assets/img/tab2.png')
       background-size: 100% 100%
       cursor: pointer
+      @media screen and (max-width: 1920px)
+        font-size: 14px
       &.item-active
         background-image: url('~@/assets/img/tab3.png')
         color: $green

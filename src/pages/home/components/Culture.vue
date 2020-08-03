@@ -176,7 +176,7 @@ export default {
       }).then((res) => {
         this.peoplePeakEcharts = {
           id: 'culline12',
-          title: '今日游客峰值警报(人)',
+          title: '今日游客峰值警报',
           legendShow: false,
           markLine: true,
           legendData: ['储能'],
@@ -419,8 +419,13 @@ export default {
   display: flex
   justify-content: space-between
   align-items: top
+  @media screen and (max-width: 1920px) {
+    font-size: 14px
+  }
   span
     font-size: 14px
+    @media screen and (max-width: 1920px)
+      font-size: 12px
 .culture-wrapper >>> .el-calendar
   background: #286846
 .culture-wrapper >>> .el-calendar__title
@@ -436,7 +441,8 @@ export default {
   padding: 0
 .culture-wrapper >>> .el-button
   background: #286846
-  font-size: 16px
+  font-size: 12px
+  padding: 3px 5px
 .culture-wrapper >>> .el-button:focus, .el-button:hover
   background-color: rgba(255,255,255,.3)
 .culture-wrapper
@@ -495,6 +501,8 @@ export default {
             background: rgba(69,80,74,.5)
             .age-title
               font-size: 14px
+              @media screen and (max-width: 1920px)
+                font-size: 12px
               &.age-green
                 color: $green
               &.age-yellow
@@ -512,6 +520,8 @@ export default {
             font-weight: 600
             margin-bottom: 2vh
             color: $lgreen
+            @media screen and (max-width: 1920px)
+              font-size: 14px
             img
               margin-right: 8px
           .today-tourist-detail
@@ -523,6 +533,8 @@ export default {
               b
                 font-size: 24px
                 color: $green
+                @media screen and (max-width: 1920px)
+                  font-size: 18px
                 &.leave
                   color: $yellow
             .today-tourist-right
@@ -572,6 +584,8 @@ export default {
               display: flex
               justify-content: space-between
               align-items: center
+              @media screen and (max-width: 1920px)
+                width: 80%
               .sort-title
                 height: 2vh
                 p
@@ -579,9 +593,14 @@ export default {
                   padding-right: 8px
                 img
                   vertical-align: top
+                  width: 76px
+                  @media screen and (max-width: 1920px)
+                    width: 50px
               .sort-num
                 b
                   font-size: 18px
+                  @media screen and (max-width: 1920px)
+                    font-size: 14px
                   color: $yellow
               &:nth-child(3)
                 .sort-title

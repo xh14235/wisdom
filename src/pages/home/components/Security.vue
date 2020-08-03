@@ -6,14 +6,15 @@
     <div class="monitor-wrapper">
       <div class="monitor-box">
         <div class="monitor-bg">
-          <iframe id="video1" width="100%" height="100%" src="/static/rtmp/video01.html" frameborder="0"></iframe>
+          <!-- <iframe id="video1" width="100%" height="100%" src="/static/rtmp/video01.html" frameborder="0"></iframe> -->
+          <iframe id="video1" width="100%" height="100%" src="/static/jsmpeg-master/view-stream.html" frameborder="0"></iframe>
         </div>
         <div class="monitor-title" @click="showVideoPopup(0)">{{videoName0 || '监控1'}}</div>
       </div>
       <div class="monitor-box">
         <div class="monitor-box2">
           <div class="monitor-bg">
-            <iframe id="video2" width="100%" height="100%" src="/static/rtmp/video02.html" frameborder="0"></iframe>
+            <iframe id="video2" width="100%" height="100%" src="/static/jsmpeg-master/view-stream.html" frameborder="0"></iframe>
           </div>
           <div class="monitor-title">监控2</div>
         </div>
@@ -265,6 +266,8 @@ export default {
   },
   mounted () {
     this.getAbnormalList()
+    let iframe = document.getElementById('video1').contentWindow
+    iframe.postMessage('data', '*')
   }
 }
 </script>
@@ -367,6 +370,9 @@ export default {
             height: 10px
             // border-radius: 50%
             background-size: 100% 100%
+            @media screen and (max-width: 1920px)
+              width: 7px
+              height: 7px
             &.status-red
               background-image: url('~@/assets/img/icon-red.png')
             &.status-green
@@ -384,6 +390,9 @@ export default {
       font-size: 22px
       font-weight: 600
       margin-bottom: 1vh
+      @media screen and (max-width: 1920px) {
+        font-size: 16px
+      }
     .number-detail
       display: flex
       .number-left, .number-right
@@ -401,6 +410,9 @@ export default {
           font-size: 24px
           font-weight: 600
           color: $yellow
+          @media screen and (max-width: 1920px) {
+            font-size: 18px
+          }
       .number-right
         p
           display: flex

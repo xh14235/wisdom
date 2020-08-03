@@ -257,9 +257,14 @@ export default {
         justify-content: space-between
         // align-items: flex-end
         font-size: 18px
+        @media screen and (max-width: 1920px)
+          font-size: 12px
         span
           font-size: 16px
           font-weight: normal
+          color: $lgreen
+          @media screen and (max-width: 1920px)
+            font-size: 12px
           b
             color: $yellow
   .tab-wrapper
@@ -279,6 +284,10 @@ export default {
       margin: 2px 0
       color: $green
       font-size: 18px
+      @media screen and (max-width: 1920px)
+        font-size: 14px
+        height: 2.5vh
+        line-height: 2.5vh
       &.active
         background: rgba(74,204,129,0.2)
 </style>

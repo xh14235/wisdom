@@ -127,6 +127,7 @@ export default {
     },
     changeSmall1 (item) {
       this.$emit('changeSelect31', item)
+      console.log(item)
     },
     changeLarge2 (item) {
       this.getVenueSelect2(item.id)
@@ -151,6 +152,9 @@ export default {
   font-size: 18px
   font-weight: 600
   color: $lgreen
+  @media screen and (max-width: 1920px) {
+    font-size: 14px
+  }
 .controller-box
   height: 4vh
   display: flex

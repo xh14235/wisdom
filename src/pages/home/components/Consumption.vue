@@ -350,13 +350,14 @@ export default {
         }
         this.datasecond.echarts5 = {
           id: 'consecond1',
-          title: '(kWh)',
+          title: '',
           legendShow: true,
           itemStyle: 2,
           barWidth: 15,
           legendData: ['民宅', '民宿', '公建', '产业', '设施'],
           color: [this.blue, this.yellow, this.green, this.red, this.bgreen],
           xData: ['电', '热水', '冷', '热'],
+          yName: '(kWh)',
           data: [HOUSE, HOME_STAY, PUBLIC_CONSTRUCTION, INDUSTRY, AGRICULTURE]
         }
       })

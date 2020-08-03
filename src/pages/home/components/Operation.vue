@@ -153,13 +153,14 @@ export default {
       supHead1().then((res) => {
         this.echarts = {
           id: 'line1111',
-          title: '(kW)',
+          title: '',
           legendShow: true,
           legendData: ['分布式能源', '外来电'],
           color: [this.green, this.yellow],
           areaColor: false,
           smooth: true,
           xData: this.day,
+          yName: '(kW)',
           data: [Object.values(res.data.DISTRIBUTED_ENERGY), Object.values(res.data.ENERGY_EXTERNAL)]
         }
       })
@@ -176,13 +177,14 @@ export default {
       })
       this.echarts = {
         id: 'line1111',
-        title: '(kW)',
+        title: '',
         legendShow: true,
         legendData: ['供热水', '供冷', '供热'],
         color: [this.green, this.yellow, this.red],
         areaColor: false,
         smooth: true,
         xData: this.day,
+        yName: '(kW)',
         data: [this.list1, this.list2, this.list3]
       }
     },
@@ -192,13 +194,14 @@ export default {
       }).then((res) => {
         this.echarts = {
           id: 'line1111',
-          title: '(kWh)',
+          title: '',
           legendShow: false,
           legendData: ['地缘热供热', '地缘热供冷'],
           color: [this.green, this.yellow, this.blue],
           areaColor: false,
           smooth: true,
           xData: this.day,
+          yName: '(kWh)',
           data: [res.data]
         }
       })
@@ -206,13 +209,14 @@ export default {
     operationLine () {
       this.echarts = {
         id: 'line1111',
-        title: '(kWh)',
+        title: '',
         legendShow: true,
         legendData: ['地缘热供热', '地缘热供冷'],
         color: [this.green, this.yellow, this.blue],
         areaColor: false,
         smooth: true,
         xData: this.day,
+        yName: '(kWh)',
         data: [getTestList(150, 24), getTestList(150, 24)]
       }
     }

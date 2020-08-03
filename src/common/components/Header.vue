@@ -144,7 +144,12 @@ export default {
   .header-title
     bigtitle()
     cursor: pointer
+    @media screen and (max-width: 1920px)
+      font-size: 24px
   .header-time
     font-size: 18px
     margin-top: 15px
+    @media screen and (max-width: 1920px)
+      font-size: 16px
+      margin-top: 5px
 </style>

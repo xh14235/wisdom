@@ -42,8 +42,9 @@ export default {
     drawBar (radarData) {
       // i 用于计数
       let i = -1
-      let radius = 60
-      let fontName = 16
+      let bodyWidth = document.body.offsetWidth
+      let radius = bodyWidth <= 1920 ? 40 : 60
+      let fontName = bodyWidth <= 1920 ? 12 : 16
       let symbolSize = 5
       if (this.enlarge) {
         radius = 200

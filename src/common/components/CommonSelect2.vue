@@ -1,6 +1,6 @@
 <template>
   <div class="select-box">
-    <div class="chosen-value" @click.stop="changeShow()">{{largeChosen.name}}<span v-if="smallSelect">-{{defaultValue || smallChosen.name}}</span></div>
+    <div class="chosen-value" @click.stop="changeShow()">{{largeChosen.name}}<span v-if="smallSelect">-{{smallChosen.name || defaultValue}}</span></div>
     <transition name="slide">
       <div class="chosen-list-wrapper" v-show="listShow && selectListShow">
         <div class="chosen-list-left">

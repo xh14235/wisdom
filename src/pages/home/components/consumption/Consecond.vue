@@ -96,6 +96,9 @@ export default {
     font-size: 18px
     font-weight: 600
     color: $lgreen
+    @media screen and (max-width: 1920px) {
+      font-size: 14px
+    }
   .select1
     flex: 0 0 50%
     width: 50%
@@ -112,6 +115,9 @@ export default {
     display: flex
     align-items: center
     justify-content: space-between
+    @media screen and (max-width: 1920px) {
+      font-size: 14px
+    }
     span
       float: right
       font-size: 12px

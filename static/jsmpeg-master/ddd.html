@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JSMpeg Stream Client</title>
+	<style type="text/css">
+		html, body {
+			/* background-color: #111; */
+			/* text-align: center; */
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			display: flex;
+			height: 100%;
+			align-items: center;
+		}
+		canvas {
+			width: 100vw;
+			height: 100%;
+		}
+	</style>
+	
+</head>
+<body>
+	<!-- <canvas id="video-canvas1"></canvas> -->
+	<canvas id="video-canvas2"></canvas>
+	<script type="text/javascript" src="jsmpeg.min.js"></script>
+	<script type="text/javascript">
+		// var canvas1 = document.getElementById('video-canvas1');
+		var canvas2 = document.getElementById('video-canvas2');
+		// var url1 = 'ws://172.18.8.51:8082/live1';
+		var url2 = 'ws://172.18.8.51:8082/live2';
+		// var player1 = new JSMpeg.Player(url1, {canvas: canvas1});
+		var player2 = new JSMpeg.Player(url2, {canvas: canvas2});
+	</script>
+</body>
+</html>

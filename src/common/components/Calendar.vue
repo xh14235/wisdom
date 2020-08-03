@@ -126,12 +126,18 @@ export default {
     height: 16%
     line-height: 220%
     font-size: 14px
+    @media screen and (max-width: 1920px) {
+      font-size: 12px
+    }
   .calendar
     display: flex
     flex-wrap: wrap
     justify-content: flex-start
     height: 84%
     font-size: 14px
+    @media screen and (max-width: 1920px) {
+      font-size: 12px
+    }
     span
       flex: 0 0 14.285%
       width: 14.285%

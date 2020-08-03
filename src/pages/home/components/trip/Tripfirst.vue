@@ -90,7 +90,7 @@
       </div>
       <div class="park-wrapper">
         <div class="park-box" v-for="item of list.echarts3" :key="item.id">
-          <el-progress type="circle" :percentage="parseInt(item.laveNumber / item.totalNum * 100)" :width="100" :stroke-width="5" color="#4ACC81"></el-progress>
+          <el-progress type="circle" :percentage="parseInt(item.laveNumber / item.totalNum * 100)" :width="documentWidth <= 1920 ? 50 : 100" :stroke-width="documentWidth <= 1920 ? 3 : 5" color="#4ACC81"></el-progress>
           <div class="park-info">
             <p>{{item.name}}</p>
             <p>总共：{{item.totalNum}}个</p>
@@ -115,6 +115,11 @@ export default {
       podiumList: [],
       ranking: [],
       timer: null
+    }
+  },
+  computed: {
+    documentWidth () {
+      return document.body.offsetWidth
     }
   },
   methods: {
@@ -257,6 +262,9 @@ export default {
         flex: 0 0 48%
         width: 48%
         display: flex
+        @media screen and (max-width: 1920px) {
+          margin-bottom: 5px
+        }
         .traffic-road
           flex: 0 0 65%
           width: 65%
@@ -337,6 +345,9 @@ export default {
         font-size: 18px
         font-weight: 600
         color: $lgreen
+        @media screen and (max-width: 1920px) {
+          font-size: 14px
+        }
       p:nth-child(2)
         color: $lgreen
 </style>

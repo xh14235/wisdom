@@ -4,13 +4,13 @@
     <Header></Header>
     <div class="log-btn" @click="logToggle()" v-show="logBtnShow"><img src="../../assets/img/login.png" alt="">登录</div>
     <div class="login-wrapper">
-      <div class="tec-support">地址：上海市金都西路800号7幢 电话：021-67649809 网站：www.shregeon.com</div>
+      <!-- <div class="tec-support">地址：上海市金都西路800号7幢 电话：021-67649809 网站：www.shregeon.com</div> -->
       <transition name="opacity">
         <div class="login-show-box" v-show="logShow">
           <div class="login-name">
             <div class="login-welcome">Welcome</div>
             <div class="login-title">智慧大脑数字全景</div>
-            <div class="login-compony">上海昱章电气成套设备有限公司</div>
+            <!-- <div class="login-compony">上海昱章电气成套设备有限公司</div> -->
           </div>
           <div class="login-box">
             <div class="login-close" @click="logBoxClose()">&times;</div>
@@ -133,6 +133,10 @@ export default {
     justify-content: space-around
     align-items: center
     font-size: 24px
+    @media screen and (max-width: 1920px)
+      font-size: 16px
+      padding: 6px 8px
+      border: 1px solid #fff
     img
       height: 2vh
       margin-right: 12px
@@ -166,12 +170,17 @@ export default {
           color: rgba(255,255,255,1)
           line-height: 24px
           text-shadow: 0px 2px 2px rgba(49,54,60,0.75)
+          @media screen and (max-width: 1920px)
+            margin-top: 15vh
+            font-size: 28px
         .login-title
           margin-top: 3.6vh
           font-size: 48px
           color: rgba(255,255,255,1)
           line-height: 27px
           text-shadow: 0px 3px 3px rgba(49,54,60,0.75)
+          @media screen and (max-width: 1920px)
+            font-size: 36px
         .login-compony
           margin-top: 17.5vh
           font-size: 14px
@@ -196,6 +205,12 @@ export default {
           border-radius: 50%
           background: #333
           cursor: pointer
+          @media screen and (max-width: 1920px)
+            width: 20px
+            height: 20px
+            height: 20px
+            line-height: 18px
+            font-size: 22px
         .login-line
           width: 14vw
           height: 4vh
@@ -215,6 +230,10 @@ export default {
             top: 1vh
             width: 21px
             height: 21px
+            @media screen and (max-width: 1920px)
+              top: 1.5vh
+              width: 15px
+              height: 15px
         .login-checkbox
           position: relative
           overflow: hidden
@@ -222,14 +241,22 @@ export default {
             position: absolute
             left: 0
             top: 3px
-            z-index: -1
+            // z-index: -1
+            opacity: 0
           label
             color: #a8a8a8
             font-size: 16px
+            @media screen and (max-width: 1920px)
+              font-size: 14px
+              margin-left: 5px
           .icon
             width: 21px
             height: 21px
             vertical-align: bottom
+            @media screen and (max-width: 1920px)
+              // top: 1.5vh
+              width: 15px
+              height: 15px
         .login-btn
           width: 14vw
           height: 4vh
@@ -241,6 +268,9 @@ export default {
           color: $white
           border-radius: 2vh
           cursor: pointer
+          @media screen and (max-width: 1920px)
+            font-size: 16px
+            height: 3.5vh
         .login-msg
           position: absolute
           top: 23vh

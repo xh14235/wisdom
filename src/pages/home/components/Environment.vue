@@ -252,6 +252,9 @@ export default {
       font-size: 18px
       font-weight: 600
       color: $lgreen
+      @media screen and (max-width: 1920px) {
+        font-size: 14px
+      }
 .echarts-box
   width: 100%
   height: 11vh
@@ -271,10 +274,16 @@ export default {
     justify-content: center
     .weather-item
       font-size: 18px
+      @media screen and (max-width: 1920px) {
+        font-size: 14px
+      }
     .weather-num
       font-weight: 600
       font-size: 24px
       color: $yellow
+      @media screen and (max-width: 1920px) {
+        font-size: 16px
+      }
   &.weather-list2
     justify-content: flex-start
     .weather-li
@@ -292,11 +301,17 @@ export default {
     border-radius: 5px
     .pm-title
       font-size: 18px
+      @media screen and (max-width: 1920px) {
+        font-size: 14px
+      }
     .pm-detail
       display: flex
       justify-content: space-between
       align-items: center
       font-size: 22px
+      @media screen and (max-width: 1920px) {
+        font-size: 16px
+      }
       height: 4vh
     .pm-outer
       height: 1.5vh

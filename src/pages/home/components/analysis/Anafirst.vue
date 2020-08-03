@@ -5,7 +5,7 @@
     </div>
     <div class="statistics">
       <p v-for="item of list.abnormalType" :key="item.abnormalKey">
-        <span>{{item.abnormalReason}}：</span>
+        <span>{{item.abnormalReason}}</span>
         <b>{{item.value}}</b>
       </p>
     </div>
@@ -92,7 +92,7 @@ export default {
   display: flex
   justify-content: flex-start
   align-items: center
-  border: 1px solid $lgreen
+  border: 1px solid #45504A
   height: 3vh
   margin: 1vh 0
   p
@@ -164,6 +164,9 @@ export default {
           b
             font-size: 16px
             color: $yellow
+            @media screen and (max-width: 1920px) {
+              font-size: 14px
+            }
         .single-change
           color: $red
     .single-controller

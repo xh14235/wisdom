@@ -75,8 +75,14 @@ export default {
       z-index: 1
       .tem
         font-size: 36px
+        @media screen and (max-width: 1920px) {
+          font-size: 24px
+        }
       .weather
         font-size: 14px
+        @media screen and (max-width: 1920px) {
+          font-size: 12px
+        }
   .next
     flex: 0 0 12%
     width: 12%
@@ -104,4 +110,7 @@ export default {
         font-size: 12px
       .wendu
         font-size: 14px
+        @media screen and (max-width: 1920px) {
+          font-size: 12px
+        }
 </style>

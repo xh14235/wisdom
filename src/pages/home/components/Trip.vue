@@ -280,7 +280,7 @@ export default {
           borderWidth: false,
           labelShow: false,
           graphic: img1,
-          radius: ['50%', '65%'],
+          radius: ['40%', '50%'],
           center: ['25%', '50%'],
           color: [this.blue, this.green, this.yellow],
           data: [
@@ -297,7 +297,7 @@ export default {
           borderWidth: false,
           labelShow: false,
           graphic: img2,
-          radius: ['50%', '65%'],
+          radius: ['40%', '50%'],
           center: ['25%', '50%'],
           color: [this.blue, this.green, this.yellow],
           data: [
@@ -314,7 +314,7 @@ export default {
           borderWidth: false,
           labelShow: false,
           graphic: img3,
-          radius: ['50%', '65%'],
+          radius: ['40%', '50%'],
           center: ['25%', '50%'],
           color: [this.blue, this.green, this.yellow],
           data: [
@@ -331,7 +331,7 @@ export default {
           borderWidth: false,
           labelShow: false,
           graphic: img4,
-          radius: ['50%', '65%'],
+          radius: ['40%', '50%'],
           center: ['25%', '50%'],
           color: [this.blue, this.green, this.yellow],
           data: [
@@ -366,7 +366,7 @@ export default {
       tripPower({
         year: year
       }).then((res) => {
-        // console.log(res)
+        console.log(res)
         let data = res.data.data || []
         this.datasecond.echarts5 = {
           id: 'trip1',

@@ -2,7 +2,7 @@
   <div>
     <div class="controller-box">
       <div class="select1">
-        分析类型选择<CommonSelect2 :largeSelect="largeSelect" :smallSelect="smallSelect" @changeLarge="changeLarge" @changeSmall="changeSmall"></CommonSelect2>
+        分析对象<CommonSelect2 :largeSelect="largeSelect" :smallSelect="smallSelect" @changeLarge="changeLarge" @changeSmall="changeSmall"></CommonSelect2>
       </div>
       <DateType @getDateType="changeDate3"></DateType>
     </div>

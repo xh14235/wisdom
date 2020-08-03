@@ -164,6 +164,9 @@ export default {
       font-weight: normal
       display: flex
       align-items: center
+      @media screen and (max-width: 1920px) {
+        font-size: 14px
+      }
       .sum
         margin-right: 1vw
         span
@@ -203,6 +206,9 @@ export default {
             height: 10px
             // border-radius: 50%
             background-size: 100% 100%
+            @media screen and (max-width: 1920px)
+              width: 7px
+              height: 7px
             &.green
               background-image: url('~@/assets/img/icon-green.png')
             &.red

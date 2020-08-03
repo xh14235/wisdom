@@ -102,12 +102,14 @@ export default {
           itemHeight = 10
         }
       }
-      let fontTitle = 16
-      let fontXy = 12
+      let bodyWidth = document.body.offsetWidth
+      let fontTitle = bodyWidth <= 1920 ? 14 : 16
+      let fontXy = bodyWidth <= 1920 ? 9 : 12
       let legendTop = '8%'
       let legendLeft = '10%'
       let barWidth = 10
       let itemGap = 15
+      let verticalAlign = 'top'
       if (this.enlarge) {
         fontTitle = 32
         fontXy = 24
@@ -115,6 +117,7 @@ export default {
         legendLeft = '15%'
         barWidth = 20
         itemGap = 30
+        verticalAlign = 'bottom'
       }
       // console.log(barData.data.length)
       for (let i = 0; i < barData.data.length; i++) {
@@ -221,8 +224,9 @@ export default {
           nameLocation: 'end',
           nameTextStyle: {
             color: this.lgreen,
-            fontSize: fontXy
-            // paddingLeft: -10
+            fontSize: fontXy,
+            align: 'right',
+            verticalAlign: verticalAlign
           },
           axisLabel: {
             show: true,

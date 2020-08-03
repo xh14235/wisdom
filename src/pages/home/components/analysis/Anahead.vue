@@ -200,7 +200,7 @@ export default {
           background-size: 100% 100%
   .num-box
     height: 12vh
-    margin-top: 1vh
+    // margin-top: 1vh
     display: flex
     justify-content: space-between
     .num-line
@@ -217,6 +217,10 @@ export default {
         font-size: 16px
         margin-top: 4vh
         margin-bottom: 1vh
+        @media screen and (max-width: 1920px) {
+          margin-top: 3vh
+          margin-bottom: 0vh
+        }
   .type-wrapper
     height: 12vh
     display: flex

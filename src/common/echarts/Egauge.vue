@@ -39,10 +39,11 @@ export default {
   methods: {
     ...mapMutations(['showEchartsPopup']),
     drawBar (gaugeData) {
+      let bodyWidth = document.body.offsetWidth
       let axisLineWidth = 3
       let splitLineLength = 8
       let splitLineWidth = 1
-      let fontSize = 16
+      let fontSize = bodyWidth <= 1920 ? 12 : 16
       if (this.enlarge) {
         axisLineWidth = 10
         splitLineLength = 20

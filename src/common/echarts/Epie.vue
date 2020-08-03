@@ -39,11 +39,16 @@ export default {
   methods: {
     ...mapMutations(['showEchartsPopup']),
     drawPie (pieData) {
+      let bodyWidth = document.body.offsetWidth
       // let enlarge = localStorage.enlarge
       // let enlargeFontSize = null
       // if (enlarge) {
       //   enlargeFontSize = 24
       // }
+      let imgWidth = 50
+      if (bodyWidth <= 1920) {
+        imgWidth = 30
+      }
       let graphic = null
       if (pieData.graphic) {
         graphic = {
@@ -51,8 +56,8 @@ export default {
             type: 'image',
             style: {
               image: pieData.graphic,
-              width: 50,
-              height: 50
+              width: imgWidth,
+              height: imgWidth
             },
             left: '16%',
             top: 'center'
@@ -63,9 +68,9 @@ export default {
       if (pieData.labelShow === false) {
         labelShow = false
       }
-      let fontTitle = 16
+      let fontTitle = bodyWidth <= 1920 ? 14 : 16
       let fontXy = 12
-      let fontCenter = 14
+      let fontCenter = bodyWidth <= 1920 ? 12 : 14
       let titleTop = pieData.titleTop
       let titleLeft = pieData.titleLeft
       if (this.enlarge) {

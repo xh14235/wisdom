@@ -81,6 +81,8 @@ export default {
     _this.timer = setInterval(() => {
       _this.login()
     }, 63103)
+    // console.log(document.body.offsetWidth)
+    // console.log(document.body.clientWidth)
   },
   beforeDestroy () {
     clearInterval(this.timer)

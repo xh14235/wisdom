@@ -45,26 +45,32 @@ export default {
     background-image: url('../../assets/img/stat-title-bg.png')
     background-size: 100% 100%
     font-size: 14px
+    @media screen and (max-width: 1920px) {
+      font-size: 12px
+    }
   .stat-box
     display: flex
     justify-content: space-between
     align-items: center
     height: 8vh
     .stat-img
-      // display: flex
-      // justify-content: space-between
-      // align-items: center
-      // width: 2.5vw
-      // height: 2vh
       position: relative
       width: 5.75vh
       height: 5.75vh
+      @media screen and (max-width: 1920px) {
+        width: 4vh
+        height: 4vh
+      }
       .img-outer
         position: absolute
-        top: 0
-        left: 0
         width: 5.75vh
         height: 5.75vh
+        top: 0
+        left: 0
+        @media screen and (max-width: 1920px) {
+          width: 4vh
+          height: 4vh
+        }
       .img-inner
         position: absolute
         width: 18px
@@ -72,24 +78,46 @@ export default {
         top: 50%
         left: 50%
         transform: translate(-9px, -16.5px)
+        @media screen and (max-width: 1920px) {
+          width: 12px
+          height: 22px
+          transform: translate(-6px, -11px)
+        }
   .stat-info-right, .stat-info-left
     text-align: center
     .stat-info-title
       font-size: 14px
       position: relative
       top: -1vh
+      @media screen and (max-width: 1920px) {
+        font-size: 12px
+      }
+    img
+      width: 92px
+      @media screen and (max-width: 1920px) {
+        width: 65px
+      }
     .stat-info-num
       font-size: 14px
+      @media screen and (max-width: 1920px) {
+        font-size: 12px
+      }
   .stat-info-left
     .stat-info-num
       span
         color: $green
         font-weight: 600
         font-size: 24px
+        @media screen and (max-width: 1920px) {
+          font-size: 16px
+        }
   .stat-info-right
     .stat-info-num
       span
         color: $yellow
         font-weight: 600
         font-size: 24px
+        @media screen and (max-width: 1920px) {
+          font-size: 16px
+        }
 </style>

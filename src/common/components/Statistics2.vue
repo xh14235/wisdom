@@ -54,11 +54,19 @@ export default {
     background-image: url('../../assets/img/stat-title-bg.png')
     background-size: 100% 100%
     font-size: 14px
+    @media screen and (max-width: 1920px) {
+      font-size: 12px
+    }
   .stat-box
     display: flex
     justify-content: space-between
     align-items: center
     height: 6vh
+    .stat-arrow-left, .stat-arrow-right
+      width: 31px
+      @media screen and (max-width: 1920px) {
+        width: 15px
+      }
     .stat-img
       display: flex
       justify-content: space-between
@@ -67,6 +75,11 @@ export default {
       height: 2vh
       position: relative
       top: 1vh
+      .stat-img-left, .stat-img-right
+        width: 29px
+        @media screen and (max-width: 1920px) {
+          width: 18px
+        }
       .stat-line
         width: 1px
         height: 2vh
@@ -76,41 +89,23 @@ export default {
     text-align: center
     .stat-info-title
       font-size: 14px
+      @media screen and (max-width: 1920px) {
+        font-size: 12px
+      }
     .stat-info-num
       font-size: 14px
+      @media screen and (max-width: 1920px) {
+        font-size: 12px
+      }
       b
         font-size: 18px
+        @media screen and (max-width: 1920px) {
+          font-size: 14px
+        }
   .stat-info-left
     .stat-info-title
       color: $green
   .stat-info-right
     .stat-info-title
       color: $yellow
-  // display: flex
-  // flex-direction: column
-  // justify-content: center
-  // text-align: right
-  // .statistics-box
-  //   margin-bottom: 15px
-  //   p
-  //     border: 1px solid rgba(255, 255, 255, .5)
-  //     padding-right: 5px
-  //     margin: 5px 0
-  //   .statistics-num
-  //     height: 2vh
-  //     line-height: 2vh
-  //     margin-right: 5px
-  //     font-size: 18px
-  //     font-weight: 600
-  //     background-size: 100% 100%
-  //     display: flex
-  //     justify-content: space-around
-  //     align-items: center
-  //     color: $green
-  //     span
-  //       font-size: 14px
-  //       color: $white
-  //   &:nth-child(2)
-  //     .statistics-num
-  //       color: $yellow
 </style>

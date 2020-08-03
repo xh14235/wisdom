@@ -53,16 +53,24 @@ export default {
     align-items: center
     height: 2.5vh
     line-height: 2.5vh
+    @media screen and (max-width: 1920px) {
+      height: 2vh
+      line-height: 2vh
+    }
     .ranking-img
       flex: 0 0 2vh
       width: 2vh
       height: 2vh
+      line-height: 2vh
       text-align: center
       span
         color: $green
       img
         height: 2vh
         vertical-align: top
+        @media screen and (max-width: 1920px) {
+          height: 1.5vh
+        }
     .ranking-title
       font-size: 12px
       overflow: hidden

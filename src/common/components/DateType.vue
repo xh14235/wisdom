@@ -55,6 +55,9 @@ export default {
     line-height: 2.33333vh
     color: $green
     cursor: pointer
+    @media screen and (max-width: 1920px) {
+      font-size: 12px
+    }
     &.active
       background: rgba(74,204,129,0.2)
 </style>

@@ -34,16 +34,19 @@ export default {
   methods: {
     ...mapMutations(['showEchartsPopup']),
     drawLine (lineData) {
+      let bodyWidth = document.body.offsetWidth
       let series = []
       let seriesLength = lineData.legendData.length
       let markLine = null
-      let fontTitle = 16
-      let fontXy = 12
-      let lineWidth = 2
+      let fontTitle = bodyWidth <= 1920 ? 14 : 16
+      let fontXy = bodyWidth <= 1920 ? 9 : 12
+      let lineWidth = 1.5
+      let verticalAlign = 'top'
       if (this.enlarge) {
         fontTitle = 32
         fontXy = 24
         lineWidth = 4
+        verticalAlign = 'bottom'
       }
       for (let i = 0; i < seriesLength; i++) {
         let areaStyle = null
@@ -186,7 +189,9 @@ export default {
           nameLocation: 'end',
           nameTextStyle: {
             color: this.lgreen,
-            fontSize: fontXy
+            fontSize: fontXy,
+            align: 'right',
+            verticalAlign: verticalAlign
             // padding: 10
           },
           axisLabel: {
