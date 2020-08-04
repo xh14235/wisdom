@@ -13,6 +13,7 @@
         <transition name="opacity">
           <VideoPopup v-if="videoPopupShow"></VideoPopup>
           <EchartsPopup v-if="echartsPopupShow"></EchartsPopup>
+          <MonitorPopup v-if="monitorPopupShow"></MonitorPopup>
         </transition>
         <!-- <VideoPopup v-if="videoPopupShow"></VideoPopup>
         <EchartsPopup v-if="echartsPopupShow && echarts.id"></EchartsPopup> -->
@@ -39,6 +40,7 @@ export default {
       // weaShow: state => state.weather.weaShow,
       videoPopupShow: state => state.popup.videoPopupShow,
       echartsPopupShow: state => state.popup.echartsPopupShow,
+      monitorPopupShow: state => state.popup.monitorPopupShow,
       echarts: state => state.popup.echarts,
       selectListShow: state => state.selectListShow
     })
@@ -72,6 +74,7 @@ export default {
     Weather: () => import('@/common/components/Weather'),
     VideoPopup: () => import('@/common/popup/VideoPopup'),
     EchartsPopup: () => import('@/common/popup/EchartsPopup'),
+    MonitorPopup: () => import('@/common/popup/MonitorPopup'),
     Energy: () => import('./components/Energy'),
     Livelihood: () => import('./components/Livelihood')
   },

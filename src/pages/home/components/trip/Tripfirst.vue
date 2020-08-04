@@ -7,7 +7,7 @@
       <div class="monitor-box">
         <div class="monitor-bg">
           <!-- <iframe id="video1" width="100%" height="100%" src="/static/rtmp/video01.html" frameborder="0"></iframe> -->
-            <iframe id="video2" width="100%" height="100%" src="" frameborder="0"></iframe>
+            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws1" frameborder="0"></iframe> -->
         </div>
         <div class="monitor-title" @click="showVideoPopup()">监控1</div>
       </div>
@@ -15,25 +15,25 @@
         <div class="monitor-box2">
           <div class="monitor-bg">
             <!-- <iframe id="video2" width="100%" height="100%" src="/static/rtmp/video02.html" frameborder="0"></iframe> -->
-            <iframe id="video2" width="100%" height="100%" src="" frameborder="0"></iframe>
+            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
           </div>
           <div class="monitor-title">监控2</div>
         </div>
         <div class="monitor-box2">
           <div class="monitor-bg">
-            <iframe id="video2" width="100%" height="100%" src="" frameborder="0"></iframe>
+            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
           </div>
           <div class="monitor-title">监控3</div>
         </div>
         <div class="monitor-box2">
           <div class="monitor-bg">
-            <iframe id="video2" width="100%" height="100%" src="" frameborder="0"></iframe>
+            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
           </div>
           <div class="monitor-title">监控4</div>
         </div>
         <div class="monitor-box2">
           <div class="monitor-bg">
-            <iframe id="video2" width="100%" height="100%" src="" frameborder="0"></iframe>
+            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
           </div>
           <div class="monitor-title">监控5</div>
         </div>
@@ -115,6 +115,9 @@ export default {
       podiumList: [],
       ranking: [],
       timer: null
+      // defaultUrl: '/static/jsmpeg-master/view-stream.html?url=',
+      // ws1: 'live1',
+      // ws2: 'live2'
     }
   },
   computed: {

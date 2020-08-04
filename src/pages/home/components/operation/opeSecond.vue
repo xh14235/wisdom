@@ -54,7 +54,7 @@ export default {
   },
   data () {
     return {
-      chosenImg: 'all-electric.gif',
+      chosenImg: 'earch-hot-cube.gif',
       largeSelect: [],
       smallSelect: [],
       sumList: []
@@ -105,7 +105,7 @@ export default {
       this.$emit('changeSelect2', item)
       let cube = item[0].name
       switch (cube) {
-        case '地热源魔方':
+        case '地源热魔方':
           this.chosenImg = 'earch-hot-cube.gif'
           break
         case '热水源魔方':

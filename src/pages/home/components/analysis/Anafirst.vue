@@ -24,7 +24,7 @@
           <span v-if="item.type === 'COLD'">冷</span>
           <span v-if="item.type === 'HOT'">热</span>
           <span>{{item.buildingSubName}}</span>
-          <span>{{item.abnormalValue}}{{item.unit}}<span class="percent">{{item.percentValue}}%</span></span>
+          <span>{{item.abnormalValue}}{{item.unit}}<span class="percent" :class="{'red': item.percentValue >= 0, 'green': item.percentValue < 0}">{{item.percentValue >= 0 ? '+' : '-'}}{{item.percentValue}}%</span></span>
         </p>
       </div>
     </div>
@@ -109,14 +109,14 @@ export default {
       display: inline-block
       text-align: center
       &:nth-child(1)
-        flex: 0 0 30%
-        width: 30%
+        flex: 0 0 35%
+        width: 35%
       &:nth-child(2)
         flex: 0 0 10%
         width: 10%
       &:nth-child(3)
-        flex: 0 0 30%
-        width: 30%
+        flex: 0 0 25%
+        width: 25%
       &:nth-child(4)
         flex: 0 0 30%
         width: 30%
@@ -126,16 +126,19 @@ export default {
         display: inline-block
         text-align: center
         .percent
-          color: $red
+          &.red
+            color: $red
+          &.green
+            color: $green
         &:nth-child(1)
-          flex: 0 0 30%
-          width: 30%
+          flex: 0 0 35%
+          width: 35%
         &:nth-child(2)
           flex: 0 0 10%
           width: 10%
         &:nth-child(3)
-          flex: 0 0 30%
-          width: 30%
+          flex: 0 0 25%
+          width: 25%
         &:nth-child(4)
           flex: 0 0 30%
           width: 30%
@@ -164,9 +167,8 @@ export default {
           b
             font-size: 16px
             color: $yellow
-            @media screen and (max-width: 1920px) {
+            @media screen and (max-width: 1920px)
               font-size: 14px
-            }
         .single-change
           color: $red
     .single-controller

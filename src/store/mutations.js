@@ -42,6 +42,13 @@ export default {
   hideEchartsPopup (state) {
     state.popup.echartsPopupShow = false
   },
+  showMonitorPopup (state, data) {
+    state.popup.monitorPopupShow = true
+    localStorage.monitorUrl = data
+  },
+  hideMonitorPopup (state) {
+    state.popup.monitorPopupShow = false
+  },
   changeVideoName (state, info) {
     // console.log(info)
     state.popup.videoName0 = info

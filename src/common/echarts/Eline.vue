@@ -168,7 +168,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          boundaryGap: false,
+          boundaryGap: true,
           axisLabel: {
             show: true,
             textStyle: {
