@@ -76,24 +76,25 @@
         </div>
       </div>
     </div>
-    <svg width="100%" height="100%" style="position: absolute;z-index: -1;">
+    <!-- <svg width="100%" height="100%" style="position: absolute;z-index: -1;">
       <defs>
         <linearGradient id="blue" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" style="stop-color: rgba(74, 204, 129, 0.1);" />
           <stop offset="100%" style="stop-color: rgba(74, 204, 129, 1);" />
         </linearGradient>
       </defs>
-    </svg>
+    </svg> -->
     <div class="park">
       <div class="common-title">
         <div>停车场车位</div>
       </div>
-      <div class="park-wrapper">
+      <div class="park-wrapper" v-if="list.echarts3.length">
         <div class="park-box" v-for="item of list.echarts3" :key="item.id">
-          <el-progress type="circle" :percentage="parseInt(item.laveNumber / item.totalNum * 100)" :width="documentWidth <= 1920 ? 50 : 100" :stroke-width="documentWidth <= 1920 ? 3 : 5" color="#4ACC81"></el-progress>
+          <!-- <el-progress type="circle" :percentage="parseInt(item.laveNumber / item.totalNum * 100)" :width="documentWidth <= 1920 ? 50 : 100" :stroke-width="documentWidth <= 1920 ? 3 : 5" color="#4ACC81"></el-progress> -->
+          <Epie2 :pieData = "item.echarts"></Epie2>
           <div class="park-info">
-            <p>{{item.name}}</p>
-            <p>总共：{{item.totalNum}}个</p>
+            <p>{{item.echarts.data.name}}</p>
+            <p>总共：{{item.echarts.allNum}}个</p>
             <!-- <p>已用：{{item.used}}个</p> -->
           </div>
         </div>
@@ -108,6 +109,9 @@ export default {
   name: 'Tripfirst',
   props: {
     list: Object
+  },
+  components: {
+    Epie2: () => import('@/common/echarts/Epie2')
   },
   data () {
     return {
@@ -142,6 +146,24 @@ export default {
         facilityId: id,
         topNum: 3
       }).then((res) => {
+        // console.log(res)
+        let defaultList = [
+          {
+            id: '001',
+            title: '彩绘馆',
+            num: 0
+          },
+          {
+            id: '002',
+            title: '彩釉馆',
+            num: 0
+          },
+          {
+            id: '003',
+            title: '陶瓷馆',
+            num: 0
+          }
+        ]
         let data = res.data
         this.ranking = []
         for (let i = 0; i < data.length; i++) {
@@ -151,11 +173,11 @@ export default {
             num: data[i].onlineNumber
           })
         }
+        if (this.ranking.length === 0) this.ranking = defaultList
       })
     },
     getPodiumList () {
       buildingSelect().then((res) => {
-        // console.log(res.data)
         let data = res.data
         this.podiumList = []
         for (let i = 0; i < data.length; i++) {
@@ -163,7 +185,6 @@ export default {
             this.podiumList.push(data[i])
           }
         }
-        // this.podiumList = res.data
       })
     }
   },
@@ -204,16 +225,16 @@ export default {
 
 <style scoped lang="stylus">
 @import '~@/assets/css/common.styl'
-.park-box >>> .el-progress__text
-  color: #fff
-.park-box >>> svg path:first-child
-  stroke: transparent
-.park-box >>> svg path:last-child
-  stroke: url(#blue)
+// .park-box >>> .el-progress__text
+//   color: #fff
+// .park-box >>> svg path:first-child
+//   stroke: transparent
+// .park-box >>> svg path:last-child
+//   stroke: url(#blue)
 .monitor-wrapper
   // height: 20vh
   width: 100%
-  margin: 1vh 0
+  margin: 3vh 0
   display: flex
   justify-content: space-between
   .monitor-box
@@ -222,9 +243,14 @@ export default {
     position: relative
     // height: 20vh
     .monitor-bg
-      height: 20vh
+      width: 100%
+      height: 0
+      padding-bottom: 56.25%
       background-image: url('~@/assets/img/novideo1.png')
       background-size: 100% 100%
+      position: relative
+      @media screen and (max-width: 1920px)
+        padding-bottom: 71%
     .monitor-title
       position: absolute
       left: 0
@@ -234,17 +260,23 @@ export default {
       line-height: 3vh
       text-align: center
       background: rgba(0, 0, 0, 0.5)
+      @media screen and (max-width: 1920px)
+        height: 2.5vh
+        line-height: 2.5vh
     .monitor-box2
       float: left
       width: 50%
-      height: 10vh
+      // height: 10vh
       overflow: hidden
       position: relative
       .monitor-bg
         width: 100%
-        height: 10vh
+        height: 0
+        padding-bottom: 56.25%
         background-image: url('~@/assets/img/novideo2.png')
         background-size: 100% 100%
+        @media screen and (max-width: 1920px)
+          padding-bottom: 71%
 .traffic
   display: flex
   justify-content space-between
@@ -265,9 +297,8 @@ export default {
         flex: 0 0 48%
         width: 48%
         display: flex
-        @media screen and (max-width: 1920px) {
+        @media screen and (max-width: 1920px)
           margin-bottom: 5px
-        }
         .traffic-road
           flex: 0 0 65%
           width: 65%
@@ -321,14 +352,20 @@ export default {
           margin-top: 0.5vh
           font-size: 14px
           color: $lgreen
+          @media screen and (max-width: 1920px)
+            font-size: 12px
           img
             vertical-align: middle
+            @media screen and (max-width: 1920px)
+              height: 1.5vh
         .podium-num
           font-size: 24px
           font-weight: 600
           color: $yellow
           margin-top: 1vh
           margin-bottom: 0.5vh
+          @media screen and (max-width: 1920px)
+            font-size: 18px
 .park
   .park-wrapper
     display: flex
@@ -343,14 +380,19 @@ export default {
       display: flex
       justify-content: space-around
       align-items: center
-    .park-info
-      p:nth-child(1)
-        font-size: 18px
-        font-weight: 600
-        color: $lgreen
-        @media screen and (max-width: 1920px) {
-          font-size: 14px
-        }
-      p:nth-child(2)
-        color: $lgreen
+      .echarts-kuang
+        flex: 0 0 50%
+        width: 50%
+      .park-info
+        flex: 0 0 50%
+        width: 50%
+        p:nth-child(1)
+          font-size: 18px
+          font-weight: 600
+          color: $lgreen
+          @media screen and (max-width: 1920px) {
+            font-size: 14px
+          }
+        p:nth-child(2)
+          color: $lgreen
 </style>

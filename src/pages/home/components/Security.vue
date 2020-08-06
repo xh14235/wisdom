@@ -8,7 +8,7 @@
         <div class="monitor-bg">
           <div class="enlarge" @click="showMonitorPopup(ws1)"></div>
           <!-- <iframe id="video1" width="100%" height="100%" src="/static/rtmp/video01.html" frameborder="0"></iframe> -->
-          <iframe id="video1" width="100%" height="100%" :src="defaultUrl + ws1" frameborder="0"></iframe>
+          <iframe class="video-big" id="video1" width="100%" height="100%" :src="defaultUrl + ws1" frameborder="0"></iframe>
         </div>
         <div class="monitor-title" @click="showVideoPopup(0)">{{videoName0 || '监控1'}}</div>
       </div>
@@ -16,7 +16,7 @@
         <div class="monitor-box2">
           <div class="monitor-bg">
             <div class="enlarge" @click="showMonitorPopup(ws2)"></div>
-            <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe>
+            <iframe class="video-small" id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe>
           </div>
           <div class="monitor-title">监控2</div>
         </div>
@@ -292,7 +292,7 @@ export default {
 .monitor-wrapper
   // height: 20vh
   width: 100%
-  margin: 1vh 0
+  margin: 3vh 0
   display: flex
   justify-content: space-between
   .monitor-box
@@ -301,10 +301,14 @@ export default {
     position: relative
     // height: 20vh
     .monitor-bg
-      height: 20vh
+      width: 100%
+      height: 0
+      padding-bottom: 56.25%
       background-image: url('~@/assets/img/novideo1.png')
       background-size: 100% 100%
       position: relative
+      @media screen and (max-width: 1920px)
+        padding-bottom: 60%
       .enlarge
         position: absolute
         top: 0
@@ -314,6 +318,12 @@ export default {
         background-image: url('~@/assets/img/video-btn.png')
         background-size: 100% 100%
         z-index: 1
+      .video-big
+        position: absolute
+        left: 0
+        top: 0
+        width: 100%
+        height: 100%
     .monitor-title
       position: absolute
       left: 0
@@ -323,17 +333,29 @@ export default {
       line-height: 3vh
       text-align: center
       background: rgba(0, 0, 0, 0.5)
+      @media screen and (max-width: 1920px)
+        height: 2.5vh
+        line-height: 2.5vh
     .monitor-box2
       float: left
       width: 50%
-      height: 10vh
+      // height: 10vh
       overflow: hidden
       position: relative
       .monitor-bg
         width: 100%
-        height: 10vh
+        height: 0
+        padding-bottom: 56.25%
         background-image: url('~@/assets/img/novideo2.png')
         background-size: 100% 100%
+        @media screen and (max-width: 1920px)
+          padding-bottom: 60%
+        .video-small
+          position: absolute
+          left: 0
+          top: 0
+          width: 100%
+          height: 100%
     .distinguish-list
       flex: 0 0 100%
       width: 100%

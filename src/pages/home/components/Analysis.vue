@@ -254,6 +254,7 @@ export default {
       anaRadar({
         hour: hour
       }).then((res) => {
+        // console.log(res)
         // this.datahead.radarList = res.data
         this.datahead.echarts1 = {
           id: 'anahead1',
@@ -299,18 +300,19 @@ export default {
       anaAbnormalNum({
         year: year
       }).then((res) => {
+        // console.log(res)
         this.datahead.statistics1 = {
           alluser: res.data.totalUser,
           allnum: res.data.timeValue,
           average: res.data.timeValue / res.data.totalUser
         }
+        this.datahead.statistics2 = {
+          electric: res.data.ELECTRICITY,
+          hotwater: res.data.HOT_WATER,
+          cold: res.data.COLD,
+          hot: res.data.HOT
+        }
       })
-      this.datahead.statistics2 = {
-        electric: 33,
-        hotwater: 21,
-        cold: 25,
-        hot: 24
-      }
     },
     anafirst1 () {
       anaAbnormalType().then((res) => {

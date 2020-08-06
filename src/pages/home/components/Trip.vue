@@ -78,7 +78,7 @@ export default {
       switch (index) {
         case 0:
           if (this.getBool(this.datafirst)) {
-            this.getPeopleNum()
+            // this.getPeopleNum()
             this.getRoad()
             this.getParking()
           }
@@ -159,112 +159,31 @@ export default {
       tripRoad().then((res) => {
         this.datafirst.echarts1 = res.data
       })
-      // this.datafirst.echarts1 = [
-      //   {
-      //     id: '001',
-      //     road: '五丰路',
-      //     state: '畅通'
-      //   },
-      //   {
-      //     id: '002',
-      //     road: '五丰路',
-      //     state: '拥堵'
-      //   },
-      //   {
-      //     id: '003',
-      //     road: '五丰路五丰路五丰路五丰路',
-      //     state: '拥堵'
-      //   },
-      //   {
-      //     id: '004',
-      //     road: '五丰路',
-      //     state: '畅通'
-      //   },
-      //   {
-      //     id: '005',
-      //     road: '五丰路',
-      //     state: '拥堵'
-      //   },
-      //   {
-      //     id: '006',
-      //     road: '五丰路五丰路五丰路五丰路',
-      //     state: '拥堵'
-      //   },
-      //   {
-      //     id: '007',
-      //     road: '五丰路',
-      //     state: '畅通'
-      //   },
-      //   {
-      //     id: '008',
-      //     road: '五丰路',
-      //     state: '拥堵'
-      //   },
-      //   {
-      //     id: '009',
-      //     road: '五丰路五丰路五丰路五丰路',
-      //     state: '拥堵'
-      //   },
-      //   {
-      //     id: '010',
-      //     road: '五丰路',
-      //     state: '畅通'
-      //   },
-      //   {
-      //     id: '011',
-      //     road: '五丰路',
-      //     state: '拥堵'
-      //   },
-      //   {
-      //     id: '012',
-      //     road: '五丰路五丰路五丰路五丰路',
-      //     state: '拥堵'
-      //   }
-      // ]
     },
     // 车位剩余情况
     getParking () {
       tripParking().then((res) => {
-        this.datafirst.echarts3 = res.data
+        // console.log(res.data)
+        // this.datafirst.echarts3 = []
+        for (let i = 0; i < res.data.length; i++) {
+          this.datafirst.echarts3.push({
+            echarts: {
+              id: res.data[i].id,
+              title: '{name|剩余车位}\n{value|' + res.data[i].laveNumber + '}',
+              color: this.green,
+              radius: ['75%', '85%'],
+              center: ['50%', '50%'],
+              titleTop: '30%',
+              titleLeft: '50%',
+              data: {
+                name: res.data[i].name,
+                value: res.data[i].laveNumber
+              },
+              allNum: res.data[i].totalNum
+            }
+          })
+        }
       })
-      // this.datafirst.echarts3 = [
-      //   {
-      //     id: '001',
-      //     title: '村委会',
-      //     all: 6,
-      //     used: 6
-      //   },
-      //   {
-      //     id: '002',
-      //     title: '绿妮瓜果',
-      //     all: 8,
-      //     used: 8
-      //   },
-      //   {
-      //     id: '003',
-      //     title: '936能源馆',
-      //     all: 4,
-      //     used: 4
-      //   },
-      //   {
-      //     id: '004',
-      //     title: '乡村会客厅',
-      //     all: 5,
-      //     used: 5
-      //   },
-      //   {
-      //     id: '005',
-      //     title: '玫瑰工坊',
-      //     all: 12,
-      //     used: 10
-      //   },
-      //   {
-      //     id: '006',
-      //     title: '网红打卡点',
-      //     all: 8,
-      //     used: 8
-      //   }
-      // ]
     },
     // 获取电动车船使用次数及智能路灯数量
     getFrequency () {
@@ -281,7 +200,7 @@ export default {
           labelShow: false,
           graphic: img1,
           radius: ['40%', '50%'],
-          center: ['25%', '50%'],
+          center: ['50%', '50%'],
           color: [this.blue, this.green, this.yellow],
           data: [
             { value: CHARGE_PILE.total - CHARGE_PILE.maintenance - CHARGE_PILE.lave, name: '使用中' },
@@ -298,7 +217,7 @@ export default {
           labelShow: false,
           graphic: img2,
           radius: ['40%', '50%'],
-          center: ['25%', '50%'],
+          center: ['50%', '50%'],
           color: [this.blue, this.green, this.yellow],
           data: [
             { value: ELECTRIC_CAR.total - ELECTRIC_CAR.maintenance - ELECTRIC_CAR.lave, name: '使用中' },
@@ -315,7 +234,7 @@ export default {
           labelShow: false,
           graphic: img3,
           radius: ['40%', '50%'],
-          center: ['25%', '50%'],
+          center: ['50%', '50%'],
           color: [this.blue, this.green, this.yellow],
           data: [
             { value: ELECTRIC_BOAT.total - ELECTRIC_BOAT.maintenance - ELECTRIC_BOAT.lave, name: '使用中' },
@@ -332,7 +251,7 @@ export default {
           labelShow: false,
           graphic: img4,
           radius: ['40%', '50%'],
-          center: ['25%', '50%'],
+          center: ['50%', '50%'],
           color: [this.blue, this.green, this.yellow],
           data: [
             { value: SMART_STREET_LIGHT.total - SMART_STREET_LIGHT.maintenance - SMART_STREET_LIGHT.lave, name: '使用中' },

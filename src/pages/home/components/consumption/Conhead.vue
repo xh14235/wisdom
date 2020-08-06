@@ -1,7 +1,7 @@
 <template>
   <div class="common-echarts-wrapper">
     <div class="common-echarts-box">
-      <div class="common-echarts-title"></div>
+      <div class="common-echarts-title">用电</div>
       <Eline class="echarts-with-title" v-if="list.echarts1.id" :lineData="list.echarts1"></Eline>
     </div>
     <div class="common-echarts-box">

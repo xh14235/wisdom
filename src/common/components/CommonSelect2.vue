@@ -4,7 +4,7 @@
     <transition name="slide">
       <div class="chosen-list-wrapper" v-show="listShow && selectListShow">
         <div class="chosen-list-left">
-          <div class="chosen-list-left-li" :class="{'active': item.active}" v-for="(item, index) of largeSelect" :key="index" @click="changeLarge(item, index)">{{item.name}}<span v-show="item.active">&gt;</span></div>
+          <div class="chosen-list-left-li" :class="{'active': item.active}" v-for="(item, index) of largeSelect" :key="index" @mouseenter="changeLarge(item, index)">{{item.name}}<span v-show="item.active">&gt;</span></div>
         </div>
         <div class="chosen-list-right">
           <div class="chosen-list-right-li" :class="{'active': item.active}" v-for="(item, index) of smallSelect" :key="index" @click="changeSmall(item, index)">{{item.name}}</div>

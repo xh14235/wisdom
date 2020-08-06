@@ -56,8 +56,8 @@ export default {
   height: 10vh
   overflow: hidden
   .today
-    flex: 0 0 20%
-    width: 20%
+    flex: 0 0 25%
+    width: 25%
     overflow: hidden
     position: relative
     .today-box
@@ -84,8 +84,8 @@ export default {
           font-size: 12px
         }
   .next
-    flex: 0 0 12%
-    width: 12%
+    flex: 0 0 18%
+    width: 18%
     position: relative
     .next-box
       position: absolute

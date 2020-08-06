@@ -163,14 +163,14 @@ export default {
     // 更改合作社
     changeCooperative (id, index) {
       this.cooperativeTab = index
-      clearInterval(this.timer)
-      this.timer = null
+      // clearInterval(this.timer)
+      // this.timer = null
       // this.getLast2(this.cooperativeTab)
-      this.timer = setInterval(() => {
-        this.cooperativeTab++
-        if (this.cooperativeTab > 11) this.cooperativeTab = 0
-        // this.getLast2(this.cooperativeTab)
-      }, 5000)
+      // this.timer = setInterval(() => {
+      //   this.cooperativeTab++
+      //   if (this.cooperativeTab > 9) this.cooperativeTab = 0
+      //   // this.getLast2(this.cooperativeTab)
+      // }, 5000)
     },
     // 底部两个echarts图
     getLast2 (id) {
@@ -223,26 +223,26 @@ export default {
     setTimeout(() => {
       this.getLast2(this.cooperativeList[this.cooperativeTab].id)
     }, 100)
-    this.timer = setInterval(() => {
-      this.cooperativeTab++
-      if (this.cooperativeTab > 11) this.cooperativeTab = 0
-    }, 5000)
-  },
-  deactivated () {
-    clearInterval(this.timer)
-    this.timer = null
-  },
-  activated () {
-    if (this.timer) clearInterval(this.timer)
-    this.timer = setInterval(() => {
-      this.cooperativeTab++
-      if (this.cooperativeTab > 11) this.cooperativeTab = 0
-    }, 5000)
-  },
-  beforeDestroy () {
-    clearInterval(this.timer)
-    this.timer = null
+    // this.timer = setInterval(() => {
+    //   this.cooperativeTab++
+    //   if (this.cooperativeTab > 9) this.cooperativeTab = 0
+    // }, 5000)
   }
+  // deactivated () {
+  //   clearInterval(this.timer)
+  //   this.timer = null
+  // },
+  // activated () {
+  //   if (this.timer) clearInterval(this.timer)
+  //   this.timer = setInterval(() => {
+  //     this.cooperativeTab++
+  //     if (this.cooperativeTab > 9) this.cooperativeTab = 0
+  //   }, 5000)
+  // },
+  // beforeDestroy () {
+  //   clearInterval(this.timer)
+  //   this.timer = null
+  // }
 }
 </script>
 

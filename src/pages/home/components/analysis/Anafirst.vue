@@ -83,6 +83,10 @@ export default {
       this.$emit('add', index, nownum)
     }
   }
+  // mounted () {
+  //   let cmd = new ActiveXObject('WScript.Shell')
+  //   cmd.run('cmd.exe /k cd C:/')
+  // }
 }
 </script>
 

@@ -161,8 +161,8 @@ export default {
         color: lineData.color,
         grid: {
           top: '25%',
-          left: '0',
-          right: '0',
+          left: '5%',
+          right: '5%',
           bottom: '5%',
           containLabel: true
         },
@@ -171,6 +171,9 @@ export default {
           boundaryGap: true,
           axisLabel: {
             show: true,
+            // showMixLabel: true,
+            // showMaxLabel: true,
+            // interval: 0, // x轴文字显示完全
             textStyle: {
               fontSize: fontXy,
               color: '#c3edd7'

@@ -8,6 +8,7 @@
       <div class="popup-main">
         <Eline v-if="echarts.id && dataType === 'line'" :lineData="echarts" :enlarge="true"></Eline>
         <Epie v-if="echarts.id && dataType === 'pie'" :pieData="echarts" :enlarge="true"></Epie>
+        <Epie2 v-if="echarts.id && dataType === 'pie2'" :pieData="echarts" :enlarge="true"></Epie2>
         <Ebar v-if="echarts.id && dataType === 'bar'" :barData="echarts" :enlarge="true"></Ebar>
         <Egauge v-if="echarts.id && dataType === 'gauge'" :gaugeData="echarts" :enlarge="true"></Egauge>
         <Eradar v-if="echarts.id && dataType === 'radar'" :radarData="echarts" :enlarge="true"></Eradar>
@@ -25,6 +26,7 @@ export default {
   components: {
     Eline: () => import('@/common/echarts/Eline'),
     Epie: () => import('@/common/echarts/Epie'),
+    Epie2: () => import('@/common/echarts/Epie2'),
     Ebar: () => import('@/common/echarts/Ebar'),
     Egauge: () => import('@/common/echarts/Egauge'),
     Eradar: () => import('@/common/echarts/Eradar')

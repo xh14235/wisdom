@@ -40,14 +40,12 @@ export default {
     ...mapMutations(['showEchartsPopup']),
     drawPie (pieData) {
       let bodyWidth = document.body.offsetWidth
-      // let enlarge = localStorage.enlarge
-      // let enlargeFontSize = null
-      // if (enlarge) {
-      //   enlargeFontSize = 24
-      // }
       let imgWidth = 50
       if (bodyWidth <= 1920) {
         imgWidth = 30
+      }
+      if (this.enlarge) {
+        imgWidth = 100
       }
       let graphic = null
       if (pieData.graphic) {
@@ -59,7 +57,7 @@ export default {
               width: imgWidth,
               height: imgWidth
             },
-            left: '16%',
+            left: 'center',
             top: 'center'
           }]
         }
@@ -68,17 +66,21 @@ export default {
       if (pieData.labelShow === false) {
         labelShow = false
       }
-      let fontTitle = bodyWidth <= 1920 ? 14 : 16
-      let fontXy = 12
+      let fontTitle = bodyWidth <= 1920 ? 12 : 16
+      let fontXy = 10
       let fontCenter = bodyWidth <= 1920 ? 12 : 14
       let titleTop = pieData.titleTop
       let titleLeft = pieData.titleLeft
+      let itemWidth = 10
+      let itemHeight = 5
       if (this.enlarge) {
         fontTitle = 32
         fontXy = 24
         fontCenter = 28
-        titleTop = '45%'
+        titleTop = '35%'
         titleLeft = '50%'
+        itemWidth = 20
+        itemHeight = 10
       }
       let myChart = this.$echarts.init(document.getElementById(pieData.id))
       let option = {
@@ -114,31 +116,33 @@ export default {
         },
         grid: {
           top: '20%',
-          left: '5%',
-          right: '5%',
+          left: '0',
+          right: '0',
           bottom: '10%'
         },
         graphic: graphic,
         legend: {
           show: pieData.legendShow,
           textStyle: {
-            color: this.lgreen
+            color: this.lgreen,
+            fontSize: fontXy
           },
           icon: 'bar',
-          itemWidth: 15,
-          itemHeight: 5,
-          orient: 'vertical',
-          right: '10',
-          top: 'center',
+          itemWidth: itemWidth,
+          itemHeight: itemHeight,
+          orient: 'horizontal',
+          left: 'center',
+          bottom: '0',
           formatter (name) {
-            var data = option.series[0].data
-            var tarValue
-            for (var i = 0, l = data.length; i < l; i++) {
-              if (data[i].name === name) {
-                tarValue = data[i].value
-              }
-            }
-            return `${name}  ${tarValue} 个`
+            // var data = option.series[0].data
+            // var tarValue
+            // for (var i = 0, l = data.length; i < l; i++) {
+            //   if (data[i].name === name) {
+            //     tarValue = data[i].value
+            //   }
+            // }
+            // return `${name} ${parseInt(tarValue)}`
+            return `${name}`
           }
         },
         color: pieData.color,
@@ -154,7 +158,14 @@ export default {
               show: labelShow,
               position: 'left',
               color: this.lgreen,
-              formatter: '{b}\n{d}%',
+              // formatter: '{b}\n{d}%',
+              formatter (params) {
+                // let sum = 0
+                // for (let i = 0; i < params) {}
+                // console.log(params)
+                // return params.percent + parseInt(params.percent) + '%'
+                return parseInt(params.percent) + '%'
+              },
               fontSize: fontXy
             },
             labelLine: {

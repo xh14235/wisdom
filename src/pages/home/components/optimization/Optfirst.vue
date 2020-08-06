@@ -13,7 +13,7 @@
       <div class="common-echarts-box">
         <div class="report-title">初级分析报告</div>
         <div class="report-info">
-          <p>1、耗电量和热水需求量均在下午开始急剧上升，说明下午游客量增多，且现为春季，气温还较为寒冷，因此可以延缓热水源的使用时长。<br/>2、 耗电量在10-16点之间使用明显，应观察现场耗电情况，合理安排用能。</p>
+          <p>根据所采集的能源消费数据，智能分析用能趋势和变化，为用户的能源消费和设备使用提供建议，并能辅助监测用户用能设备的工作健康情况。</p>
         </div>
       </div>
       <div class="common-echarts-box">

@@ -13,7 +13,7 @@
       <div class="common-echarts-box">
         <div class="report-title">高级分析报告</div>
         <div class="report-info">
-          <p>1、从无功变化曲线中看出，目前无功消耗过高，应检查现场的电气设备条件允许下给与升级。<br/>2、 在过凌晨后，还有设备在耗能，在闭馆后应该关闭不使用的设备。</p>
+          <p>根据所采集的能源消费数据，智能分析用能趋势和变化，为用户的能源消费和设备使用提供建议，并能辅助监测用户用能设备的工作健康情况。</p>
         </div>
       </div>
       <div class="common-echarts-box">
@@ -155,6 +155,8 @@ export default {
   .all-num
     text-align: center
     line-height: 2vh
+  &:nth-child(3)
+    margin-top: 2vh
 .controller-box
   height: 5vh
   display: flex

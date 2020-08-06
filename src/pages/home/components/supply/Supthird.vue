@@ -4,7 +4,7 @@
       <div class="forecast-tab">
         <div class="tab-item" :class="{'active': index === currentTab}" v-for="(item, index) of tab" :key="item.id" @click="changeTab(index)">{{item.title}}</div>
       </div>
-      <DateType @getDateType="changeDate"></DateType>
+      <DateType @getDateType="changeDate" v-show="this.currentTab === 0"></DateType>
     </div>
     <div class="common-echarts-wrapper" v-show="currentTab === 0">
       <div class="common-echarts-box">

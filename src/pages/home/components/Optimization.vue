@@ -196,46 +196,50 @@ export default {
         // console.log(res)
         this.datafirst.echarts5 = {
           id: 'optfirst5',
-          title: '节能减排-节约电量(kWh)',
+          title: '节能减排-节约电量',
           legendShow: false,
           legendData: ['节约电量'],
           color: [this.white],
           areaColor: false,
           smooth: true,
           xData: this.day,
+          yName: '(kWh)',
           data: [getTestList(150, 24)]
         }
         this.datafirst.echarts6 = {
           id: 'optfirst6',
-          title: '节能减排-节约标煤(吨)',
+          title: '节能减排-节约标煤',
           legendShow: false,
           legendData: ['节约标煤'],
           color: [this.white],
           areaColor: false,
           smooth: true,
           xData: this.day,
+          yName: '(吨)',
           data: [getTestList(150, 24)]
         }
         this.datafirst.echarts7 = {
           id: 'optfirst7',
-          title: '节能减排-节约费用(元)',
+          title: '节能减排-节约费用',
           legendShow: false,
           legendData: ['节约费用'],
           color: [this.white],
           areaColor: false,
           smooth: true,
           xData: this.day,
+          yName: '(元)',
           data: [getTestList(150, 24)]
         }
         this.datafirst.echarts8 = {
           id: 'optfirst8',
-          title: '节能减排-CO2减排(%)',
+          title: '节能减排-CO2减排',
           legendShow: false,
           legendData: ['CO2减排'],
           color: [this.white],
           areaColor: false,
           smooth: true,
           xData: this.day,
+          yName: '(%)',
           data: [getTestList(150, 24)]
         }
       })
@@ -262,24 +266,26 @@ export default {
       }).then((res) => {
         this.datasecond.echarts7 = {
           id: 'optsecond7',
-          title: '有功变化（kW）',
+          title: '有功变化',
           legendShow: false,
           legendData: ['有功变化'],
           color: [this.white],
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(kW)',
           data: [Object.values(res.data.ACTIVE_POWER).slice(0, date.length)]
         }
         this.datasecond.echarts8 = {
           id: 'optsecond8',
-          title: '无功变化（kvar）',
+          title: '无功变化',
           legendShow: false,
           legendData: ['无功变化'],
           color: [this.white],
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(Kvar)',
           data: [Object.values(res.data.REACTIVE_POWER).slice(0, date.length)]
         }
         // this.datasecond.echarts9 = {
@@ -304,46 +310,50 @@ export default {
         }).then((res) => {
           this.datafirst.echarts1 = {
             id: 'optfirst1',
-            title: '能源消费-电(kWh)',
+            title: '能源消费-电',
             legendShow: false,
             legendData: ['能源消费-电'],
             color: [this.green],
             areaColor: false,
             smooth: true,
             xData: this.day,
+            yName: '(kWh)',
             data: [Object.values(res.data.ELECTRICITY).slice(0, this.day.length)]
           }
           this.datafirst.echarts2 = {
             id: 'optfirst2',
-            title: '能源消费-热水(kWh)',
+            title: '能源消费-热水',
             legendShow: false,
             legendData: ['能源消费-热水'],
             color: [this.yellow],
             areaColor: false,
             smooth: true,
             xData: this.day,
+            yName: '(kWh)',
             data: [Object.values(res.data.HOT_WATER).slice(0, this.day.length)]
           }
           this.datafirst.echarts3 = {
             id: 'optfirst3',
-            title: '能源消费-冷(kWh)',
+            title: '能源消费-冷',
             legendShow: false,
             legendData: ['能源消费-冷'],
             color: [this.blue],
             areaColor: false,
             smooth: true,
             xData: this.day,
+            yName: '(kWh)',
             data: [Object.values(res.data.COLD).slice(0, this.day.length)]
           }
           this.datafirst.echarts4 = {
             id: 'optfirst4',
-            title: '能源消费-热(kWh)',
+            title: '能源消费-热',
             legendShow: false,
             legendData: ['能源消费-热'],
             color: [this.red],
             areaColor: false,
             smooth: true,
             xData: this.day,
+            yName: '(kWh)',
             data: [Object.values(res.data.HOT).slice(0, this.day.length)]
           }
         })
@@ -368,45 +378,49 @@ export default {
         }).then((res) => {
           this.datasecond.echarts3 = {
             id: 'optsecond3',
-            title: '能源消费-电(kWh)',
+            title: '能源消费-电',
             legendShow: false,
             legendData: ['耗电'],
             color: [this.green],
             areaColor: false,
             smooth: true,
             xData: date,
+            yName: '(kWh)',
             data: [Object.values(res.data.ELECTRICITY).slice(0, date.length)]
           }
           this.datasecond.echarts4 = {
             id: 'optsecond4',
-            title: '能源消费-热水(kWh)',
+            title: '能源消费-热水',
             legendShow: false,
             legendData: ['耗热水'],
             color: [this.yellow],
             areaColor: false,
             smooth: true,
             xData: date,
+            yName: '(kWh)',
             data: [Object.values(res.data.HOT_WATER).slice(0, date.length)]
           }
           this.datasecond.echarts5 = {
             id: 'optsecond5',
-            title: '能源消费-冷(kWh)',
+            title: '能源消费-冷',
             legendShow: false,
             legendData: ['耗冷'],
             color: [this.blue],
             areaColor: false,
             smooth: true,
             xData: date,
+            yName: '(kWh)',
             data: [Object.values(res.data.HOT).slice(0, date.length)]
           }
           this.datasecond.echarts6 = {
             id: 'optsecond6',
-            title: '能源消费-热(kWh)',
+            title: '能源消费-热',
             legendShow: false,
             legendData: ['耗热'],
             color: [this.red],
             areaColor: false,
             smooth: true,
+            yName: '(kWh)',
             xData: date,
             data: [Object.values(res.data.COLD).slice(0, date.length)]
           }
@@ -480,13 +494,14 @@ export default {
       }
       this.datasecond.echarts1 = {
         id: 'optsecond1',
-        title: '订单数量（个）',
+        title: '订单数量',
         legendShow: false,
         legendData: ['订单数量'],
         color: [this.bgreen],
         areaColor: false,
         smooth: true,
         xData: date,
+        yName: '(个)',
         data: [getTestList(150, length)]
       }
     }

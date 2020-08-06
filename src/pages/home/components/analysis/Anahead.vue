@@ -89,7 +89,7 @@ export default {
   },
   data () {
     return {
-      abnormalMax: 50,
+      abnormalMax: 5,
       curRadar: 0,
       radarTimer: null,
       radarTab: [

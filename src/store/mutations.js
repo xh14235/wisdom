@@ -18,7 +18,7 @@ export default {
     // state.weather.pm25 = weather.aqi.pm25
     // state.weather.pm25_desc = weather.aqi.pm25_desc
     state.weather.today = weather.data.shift()
-    state.weather.next6 = weather.data
+    state.weather.next6 = weather.data.slice(0, 4)
   },
   mutPm25 (state, weather) {
     state.weather.pm25 = weather.air_pm25

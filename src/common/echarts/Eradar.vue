@@ -83,6 +83,7 @@ export default {
               for (let j = 0; j < len; j++) {
                 sum += radarData.data[0].value[j]
               }
+              if (sum === 0) sum = 1
               // console.log(sum)
               i++
               return `{b|${parseInt(radarData.data[0].value[i] * 100 / sum)}%}\n{a|${a}}`

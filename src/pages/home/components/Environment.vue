@@ -138,12 +138,13 @@ export default {
       this.pieData1 = {
         id: 'environpie',
         title: '{name|总重量}\n{value|' + 1 + '}{unit|t}',
-        titleTop: '36%',
+        titleTop: '27%',
         titleLeft: '48%',
-        legendShow: false,
-        borderWidth: 0,
-        radius: ['40%', '55%'],
-        center: ['50%', '50%'],
+        legendShow: true,
+        borderWidth: false,
+        labelShow: true,
+        radius: ['40%', '50%'],
+        center: ['50%', '40%'],
         color: [this.blue, this.red, this.yellow, this.green],
         data: [
           { value: 335, name: '干垃圾' },

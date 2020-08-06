@@ -165,24 +165,26 @@ export default {
         }
         this.datafirst.echarts1 = {
           id: 'tranfirst1',
-          title: '外来电消耗（kWh）',
+          title: '外来电消耗',
           legendShow: false,
           legendData: ['外来电消耗'],
           color: [this.green],
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(kWh)',
           data: [arr]
         }
         this.datafirst.echarts2 = {
           id: 'tranfirst2',
-          title: '外来电费用（元）',
+          title: '外来电费用',
           legendShow: false,
           legendData: ['外来电费用'],
           color: [this.yellow],
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(元)',
           data: [cost]
         }
       })
@@ -341,24 +343,25 @@ export default {
         }
         this.datasecond.echarts1 = {
           id: 'transecond1',
-          title: '外来电消耗（kWh）',
+          title: '外来电消耗',
           legendShow: false,
           legendData: ['外来电消耗'],
           color: [this.green],
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(kWh)',
           data: [arr]
         }
         this.datasecond.echarts2 = {
           id: 'transecond2',
-          title: '外来电费用（元）',
+          title: '外来电费用',
           legendShow: false,
           legendData: ['外来电费用'],
           color: [this.yellow],
           areaColor: true,
           smooth: true,
-          xData: date,
+          yName: '(元)',
           data: [cost]
         }
       })
