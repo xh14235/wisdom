@@ -3,7 +3,8 @@ const popup = {
     videoPopupShow: false,
     echartsPopupShow: false,
     monitorPopupShow: false,
-    // echarts: {},
+    facePopupShow: false,
+    carPopupShow: false,
     wiiChangeVideo: 0,
     videoName0: ''
   }

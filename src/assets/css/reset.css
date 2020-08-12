@@ -6,6 +6,15 @@ html,body,div,p,span,a,b,i,s,table,tbody,thead,th,tr,td,ul,ol,li,h1,h2,h3,h4,h5,
 }
 html {
   font-size: 16px;
+  /* -webkit-filter: grayscale(100%);
+  filter: gray !important;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  background: gray; */
 }
 @media screen and (max-width: 1920px){
   html {

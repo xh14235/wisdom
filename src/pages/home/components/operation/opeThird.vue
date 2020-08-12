@@ -68,18 +68,30 @@ export default {
     echarts: Object
   },
   computed: {
-    line () {
+    echartsData () {
       return this.echarts.data
     }
   },
   watch: {
-    line () {
+    // line () {
+    //   this.sumList = []
+    //   for (let i = 0; i < this.echarts.data.length; i++) {
+    //     this.sumList.push({
+    //       id: 'd0' + i,
+    //       title: this.echarts.legendData[i],
+    //       num: this.echarts.data[i][23].value,
+    //       unit: 'kW'
+    //     })
+    //   }
+    // },
+    echartsData () {
       this.sumList = []
+      let len = this.echarts.data[0].length
       for (let i = 0; i < this.echarts.data.length; i++) {
         this.sumList.push({
           id: 'd0' + i,
           title: this.echarts.legendData[i],
-          num: this.echarts.data[i][23].value,
+          num: this.echarts.data[i][len - 1],
           unit: 'kW'
         })
       }
@@ -91,14 +103,25 @@ export default {
     }
   },
   mounted () {
+    // if (this.echarts.data) {
+    //   this.sumList = []
+    //   for (let i = 0; i < this.echarts.data.length; i++) {
+    //     this.sumList.push({
+    //       id: 'd0' + i,
+    //       title: this.echarts.legendData[i],
+    //       num: this.echarts.data[i][23],
+    //       unit: 'kW'
+    //     })
+    //   }
+    // }
     if (this.echarts.data) {
       this.sumList = []
-      console.log(this.echarts.data)
+      let len = this.echarts.data[0].length
       for (let i = 0; i < this.echarts.data.length; i++) {
         this.sumList.push({
           id: 'd0' + i,
           title: this.echarts.legendData[i],
-          num: this.echarts.data[i][23],
+          num: this.echarts.data[i][len - 1],
           unit: 'kW'
         })
       }

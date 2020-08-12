@@ -83,7 +83,7 @@ export default {
       } else if (index === 1) {
         this.getCube936('1254288413020762112')
       } else {
-        this.operationLine()
+        this.operationLine(3)
       }
     },
     changeSelect1 (code) {
@@ -97,11 +97,11 @@ export default {
       if (item[1].id === '1') {
         this.getCube936(item[0].id)
       } else {
-        this.operationLine()
+        this.operationLine(2)
       }
     },
     changeSelect3 (code) {
-      this.operationLine()
+      this.operationLine(3)
     },
     getInfoList () {
       this.infoList = [
@@ -151,73 +151,247 @@ export default {
     },
     getAllElectric () {
       supHead1().then((res) => {
+        // console.log(res.data)
+        let DISTRIBUTED_ENERGY = res.data.DISTRIBUTED_ENERGY
+        let ENERGY_EXTERNAL = res.data.ENERGY_EXTERNAL
+        let list1 = []
+        let list2 = []
+        let xData = []
+        let j = 0
+        for (let i = 0; i < DISTRIBUTED_ENERGY.length; i++) {
+          if (DISTRIBUTED_ENERGY[i].lasted) {
+            list1.push(DISTRIBUTED_ENERGY[i].value)
+            j++
+            xData.push(j)
+          }
+          if (ENERGY_EXTERNAL[i].lasted) {
+            list2.push(ENERGY_EXTERNAL[i].value)
+          }
+        }
         this.echarts = {
           id: 'line1111',
           title: '',
           legendShow: true,
-          legendData: ['分布式能源', '外来电'],
-          color: [this.green, this.yellow],
+          legendData: ['分布式能源', '外来电', '储能量'],
+          color: [this.green, this.yellow, this.blue],
           areaColor: false,
           smooth: true,
-          xData: this.day,
+          xData: xData,
           yName: '(kW)',
-          data: [Object.values(res.data.DISTRIBUTED_ENERGY), Object.values(res.data.ENERGY_EXTERNAL)]
+          data: [list1, list2, getTestList(300, 11)],
+          y2: true,
+          yName2: '(kWh)'
         }
+        // this.echarts = {
+        //   id: 'line1111',
+        //   title: '',
+        //   legendShow: true,
+        //   legendData: ['分布式能源', '外来电'],
+        //   color: [this.green, this.yellow],
+        //   areaColor: false,
+        //   smooth: true,
+        //   xData: this.day,
+        //   yName: '(kW)',
+        //   data: [getTestList(150, 24), getTestList(150, 24)]
+        // }
       })
     },
     getAllHot () {
-      suphotwaterline().then((res) => {
-        this.list1 = res.data
-      })
-      supcoldline().then((res) => {
-        this.list2 = res.data
-      })
-      suphotline().then((res) => {
-        this.list3 = res.data
-      })
-      this.echarts = {
-        id: 'line1111',
-        title: '',
-        legendShow: true,
-        legendData: ['供热水', '供冷', '供热'],
-        color: [this.green, this.yellow, this.red],
-        areaColor: false,
-        smooth: true,
-        xData: this.day,
-        yName: '(kW)',
-        data: [this.list1, this.list2, this.list3]
+      let date = new Date()
+      let hour = date.getHours()
+      let hourList = []
+      for (let i = 0; i < hour; i++) {
+        hourList.push(i)
       }
+      let promise1 = new Promise((resolve, reject) => {
+        suphotwaterline().then((res) => {
+          let data = res.data
+          if (data.length) {
+            for (let i = 0; i < data.length; i++) {
+              if (data[i].lasted) {
+                this.list1.push(data[i].value)
+              }
+            }
+          } else {
+            this.list1 = getTestList(20, 12)
+          }
+          resolve(this.list1)
+        })
+      })
+      let promise2 = new Promise((resolve, reject) => {
+        supcoldline().then((res) => {
+          let data = res.data
+          if (data.length) {
+            for (let i = 0; i < data.length; i++) {
+              if (data[i].lasted) {
+                this.list2.push(data[i].value)
+              }
+            }
+          } else {
+            this.list2 = getTestList(200, hour)
+          }
+          resolve(this.list2)
+        })
+      })
+      let promise3 = new Promise((resolve, reject) => {
+        suphotline().then((res) => {
+          let data = res.data
+          if (data.length) {
+            for (let i = 0; i < data.length; i++) {
+              if (data[i].lasted) {
+                this.list3.push(data[i].value)
+              }
+            }
+          } else {
+            this.list3 = getTestList(20, 12)
+          }
+          resolve(this.list3)
+        })
+      })
+      Promise.all([promise1, promise2, promise3]).then((res) => {
+        this.echarts = {
+          id: 'line1111',
+          title: '',
+          legendShow: true,
+          legendData: ['供热水', '供冷', '供热'],
+          color: [this.yellow, this.blue, this.red],
+          areaColor: false,
+          smooth: true,
+          xData: hourList,
+          yName: '(kW)',
+          data: res
+        }
+        // this.echarts = {
+        //   id: 'line1111',
+        //   title: '',
+        //   legendShow: true,
+        //   legendData: ['供热水', '供冷', '供热'],
+        //   color: [this.yellow, this.blue, this.red],
+        //   areaColor: false,
+        //   smooth: true,
+        //   xData: hourList,
+        //   yName: '(kW)',
+        //   data: [getTestList(150, 13), getTestList(150, 13), getTestList(150, 13)]
+        // }
+      })
+      // suphotwaterline().then((res) => {
+      //   let data = res.data
+      //   if (data.length) {
+      //     for (let i = 0; i < data.length; i++) {
+      //       if (data[i].lasted) {
+      //         this.list1.push(data[i].value)
+      //       }
+      //     }
+      //   } else {
+      //     this.list1 = getTestList(20, 12)
+      //   }
+      // })
+      // supcoldline().then((res) => {
+      //   let data = res.data
+      //   if (data.length) {
+      //     for (let i = 0; i < data.length; i++) {
+      //       if (data[i].lasted) {
+      //         this.list2.push(data[i].value)
+      //       }
+      //     }
+      //   } else {
+      //     this.list2 = getTestList(20, 12)
+      //   }
+      // })
+      // suphotline().then((res) => {
+      //   let data = res.data
+      //   if (data.length) {
+      //     for (let i = 0; i < data.length; i++) {
+      //       if (data[i].lasted) {
+      //         this.list3.push(data[i].value)
+      //       }
+      //     }
+      //   } else {
+      //     this.list3 = getTestList(20, 12)
+      //   }
+      // })
+      // this.echarts = {
+      //   id: 'line1111',
+      //   title: '',
+      //   legendShow: true,
+      //   legendData: ['供热水', '供冷', '供热'],
+      //   color: [this.blue, this.yellow, this.red],
+      //   areaColor: false,
+      //   smooth: true,
+      //   xData: this.day,
+      //   yName: '(kW)',
+      //   data: [this.list1, this.list2, this.list3]
+      // }
     },
     getCube936 (cubeType) {
       operationCube({
         cubeId: cubeType
       }).then((res) => {
+        let data = res.data
+        let list = []
+        let xData = []
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].lasted) {
+            list.push(data[i].value)
+            xData.push(data[i].hourValue)
+          }
+        }
+        let legend = []
+        let color = []
+        switch (cubeType) {
+          case '1254288413020762112':
+            legend = ['供冷总计', '供热总计']
+            color = [this.blue, this.red]
+            break
+          case '1254288413020762113':
+            legend = ['供热水总计']
+            color = [this.yellow]
+            break
+          case '1254288413020762114':
+            legend = ['供热水总计']
+            color = [this.yellow]
+            break
+          case '1254288413024956416':
+            legend = ['供电总计']
+            color = [this.green]
+            break
+          case '1254288413024956417':
+            legend = ['供电总计']
+            color = [this.green]
+            break
+          case '1254288413024956418':
+            legend = ['供电总计']
+            color = [this.green]
+            break
+          default:
+            break
+        }
         this.echarts = {
           id: 'line1111',
           title: '',
-          legendShow: false,
-          legendData: ['地缘热供热', '地缘热供冷'],
-          color: [this.green, this.yellow, this.blue],
+          legendShow: legend.length > 1,
+          legendData: legend,
+          color: color,
           areaColor: false,
           smooth: true,
-          xData: this.day,
-          yName: '(kWh)',
-          data: [res.data]
+          xData: xData,
+          yName: '(kW)',
+          data: [list]
         }
       })
     },
-    operationLine () {
+    operationLine (num) {
       this.echarts = {
         id: 'line1111',
         title: '',
-        legendShow: true,
-        legendData: ['地缘热供热', '地缘热供冷'],
-        color: [this.green, this.yellow, this.blue],
+        legendShow: false,
+        legendData: ['供电总计'],
+        color: [this.green],
         areaColor: false,
         smooth: true,
         xData: this.day,
         yName: '(kWh)',
-        data: [getTestList(150, 24), getTestList(150, 24)]
+        data: [getTestList(150, 24)]
       }
     }
   },

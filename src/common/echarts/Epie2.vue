@@ -8,21 +8,6 @@
 import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Epie2',
-  // data () {
-  //   return {
-  //     pieData: {
-  //       id: 'sdfasdfasd',
-  //       title: 'jianbian',
-  //       color: 'yellow',
-  //       radius: ['60%', '75%'],
-  //       center: ['50%', '50%'],
-  //       data: {
-  //         name: 'aaaaaa',
-  //         value: 52
-  //       }
-  //     }
-  //   }
-  // },
   props: {
     pieData: Object,
     enlarge: Boolean

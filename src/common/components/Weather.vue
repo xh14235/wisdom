@@ -108,6 +108,9 @@ export default {
           height: 2.9vh
       .weather
         font-size: 12px
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
       .wendu
         font-size: 14px
         @media screen and (max-width: 1920px) {

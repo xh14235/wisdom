@@ -68,20 +68,32 @@ export default {
     largeSelect () {
       this.getCubeSelect(this.largeSelect[0].id)
     },
-    line () {
+    // line () {
+    //   this.sumList = []
+    //   for (let i = 0; i < this.echarts.data.length; i++) {
+    //     this.sumList.push({
+    //       id: 'd0' + i,
+    //       title: this.echarts.legendData[i],
+    //       num: this.echarts.data[i][23].value,
+    //       unit: 'kW'
+    //     })
+    //   }
+    // },
+    echartsData () {
       this.sumList = []
+      let len = this.echarts.data[0].length
       for (let i = 0; i < this.echarts.data.length; i++) {
         this.sumList.push({
           id: 'd0' + i,
           title: this.echarts.legendData[i],
-          num: this.echarts.data[i][23].value,
+          num: this.echarts.data[i][len - 1],
           unit: 'kW'
         })
       }
     }
   },
   computed: {
-    line () {
+    echartsData () {
       return this.echarts.data
     }
   },
@@ -115,7 +127,7 @@ export default {
           this.chosenImg = 'biomass-cube.gif'
           break
         case '电源变魔方':
-          this.chosenImg = 'test.gif'
+          this.chosenImg = 'power-transformer.gif'
           break
         case '微电网魔方':
           this.chosenImg = 'microgrid-cube.gif'
@@ -140,13 +152,25 @@ export default {
   },
   mounted () {
     this.getAreaSelect()
+    // if (this.echarts.data) {
+    //   this.sumList = []
+    //   for (let i = 0; i < this.echarts.data.length; i++) {
+    //     this.sumList.push({
+    //       id: 'd0' + i,
+    //       title: this.echarts.legendData[i],
+    //       num: this.echarts.data[i][23].value,
+    //       unit: 'kW'
+    //     })
+    //   }
+    // }
     if (this.echarts.data) {
       this.sumList = []
+      let len = this.echarts.data[0].length
       for (let i = 0; i < this.echarts.data.length; i++) {
         this.sumList.push({
           id: 'd0' + i,
           title: this.echarts.legendData[i],
-          num: this.echarts.data[i][23].value,
+          num: this.echarts.data[i][len - 1],
           unit: 'kW'
         })
       }

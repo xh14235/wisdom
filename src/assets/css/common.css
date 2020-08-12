@@ -80,6 +80,7 @@
 .table-head, .table-body p{
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 .table-head span, .table-body p span{
   color: #c3edd7;
@@ -126,7 +127,7 @@
   width: 100vw;
   height: 100vh;
   background: rgba(0,0,0,.3);
-  z-index: 2;
+  z-index: 3;
 }
 .popup-wrapper{
   background: rgba(23, 30, 27, 1);

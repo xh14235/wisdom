@@ -72,18 +72,19 @@ export default {
     echarts: Object
   },
   computed: {
-    line () {
+    echartsData () {
       return this.echarts.data
     }
   },
   watch: {
-    line () {
+    echartsData () {
       this.sumList = []
+      let len = this.echarts.data[0].length
       for (let i = 0; i < this.echarts.data.length; i++) {
         this.sumList.push({
           id: 'd0' + i,
           title: this.echarts.legendData[i],
-          num: this.echarts.data[i][23].value,
+          num: this.echarts.data[i][len - 1],
           unit: 'kW'
         })
       }
@@ -108,11 +109,12 @@ export default {
   mounted () {
     if (this.echarts.data) {
       this.sumList = []
+      let len = this.echarts.data[0].length
       for (let i = 0; i < this.echarts.data.length; i++) {
         this.sumList.push({
           id: 'd0' + i,
           title: this.echarts.legendData[i],
-          num: this.echarts.data[i][23].value,
+          num: this.echarts.data[i][len - 1],
           unit: 'kW'
         })
       }

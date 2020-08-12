@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
   name: 'EchartsPopup',
   components: {
@@ -38,9 +38,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      echartsPopupShow: state => state.popup.echartsPopupShow
-    }),
     dataType () {
       return localStorage.dataType
     }

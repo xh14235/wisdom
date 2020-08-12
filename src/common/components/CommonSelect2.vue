@@ -43,6 +43,11 @@ export default {
     largeSelect () {
       this.largeChosen = this.largeSelect[0]
       this.largeSelect[0].active = true
+    },
+    selectListShow () {
+      if (this.selectListShow === false) {
+        this.listShow = false
+      }
     }
   },
   methods: {

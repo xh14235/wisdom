@@ -14,9 +14,12 @@
           <VideoPopup v-if="videoPopupShow"></VideoPopup>
           <EchartsPopup v-if="echartsPopupShow"></EchartsPopup>
           <MonitorPopup v-if="monitorPopupShow"></MonitorPopup>
+          <FacePopup v-if="facePopupShow"></FacePopup>
+          <CarPopup v-if="carPopupShow"></CarPopup>
         </transition>
-        <!-- <VideoPopup v-if="videoPopupShow"></VideoPopup>
-        <EchartsPopup v-if="echartsPopupShow && echarts.id"></EchartsPopup> -->
+        <transition name="opacity">
+          <WeatherControl v-if="weatherControlShow"></WeatherControl>
+        </transition>
       </div>
       <div class="main-right">
         <Livelihood></Livelihood>
@@ -37,12 +40,14 @@ export default {
   },
   computed: {
     ...mapState({
-      // weaShow: state => state.weather.weaShow,
       videoPopupShow: state => state.popup.videoPopupShow,
       echartsPopupShow: state => state.popup.echartsPopupShow,
       monitorPopupShow: state => state.popup.monitorPopupShow,
+      facePopupShow: state => state.popup.facePopupShow,
+      carPopupShow: state => state.popup.carPopupShow,
       echarts: state => state.popup.echarts,
-      selectListShow: state => state.selectListShow
+      selectListShow: state => state.selectListShow,
+      weatherControlShow: state => state.weatherControlShow
     })
   },
   methods: {
@@ -61,9 +66,7 @@ export default {
       })
     },
     dddd () {
-      // console.log(this.selectListShow)
       if (this.selectListShow) {
-        // console.log(1)
         this.hideSelectList()
       }
     },
@@ -71,10 +74,12 @@ export default {
   },
   components: {
     Header: () => import('@/common/components/Header'),
-    Weather: () => import('@/common/components/Weather'),
+    WeatherControl: () => import('@/common/components/WeatherControl'),
     VideoPopup: () => import('@/common/popup/VideoPopup'),
     EchartsPopup: () => import('@/common/popup/EchartsPopup'),
     MonitorPopup: () => import('@/common/popup/MonitorPopup'),
+    FacePopup: () => import('@/common/popup/FacePopup'),
+    CarPopup: () => import('@/common/popup/CarPopup'),
     Energy: () => import('./components/Energy'),
     Livelihood: () => import('./components/Livelihood')
   },

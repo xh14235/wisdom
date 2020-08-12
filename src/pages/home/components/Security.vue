@@ -7,7 +7,6 @@
       <div class="monitor-box">
         <div class="monitor-bg">
           <div class="enlarge" @click="showMonitorPopup(ws1)"></div>
-          <!-- <iframe id="video1" width="100%" height="100%" src="/static/rtmp/video01.html" frameborder="0"></iframe> -->
           <iframe class="video-big" id="video1" width="100%" height="100%" :src="defaultUrl + ws1" frameborder="0"></iframe>
         </div>
         <div class="monitor-title" @click="showVideoPopup(0)">{{videoName0 || '监控1'}}</div>
@@ -62,7 +61,7 @@
           </div>
           <div class="monitor-title">监控7</div>
         </div>
-        <div class="distinguish-list face-list scroll">
+        <div class="distinguish-list face-list scroll" @click="showFacePopup()">
           <div class="distinguish-item face-item" v-for="item of facelist" :key="item.id">
             <div class="distinguish-img">
               <img :src="item.imgUrl" alt="">
@@ -84,7 +83,7 @@
           </div>
           <div class="monitor-title">监控9</div>
         </div>
-        <div class="distinguish-list car-list scroll">
+        <div class="distinguish-list car-list scroll" @click="showCarPopup()">
           <div class="distinguish-item car-item" v-for="item of carlist" :key="item.id">
             <div class="distinguish-img">
               <img :src="item.imgUrl" alt="">
@@ -271,7 +270,7 @@ export default {
     ccc () {
       this.ws1 = 'dddd'
     },
-    ...mapMutations(['showVideoPopup', 'showMonitorPopup'])
+    ...mapMutations(['showVideoPopup', 'showMonitorPopup', 'showFacePopup', 'showCarPopup'])
   },
   mounted () {
     this.getAbnormalList()
@@ -304,8 +303,9 @@ export default {
       width: 100%
       height: 0
       padding-bottom: 56.25%
-      background-image: url('~@/assets/img/novideo1.png')
-      background-size: 100% 100%
+      background: #000
+      // background-image: url('~@/assets/img/novideo1.png')
+      // background-size: 100% 100%
       position: relative
       @media screen and (max-width: 1920px)
         padding-bottom: 60%
@@ -346,8 +346,9 @@ export default {
         width: 100%
         height: 0
         padding-bottom: 56.25%
-        background-image: url('~@/assets/img/novideo2.png')
-        background-size: 100% 100%
+        background: #000
+        // background-image: url('~@/assets/img/novideo2.png')
+        // background-size: 100% 100%
         @media screen and (max-width: 1920px)
           padding-bottom: 60%
         .video-small
@@ -360,13 +361,16 @@ export default {
       flex: 0 0 100%
       width: 100%
       overflow-x: scroll
+      overflow-y: hidden
       display: flex
       .distinguish-item
         position: relative
         .distinguish-img
           img
-            height: 5vh
+            height: 57px
             vertical-align: bottom
+            @media screen and (max-width: 1920px)
+              height: 36.8px
         .distinguish-time
           width: 100%
           height: 1.5vh

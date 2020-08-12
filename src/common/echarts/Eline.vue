@@ -36,7 +36,7 @@ export default {
     drawLine (lineData) {
       let bodyWidth = document.body.offsetWidth
       let series = []
-      let seriesLength = lineData.legendData.length
+      let seriesLength = lineData.y2 ? (lineData.legendData.length - 1) : lineData.legendData.length
       let markLine = null
       let fontTitle = bodyWidth <= 1920 ? 14 : 16
       let fontXy = bodyWidth <= 1920 ? 9 : 12
@@ -116,6 +116,7 @@ export default {
           smooth: lineData.smooth,
           markLine: markLine,
           type: 'line',
+          yAxisIndex: 0,
           itemStyle: {
             normal: {
               areaStyle: areaStyle,
@@ -128,6 +129,131 @@ export default {
             emphasis: {}
           }
         })
+      }
+      let yAxis = [{
+        type: 'value',
+        name: lineData.yName || '',
+        nameLocation: 'end',
+        nameTextStyle: {
+          color: this.lgreen,
+          fontSize: fontXy,
+          align: 'right',
+          verticalAlign: verticalAlign
+        },
+        axisLabel: {
+          show: true,
+          textStyle: {
+            fontSize: fontXy,
+            color: '#c3edd7'
+          }
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#33403E'
+          }
+        },
+        splitLine: {
+          show: true,
+          lineStyle: {
+            color: '#33403E'
+          }
+        }
+      }]
+      let legend = [{
+        show: lineData.legendShow,
+        textStyle: {
+          fontSize: fontXy,
+          color: this.white
+        },
+        itemWidth: 15,
+        right: '0',
+        top: '0',
+        icon: 'line',
+        data: lineData.legendData
+      }]
+      if (lineData.y2) {
+        yAxis.push({
+          type: 'value',
+          name: lineData.yName2 || '',
+          nameLocation: 'end',
+          nameTextStyle: {
+            color: this.lgreen,
+            fontSize: fontXy,
+            align: 'left',
+            verticalAlign: verticalAlign
+          },
+          axisLabel: {
+            show: true,
+            textStyle: {
+              fontSize: fontXy,
+              color: '#c3edd7'
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#33403E'
+            }
+          },
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: '#33403E'
+            }
+          }
+        })
+        series.push({
+          name: lineData.legendData[lineData.legendData.length - 1],
+          data: lineData.data[lineData.legendData.length - 1],
+          symbol: 'circle',
+          symbolSize: 2,
+          smooth: 'true',
+          type: 'line',
+          yAxisIndex: 1,
+          itemStyle: {
+            normal: {
+              areaStyle: {
+                color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1,
+                  [{
+                    offset: 0, color: lineData.color[lineData.legendData.length - 1]
+                  }, {
+                    offset: 1, color: 'transparent'
+                  }]
+                )
+              },
+              lineStyle: {
+                width: 2,
+                type: 'solid',
+                color: lineData.color[lineData.legendData.length - 1]
+              }
+            },
+            emphasis: {}
+          }
+        })
+        let arr = lineData.legendData
+        let arr2 = [arr.pop()]
+        legend = [{
+          show: lineData.legendShow,
+          textStyle: {
+            fontSize: fontXy,
+            color: this.white
+          },
+          itemWidth: 15,
+          left: '15',
+          top: '0',
+          icon: 'line',
+          data: arr
+        }, {
+          show: lineData.legendShow,
+          textStyle: {
+            fontSize: fontXy,
+            color: this.white
+          },
+          itemWidth: 15,
+          right: '15',
+          top: '0',
+          icon: 'bar',
+          data: arr2
+        }]
       }
       let myChart = this.$echarts.init(document.getElementById(lineData.id))
       let option = {
@@ -146,18 +272,7 @@ export default {
         tooltip: {
           trigger: 'axis'
         },
-        legend: {
-          show: lineData.legendShow,
-          textStyle: {
-            fontSize: fontXy,
-            color: this.white
-          },
-          itemWidth: 15,
-          right: '0',
-          top: '0',
-          icon: 'line',
-          data: lineData.legendData
-        },
+        legend: legend,
         color: lineData.color,
         grid: {
           top: '25%',
@@ -186,39 +301,10 @@ export default {
           },
           data: lineData.xData
         },
-        yAxis: {
-          type: 'value',
-          name: lineData.yName || '',
-          nameLocation: 'end',
-          nameTextStyle: {
-            color: this.lgreen,
-            fontSize: fontXy,
-            align: 'right',
-            verticalAlign: verticalAlign
-            // padding: 10
-          },
-          axisLabel: {
-            show: true,
-            textStyle: {
-              fontSize: fontXy,
-              color: '#c3edd7'
-            }
-          },
-          axisLine: {
-            lineStyle: {
-              color: '#33403E'
-            }
-          },
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: '#33403E'
-            }
-          }
-        },
+        yAxis: yAxis,
         series: series
       }
-      myChart.setOption(option)
+      myChart.setOption(option, true)
     }
   },
   mounted () {
