@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <title>监控播放</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    #myPlayer {
+      width: 100vw;
+      height: 100%;
+    }
+  </style>
+  <script src="./js/ezuikit.js"></script>
+  <script src="./js/jquery.min.js"></script>
+</head>
+
+<body>
+  <video id="myPlayer" src="" autoplay playsInline webkit-playsinline></video>
+
+  <script>
+    function init () {
+      var player = new EZUIKit.EZUIPlayer('myPlayer');
+      player.on('log', log);
+    }
+    function log () {
+      // ...
+    }
+    window.onload = function () {
+      let url = location.href.split('=')[1]
+      $('#myPlayer').attr("src", url)
+      init()
+    }
+  </script>
+</body>
+
+</html>

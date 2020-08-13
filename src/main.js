@@ -7,6 +7,7 @@ import store from './store'
 import echarts from 'echarts'
 import ElementUI from 'element-ui'
 import vueJsonp from 'vue-jsonp'
+// 加密登录
 import JSEncrypt from 'jsencrypt'
 import 'default-passive-events'
 import 'element-ui/lib/theme-chalk/index.css'

@@ -162,14 +162,20 @@ export default {
     },
     getLineData1 () {
       ecologyPM25().then((res) => {
-        let data = res.data.slice(0, this.day.length)
+        // console.log(res)
+        // let data = res.data.slice(0, this.day.length)
+        // let list = []
+        // for (let i = 0; i < 24; i++) {
+        //   if (data[i]) {
+        //     list.push(data[i].value)
+        //   } else {
+        //     list.push(0)
+        //   }
+        // }
+        let data = res.data
         let list = []
-        for (let i = 0; i < 24; i++) {
-          if (data[i]) {
-            list.push(data[i].value)
-          } else {
-            list.push(0)
-          }
+        for (let i = 0; i < data.length; i++) {
+          list.push(data[i].pmValue)
         }
         this.lineData1 = {
           id: 'environmentLine1',
@@ -179,7 +185,7 @@ export default {
           color: [this.white],
           areaColor: true,
           smooth: true,
-          xData: this.day,
+          xData: Object.keys(res.data),
           yName: '(g/mg)',
           data: [list]
         }
@@ -192,14 +198,20 @@ export default {
     },
     getLineData2 () {
       ecologyPH().then((res) => {
-        let data = res.data.slice(0, this.day.length)
+        console.log(res)
+        // let data = res.data.slice(0, this.day.length)
+        // let list = []
+        // for (let i = 0; i < 24; i++) {
+        //   if (data[i]) {
+        //     list.push(data[i].value)
+        //   } else {
+        //     list.push(0)
+        //   }
+        // }
+        let data = res.data
         let list = []
-        for (let i = 0; i < 24; i++) {
-          if (data[i]) {
-            list.push(data[i].value)
-          } else {
-            list.push(0)
-          }
+        for (let i = 0; i < data.length; i++) {
+          list.push(data[i].phValue)
         }
         this.lineData2 = {
           id: 'environmentLine2',
@@ -209,7 +221,7 @@ export default {
           color: [this.blue],
           areaColor: true,
           smooth: true,
-          xData: this.day,
+          xData: Object.keys(res.data),
           data: [list]
         }
       })

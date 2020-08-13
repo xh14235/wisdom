@@ -6,6 +6,7 @@
     <div class="monitor-wrapper">
       <div class="monitor-box">
         <div class="monitor-bg">
+          <!-- <Yingshi></Yingshi> -->
           <div class="enlarge" @click="showMonitorPopup(ws1)"></div>
           <iframe class="video-big" id="video1" width="100%" height="100%" :src="defaultUrl + ws1" frameborder="0"></iframe>
         </div>
@@ -159,6 +160,9 @@
 import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Security',
+  // components: {
+  //   Yingshi: () => import('@/common/components/Yingshi')
+  // },
   data () {
     return {
       facelist: [
@@ -216,9 +220,9 @@ export default {
         }
       ],
       abnormalList: [],
-      defaultUrl: '/static/jsmpeg-master/view-stream.html?url=',
-      ws1: 'live1',
-      ws2: 'live2'
+      defaultUrl: '/static/yingshi/index.html?url=',
+      ws1: 'http://hls01open.ys7.com/openlive/15b352defb864f3d962110b504605654.hd.m3u8',
+      ws2: 'http://hls01open.ys7.com/openlive/fea250fabf4242efad0920de72c2f7e1.hd.m3u8'
     }
   },
   computed: {
@@ -274,14 +278,6 @@ export default {
   },
   mounted () {
     this.getAbnormalList()
-    // let video1 = document.getElementById('video1').contentWindow
-    // let video2 = document.getElementById('video3').contentWindow
-    // window.onload = function () {
-    //   let ws = 'ws://172.18.8.51:8082/live1'
-    //   let ws2 = 'ws://172.18.8.51:8082/live2'
-    //   video1.postMessage({id: '01', url: ws}, '*')
-    //   video2.postMessage({id: '02', url: ws2}, '*')
-    // }
   }
 }
 </script>

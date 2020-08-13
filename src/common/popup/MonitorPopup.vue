@@ -31,7 +31,7 @@ export default {
     ...mapMutations(['hideMonitorPopup'])
   },
   mounted () {
-    this.defaultUrl = '/static/jsmpeg-master/view-stream.html?url=' + localStorage.monitorUrl
+    this.defaultUrl = '/static/yingshi/index.html?url=' + localStorage.monitorUrl
   }
 }
 </script>
