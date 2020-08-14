@@ -21,23 +21,23 @@
     <div class="weather-list">
       <div class="weather-li">
         <div class="weather-item">温度 ℃</div>
-        <div class="weather-num">{{otherWeather.TEMPERATURE}}</div>
+        <div class="weather-num">{{otherWeather.temperatureValue}}</div>
       </div>
       <div class="weather-li">
         <div class="weather-item">湿度 %RH</div>
-        <div class="weather-num">{{otherWeather.TEMPERATURE_RH}}</div>
+        <div class="weather-num">{{otherWeather.rhValue}}</div>
       </div>
       <div class="weather-li">
         <div class="weather-item">风速 m/s</div>
-        <div class="weather-num">{{otherWeather.WIND_SPEED}}</div>
+        <div class="weather-num">{{otherWeather.windValue}}</div>
       </div>
       <div class="weather-li">
         <div class="weather-item">风向 °</div>
-        <div class="weather-num">{{otherWeather.WIND_DIRECTION}}</div>
+        <div class="weather-num">{{otherWeather.windDirectionValue}}</div>
       </div>
       <div class="weather-li">
         <div class="weather-item">噪音 dB(A)</div>
-        <div class="weather-num">{{otherWeather.NOISE}}</div>
+        <div class="weather-num">{{otherWeather.noiseValue}}</div>
       </div>
     </div>
     <div class="controller-box">
@@ -52,11 +52,11 @@
     <div class="weather-list weather-list2">
       <div class="weather-li">
         <div class="weather-item">水温 ℃</div>
-        <div class="weather-num">{{waterQuality.WATER_TEMPERATURE}}</div>
+        <div class="weather-num">{{waterQuality.temperatureValue}}</div>
       </div>
       <div class="weather-li">
         <div class="weather-item">水位 m</div>
-        <div class="weather-num">{{waterQuality.WATER_LEVEL}}</div>
+        <div class="weather-num">{{waterQuality.levelValue}}</div>
       </div>
     </div>
     <div class="controller-box">
@@ -198,7 +198,7 @@ export default {
     },
     getLineData2 () {
       ecologyPH().then((res) => {
-        console.log(res)
+        // console.log(res)
         // let data = res.data.slice(0, this.day.length)
         // let list = []
         // for (let i = 0; i < 24; i++) {

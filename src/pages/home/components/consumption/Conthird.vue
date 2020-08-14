@@ -83,7 +83,7 @@ export default {
             name: data[i].name
           })
         }
-        this.$emit('changeSelect3', this.smallSelect[0])
+        // this.$emit('changeSelect3', this.smallSelect[0])
       })
     },
     changeLarge (item) {

@@ -34,9 +34,9 @@
       <div>游客人数统计</div>
     </div>
     <div class="select-wrapper">
-      <p class="chosenDate" @click="ShowCalendar()">{{formatTime}}</p>
+      <p class="chosenDate" @click.stop="ShowCalendar()">{{formatTime}}</p>
     </div>
-    <div class="calendar-wrapper" v-show="calendarShow">
+    <div class="calendar-wrapper" v-show="calendarShow && selectListShow">
       <el-calendar v-model="calendarDate"></el-calendar>
     </div>
     <div class="common-echarts-wrapper">
@@ -102,7 +102,7 @@
 <script>
 import img1 from '@/assets/img/tourist-arrive.png'
 import img2 from '@/assets/img/tourist-leave.png'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 // import { culturepeak, culturesexage, culturecalendar } from '@/request/api'
 import { culturepeak, cultureinout, culturecalendar, culturesexage } from '@/request/api'
 export default {
@@ -141,7 +141,8 @@ export default {
       blue: state => state.color.blue,
       yellow: state => state.color.yellow,
       bgreen: state => state.color.bgreen,
-      red: state => state.color.red
+      red: state => state.color.red,
+      selectListShow: state => state.selectListShow
     }),
     formatTime () {
       let year = this.calendarDate.getFullYear()
@@ -159,6 +160,11 @@ export default {
       this.getRanking()
       this.getTouristByBuilding()
       // this.getCalendar()
+    },
+    selectListShow () {
+      if (this.selectListShow === false) {
+        this.calendarShow = false
+      }
     }
   },
   methods: {
@@ -383,7 +389,9 @@ export default {
     // 显示日历选择器
     ShowCalendar () {
       this.calendarShow = !this.calendarShow
-    }
+      this.showSelectList()
+    },
+    ...mapMutations(['showSelectList'])
   },
   mounted () {
     this.getPeoplePeak()

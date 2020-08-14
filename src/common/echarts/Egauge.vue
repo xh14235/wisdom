@@ -184,6 +184,14 @@ export default {
       option.series[0].axisLine.lineStyle.color[0][0] = (gaugeData.data[0].value - 0) / (gaugeData.max - 0)
       option.series[0].axisLine.lineStyle.color[0][1] = this.green
       myChart.setOption(option)
+      // 只有页面最后一个echarts图会改变尺寸
+      // window.onresize = function () {
+      //   myChart.resize()
+      // }
+      // 多个echarts图都可以改变尺寸
+      window.addEventListener('resize', () => {
+        myChart.resize()
+      })
     }
   }
 }

@@ -104,7 +104,7 @@ export default {
             name: data[i].name
           })
         }
-        this.$emit('changeSelect31', this.smallSelect1[0])
+        // this.$emit('changeSelect31', this.smallSelect1[0])
       })
     },
     getVenueSelect2 (id) {
@@ -119,7 +119,7 @@ export default {
             name: data[i].name
           })
         }
-        this.$emit('changeSelect32', this.smallSelect2[1])
+        // this.$emit('changeSelect32', this.smallSelect2[1])
       })
     },
     changeLarge1 (item) {

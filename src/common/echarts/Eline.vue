@@ -305,6 +305,14 @@ export default {
         series: series
       }
       myChart.setOption(option, true)
+      // 只有页面最后一个echarts图会改变尺寸
+      // window.onresize = function () {
+      //   myChart.resize()
+      // }
+      // 多个echarts图都可以改变尺寸
+      window.addEventListener('resize', () => {
+        myChart.resize()
+      })
     }
   },
   mounted () {

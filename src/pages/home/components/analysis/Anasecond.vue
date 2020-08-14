@@ -106,7 +106,8 @@ export default {
             name: data[i].name
           })
         }
-        this.$emit('changeSelect2', this.smallSelect[0])
+        // 大分类改变，默认选中小分类第一个，并请求数据，去掉该功能
+        // this.$emit('changeSelect2', this.smallSelect[0])
       })
     },
     changeLarge (item) {
@@ -115,9 +116,6 @@ export default {
     changeSmall (item) {
       this.$emit('changeSelect2', item)
     },
-    // changeSelect (chosen) {
-    //   this.$emit('changeSelect2', chosen)
-    // },
     changeDate (code) {
       this.$emit('changeDate2', code)
     }

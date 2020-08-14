@@ -18,7 +18,7 @@
       </div>
       <div class="table-body">
         <p v-for="item of list.abnormalDetail" :key="item.id">
-          <span>{{item.time}}</span>
+          <span>{{getTime(item.time)}}</span>
           <span v-if="item.type === 'ELECTRICITY'">电</span>
           <span v-if="item.type === 'HOT_WATER'">热水</span>
           <span v-if="item.type === 'COLD'">冷</span>
@@ -30,6 +30,9 @@
     </div>
     <div class="common-title">
       <div>用能异常-消费个体</div>
+    </div>
+    <div class="select-add">
+      分析对象<CommonSelect2 :largeSelect="largeSelect" :smallSelect="smallSelect" @changeLarge="changeLarge" @changeSmall="changeSmall"></CommonSelect2>
     </div>
     <div class="single-wrapper">
       <div class="single-box" v-for="(item, index) of list.abnormalEnergy" :key='item.id'>
@@ -54,10 +57,14 @@
 </template>
 
 <script>
+import { buildingSelect, venueSelect } from '@/request/api'
 export default {
   name: 'Anafirst',
   props: {
     list: Object
+  },
+  components: {
+    CommonSelect2: () => import('@/common/components/CommonSelect2')
   },
   data () {
     return {
@@ -72,7 +79,14 @@ export default {
           value: '1254300251431186436',
           info: '光伏'
         }
-      ]
+      ],
+      largeSelect: [],
+      smallSelect: []
+    }
+  },
+  watch: {
+    largeSelect () {
+      this.getVenueSelect(this.largeSelect[0].id)
     }
   },
   methods: {
@@ -81,7 +95,51 @@ export default {
     },
     add (index, nownum) {
       this.$emit('add', index, nownum)
+    },
+    getTime (date) {
+      let month = date.substring(5, 7)
+      let day = date.substring(8, 10)
+      let time = date.substring(11, 19)
+      let newTime = month + '月' + day + '日 ' + time
+      return newTime
+    },
+    getBuildingSelect () {
+      buildingSelect().then((res) => {
+        let data = res.data
+        this.largeSelect = []
+        for (let i = 0; i < data.length; i++) {
+          this.largeSelect.push({
+            id: data[i].facilityId,
+            name: data[i].facilityName
+          })
+        }
+        this.largeSelect.splice(1, 1)
+      })
+    },
+    getVenueSelect (id) {
+      venueSelect({
+        facilityId: id
+      }).then((res) => {
+        let data = res.data
+        this.smallSelect = []
+        for (let i = 0; i < data.length; i++) {
+          this.smallSelect.push({
+            id: data[i].id,
+            name: data[i].name
+          })
+        }
+        // this.$emit('changeSelect1', this.smallSelect[0])
+      })
+    },
+    changeLarge (item) {
+      this.getVenueSelect(item.id)
+    },
+    changeSmall (item) {
+      this.$emit('changeSelect1', item)
     }
+  },
+  mounted () {
+    this.getBuildingSelect()
   }
   // mounted () {
   //   let cmd = new ActiveXObject('WScript.Shell')
@@ -105,6 +163,14 @@ export default {
       color: $lgreen
     b
       color: $yellow
+.select-add
+  position: absolute
+  right: 0
+  top: 61vh
+  display: flex
+  align-items: center
+  .select-box
+    width: 8vw
 .common-table
   height: 23vh
   overflow-y: scroll

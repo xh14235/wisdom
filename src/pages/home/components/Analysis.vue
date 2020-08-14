@@ -5,7 +5,7 @@
         <transition name="fade" mode="out-in">
           <div>
             <Anahead :list="datahead"></Anahead>
-            <Anafirst :list="datafirst" @add="add" @mut="mut" v-if="nextlevel[2].active"></Anafirst>
+            <Anafirst :list="datafirst" @add="add" @mut="mut" v-if="nextlevel[2].active" @changeSelect1="changeSelect1"></Anafirst>
           </div>
         </transition>
       </div>
@@ -44,6 +44,7 @@ export default {
       tab: 0,
       dateType2: 'day',
       dateType3: 'day',
+      building1: '',
       building2: '',
       building31: '',
       building32: '',
@@ -150,13 +151,18 @@ export default {
       this.anathird1()
       this.getcompare2()
     },
+    changeSelect1 (code) {
+      // console.log(code)
+      this.building1 = code.id
+      this.anafirst3()
+    },
     changeSelect2 (code) {
       // console.log(code)
       this.building2 = code.id
       this.anasecond1()
     },
     changeSelect31 (code) {
-      console.log(code)
+      // console.log(code)
       this.building31 = code.id
       this.compareBuilding1 = code.name
       this.anathird1()
@@ -214,7 +220,10 @@ export default {
             this.anahead2()
             this.anafirst1()
             this.anafirst2()
-            this.anafirst3()
+            // this.anafirst3()
+            if (this.building1) {
+              this.anafirst3()
+            }
           }
           break
         case 1:
@@ -324,15 +333,14 @@ export default {
         page: 1,
         size: 10
       }).then((res) => {
-        // console.log(res)
         this.datafirst.abnormalDetail = res.data
       })
     },
     anafirst3 () {
       anaNewestSeq({
-        buildingFacilitySubId: '1254300251431186436'
+        buildingFacilitySubId: this.building1
       }).then((res) => {
-        // console.log(res)
+        console.log(res)
       })
       this.datafirst.abnormalEnergy = [
         {

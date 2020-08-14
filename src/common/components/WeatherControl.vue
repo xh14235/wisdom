@@ -120,7 +120,7 @@ export default {
       height: 3px
       background: #fff
       @media screen and (max-width: 1920px)
-        top: 6.7vh
+        top: 6vh
         left: 9%
         width: 82%
     .control-item
@@ -135,6 +135,8 @@ export default {
       .control-img
         width: 50px
         vertical-align: bottom
+        @media screen and (max-width: 1920px)
+          width: 35px
       .control-icon
         width: 10px
         height: 10px
