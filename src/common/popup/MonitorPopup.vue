@@ -31,7 +31,10 @@ export default {
     ...mapMutations(['hideMonitorPopup'])
   },
   mounted () {
+    // 萤石云
     this.defaultUrl = '/static/yingshi/index.html?url=' + localStorage.monitorUrl
+    // jsmpeg
+    // this.defaultUrl = '/static/jsmpeg-master/view-stream.html?url=' + localStorage.monitorUrl
   }
 }
 </script>

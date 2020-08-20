@@ -44,10 +44,10 @@ export default {
       tab: 0,
       dateType2: 'day',
       dateType3: 'day',
-      building1: '',
-      building2: '',
-      building31: '',
-      building32: '',
+      building1: '1254300251426992128',
+      building2: '1254300251426992128',
+      building31: '1254300251426992128',
+      building32: '1254300251426992129',
       list: [
         {
           id: '01',

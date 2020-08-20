@@ -44,8 +44,8 @@ export default {
       contimer: null,
       dateType2: 'day',
       dateType3: 'day',
-      building2: '',
-      building3: '',
+      building2: '1254292656272252928',
+      building3: '1254300251426992128',
       list: [
         {
           id: '01',
@@ -425,46 +425,50 @@ export default {
         const data = res.data
         this.datathird.echarts1 = {
           id: 'conthird1',
-          title: '用电统计(kW)',
+          title: '用电统计',
           legendShow: false,
           legendData: ['热水'],
           color: [this.green],
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.ELECTRICITY)]
         }
         this.datathird.echarts2 = {
           id: 'conthird2',
-          title: '用热水统计(kW)',
+          title: '用热水统计',
           legendShow: false,
           legendData: ['热水'],
           color: [this.yellow],
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.HOT_WATER)]
         }
         this.datathird.echarts3 = {
           id: 'conthird3',
-          title: '用冷统计(kW)',
+          title: '用冷统计',
           legendShow: false,
           legendData: ['热水'],
           color: [this.blue],
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.COLD)]
         }
         this.datathird.echarts4 = {
           id: 'conthird4',
-          title: '用热统计(kW)',
+          title: '用热统计',
           legendShow: false,
           legendData: ['热水'],
           color: [this.red],
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.HOT)]
         }
       })
@@ -490,41 +494,29 @@ export default {
       }
       this.datathird.echarts5 = {
         id: 'conthird5',
-        title: '峰谷平(kWh)',
+        title: '峰谷平',
         legendShow: true,
         itemStyle: 1,
         legendData: ['峰电量', '谷电量', '平电量'],
         stack: '峰谷平',
         color: [this.green, this.yellow, this.blue],
         xData: date,
+        yName: '(kWh)',
         data: [getTestList(20, length), getTestList(20, length), getTestList(20, length)]
       }
     },
     conthird3 () {
-      // let date
-      // switch (this.dateType3) {
-      //   case 'year':
-      //     date = this.year
-      //     break
-      //   case 'month':
-      //     date = this.month
-      //     break
-      //   case 'day':
-      //     date = this.day
-      //     break
-      //   default:
-      //     break
-      // }
       conelectric().then((res) => {
         this.datathird.echarts6 = {
           id: 'conthird6',
-          title: '用电组成占比(kW)',
+          title: '用电组成占比',
           legendShow: true,
           legendData: ['外来电', '分布式能源'],
           color: [this.green, this.yellow],
           areaColor: false,
           smooth: true,
           xData: this.day,
+          yName: '(kW)',
           data: [Object.values(res.data.FOREIGN_ELECTRICITY).slice(0, this.day.length), Object.values(res.data.ELECTRICITY).slice(0, this.day.length)]
         }
       })

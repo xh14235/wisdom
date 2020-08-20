@@ -7,16 +7,18 @@
       <div class="monitor-box">
         <div class="monitor-bg">
           <!-- <Yingshi></Yingshi> -->
-          <div class="enlarge" @click="showMonitorPopup(ws1)"></div>
-          <iframe class="video-big" id="video1" width="100%" height="100%" :src="defaultUrl + ws1" frameborder="0"></iframe>
+          <!-- <div class="enlarge" @click="showMonitorPopup(ws1)"></div> -->
+          <iframe id="dddd" class="video-big" src="http://127.0.0.1:10800/play.html?channel=1&iframe=yes&aspect=640x360" allowfullscreen allow="autoplay"></iframe>
+          <!-- <iframe class="video-big" id="video1" width="100%" height="100%" :src="defaultUrl + ws1" frameborder="0"></iframe> -->
         </div>
         <div class="monitor-title" @click="showVideoPopup(0)">{{videoName0 || '监控1'}}</div>
       </div>
       <div class="monitor-box">
         <div class="monitor-box2">
           <div class="monitor-bg">
-            <div class="enlarge" @click="showMonitorPopup(ws2)"></div>
-            <iframe class="video-small" id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe>
+            <!-- <div class="enlarge" @click="showMonitorPopup(ws2)"></div> -->
+          <iframe class="video-small" src="http://127.0.0.1:10800/play.html?channel=2&iframe=yes&aspect=640x360" allowfullscreen allow="autoplay"></iframe>
+            <!-- <iframe class="video-small" id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
           </div>
           <div class="monitor-title">监控2</div>
         </div>
@@ -220,9 +222,14 @@ export default {
         }
       ],
       abnormalList: [],
+      // 萤石云
       defaultUrl: '/static/yingshi/index.html?url=',
       ws1: 'http://hls01open.ys7.com/openlive/15b352defb864f3d962110b504605654.hd.m3u8',
       ws2: 'http://hls01open.ys7.com/openlive/fea250fabf4242efad0920de72c2f7e1.hd.m3u8'
+      // jsmpeg
+      // defaultUrl: '/static/jsmpeg-master/view-stream.html?url=',
+      // ws1: 'live1',
+      // ws2: 'live2'
     }
   },
   computed: {
@@ -278,6 +285,11 @@ export default {
   },
   mounted () {
     this.getAbnormalList()
+    // window.onload = function () {
+    //   let iframe = document.getElementById('dddd').contentWindow.document.getElementById('vjs_video_2')
+    //   console.log(iframe)
+    //   iframe.style.display = 'none'
+    // }
   }
 }
 </script>

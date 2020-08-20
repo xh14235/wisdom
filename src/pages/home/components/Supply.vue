@@ -463,6 +463,7 @@ export default {
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.MIC_POWER_GRID_CUBE).slice(0, date.length)]
         }
         this.datasecond.echarts2 = {
@@ -474,6 +475,7 @@ export default {
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.CONCENTRATED_WIND_POWER).slice(0, date.length)]
         }
         this.datasecond.echarts3 = {
@@ -485,6 +487,7 @@ export default {
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.CONCENTRATED_PHOTOVOLTAIC).slice(0, date.length)]
         }
         this.datasecond.echarts4 = {
@@ -496,6 +499,7 @@ export default {
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.CONCENTRATED_ENERGY_STORAGE).slice(0, date.length)]
         }
       })
@@ -511,6 +515,7 @@ export default {
         color: [this.green],
         areaColor: false,
         xData: this.day,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.datasecond.echarts6 = {
@@ -523,6 +528,7 @@ export default {
         color: [this.green],
         areaColor: false,
         xData: this.day,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.datasecond.echarts7 = {
@@ -535,6 +541,7 @@ export default {
         color: [this.yellow],
         areaColor: false,
         xData: this.day,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.datasecond.echarts8 = {
@@ -547,6 +554,7 @@ export default {
         color: [this.yellow],
         areaColor: false,
         xData: this.day,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
     },
@@ -581,6 +589,7 @@ export default {
           areaColor: true,
           color: [this.green],
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.GEOTHERMAL_CUBE).slice(0, date.length)]
           // xData: this.dateType3 === 'day' ? Object.keys(data.GEOTHERMAL_CUBE).slice(0, hour) : Object.keys(data.GEOTHERMAL_CUBE),
           // data: [this.dateType3 === 'day' ? Object.values(data.GEOTHERMAL_CUBE).slice(0, hour) : Object.values(data.GEOTHERMAL_CUBE)]
@@ -594,6 +603,7 @@ export default {
           areaColor: true,
           color: [this.green],
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.BIOMASS_CUBE).slice(0, date.length)]
           // xData: this.dateType3 === 'day' ? Object.keys(data.BIOMASS_CUBE).slice(0, hour) : Object.keys(data.BIOMASS_CUBE),
           // data: [this.dateType3 === 'day' ? Object.values(data.BIOMASS_CUBE).slice(0, hour) : Object.values(data.BIOMASS_CUBE)]
@@ -607,6 +617,7 @@ export default {
           areaColor: true,
           color: [this.yellow],
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.HOT_WATER_CUBE).slice(0, date.length)]
           // xData: this.dateType3 === 'day' ? Object.keys(data.HOT_WATER_CUBE).slice(0, hour) : Object.keys(data.HOT_WATER_CUBE),
           // data: [this.dateType3 === 'day' ? Object.values(data.HOT_WATER_CUBE).slice(0, hour) : Object.values(data.HOT_WATER_CUBE)]
@@ -620,6 +631,7 @@ export default {
           areaColor: true,
           color: [this.yellow],
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.POWER_SUPPLY_CUBE).slice(0, date.length)]
           // xData: this.dateType3 === 'day' ? Object.keys(data.POWER_SUPPLY_CUBE).slice(0, hour) : Object.keys(data.POWER_SUPPLY_CUBE),
           // data: [this.dateType3 === 'day' ? Object.values(data.POWER_SUPPLY_CUBE).slice(0, hour) : Object.values(data.POWER_SUPPLY_CUBE)]
@@ -633,6 +645,7 @@ export default {
           areaColor: true,
           color: [this.blue],
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.MIC_POWER_GRID_CUBE).slice(0, date.length)]
           // xData: this.dateType3 === 'day' ? Object.keys(data.MIC_POWER_GRID_CUBE).slice(0, hour) : Object.keys(data.MIC_POWER_GRID_CUBE),
           // data: [this.dateType3 === 'day' ? Object.values(data.MIC_POWER_GRID_CUBE).slice(0, hour) : Object.values(data.MIC_POWER_GRID_CUBE)]
@@ -646,6 +659,7 @@ export default {
           areaColor: true,
           color: [this.blue],
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.HYDROGEN_CUBE).slice(0, date.length)]
           // xData: this.dateType3 === 'day' ? Object.keys(data.HYDROGEN_CUBE).slice(0, hour) : Object.keys(data.HYDROGEN_CUBE),
           // data: [this.dateType3 === 'day' ? Object.values(data.HYDROGEN_CUBE).slice(0, hour) : Object.values(data.HYDROGEN_CUBE)]
@@ -716,6 +730,7 @@ export default {
         color: [this.green],
         dotted: true,
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.datathird.echarts12 = {
@@ -727,6 +742,7 @@ export default {
         color: [this.green],
         dotted: true,
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.datathird.echarts13 = {
@@ -738,6 +754,7 @@ export default {
         dotted: true,
         smooth: true,
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.datathird.echarts14 = {
@@ -749,6 +766,7 @@ export default {
         dotted: true,
         smooth: true,
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.datathird.echarts15 = {
@@ -760,6 +778,7 @@ export default {
         dotted: true,
         smooth: true,
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.datathird.echarts16 = {
@@ -771,6 +790,7 @@ export default {
         dotted: true,
         smooth: true,
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
     },
@@ -804,6 +824,7 @@ export default {
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.WIND_POWER).slice(0, date.length)]
         }
         this.dataforth.echarts2 = {
@@ -815,6 +836,7 @@ export default {
           areaColor: true,
           smooth: true,
           xData: date,
+          yName: '(kWh)',
           data: [Object.values(data.PHOTOVOLTAIC).slice(0, date.length)]
         }
       })
@@ -847,6 +869,7 @@ export default {
         areaColor: true,
         smooth: true,
         xData: date,
+        yName: '(kWh)',
         data: [getTestList(150, date.length)]
       }
       this.dataforth.echarts4 = {
@@ -858,6 +881,7 @@ export default {
         areaColor: true,
         smooth: true,
         xData: date,
+        yName: '(kWh)',
         data: [getTestList(150, date.length)]
       }
     },
@@ -871,6 +895,7 @@ export default {
         dotted: true,
         color: [this.green],
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.dataforth.echarts6 = {
@@ -882,6 +907,7 @@ export default {
         dotted: true,
         color: [this.green],
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.dataforth.echarts7 = {
@@ -893,6 +919,7 @@ export default {
         dotted: true,
         color: [this.yellow],
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
       this.dataforth.echarts8 = {
@@ -904,6 +931,7 @@ export default {
         dotted: true,
         color: [this.yellow],
         xData: this.defaultDay,
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
     }
