@@ -1,8 +1,8 @@
 <template>
   <div @click="dddd()">
     <div class="main">
-      <!-- <button @click="hideModel()">跳转到936</button>
-      <div class="map">
+      <!-- <button @click="hideModel()">跳转到936</button> -->
+      <!-- <div class="map">
         <iframe ref="map" id="map" src="/static/map/index.html" frameborder="0"></iframe>
       </div> -->
       <div class="main-left">

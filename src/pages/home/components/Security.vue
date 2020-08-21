@@ -8,7 +8,7 @@
         <div class="monitor-bg">
           <!-- <Yingshi></Yingshi> -->
           <!-- <div class="enlarge" @click="showMonitorPopup(ws1)"></div> -->
-          <iframe id="dddd" class="video-big" src="http://127.0.0.1:10800/play.html?channel=1&iframe=yes&aspect=640x360" allowfullscreen allow="autoplay"></iframe>
+          <iframe id="dddd" class="video-big" src="http://172.18.8.51:10800/play.html?channel=1&iframe=yes&aspect=1920x1080" frameborder=0 allowfullscreen allow="autoplay"></iframe>
           <!-- <iframe class="video-big" id="video1" width="100%" height="100%" :src="defaultUrl + ws1" frameborder="0"></iframe> -->
         </div>
         <div class="monitor-title" @click="showVideoPopup(0)">{{videoName0 || '监控1'}}</div>
@@ -162,9 +162,6 @@
 import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Security',
-  // components: {
-  //   Yingshi: () => import('@/common/components/Yingshi')
-  // },
   data () {
     return {
       facelist: [
@@ -278,9 +275,6 @@ export default {
         }
       ]
     },
-    ccc () {
-      this.ws1 = 'dddd'
-    },
     ...mapMutations(['showVideoPopup', 'showMonitorPopup', 'showFacePopup', 'showCarPopup'])
   },
   mounted () {
@@ -288,8 +282,9 @@ export default {
     // window.onload = function () {
     //   let iframe = document.getElementById('dddd').contentWindow.document.getElementById('vjs_video_2')
     //   console.log(iframe)
-    //   iframe.style.display = 'none'
     // }
+    // let iframe = document.getElementById('dddd').contentWindow.document
+    // console.log(iframe)
   }
 }
 </script>
@@ -315,8 +310,8 @@ export default {
       // background-image: url('~@/assets/img/novideo1.png')
       // background-size: 100% 100%
       position: relative
-      @media screen and (max-width: 1920px)
-        padding-bottom: 60%
+      // @media screen and (max-width: 1920px)
+      //   padding-bottom: 60%
       .enlarge
         position: absolute
         top: 0
@@ -335,7 +330,7 @@ export default {
     .monitor-title
       position: absolute
       left: 0
-      bottom: 0
+      top: 0
       width: 100%
       height: 3vh
       line-height: 3vh
@@ -357,8 +352,8 @@ export default {
         background: #000
         // background-image: url('~@/assets/img/novideo2.png')
         // background-size: 100% 100%
-        @media screen and (max-width: 1920px)
-          padding-bottom: 60%
+        // @media screen and (max-width: 1920px)
+        //   padding-bottom: 60%
         .video-small
           position: absolute
           left: 0
