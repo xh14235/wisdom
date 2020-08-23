@@ -93,7 +93,7 @@ export default {
     })
   },
   methods: {
-    // 顶部四个echarts图
+    // 顶部四个echarts图 各代表场馆销售数据
     getSales () {
       let date = new Date()
       let year = date.getFullYear()
@@ -172,7 +172,7 @@ export default {
       //   // this.getLast2(this.cooperativeTab)
       // }, 5000)
     },
-    // 底部两个echarts图
+    // 底部两个echarts图 各合作社销售额、订单数 数据
     getLast2 (id) {
       let date = new Date()
       let year = date.getFullYear()

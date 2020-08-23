@@ -87,6 +87,7 @@ export default {
     })
   },
   methods: {
+    // 根据年月日组件传来的日期类型改变视图
     changeDate2 (date) {
       this.dateType2 = date
       this.getBoth(2)
@@ -95,6 +96,7 @@ export default {
       this.getSex()
       // this.optwork()
     },
+    // 根据下拉框组件传来的数据改变视图
     changeSelect1 (chosen) {
       this.building1 = chosen.id
       this.getBoth(1)
@@ -109,6 +111,7 @@ export default {
       this.optwork()
       this.optSecondOrder()
     },
+    // 分页切换，显示不同内容
     changeTab (index) {
       this.tab = index
       this.subTitle = this.list[index].title
@@ -137,6 +140,7 @@ export default {
           break
       }
     },
+    // 判断分页数据是否为空，返回boolean
     getBool (obj) {
       let boo = 0
       for (let item in obj) {
@@ -301,7 +305,7 @@ export default {
         // }
       })
     },
-    // 能源价格比较
+    // 能源消费情况 冷热水电数据
     getBoth (page) {
       if (page === 1) {
         optenergy({
@@ -427,6 +431,7 @@ export default {
         })
       }
     },
+    // 能源价格比较 数据 使用前与使用后
     getPrice (page) {
       if (page === 1) {
         optprice({
@@ -473,6 +478,7 @@ export default {
         })
       }
     },
+    // 订单数量 折线图 数据
     optSecondOrder () {
       let date
       let length

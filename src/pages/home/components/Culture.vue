@@ -168,7 +168,7 @@ export default {
     }
   },
   methods: {
-    // 获取人流量峰值
+    // 获取人流量峰值 数据
     getPeoplePeak () {
       // let date = new Date()
       // let year = date.getFullYear()
@@ -195,7 +195,7 @@ export default {
         }
       })
     },
-    // 当天游客人数统计
+    // 当天游客人数统计 数据
     getTodayTourist () {
       let date = new Date()
       let year = date.getFullYear()
@@ -254,7 +254,7 @@ export default {
     random (max) {
       return Math.floor(Math.random() * max)
     },
-    // 获取游客人数分布 按建筑
+    // 获取游客人数分布 按建筑 数据
     getTouristByBuilding () {
       this.buildingTourist = [
         {
@@ -274,7 +274,7 @@ export default {
         }
       ]
     },
-    // 获取排行榜
+    // 获取排行榜 数据
     getRanking () {
       this.ranking1 = [
         {
@@ -328,7 +328,7 @@ export default {
         }
       ]
     },
-    // 获取游客性别年龄统计
+    // 获取游客性别年龄统计 数据
     getSexAgeData () {
       // let date = new Date()
       // let year = date.getFullYear()
@@ -386,7 +386,7 @@ export default {
         }
       })
     },
-    // 显示日历选择器
+    // 显示日历选择器 数据
     ShowCalendar () {
       this.calendarShow = !this.calendarShow
       this.showSelectList()

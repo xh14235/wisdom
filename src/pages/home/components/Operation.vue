@@ -75,6 +75,7 @@ export default {
     })
   },
   methods: {
+    // 分页切换
     changeTab (index) {
       this.tab = index
       this.subTitle = this.list[index].title
@@ -86,6 +87,7 @@ export default {
         this.operationLine(3)
       }
     },
+    // 根据下拉框组件传来的数据改变视图
     changeSelect1 (code) {
       if (code.id === '11') {
         this.getAllElectric()
@@ -103,6 +105,7 @@ export default {
     changeSelect3 (code) {
       this.operationLine(3)
     },
+    // 获取信息中心列表信息 数据
     getInfoList () {
       this.infoList = [
         {
@@ -149,6 +152,7 @@ export default {
         }
       ]
     },
+    // 获取全村域 用电 折线图 数据
     getAllElectric () {
       supHead1().then((res) => {
         // console.log(res.data)
@@ -196,6 +200,7 @@ export default {
         // }
       })
     },
+    // 获取全村域 水热冷 折线图 数据
     getAllHot () {
       let date = new Date()
       let hour = date.getHours()
@@ -323,6 +328,7 @@ export default {
       //   data: [this.list1, this.list2, this.list3]
       // }
     },
+    // 分布式能源折线图 数据
     getCube936 (cubeType) {
       operationCube({
         cubeId: cubeType
@@ -380,6 +386,7 @@ export default {
         }
       })
     },
+    // 获取随机折线图
     operationLine (num) {
       this.echarts = {
         id: 'line1111',

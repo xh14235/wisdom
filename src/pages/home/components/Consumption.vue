@@ -110,6 +110,7 @@ export default {
     })
   },
   methods: {
+    // 根据年月日组件传来的日期类型改变视图
     changeDate2 (date) {
       this.dateType2 = date
       this.consecondbar()
@@ -124,6 +125,7 @@ export default {
       this.conthird2()
       this.conthird3()
     },
+    // 根据下拉框组件传来的数据改变视图
     changeSelect2 (chosen) {
       this.building2 = chosen.id
       this.consecondbar()
@@ -138,6 +140,7 @@ export default {
       this.conthird2()
       this.conthird3()
     },
+    // 分页切换，显示不同内容
     changeTab (index, title) {
       this.tab = index
       this.$emit('changeTitle', title)
@@ -176,6 +179,7 @@ export default {
           break
       }
     },
+    // 判断分页数据是否为空，返回boolean
     getBool (obj) {
       let boo = 0
       for (let item in obj) {
@@ -187,6 +191,7 @@ export default {
         return true
       }
     },
+    // 24小时监测 供电、冷、热、热水 折线图 消费数据
     conusedline () {
       conusedline().then((res) => {
         const timeType = this.day
@@ -243,6 +248,7 @@ export default {
         }
       })
     },
+    // 24小时监测 供电、冷、热、热水 饼图 消费分类数据
     conusedpie () {
       let time = new Date()
       let hour = time.getHours()
@@ -335,6 +341,7 @@ export default {
         }
       })
     },
+    // 消费排行榜 能源消费方向 数据
     consecondbar () {
       consecondbar({
         dateType: this.dateType2
@@ -366,6 +373,7 @@ export default {
         }
       })
     },
+    // 用冷 消费排行榜
     supcold () {
       supcold({
         buildingFacilityId: this.building2,
@@ -375,6 +383,7 @@ export default {
         this.datasecond.echarts3 = res.data
       })
     },
+    // 用电 消费排行榜
     supelectry () {
       supelectry({
         buildingFacilityId: this.building2,
@@ -384,6 +393,7 @@ export default {
         this.datasecond.echarts1 = res.data
       })
     },
+    // 用热水 消费排行榜
     suphotwater () {
       suphotwater({
         buildingFacilityId: this.building2,
@@ -394,6 +404,7 @@ export default {
         // console.log(this.datasecond.echarts2)
       })
     },
+    // 用热 消费排行榜
     suphot () {
       suphot({
         buildingFacilityId: this.building2,
@@ -403,6 +414,7 @@ export default {
         this.datasecond.echarts4 = res.data
       })
     },
+    // 消费个体 各建筑 冷热水电消费情况 折线图 数据
     concomparebuilding (num) {
       let date
       switch (this.dateType3) {
@@ -473,6 +485,7 @@ export default {
         }
       })
     },
+    // 消费个体 峰谷平 柱状图 数据
     conthird2 () {
       let date
       let length
@@ -505,6 +518,7 @@ export default {
         data: [getTestList(20, length), getTestList(20, length), getTestList(20, length)]
       }
     },
+    // 消费个体 用电组成占比折线图
     conthird3 () {
       conelectric().then((res) => {
         this.datathird.echarts6 = {
@@ -530,6 +544,7 @@ export default {
   mounted () {
     this.changeTab(0, this.list[0].title)
   },
+  // 页面切换时，停止或重启定时器
   deactivated () {
     clearInterval(this.contimer)
     this.contimer = null

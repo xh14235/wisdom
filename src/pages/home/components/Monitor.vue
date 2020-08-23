@@ -66,6 +66,7 @@ export default {
     }
   },
   methods: {
+    // 根据不同组件切换tab高度，并且有动画
     changeHeight (index) {
       if (this.list[index].active === false) {
         this.list[index].active = true
@@ -77,6 +78,7 @@ export default {
         this.subTitleShow = -1
       }
     },
+    // 在组件title中加上当前文字
     changeTitle1 (msg) {
       this.subTitle1 = msg
     },

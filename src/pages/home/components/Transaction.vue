@@ -88,6 +88,7 @@ export default {
     }
   },
   methods: {
+    // 根据年月日组件传来的日期类型改变视图
     changeDate1 (date) {
       this.dateType1 = date
       this.tranallfirst()
@@ -98,12 +99,14 @@ export default {
       this.transinglefirst()
       this.transinglethird()
     },
+    // 根据下拉框组件传来的数据改变视图
     changeSelect2 (chosen) {
       this.building2 = chosen.id
       this.transinglefirst()
       this.transinglethird()
       this.transinglestatistics()
     },
+    // 分页切换，显示不同内容
     changeTab (index) {
       this.tab = index
       this.subTitle = this.list[index].title
@@ -128,6 +131,7 @@ export default {
           break
       }
     },
+    // 判断分页数据是否为空，返回boolean
     getBool (obj) {
       let boo = 0
       for (let item in obj) {
@@ -139,6 +143,7 @@ export default {
         return true
       }
     },
+    // 全村域 外来电 消耗及费用 折线图 数据
     tranallfirst () {
       let date
       switch (this.dateType1) {
@@ -189,6 +194,7 @@ export default {
         }
       })
     },
+    // 全村域 能源供给及能源收益 柱状图 数据
     tranallthird () {
       let date
       switch (this.dateType1) {
@@ -291,6 +297,7 @@ export default {
         }
       })
     },
+    // 全村域 收支统计数据
     tranallstatistics () {
       let time = new Date()
       let year = time.getFullYear()
@@ -316,6 +323,7 @@ export default {
         this.datafirst.profit = parseInt(res.data.income) - parseInt(res.data.expend)
       })
     },
+    // 单个单位 外来电 消耗及费用 折线图 数据
     transinglefirst () {
       let date
       switch (this.dateType2) {
@@ -366,6 +374,7 @@ export default {
         }
       })
     },
+    // 单个单位 能源供给及能源收益 柱状图 数据
     transinglethird () {
       let date
       switch (this.dateType2) {
@@ -472,6 +481,7 @@ export default {
         }
       })
     },
+    // 单个单位 收支统计数据
     transinglestatistics () {
       let time = new Date()
       let year = time.getFullYear()

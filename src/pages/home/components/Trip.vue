@@ -104,7 +104,7 @@ export default {
         return true
       }
     },
-    // 人流量排行榜
+    // 人流量排行榜 数据
     getPeopleNum () {
       this.datafirst.echarts2 = [
         {

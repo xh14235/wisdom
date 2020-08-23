@@ -134,6 +134,7 @@ export default {
     })
   },
   methods: {
+    // 获取今日垃圾分类数据
     getRubbishData () {
       this.pieData1 = {
         id: 'environpie',
@@ -154,24 +155,16 @@ export default {
         ]
       }
     },
+    // 根据年月日组件传来的日期类型改变视图
     changeSelect1 (chosen) {
       this.getLineData1()
     },
     changeSelect2 (chosen) {
       this.getLineData2()
     },
+    // 获取pm2.5 折线图数据 及当前pm空气质量数据
     getLineData1 () {
       ecologyPM25().then((res) => {
-        // console.log(res)
-        // let data = res.data.slice(0, this.day.length)
-        // let list = []
-        // for (let i = 0; i < 24; i++) {
-        //   if (data[i]) {
-        //     list.push(data[i].value)
-        //   } else {
-        //     list.push(0)
-        //   }
-        // }
         let data = res.data
         let list = []
         for (let i = 0; i < data.length; i++) {
@@ -191,11 +184,13 @@ export default {
         }
       })
     },
+    // 获取其他天气信息
     getOtherWeather () {
       ecologyWeather().then((res) => {
         this.otherWeather = res.data
       })
     },
+    // 获取水质ph值 折线图数据
     getLineData2 () {
       ecologyPH().then((res) => {
         // console.log(res)
@@ -226,6 +221,7 @@ export default {
         }
       })
     },
+    // 获取水质 水温水位等数据
     getWaterQuality () {
       ecologyWaterQuality().then((res) => {
         this.waterQuality = res.data

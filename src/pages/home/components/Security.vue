@@ -279,6 +279,7 @@ export default {
   },
   mounted () {
     this.getAbnormalList()
+    // 更改iframe内部样式尝试
     // window.onload = function () {
     //   let iframe = document.getElementById('dddd').contentWindow.document.getElementById('vjs_video_2')
     //   console.log(iframe)

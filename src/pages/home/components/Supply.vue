@@ -142,6 +142,7 @@ export default {
     })
   },
   methods: {
+    // 根据年月日组件传来的日期类型改变视图
     changeDate2 (date) {
       this.dateType2 = date
       this.supSecond1()
@@ -155,6 +156,7 @@ export default {
       this.dateType4 = date
       this.supForth1()
     },
+    // 分页切换，显示不同内容
     changeTab (index, title) {
       this.tab = index
       this.$emit('changeTitle', title)
@@ -205,6 +207,7 @@ export default {
           break
       }
     },
+    // 判断分页数据是否为空，返回boolean
     getBool (obj) {
       let boo = 0
       for (let item in obj) {
@@ -216,6 +219,7 @@ export default {
         return true
       }
     },
+    // 24小时监测 供电 折线图 数据
     supHead1 () {
       supHead1().then((res) => {
         let xData = []
@@ -245,6 +249,7 @@ export default {
         }
       })
     },
+    // 24小时监测 供电 饼图 数据
     supHead2 () {
       let date = new Date()
       let hour = date.getHours() + 1
@@ -274,6 +279,7 @@ export default {
         }
       })
     },
+    // 24小时监测 热水 折线图 数据
     suphotwaterline () {
       suphotwaterline().then((res) => {
         let xData = []
@@ -299,6 +305,7 @@ export default {
         }
       })
     },
+    // 24小时监测 热水 饼图 数据
     suphotwaterpie () {
       let time = new Date()
       let hour = time.getHours()
@@ -326,6 +333,7 @@ export default {
         }
       })
     },
+    // 24小时监测 供冷 折线图 数据
     supcoldline () {
       supcoldline().then((res) => {
         let xData = []
@@ -351,6 +359,7 @@ export default {
         }
       })
     },
+    // 24小时监测 供冷 饼图 数据
     supcoldpie () {
       let time = new Date()
       let hour = time.getHours()
@@ -379,6 +388,7 @@ export default {
         }
       })
     },
+    // 24小时监测 供热 折线图 数据
     suphotline () {
       suphotline().then((res) => {
         let xData = []
@@ -404,6 +414,7 @@ export default {
         }
       })
     },
+    // 24小时监测 供热 饼图 数据
     suphotpie () {
       let time = new Date()
       let hour = time.getHours()
@@ -430,6 +441,7 @@ export default {
         }
       })
     },
+    // 全村域能源 能源中心供电量、集中风电供电量、集中光伏供电量、集中储能供电量 数据
     supSecond1 () {
       let date
       switch (this.dateType2) {
@@ -448,12 +460,7 @@ export default {
       supSecond1({
         type: this.dateType2
       }).then((res) => {
-        // let date = new Date()
-        // let hour = date.getHours() + 1
         const data = res.data
-        // console.log(Object.values(data.MIC_POWER_GRID_CUBE))
-        // console.log(date)
-        // console.log(Object.values(data.MIC_POWER_GRID_CUBE).slice(0, date.length))
         this.datasecond.echarts1 = {
           id: 'consecond1',
           title: '能源中心供电量',
@@ -504,6 +511,7 @@ export default {
         }
       })
     },
+    // 全村域能源 能源中心供电量、集中风电供电量、集中光伏供电量、集中储能供电量 未来24小时预测数据
     conSecond2 () {
       this.datasecond.echarts5 = {
         id: 'consecond5',
@@ -558,6 +566,7 @@ export default {
         data: [getTestList(150, 24)]
       }
     },
+    // 936能源中心 实时监测 地源热魔方供能量、生物质魔方供能量、热水源魔方供能量、电源变魔方供能量、微电网魔方供能量、微电网魔方供能量 数据
     supThird1 () {
       let date
       switch (this.dateType3) {
@@ -577,8 +586,6 @@ export default {
         supplyFacilityId: 1,
         type: this.dateType3
       }).then((res) => {
-        // let date = new Date()
-        // let hour = date.getHours() + 1
         const data = res.data
         this.datathird.echarts1 = {
           id: 'supthird1',
@@ -591,8 +598,6 @@ export default {
           xData: date,
           yName: '(kWh)',
           data: [Object.values(data.GEOTHERMAL_CUBE).slice(0, date.length)]
-          // xData: this.dateType3 === 'day' ? Object.keys(data.GEOTHERMAL_CUBE).slice(0, hour) : Object.keys(data.GEOTHERMAL_CUBE),
-          // data: [this.dateType3 === 'day' ? Object.values(data.GEOTHERMAL_CUBE).slice(0, hour) : Object.values(data.GEOTHERMAL_CUBE)]
         }
         this.datathird.echarts2 = {
           id: 'supthird2',
@@ -605,8 +610,6 @@ export default {
           xData: date,
           yName: '(kWh)',
           data: [Object.values(data.BIOMASS_CUBE).slice(0, date.length)]
-          // xData: this.dateType3 === 'day' ? Object.keys(data.BIOMASS_CUBE).slice(0, hour) : Object.keys(data.BIOMASS_CUBE),
-          // data: [this.dateType3 === 'day' ? Object.values(data.BIOMASS_CUBE).slice(0, hour) : Object.values(data.BIOMASS_CUBE)]
         }
         this.datathird.echarts3 = {
           id: 'supthird3',
@@ -619,8 +622,6 @@ export default {
           xData: date,
           yName: '(kWh)',
           data: [Object.values(data.HOT_WATER_CUBE).slice(0, date.length)]
-          // xData: this.dateType3 === 'day' ? Object.keys(data.HOT_WATER_CUBE).slice(0, hour) : Object.keys(data.HOT_WATER_CUBE),
-          // data: [this.dateType3 === 'day' ? Object.values(data.HOT_WATER_CUBE).slice(0, hour) : Object.values(data.HOT_WATER_CUBE)]
         }
         this.datathird.echarts4 = {
           id: 'supthird4',
@@ -633,8 +634,6 @@ export default {
           xData: date,
           yName: '(kWh)',
           data: [Object.values(data.POWER_SUPPLY_CUBE).slice(0, date.length)]
-          // xData: this.dateType3 === 'day' ? Object.keys(data.POWER_SUPPLY_CUBE).slice(0, hour) : Object.keys(data.POWER_SUPPLY_CUBE),
-          // data: [this.dateType3 === 'day' ? Object.values(data.POWER_SUPPLY_CUBE).slice(0, hour) : Object.values(data.POWER_SUPPLY_CUBE)]
         }
         this.datathird.echarts5 = {
           id: 'supthird5',
@@ -647,8 +646,6 @@ export default {
           xData: date,
           yName: '(kWh)',
           data: [Object.values(data.MIC_POWER_GRID_CUBE).slice(0, date.length)]
-          // xData: this.dateType3 === 'day' ? Object.keys(data.MIC_POWER_GRID_CUBE).slice(0, hour) : Object.keys(data.MIC_POWER_GRID_CUBE),
-          // data: [this.dateType3 === 'day' ? Object.values(data.MIC_POWER_GRID_CUBE).slice(0, hour) : Object.values(data.MIC_POWER_GRID_CUBE)]
         }
         this.datathird.echarts6 = {
           id: 'supthird6',
@@ -661,11 +658,10 @@ export default {
           xData: date,
           yName: '(kWh)',
           data: [Object.values(data.HYDROGEN_CUBE).slice(0, date.length)]
-          // xData: this.dateType3 === 'day' ? Object.keys(data.HYDROGEN_CUBE).slice(0, hour) : Object.keys(data.HYDROGEN_CUBE),
-          // data: [this.dateType3 === 'day' ? Object.values(data.HYDROGEN_CUBE).slice(0, hour) : Object.values(data.HYDROGEN_CUBE)]
         }
       })
     },
+    // 储能信息数据 储能量、循环效率、次数统计等
     supThird2 () {
       supThird2().then((res) => {
         // console.log(res)
@@ -701,7 +697,6 @@ export default {
         ]
       }
       this.datathird.echarts7 = {
-        // title: '{name|热水供应}\n{value|' + value + '}{unit|kW}',
         id: 'gauge1',
         unit: 'kWh',
         max: 20,
@@ -720,6 +715,7 @@ export default {
         }]
       }
     },
+    // 936能源中心 未来24小时预测 地源热魔方供能量、生物质魔方供能量、热水源魔方供能量、电源变魔方供能量、微电网魔方供能量、微电网魔方供能量 数据
     supThird3 () {
       this.datathird.echarts11 = {
         id: 'conforth1',
@@ -794,6 +790,7 @@ export default {
         data: [getTestList(150, 24)]
       }
     },
+    // 936能源个体 1号风电供电量、1号光伏供电量、2号风电供电量、2号光伏供电量 数据
     supForth1 () {
       let date
       switch (this.dateType4) {
@@ -812,8 +809,6 @@ export default {
       supForth1({
         type: this.dateType4
       }).then((res) => {
-        // let date = new Date()
-        // let hour = date.getHours() + 1
         let data = res.data
         this.dataforth.echarts1 = {
           id: 'supforth1',
@@ -840,26 +835,6 @@ export default {
           data: [Object.values(data.PHOTOVOLTAIC).slice(0, date.length)]
         }
       })
-      // let date
-      // let length
-      // let time = new Date()
-      // let hour = time.getHours() + 1
-      // switch (this.dateType4) {
-      //   case 'year':
-      //     date = this.year
-      //     length = 12
-      //     break
-      //   case 'month':
-      //     date = this.month
-      //     length = 30
-      //     break
-      //   case 'day':
-      //     date = this.day.slice(0, hour)
-      //     length = hour
-      //     break
-      //   default:
-      //     break
-      // }
       this.dataforth.echarts3 = {
         id: 'supforth3',
         title: '2号风电供电量',
@@ -885,6 +860,7 @@ export default {
         data: [getTestList(150, date.length)]
       }
     },
+    // 936能源个体 1号风电供电量、1号光伏供电量、2号风电供电量、2号光伏供电量 未来24小时预测数据
     supForth2 () {
       this.dataforth.echarts5 = {
         id: 'supforth5',
@@ -944,6 +920,7 @@ export default {
   mounted () {
     this.changeTab(0, this.list[0].title)
   },
+  // 页面切换时，停止或重启定时器
   deactivated () {
     clearInterval(this.suptimer)
     this.suptimer = null

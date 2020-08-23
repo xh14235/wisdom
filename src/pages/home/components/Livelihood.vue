@@ -71,6 +71,7 @@ export default {
     ...mapState(['tab_right']),
     view () {
       let component = ''
+      // 动态切换组件
       switch (this.tab_right) {
         case '001':
           component = 'Security'

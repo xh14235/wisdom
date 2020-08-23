@@ -54,11 +54,6 @@
         </div>
       </div>
       <div class="cost-list">
-        <!-- <div class="cost-item" v-for="item of costList" :key="item.id">
-          <img :src="item.icon" alt="">
-          <div class="cost-name">{{item.name}}:</div>
-          <div class="cost-num"><b>{{parseFloat(item.num).toLocaleString()}}</b>元</div>
-        </div> -->
         <div class="cost-item">
           <img src="../../../assets/img/icon-green.png" alt="">
           <div class="cost-name">电费:</div>
@@ -80,12 +75,6 @@
           <div class="cost-num"><b>{{parseInt(costList.HOT).toLocaleString()}}</b>元</div>
         </div>
       </div>
-      <!-- <div class="common-echarts-box">
-        <Eline :lineData="lineData5"></Eline>
-      </div>
-      <div class="common-echarts-box">
-        <Eline :lineData="lineData6"></Eline>
-      </div> -->
     </div>
   </div>
 </template>
@@ -219,6 +208,7 @@ export default {
       this.getEcharts()
       this.getCostList()
     },
+    // 获取家用能源统计 折线图 数据 冷热水电
     getEcharts () {
       let date
       switch (this.dateType) {
@@ -289,6 +279,7 @@ export default {
         }
       })
     },
+    // 获取能源消费统计的数据 冷热水电费 及 累计消费
     getCostList () {
       homecost({
         buildingFacilitySubId: this.chosenSelect,

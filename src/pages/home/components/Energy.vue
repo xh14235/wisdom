@@ -59,6 +59,7 @@ export default {
     ...mapState(['tab_left']),
     view () {
       let component = ''
+      // 动态切换组件
       switch (this.tab_left) {
         case '001':
           component = 'Monitor'

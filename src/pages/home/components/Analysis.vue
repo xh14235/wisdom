@@ -126,6 +126,7 @@ export default {
     })
   },
   methods: {
+    // 根据年月日组件传来的日期类型改变视图
     changeDate2 (code) {
       this.dateType2 = code
       this.anasecond1()
@@ -151,18 +152,16 @@ export default {
       this.anathird1()
       this.getcompare2()
     },
+    // 根据下拉框组件传来的数据改变视图
     changeSelect1 (code) {
-      // console.log(code)
       this.building1 = code.id
       this.anafirst3()
     },
     changeSelect2 (code) {
-      // console.log(code)
       this.building2 = code.id
       this.anasecond1()
     },
     changeSelect31 (code) {
-      // console.log(code)
       this.building31 = code.id
       this.compareBuilding1 = code.name
       this.anathird1()
@@ -172,18 +171,21 @@ export default {
       this.compareBuilding2 = code.name
       this.getcompare2()
     },
+    // 消费个体 用能异常 查看上一个异常信息
     mut (index, nownum) {
       if (this.datafirst.abnormalEnergy[index].nownum > 1) {
         this.datafirst.abnormalEnergy[index].nownum--
         this.getNewDetailBySeq(index, nownum)
       }
     },
+    // 消费个体 用能异常 查看下一个异常信息
     add (index, nownum) {
       if (this.datafirst.abnormalEnergy[index].nownum < this.datafirst.abnormalEnergy[index].allnum) {
         this.datafirst.abnormalEnergy[index].nownum++
         this.getNewDetailBySeq(index, nownum)
       }
     },
+    // 消费个体 用能异常 列表获取
     getNewDetailBySeq (index, nownum) {
       let energyType
       switch (index) {
@@ -210,6 +212,7 @@ export default {
         console.log(res)
       })
     },
+    // 分页切换，显示不同内容
     changeTab (index, title) {
       this.tab = index
       this.$emit('changeTitle', title)
@@ -246,6 +249,7 @@ export default {
           break
       }
     },
+    // 判断分页数据是否为空，返回boolean
     getBool (obj) {
       let boo = 0
       for (let item in obj) {
@@ -257,14 +261,13 @@ export default {
         return true
       }
     },
+    // 获取用能异常 四个雷达图 数据
     anahead1 () {
       let time = new Date()
       let hour = time.getHours()
       anaRadar({
         hour: hour
       }).then((res) => {
-        // console.log(res)
-        // this.datahead.radarList = res.data
         this.datahead.echarts1 = {
           id: 'anahead1',
           name: '电',
@@ -303,6 +306,7 @@ export default {
         }
       })
     },
+    // 获取用能异常 统计数据 冷热水单异常次数
     anahead2 () {
       let date = new Date()
       let year = date.getFullYear()
@@ -323,11 +327,13 @@ export default {
         }
       })
     },
+    // 用能异常类型 类型统计 业务调整等类型
     anafirst1 () {
       anaAbnormalType().then((res) => {
         this.datafirst.abnormalType = res.data
       })
     },
+    // 用能异常 列表 详情 数据
     anafirst2 () {
       anaAbnormalList({
         page: 1,
@@ -336,6 +342,7 @@ export default {
         this.datafirst.abnormalDetail = res.data
       })
     },
+    // 获取用能异常 统计数据 冷热水单异常及上次下次查看
     anafirst3 () {
       anaNewestSeq({
         buildingFacilitySubId: this.building1
@@ -381,6 +388,7 @@ export default {
         }
       ]
     },
+    // 能源分析 用电统计、用热水统计、用冷统计、用热统计 折线图 数据
     anasecond1 () {
       let date
       switch (this.dateType2) {
@@ -451,6 +459,7 @@ export default {
         }
       })
     },
+    // 能源分析 用电统计、用热水统计、用冷统计、用热统计 折线图 未来24小时预测数据
     anasecond3 () {
       this.datasecond.echarts9 = {
         id: 'anasecond9',
@@ -505,6 +514,7 @@ export default {
         data: [getTestList(150, 24)]
       }
     },
+    // 用能对比 历史对比 冷热水电 数据对比
     anathird1 () {
       let date
       switch (this.dateType3) {
@@ -577,6 +587,7 @@ export default {
         this.compare1 = ThisValue
       })
     },
+    // 用能对比 各建筑之间的对比 冷热水电 数据对比
     anathird2 () {
       let date
       switch (this.dateType3) {
