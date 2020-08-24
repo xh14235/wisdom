@@ -62,8 +62,6 @@ export default {
   name: 'Industry',
   components: {
     Eline: () => import('@/common/echarts/Eline')
-    // Indfirst: () => import('./industry/Indfirst'),
-    // Indsecond: () => import('./industry/Indsecond')
   },
   data () {
     return {
@@ -75,7 +73,8 @@ export default {
       echarts6: {},
       cooperativeList: [],
       cooperativeTab: 0,
-      timer: null
+      industrytimer: null,
+      duration: 60000
     }
   },
   computed: {
@@ -163,14 +162,6 @@ export default {
     // 更改合作社
     changeCooperative (id, index) {
       this.cooperativeTab = index
-      // clearInterval(this.timer)
-      // this.timer = null
-      // this.getLast2(this.cooperativeTab)
-      // this.timer = setInterval(() => {
-      //   this.cooperativeTab++
-      //   if (this.cooperativeTab > 9) this.cooperativeTab = 0
-      //   // this.getLast2(this.cooperativeTab)
-      // }, 5000)
     },
     // 底部两个echarts图 各合作社销售额、订单数 数据
     getLast2 (id) {
@@ -223,26 +214,29 @@ export default {
     setTimeout(() => {
       this.getLast2(this.cooperativeList[this.cooperativeTab].id)
     }, 100)
-    // this.timer = setInterval(() => {
-    //   this.cooperativeTab++
-    //   if (this.cooperativeTab > 9) this.cooperativeTab = 0
-    // }, 5000)
+    this.industrytimer = setInterval(() => {
+      this.getSales()
+      this.getCooperative()
+      this.getLast2(this.cooperativeList[this.cooperativeTab].id)
+    }, this.duration)
+  },
+  // 页面切换时，停止或重启定时器
+  deactivated () {
+    clearInterval(this.industrytimer)
+    this.industrytimer = null
+  },
+  activated () {
+    if (this.industrytimer) clearInterval(this.industrytimer)
+    this.industrytimer = setInterval(() => {
+      this.getSales()
+      this.getCooperative()
+      this.getLast2(this.cooperativeList[this.cooperativeTab].id)
+    }, this.duration)
+  },
+  beforeDestroy () {
+    clearInterval(this.industrytimer)
+    this.industrytimer = null
   }
-  // deactivated () {
-  //   clearInterval(this.timer)
-  //   this.timer = null
-  // },
-  // activated () {
-  //   if (this.timer) clearInterval(this.timer)
-  //   this.timer = setInterval(() => {
-  //     this.cooperativeTab++
-  //     if (this.cooperativeTab > 9) this.cooperativeTab = 0
-  //   }, 5000)
-  // },
-  // beforeDestroy () {
-  //   clearInterval(this.timer)
-  //   this.timer = null
-  // }
 }
 </script>
 

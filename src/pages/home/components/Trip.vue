@@ -34,6 +34,8 @@ export default {
   data () {
     return {
       tab: 0,
+      triptimer: null,
+      duration: 60000,
       list: [
         {
           id: '01',
@@ -75,18 +77,27 @@ export default {
   methods: {
     changeTab (index) {
       this.tab = index
+      if (this.triptimer) clearInterval(this.triptimer)
       switch (index) {
         case 0:
           if (this.getBool(this.datafirst)) {
             // this.getPeopleNum()
             this.getRoad()
             this.getParking()
+            this.triptimer = setInterval(() => {
+              this.getRoad()
+              this.getParking()
+            }, this.duration)
           }
           break
         case 1:
           if (this.getBool(this.datasecond)) {
             this.getFrequency()
             this.getConsumePower()
+            this.triptimer = setInterval(() => {
+              this.getFrequency()
+              this.getConsumePower()
+            }, this.duration)
           }
           break
         default:
@@ -340,6 +351,34 @@ export default {
   mounted () {
     this.changeTab(0)
     // this.getLampState()
+  },
+  // 页面切换时，停止或重启定时器
+  deactivated () {
+    clearInterval(this.triptimer)
+    this.triptimer = null
+  },
+  activated () {
+    if (this.triptimer) clearInterval(this.triptimer)
+    switch (this.tab) {
+      case 0:
+        this.triptimer = setInterval(() => {
+          this.getRoad()
+          this.getParking()
+        }, this.duration)
+        break
+      case 1:
+        this.triptimer = setInterval(() => {
+          this.getFrequency()
+          this.getConsumePower()
+        }, this.duration)
+        break
+      default:
+        break
+    }
+  },
+  beforeDestroy () {
+    clearInterval(this.triptimer)
+    this.triptimer = null
   }
 }
 </script>

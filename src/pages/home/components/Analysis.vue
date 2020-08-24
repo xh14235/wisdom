@@ -42,6 +42,8 @@ export default {
   data () {
     return {
       tab: 0,
+      analysistimer: null,
+      duration: 60000,
       dateType2: 'day',
       dateType3: 'day',
       building1: '1254300251426992128',
@@ -216,6 +218,7 @@ export default {
     changeTab (index, title) {
       this.tab = index
       this.$emit('changeTitle', title)
+      if (this.analysistimer) clearInterval(this.analysistimer)
       switch (index) {
         case 0:
           if (this.getBool(this.datahead) && this.getBool(this.datafirst)) {
@@ -223,10 +226,16 @@ export default {
             this.anahead2()
             this.anafirst1()
             this.anafirst2()
-            // this.anafirst3()
             if (this.building1) {
               this.anafirst3()
             }
+            this.analysistimer = setInterval(() => {
+              this.anahead1()
+              this.anahead2()
+              this.anafirst1()
+              this.anafirst2()
+              this.anafirst3()
+            }, this.duration)
           }
           break
         case 1:
@@ -235,6 +244,10 @@ export default {
               this.anasecond1()
             }
             this.anasecond3()
+            this.analysistimer = setInterval(() => {
+              this.anasecond1()
+              this.anasecond3()
+            }, this.duration)
           }
           break
         case 2:
@@ -243,6 +256,10 @@ export default {
               this.anathird1()
               this.getcompare2()
             }
+            this.analysistimer = setInterval(() => {
+              this.anathird1()
+              this.getcompare2()
+            }, this.duration)
           }
           break
         default:
@@ -687,6 +704,43 @@ export default {
   },
   mounted () {
     this.changeTab(0, this.list[0].title)
+  },
+  // 页面切换时，停止或重启定时器
+  deactivated () {
+    clearInterval(this.analysistimer)
+    this.analysistimer = null
+  },
+  activated () {
+    if (this.analysistimer) clearInterval(this.analysistimer)
+    switch (this.tab) {
+      case 0:
+        this.analysistimer = setInterval(() => {
+          this.anahead1()
+          this.anahead2()
+          this.anafirst1()
+          this.anafirst2()
+          this.anafirst3()
+        }, this.duration)
+        break
+      case 1:
+        this.analysistimer = setInterval(() => {
+          this.anasecond1()
+          this.anasecond3()
+        }, this.duration)
+        break
+      case 2:
+        this.analysistimer = setInterval(() => {
+          this.anathird1()
+          this.getcompare2()
+        }, this.duration)
+        break
+      default:
+        break
+    }
+  },
+  beforeDestroy () {
+    clearInterval(this.analysistimer)
+    this.analysistimer = null
   }
 }
 </script>

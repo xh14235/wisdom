@@ -96,6 +96,8 @@ export default {
   },
   data () {
     return {
+      environtimer: null,
+      duration: 60000,
       lineData1: {},
       lineData2: {},
       pieData1: {},
@@ -234,6 +236,33 @@ export default {
     this.getOtherWeather()
     this.getLineData2()
     this.getWaterQuality()
+    if (this.environtimer) clearInterval(this.environtimer)
+    this.environtimer = setInterval(() => {
+      this.getRubbishData()
+      this.getLineData1()
+      this.getOtherWeather()
+      this.getLineData2()
+      this.getWaterQuality()
+    }, this.duration)
+  },
+  // 页面切换时，停止或重启定时器
+  deactivated () {
+    clearInterval(this.environtimer)
+    this.environtimer = null
+  },
+  activated () {
+    if (this.environtimer) clearInterval(this.environtimer)
+    this.environtimer = setInterval(() => {
+      this.getRubbishData()
+      this.getLineData1()
+      this.getOtherWeather()
+      this.getLineData2()
+      this.getWaterQuality()
+    }, this.duration)
+  },
+  beforeDestroy () {
+    clearInterval(this.environtimer)
+    this.environtimer = null
   }
 }
 </script>

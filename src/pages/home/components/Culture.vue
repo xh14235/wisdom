@@ -129,7 +129,8 @@ export default {
       dayList: [],
       calendarDate: new Date(),
       calendarShow: false,
-      cultureTimer: null
+      cultureTimer: null,
+      duration: 60000
     }
   },
   computed: {
@@ -401,9 +402,14 @@ export default {
     this.getRanking()
     if (this.cultureTimer) clearInterval(this.cultureTimer)
     this.cultureTimer = setInterval(() => {
+      this.getPeoplePeak()
       this.getTodayTourist()
-    }, 60000)
+      this.getSexAgeData()
+      this.getTouristByBuilding()
+      this.getRanking()
+    }, this.duration)
   },
+  // 页面切换时，停止或重启定时器
   deactivated () {
     clearInterval(this.cultureTimer)
     this.cultureTimer = null
@@ -411,8 +417,16 @@ export default {
   activated () {
     if (this.cultureTimer) clearInterval(this.sucultureTimerptimer)
     this.cultureTimer = setInterval(() => {
+      this.getPeoplePeak()
       this.getTodayTourist()
-    }, 60000)
+      this.getSexAgeData()
+      this.getTouristByBuilding()
+      this.getRanking()
+    }, this.duration)
+  },
+  beforeDestroy () {
+    clearInterval(this.cultureTimer)
+    this.cultureTimer = null
   }
 }
 </script>

@@ -48,6 +48,8 @@ export default {
       dateType2: 'day',
       building2: '',
       tab: 0,
+      trantimer: null,
+      duration: 60000,
       subTitle: '',
       list: [
         {
@@ -67,16 +69,6 @@ export default {
         statistics: [],
         profit: 0
       },
-      // 能源供给 电 水 冷 热
-      // supplyElectric: [],
-      // supplyHotwater: [],
-      // supplyCold: [],
-      // supplyHot: [],
-      // 能源供给 电 水 冷 热 个体数据
-      // singleElectric: [],
-      // singleHotwater: [],
-      // singleCold: [],
-      // singleHot: [],
       datasecond: {
         echarts1: {},
         echarts2: {},
@@ -110,12 +102,18 @@ export default {
     changeTab (index) {
       this.tab = index
       this.subTitle = this.list[index].title
+      if (this.trantimer) clearInterval(this.trantimer)
       switch (index) {
         case 0:
           if (this.getBool(this.datafirst)) {
             this.tranallfirst()
             this.tranallthird()
             this.tranallstatistics()
+            this.trantimer = setInterval(() => {
+              this.tranallfirst()
+              this.tranallthird()
+              this.tranallstatistics()
+            }, this.duration)
           }
           break
         case 1:
@@ -125,6 +123,11 @@ export default {
               this.transinglethird()
               this.transinglestatistics()
             }
+            this.trantimer = setInterval(() => {
+              this.transinglefirst()
+              this.transinglethird()
+              this.transinglestatistics()
+            }, this.duration)
           }
           break
         default:
@@ -512,6 +515,36 @@ export default {
   },
   mounted () {
     this.changeTab(0)
+  },
+  // 页面切换时，停止或重启定时器
+  deactivated () {
+    clearInterval(this.trantimer)
+    this.trantimer = null
+  },
+  activated () {
+    if (this.trantimer) clearInterval(this.trantimer)
+    switch (this.tab) {
+      case 0:
+        this.trantimer = setInterval(() => {
+          this.tranallfirst()
+          this.tranallthird()
+          this.tranallstatistics()
+        }, this.duration)
+        break
+      case 1:
+        this.trantimer = setInterval(() => {
+          this.transinglefirst()
+          this.transinglethird()
+          this.transinglestatistics()
+        }, this.duration)
+        break
+      default:
+        break
+    }
+  },
+  beforeDestroy () {
+    clearInterval(this.trantimer)
+    this.trantimer = null
   }
 }
 </script>

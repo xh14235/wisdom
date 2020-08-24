@@ -162,7 +162,6 @@ export default {
       select: [
         {
           id: '1254300251431186436',
-          // value: '1254300251431186436',
           info: '936能源馆'
         }
       ],
@@ -170,11 +169,11 @@ export default {
       lineData2: {},
       lineData3: {},
       lineData4: {},
-      // lineData5: {},
-      // lineData6: {},
       dateType: 'day',
       chosenSelect: '',
-      costList: {}
+      costList: {},
+      hometimer: null,
+      duration: 60000
     }
   },
   computed: {
@@ -293,6 +292,27 @@ export default {
     this.chosenSelect = this.select[0].id
     this.getEcharts()
     this.getCostList()
+    if (this.hometimer) clearInterval(this.hometimer)
+    this.hometimer = setInterval(() => {
+      this.getEcharts()
+      this.getCostList()
+    })
+  },
+  // 页面切换时，停止或重启定时器
+  deactivated () {
+    clearInterval(this.hometimer)
+    this.hometimer = null
+  },
+  activated () {
+    if (this.hometimer) clearInterval(this.hometimer)
+    this.hometimer = setInterval(() => {
+      this.getEcharts()
+      this.getCostList()
+    }, this.duration)
+  },
+  beforeDestroy () {
+    clearInterval(this.hometimer)
+    this.hometimer = null
   }
 }
 </script>

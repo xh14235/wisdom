@@ -33,6 +33,8 @@ export default {
   data () {
     return {
       tab: 0,
+      opttimer: null,
+      duration: 60000,
       subTitle: '',
       list: [
         {
@@ -115,6 +117,7 @@ export default {
     changeTab (index) {
       this.tab = index
       this.subTitle = this.list[index].title
+      if (this.opttimer) clearInterval(this.opttimer)
       switch (index) {
         case 0:
           if (this.getBool(this.datafirst)) {
@@ -123,6 +126,11 @@ export default {
               this.getBoth(1)
               this.getPrice(1)
             }
+            this.opttimer = setInterval(() => {
+              this.optsave()
+              this.getBoth(1)
+              this.getPrice(1)
+            }, this.duration)
           }
           break
         case 1:
@@ -134,6 +142,13 @@ export default {
               this.getSex()
               this.optwork()
             }
+            this.opttimer = setInterval(() => {
+              this.getBoth(2)
+              this.getPrice(2)
+              this.optSecondOrder()
+              this.getSex()
+              this.optwork()
+            }, this.duration)
           }
           break
         default:
@@ -514,6 +529,38 @@ export default {
   },
   mounted () {
     this.changeTab(0)
+  },
+  // 页面切换时，停止或重启定时器
+  deactivated () {
+    clearInterval(this.opttimer)
+    this.opttimer = null
+  },
+  activated () {
+    if (this.opttimer) clearInterval(this.opttimer)
+    switch (this.tab) {
+      case 0:
+        this.opttimer = setInterval(() => {
+          this.optsave()
+          this.getBoth(1)
+          this.getPrice(1)
+        }, this.duration)
+        break
+      case 1:
+        this.opttimer = setInterval(() => {
+          this.getBoth(2)
+          this.getPrice(2)
+          this.optSecondOrder()
+          this.getSex()
+          this.optwork()
+        }, this.duration)
+        break
+      default:
+        break
+    }
+  },
+  beforeDestroy () {
+    clearInterval(this.opttimer)
+    this.opttimer = null
   }
 }
 </script>

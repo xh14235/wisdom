@@ -39,6 +39,8 @@ export default {
   data () {
     return {
       tab: 0,
+      operationtimer: null,
+      duration: 60000,
       subTitle: '',
       list: [
         {
@@ -79,12 +81,22 @@ export default {
     changeTab (index) {
       this.tab = index
       this.subTitle = this.list[index].title
+      if (this.operationtimer) clearInterval(this.operationtimer)
       if (index === 0) {
         this.getAllElectric()
+        this.operationtimer = setInterval(() => {
+          this.getAllElectric()
+        }, this.duration)
       } else if (index === 1) {
         this.getCube936('1254288413020762112')
+        this.operationtimer = setInterval(() => {
+          this.getCube936('1254288413020762112')
+        }, this.duration)
       } else {
         this.operationLine(3)
+        this.operationtimer = setInterval(() => {
+          this.operationLine(3)
+        }, this.duration)
       }
     },
     // 根据下拉框组件传来的数据改变视图
@@ -155,7 +167,8 @@ export default {
     // 获取全村域 用电 折线图 数据
     getAllElectric () {
       supHead1().then((res) => {
-        // console.log(res.data)
+        let time = new Date()
+        let hour = time.getHours() + 1
         let DISTRIBUTED_ENERGY = res.data.DISTRIBUTED_ENERGY
         let ENERGY_EXTERNAL = res.data.ENERGY_EXTERNAL
         let list1 = []
@@ -182,22 +195,10 @@ export default {
           smooth: true,
           xData: xData,
           yName: '(kW)',
-          data: [list1, list2, getTestList(300, 11)],
+          data: [list1, list2, getTestList(300, hour)],
           y2: true,
           yName2: '(kWh)'
         }
-        // this.echarts = {
-        //   id: 'line1111',
-        //   title: '',
-        //   legendShow: true,
-        //   legendData: ['分布式能源', '外来电'],
-        //   color: [this.green, this.yellow],
-        //   areaColor: false,
-        //   smooth: true,
-        //   xData: this.day,
-        //   yName: '(kW)',
-        //   data: [getTestList(150, 24), getTestList(150, 24)]
-        // }
       })
     },
     // 获取全村域 水热冷 折线图 数据
@@ -266,67 +267,7 @@ export default {
           yName: '(kW)',
           data: res
         }
-        // this.echarts = {
-        //   id: 'line1111',
-        //   title: '',
-        //   legendShow: true,
-        //   legendData: ['供热水', '供冷', '供热'],
-        //   color: [this.yellow, this.blue, this.red],
-        //   areaColor: false,
-        //   smooth: true,
-        //   xData: hourList,
-        //   yName: '(kW)',
-        //   data: [getTestList(150, 13), getTestList(150, 13), getTestList(150, 13)]
-        // }
       })
-      // suphotwaterline().then((res) => {
-      //   let data = res.data
-      //   if (data.length) {
-      //     for (let i = 0; i < data.length; i++) {
-      //       if (data[i].lasted) {
-      //         this.list1.push(data[i].value)
-      //       }
-      //     }
-      //   } else {
-      //     this.list1 = getTestList(20, 12)
-      //   }
-      // })
-      // supcoldline().then((res) => {
-      //   let data = res.data
-      //   if (data.length) {
-      //     for (let i = 0; i < data.length; i++) {
-      //       if (data[i].lasted) {
-      //         this.list2.push(data[i].value)
-      //       }
-      //     }
-      //   } else {
-      //     this.list2 = getTestList(20, 12)
-      //   }
-      // })
-      // suphotline().then((res) => {
-      //   let data = res.data
-      //   if (data.length) {
-      //     for (let i = 0; i < data.length; i++) {
-      //       if (data[i].lasted) {
-      //         this.list3.push(data[i].value)
-      //       }
-      //     }
-      //   } else {
-      //     this.list3 = getTestList(20, 12)
-      //   }
-      // })
-      // this.echarts = {
-      //   id: 'line1111',
-      //   title: '',
-      //   legendShow: true,
-      //   legendData: ['供热水', '供冷', '供热'],
-      //   color: [this.blue, this.yellow, this.red],
-      //   areaColor: false,
-      //   smooth: true,
-      //   xData: this.day,
-      //   yName: '(kW)',
-      //   data: [this.list1, this.list2, this.list3]
-      // }
     },
     // 分布式能源折线图 数据
     getCube936 (cubeType) {
@@ -406,6 +347,37 @@ export default {
     this.changeTab(0)
     this.getInfoList()
     this.getAllElectric()
+  },
+  // 页面切换时，停止或重启定时器
+  deactivated () {
+    clearInterval(this.analysistimer)
+    this.analysistimer = null
+  },
+  activated () {
+    if (this.operationtimer) clearInterval(this.operationtimer)
+    switch (this.tab) {
+      case 0:
+        this.operationtimer = setInterval(() => {
+          this.getAllElectric()
+        }, this.duration)
+        break
+      case 1:
+        this.operationtimer = setInterval(() => {
+          this.getCube936('1254288413020762112')
+        }, this.duration)
+        break
+      case 2:
+        this.operationtimer = setInterval(() => {
+          this.operationLine(3)
+        }, this.duration)
+        break
+      default:
+        break
+    }
+  },
+  beforeDestroy () {
+    clearInterval(this.operationtimer)
+    this.operationtimer = null
   }
 }
 </script>

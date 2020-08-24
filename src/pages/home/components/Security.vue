@@ -164,6 +164,8 @@ export default {
   name: 'Security',
   data () {
     return {
+      securitytimer: null,
+      duration: 60000,
       facelist: [
         {
           id: '001',
@@ -279,13 +281,25 @@ export default {
   },
   mounted () {
     this.getAbnormalList()
-    // 更改iframe内部样式尝试
-    // window.onload = function () {
-    //   let iframe = document.getElementById('dddd').contentWindow.document.getElementById('vjs_video_2')
-    //   console.log(iframe)
-    // }
-    // let iframe = document.getElementById('dddd').contentWindow.document
-    // console.log(iframe)
+    if (this.securitytimer) clearInterval(this.securitytimer)
+    this.securitytimer = setInterval(() => {
+      this.getAbnormalList()
+    }, this.duration)
+  },
+  // 页面切换时，停止或重启定时器
+  deactivated () {
+    clearInterval(this.securitytimer)
+    this.securitytimer = null
+  },
+  activated () {
+    if (this.securitytimer) clearInterval(this.securitytimer)
+    this.securitytimer = setInterval(() => {
+      this.getAbnormalList()
+    }, this.duration)
+  },
+  beforeDestroy () {
+    clearInterval(this.securitytimer)
+    this.securitytimer = null
   }
 }
 </script>

@@ -42,6 +42,7 @@ export default {
     return {
       tab: 0,
       contimer: null,
+      duration: 60000,
       dateType2: 'day',
       dateType3: 'day',
       building2: '1254292656272252928',
@@ -144,15 +145,16 @@ export default {
     changeTab (index, title) {
       this.tab = index
       this.$emit('changeTitle', title)
+      if (this.contimer) clearInterval(this.contimer)
       switch (index) {
         case 0:
           if (this.getBool(this.datahead) && this.getBool(this.datafirst)) {
             this.conusedline()
             this.conusedpie()
-            if (this.contimer) clearInterval(this.contimer)
             this.contimer = setInterval(() => {
               this.conusedline()
-            }, 60000)
+              this.conusedpie()
+            }, this.duration)
           }
           break
         case 1:
@@ -164,6 +166,13 @@ export default {
               this.supcold()
               this.suphot()
             }
+            this.contimer = setInterval(() => {
+              this.consecondbar()
+              this.supelectry()
+              this.suphotwater()
+              this.supcold()
+              this.suphot()
+            }, this.duration)
           }
           break
         case 2:
@@ -173,6 +182,11 @@ export default {
               this.conthird2()
               this.conthird3()
             }
+            this.contimer = setInterval(() => {
+              this.concomparebuilding()
+              this.conthird2()
+              this.conthird3()
+            }, this.duration)
           }
           break
         default:
@@ -551,9 +565,36 @@ export default {
   },
   activated () {
     if (this.contimer) clearInterval(this.contimer)
-    this.contimer = setInterval(() => {
-      this.conusedline()
-    }, 60000)
+    switch (this.tab) {
+      case 0:
+        this.contimer = setInterval(() => {
+          this.conusedline()
+          this.conusedpie()
+        }, this.duration)
+        break
+      case 1:
+        this.contimer = setInterval(() => {
+          this.consecondbar()
+          this.supelectry()
+          this.suphotwater()
+          this.supcold()
+          this.suphot()
+        }, this.duration)
+        break
+      case 2:
+        this.contimer = setInterval(() => {
+          this.concomparebuilding()
+          this.conthird2()
+          this.conthird3()
+        }, this.duration)
+        break
+      default:
+        break
+    }
+  },
+  beforeDestroy () {
+    clearInterval(this.contimer)
+    this.contimer = null
   }
 }
 </script>
