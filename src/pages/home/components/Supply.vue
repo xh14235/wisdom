@@ -33,7 +33,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getTestList, supHead1, supHead2, suphotwaterline, suphotwaterpie, supcoldline, supcoldpie, suphotline, suphotpie, supSecond1, supThird1, supThird2, supForth1 } from '@/request/api'
+import { index, getTestList, supHead1, supHead2, suphotwaterline, suphotwaterpie, supcoldline, supcoldpie, suphotline, suphotpie, supSecond1, supThird1, supThird2, supForth1 } from '@/request/api'
 export default {
   name: 'Supply',
   components: {

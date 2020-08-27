@@ -4,23 +4,67 @@
       <div>实时监控</div>
     </div>
     <div class="monitor-wrapper">
-      <div class="monitor-box" v-for="(item, index) of AllMonitorList" :key="item.id">
-        <iframe class="monitor-iframe" :src="item.url" frameborder=0 allowfullscreen allow="autoplay"></iframe>
-        <div class="monitor-title" @click="showVideoPopup(index)">{{item.name}}</div>
+      <div class="monitor-box">
+        <div class="monitor-bg">
+          <!-- <Yingshi></Yingshi> -->
+          <!-- <div class="enlarge" @click="showMonitorPopup(ws1)"></div> -->
+          <iframe id="dddd" class="video-big" src="http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080" frameborder=0 allowfullscreen allow="autoplay"></iframe>
+          <!-- <iframe class="video-big" id="video1" width="100%" height="100%" :src="defaultUrl + ws1" frameborder="0"></iframe> -->
+        </div>
+        <div class="monitor-title" @click="showVideoPopup(0)">{{videoName0 || '监控1'}}</div>
+      </div>
+      <div class="monitor-box">
+        <div class="monitor-box2">
+          <div class="monitor-bg">
+            <!-- <div class="enlarge" @click="showMonitorPopup(ws2)"></div> -->
+          <iframe class="video-small" src="http://116.236.30.222:10800/play.html?channel=2&iframe=yes&aspect=1920x1080" frameborder=0 allowfullscreen allow="autoplay"></iframe>
+            <!-- <iframe class="video-small" id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
+          </div>
+          <div class="monitor-title">监控2</div>
+        </div>
+        <div class="monitor-box2">
+          <div class="monitor-bg">
+            <!-- <iframe id="video2" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
+          </div>
+          <div class="monitor-title">监控3</div>
+        </div>
+        <div class="monitor-box2">
+          <div class="monitor-bg">
+            <!-- <iframe id="video2" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
+          </div>
+          <div class="monitor-title">监控4</div>
+        </div>
+        <div class="monitor-box2">
+          <div class="monitor-bg">
+            <!-- <iframe id="video2" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
+          </div>
+          <div class="monitor-title">监控5</div>
+        </div>
       </div>
     </div>
-    <div class="distinguish-wrapper">
-      <div class="distinguish-box">
-        <div class="common-title common-title2">
-          <div>人脸识别</div>
-        </div>
-        <div class="monitor-wrapper">
-          <div class="monitor-box" v-for="item of FaceMonitorList" :key="item.id">
-            <iframe class="monitor-iframe" :src="item.url" frameborder=0 allowfullscreen allow="autoplay"></iframe>
-            <div class="monitor-title">{{item.name}}</div>
+    <div class="distinguish">
+      <div class="common-title common-title2">
+        <div>人脸识别</div>
+      </div>
+      <div class="common-title common-title2">
+        <div>车辆识别</div>
+      </div>
+    </div>
+    <div class="monitor-wrapper">
+      <div class="monitor-box">
+        <div class="monitor-box2">
+          <div class="monitor-bg">
+            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
           </div>
+          <div class="monitor-title">监控6</div>
         </div>
-        <div class="distinguish-list scroll" @click="showFacePopup()">
+        <div class="monitor-box2">
+          <div class="monitor-bg">
+            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
+          </div>
+          <div class="monitor-title">监控7</div>
+        </div>
+        <div class="distinguish-list face-list scroll" @click="showFacePopup()">
           <div class="distinguish-item face-item" v-for="item of facelist" :key="item.id">
             <div class="distinguish-img">
               <img :src="item.imgUrl" alt="">
@@ -29,17 +73,20 @@
           </div>
         </div>
       </div>
-      <div class="distinguish-box">
-        <div class="common-title common-title2">
-          <div>车辆识别</div>
-        </div>
-        <div class="monitor-wrapper">
-          <div class="monitor-box" v-for="item of CarMonitorList" :key="item.id">
-            <iframe class="monitor-iframe" :src="item.url" frameborder=0 allowfullscreen allow="autoplay"></iframe>
-            <div class="monitor-title">{{item.name}}</div>
+      <div class="monitor-box">
+        <div class="monitor-box2">
+          <div class="monitor-bg">
+            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
           </div>
+          <div class="monitor-title">监控8</div>
         </div>
-        <div class="distinguish-list scroll" @click="showCarPopup()">
+        <div class="monitor-box2">
+          <div class="monitor-bg">
+            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
+          </div>
+          <div class="monitor-title">监控9</div>
+        </div>
+        <div class="distinguish-list car-list scroll" @click="showCarPopup()">
           <div class="distinguish-item car-item" v-for="item of carlist" :key="item.id">
             <div class="distinguish-img">
               <img :src="item.imgUrl" alt="">
@@ -113,7 +160,6 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import { videoList } from '@/request/api'
 export default {
   name: 'Security',
   data () {
@@ -175,25 +221,23 @@ export default {
         }
       ],
       abnormalList: [],
-      AllMonitorList: [],
-      FaceMonitorList: [],
-      CarMonitorList: []
+      // 萤石云
+      defaultUrl: '/static/yingshi/index.html?url=',
+      ws1: 'http://hls01open.ys7.com/openlive/15b352defb864f3d962110b504605654.hd.m3u8',
+      ws2: 'http://hls01open.ys7.com/openlive/fea250fabf4242efad0920de72c2f7e1.hd.m3u8'
+      // jsmpeg
+      // defaultUrl: '/static/jsmpeg-master/view-stream.html?url=',
+      // ws1: 'live1',
+      // ws2: 'live2'
     }
   },
   computed: {
     ...mapState({
-      monitorPopupShow: state => state.popup.monitorPopupShow,
-      changedVideoName: state => state.popup.changedVideoName
+      videoName0: state => state.popup.videoName0,
+      monitorPopupShow: state => state.popup.monitorPopupShow
     })
   },
-  watch: {
-    changedVideoName () {
-      let willChangeVideoNum = localStorage.willChangeVideoNum
-      this.AllMonitorList[willChangeVideoNum].name = this.changedVideoName
-    }
-  },
   methods: {
-    // 获取异常报警数据详情列表
     getAbnormalList () {
       this.abnormalList = [
         {
@@ -233,68 +277,10 @@ export default {
         }
       ]
     },
-    // 获取摄像头列表 全部摄像头、人脸抓拍及车辆抓拍
-    getMonitorList () {
-      videoList().then((res) => {
-        console.log(res.data)
-      })
-      this.AllMonitorList = [
-        {
-          id: '001',
-          name: '监控1',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
-        },
-        {
-          id: '002',
-          name: '监控2',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
-        },
-        {
-          id: '003',
-          name: '监控3',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
-        },
-        {
-          id: '004',
-          name: '监控4',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
-        },
-        {
-          id: '005',
-          name: '监控5',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
-        }
-      ]
-      this.FaceMonitorList = [
-        {
-          id: '001',
-          name: '监控6',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
-        },
-        {
-          id: '002',
-          name: '监控7',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
-        }
-      ]
-      this.CarMonitorList = [
-        {
-          id: '001',
-          name: '监控8',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
-        },
-        {
-          id: '002',
-          name: '监控9',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
-        }
-      ]
-    },
     ...mapMutations(['showVideoPopup', 'showMonitorPopup', 'showFacePopup', 'showCarPopup'])
   },
   mounted () {
     this.getAbnormalList()
-    this.getMonitorList()
     if (this.securitytimer) clearInterval(this.securitytimer)
     this.securitytimer = setInterval(() => {
       this.getAbnormalList()
@@ -321,28 +307,41 @@ export default {
 <style scoped lang="stylus">
 @import "~@/assets/css/common.styl"
 .monitor-wrapper
+  // height: 20vh
   width: 100%
   margin: 3vh 0
-  &:after
-    content: ""
-    display: block
-    clear: both
+  display: flex
+  justify-content: space-between
   .monitor-box
-    float: left
-    width: 25%
-    height: 0
-    padding-bottom: 14%
-    background: #ddd
+    flex: 0 0 50%
+    width: 50%
     position: relative
-    &:nth-child(1)
-      width: 50%
-      padding-bottom: 28%
-    .monitor-iframe
-      position: absolute
-      left: 0
-      top: 0
+    // height: 20vh
+    .monitor-bg
       width: 100%
-      height: 100%
+      height: 0
+      padding-bottom: 56.25%
+      background: #000
+      // background-image: url('~@/assets/img/novideo1.png')
+      // background-size: 100% 100%
+      position: relative
+      // @media screen and (max-width: 1920px)
+      //   padding-bottom: 60%
+      .enlarge
+        position: absolute
+        top: 0
+        right: 0
+        width: 24px
+        height: 24px
+        background-image: url('~@/assets/img/video-btn.png')
+        background-size: 100% 100%
+        z-index: 1
+      .video-big
+        position: absolute
+        left: 0
+        top: 0
+        width: 100%
+        height: 100%
     .monitor-title
       position: absolute
       left: 0
@@ -352,18 +351,30 @@ export default {
       line-height: 3vh
       text-align: center
       background: rgba(0, 0, 0, 0.5)
-.distinguish-wrapper
-  display: flex
-  margin-top: 1vh
-  .distinguish-box
-    flex: 0 0 50%
-    width: 50%
-    margin-bottom: 3vh
-    .monitor-wrapper
-      margin-bottom: 0
-      .monitor-box
-        width: 50%
-        padding-bottom: 28%
+      @media screen and (max-width: 1920px)
+        height: 2.5vh
+        line-height: 2.5vh
+    .monitor-box2
+      float: left
+      width: 50%
+      // height: 10vh
+      overflow: hidden
+      position: relative
+      .monitor-bg
+        width: 100%
+        height: 0
+        padding-bottom: 56.25%
+        background: #000
+        // background-image: url('~@/assets/img/novideo2.png')
+        // background-size: 100% 100%
+        // @media screen and (max-width: 1920px)
+        //   padding-bottom: 60%
+        .video-small
+          position: absolute
+          left: 0
+          top: 0
+          width: 100%
+          height: 100%
     .distinguish-list
       flex: 0 0 100%
       width: 100%
@@ -385,6 +396,13 @@ export default {
           text-align: center
           background: rgba(0, 0, 0, 0.5)
           font-size: 12px
+.distinguish
+  display: flex
+  flex-wrap: wrap
+  margin-top: 1vh
+  .common-title
+    flex: 0 0 50%
+    width: 50%
 .common-table
   .table-head
     span

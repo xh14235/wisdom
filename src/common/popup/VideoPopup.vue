@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 import { videoList } from '@/request/api'
 export default {
   name: 'VideoPopup',
@@ -28,12 +28,6 @@ export default {
       videoList: [],
       videoName: ''
     }
-  },
-  computed: {
-    ...mapState({
-      videoName0: state => state.popup.videoName0,
-      wiiChangeVideo: state => state.popup.wiiChangeVideo
-    })
   },
   components: {
     CommonSelect: () => import('@/common/components/CommonSelect')
@@ -53,8 +47,8 @@ export default {
       })
     },
     confirm () {
-      this.hideVideoPopup()
       this.changeVideoName(this.videoName)
+      this.hideVideoPopup()
     },
     changeSelect (item) {
       this.videoName = item.info
@@ -62,6 +56,9 @@ export default {
   },
   mounted () {
     this.getVideoList()
+    setTimeout(() => {
+      this.videoName = this.videoList[0].info
+    }, 1000)
   }
 }
 </script>

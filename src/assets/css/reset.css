@@ -25,7 +25,7 @@ a,a:hover{
   text-decoration: none;
 }
 ul,ol,li{
-    list-style: none;
+  list-style: none;
 }
 ::-webkit-scrollbar{
   width: 5px;

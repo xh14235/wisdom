@@ -5,8 +5,7 @@ const popup = {
     monitorPopupShow: false,
     facePopupShow: false,
     carPopupShow: false,
-    wiiChangeVideo: 0,
-    videoName0: ''
+    changedVideoName: ''
   }
 }
 

@@ -1,4 +1,11 @@
 import { get, post } from './service'
+import test from './test'
+
+let index = {
+  test
+}
+
+export default index
 
 // 模拟数据，随机产生数组
 export const getTestList = (max, length) => {

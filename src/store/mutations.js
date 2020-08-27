@@ -23,11 +23,17 @@ export default {
     state.weather.pm25_desc = weather.air_level
   },
   showVideoPopup (state, index) {
-    state.popup.willChangeVideo = index
+    localStorage.willChangeVideoNum = index
     state.popup.videoPopupShow = true
   },
   hideVideoPopup (state) {
     state.popup.videoPopupShow = false
+  },
+  changeVideoName (state, videoName) {
+    state.popup.changedVideoName = ''
+    setTimeout(() => {
+      state.popup.changedVideoName = videoName
+    }, 0)
   },
   showEchartsPopup (state, data) {
     state.popup.echartsPopupShow = true
@@ -55,10 +61,6 @@ export default {
   },
   hideCarPopup (state) {
     state.popup.carPopupShow = false
-  },
-  changeVideoName (state, info) {
-    // console.log(info)
-    state.popup.videoName0 = info
   },
   showSelectList (state) {
     state.selectListShow = true
