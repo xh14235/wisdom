@@ -85,7 +85,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { ecologyPM25, ecologyWeather, ecologyPH, ecologyWaterQuality } from '@/request/api'
+import { ecologyPM25, ecologyWeather, ecologyPH, ecologyWaterQuality } from '@/request/environment-api'
 export default {
   name: 'Environment',
   components: {

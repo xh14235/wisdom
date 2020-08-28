@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { areaSelect, cubeSelect } from '@/request/api'
+import { areaSelect, cubeSelect } from '@/request/select-api'
 export default {
   name: 'Opesecond',
   components: {

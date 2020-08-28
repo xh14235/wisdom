@@ -88,7 +88,7 @@ import conditioner from '../../../assets/img/air-conditioner.png'
 import curtains from '../../../assets/img/curtains.png'
 import bathtub from '../../../assets/img/bathtub.png'
 import { mapState } from 'vuex'
-import { homeenergy, homecost } from '@/request/api'
+import { homeenergy, homecost } from '@/request/athome-api'
 export default {
   name: 'Athome',
   components: {

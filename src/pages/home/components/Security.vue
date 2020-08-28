@@ -113,7 +113,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import { videoList } from '@/request/api'
+import { videoList } from '@/request/select-api'
 export default {
   name: 'Security',
   data () {

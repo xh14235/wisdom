@@ -103,8 +103,7 @@
 import img1 from '@/assets/img/tourist-arrive.png'
 import img2 from '@/assets/img/tourist-leave.png'
 import { mapState, mapMutations } from 'vuex'
-// import { culturepeak, culturesexage, culturecalendar } from '@/request/api'
-import { culturepeak, cultureinout, culturecalendar, culturesexage } from '@/request/api'
+import { culturepeak, cultureinout, culturecalendar, culturesexage } from '@/request/culture-api'
 export default {
   name: 'Culture',
   components: {

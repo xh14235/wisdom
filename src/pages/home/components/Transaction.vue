@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import { tranallfirst, tranallelectric, tranallhotwater, tranallcold, tranallhot, transinglefirst, transingleelectric, transinglehotwater, transinglecold, transinglehot, tranallcost, transinglecost } from '@/request/api'
 import { mapState } from 'vuex'
+import { tranallfirst, tranallelectric, tranallhotwater, tranallcold, tranallhot, transinglefirst, transingleelectric, transinglehotwater, transinglecold, transinglehot, tranallcost, transinglecost } from '@/request/transaction-api'
 export default {
   name: 'Transaction',
   components: {

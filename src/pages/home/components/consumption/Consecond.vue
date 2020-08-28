@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { buildingSelect } from '@/request/api'
+import { buildingSelect } from '@/request/select-api'
 export default {
   name: 'Supsecond',
   components: {

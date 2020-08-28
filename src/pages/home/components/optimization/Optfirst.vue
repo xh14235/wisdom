@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { buildingSelect, venueSelect } from '@/request/api'
+import { buildingSelect, venueSelect } from '@/request/select-api'
 export default {
   name: 'Optfirst',
   components: {

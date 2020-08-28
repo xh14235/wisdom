@@ -27,8 +27,10 @@
 </template>
 
 <script>
-import { getTestList, anaRadar, anaAbnormalNum, anaAbnormalType, anaAbnormalList, anaNewestSeq, anaAbnormalSeq, concomparebuilding, anacompareday } from '@/request/api'
 import { mapState } from 'vuex'
+import { getTestList } from '@/request/common-api.js'
+import { concomparebuilding } from '@/request/consumption-api.js'
+import { anaRadar, anaAbnormalNum, anaAbnormalType, anaAbnormalList, anaNewestSeq, anaAbnormalSeq, anacompareday } from '@/request/analysis-api'
 export default {
   name: 'Analysis',
   components: {

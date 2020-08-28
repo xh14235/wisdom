@@ -57,7 +57,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { industryfirst4, industrycooperative, industrysales, industryorder } from '@/request/api'
+import { industryfirst4, industrycooperative, industrysales, industryorder } from '@/request/industry-api'
 export default {
   name: 'Industry',
   components: {

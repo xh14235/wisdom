@@ -22,8 +22,9 @@
 </template>
 
 <script>
-import { getTestList, optenergy, optefficiency, optsave, optwork, optprice } from '@/request/api'
 import { mapState } from 'vuex'
+import { getTestList } from '@/request/common-api.js'
+import { optenergy, optefficiency, optsave, optwork, optprice } from '@/request/optimization-api'
 export default {
   name: 'Optimization',
   components: {

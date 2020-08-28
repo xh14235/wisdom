@@ -20,7 +20,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { tripRoad, tripParking, tripElectric, tripPower } from '@/request/api'
+import { tripRoad, tripParking, tripElectric, tripPower } from '@/request/trip-api'
 import img1 from '@/assets/img/charging.png'
 import img2 from '@/assets/img/electric-car.png'
 import img4 from '@/assets/img/electric-bicycle.png'

@@ -27,8 +27,10 @@
 </template>
 
 <script>
-import { getTestList, supHead1, suphotline, supcoldline, suphotwaterline, operationCube } from '@/request/api'
 import { mapState } from 'vuex'
+import { getTestList } from '@/request/common-api.js'
+import { supHead1, suphotline, supcoldline, suphotwaterline } from '@/request/supply-api'
+import { operationCube } from '@/request/operation-api'
 export default {
   name: 'Operation',
   components: {

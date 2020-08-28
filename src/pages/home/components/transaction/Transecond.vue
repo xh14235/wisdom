@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { areaSelect } from '@/request/api'
+import { areaSelect } from '@/request/select-api'
 export default {
   name: 'Transecond',
   data () {

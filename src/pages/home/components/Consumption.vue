@@ -28,7 +28,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getTestList, conusedline, conusedpie, consecondbar, supcold, suphotwater, supelectry, suphot, concomparebuilding, conelectric } from '@/request/api'
+import { getTestList } from '@/request/common-api.js'
+import { conusedline, conusedpie, consecondbar, supcold, suphotwater, supelectry, suphot, concomparebuilding, conelectric } from '@/request/consumption-api'
 export default {
   name: 'Consumption',
   components: {

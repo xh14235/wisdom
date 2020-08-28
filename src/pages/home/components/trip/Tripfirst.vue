@@ -104,7 +104,8 @@
 </template>
 
 <script>
-import { buildingSelect, tripPerson } from '@/request/api'
+import { buildingSelect } from '@/request/select-api'
+import { tripPerson } from '@/request/trip-api'
 export default {
   name: 'Tripfirst',
   props: {
