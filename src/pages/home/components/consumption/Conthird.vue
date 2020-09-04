@@ -56,25 +56,21 @@ export default {
   methods: {
     getBuildingSelect () {
       buildingSelect().then((res) => {
-        // console.log(res.data)
-        // this.largeSelect = res.data
         let data = res.data
         this.largeSelect = []
         for (let i = 0; i < data.length; i++) {
-          // if (data[i]) {}
           this.largeSelect.push({
             id: data[i].facilityId,
             name: data[i].facilityName
           })
         }
-        this.largeSelect.splice(1, 1)
+        // this.largeSelect.splice(1, 1)
       })
     },
     getVenueSelect (id) {
       venueSelect({
         facilityId: id
       }).then((res) => {
-        // console.log(res)
         let data = res.data
         this.smallSelect = []
         for (let i = 0; i < data.length; i++) {

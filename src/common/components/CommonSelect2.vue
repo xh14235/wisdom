@@ -79,7 +79,6 @@ export default {
   mounted () {
     // 获取大分类
     if (this.largeSelect[0]) {
-      // console.log(this.largeSelect)
       this.largeChosen = this.largeSelect[0]
       this.largeSelect[0].active = true
     }

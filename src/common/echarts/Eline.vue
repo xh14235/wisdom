@@ -138,7 +138,8 @@ export default {
           color: this.lgreen,
           fontSize: fontXy,
           align: 'right',
-          verticalAlign: verticalAlign
+          verticalAlign: verticalAlign,
+          paddingBottom: -5
         },
         axisLabel: {
           show: true,

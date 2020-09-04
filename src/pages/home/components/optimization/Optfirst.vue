@@ -1,13 +1,9 @@
 <template>
   <div>
-    <!-- <div class="common-title">
-      <div>用能优化</div>
-    </div> -->
     <div class="controller-box">
       <div class="select1">
         分析对象<CommonSelect2 :largeSelect="largeSelect" :smallSelect="smallSelect" @changeLarge="changeLarge" @changeSmall="changeSmall"></CommonSelect2>
       </div>
-      <!-- <div class="today-tourist">今日访客数量：<span>200</span>人</div> -->
     </div>
     <div class="common-echarts-wrapper echarts-margin">
       <div class="common-echarts-box">
@@ -21,7 +17,6 @@
         <Statistics v-if="statistics.length" :statistics="statistics"></Statistics>
       </div>
     </div>
-    <!-- <div class="title2">能源消耗分析</div> -->
     <div class="common-echarts-wrapper">
       <div class="common-echarts-box">
         <Eline v-if="list.echarts1.id" :lineData="list.echarts1"></Eline>
@@ -35,9 +30,6 @@
       <div class="common-echarts-box">
         <Eline v-if="list.echarts4.id" :lineData="list.echarts4"></Eline>
       </div>
-    <!-- </div> -->
-    <!-- <div class="title2">节能减排记录</div> -->
-    <!-- <div class="common-echarts-wrapper"> -->
       <div class="common-echarts-box">
         <Eline v-if="list.echarts5.id" :lineData="list.echarts5"></Eline>
       </div>
@@ -89,7 +81,7 @@ export default {
             name: data[i].facilityName
           })
         }
-        this.largeSelect.splice(1, 1)
+        // this.largeSelect.splice(1, 1)
       })
     },
     getVenueSelect (id) {
@@ -104,7 +96,7 @@ export default {
             name: data[i].name
           })
         }
-        this.$emit('changeSelect1', this.smallSelect[0])
+        // this.$emit('changeSelect1', this.smallSelect[0])
       })
     },
     changeLarge (item) {

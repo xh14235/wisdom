@@ -67,7 +67,7 @@ export default {
         labelShow = false
       }
       let fontTitle = bodyWidth <= 1920 ? 12 : 16
-      let fontXy = 10
+      let fontXy = 14
       let fontCenter = bodyWidth <= 1920 ? 12 : 14
       let titleTop = pieData.titleTop
       let titleLeft = pieData.titleLeft

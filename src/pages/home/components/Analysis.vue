@@ -366,7 +366,7 @@ export default {
       anaNewestSeq({
         buildingFacilitySubId: this.building1
       }).then((res) => {
-        console.log(res)
+        // console.log(res)
       })
       this.datafirst.abnormalEnergy = [
         {

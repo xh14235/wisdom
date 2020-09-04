@@ -1,38 +1,23 @@
 <template>
   <div class="industry-wrapper">
-    <!-- <div class="common-pages">
-      <div class="common-page" v-if="this.tab === 0">
-        <transition name="fadeRight" mode="out-in">
-          <Indfirst :list="datafirst" @changeDate1="changeDate1"></Indfirst>
-        </transition>
-      </div>
-      <div class="common-page" v-else>
-        <transition name="fadeRight" mode="out-in">
-          <Indsecond :list="datasecond" @changeDate2="changeDate2" @changeSelect="changeSelect"></Indsecond>
-        </transition>
-      </div>
-    </div>
-    <div class="common-tab">
-      <span :class="{'active': tab === index}" v-for="(item, index) of list" :key="item.id" @click="changeTab(index)">{{item.title}}</span>
-    </div> -->
     <div class="common-title">
       <div>今年产业销量统计</div>
     </div>
     <div class="common-echarts-wrapper">
       <div class="common-echarts-box">
-        <div class="common-echarts-title">乡村会客厅 <span>销售额总计：<b>{{parseFloat(5200).toLocaleString()}}</b>元</span></div>
+        <div class="common-echarts-title">乡村会客厅 <span>销售额总计：<b>{{parseFloat(totle1).toLocaleString()}}</b>元</span></div>
         <Eline class="echarts-with-title" v-if="echarts1.id" :lineData="echarts1"></Eline>
       </div>
       <div class="common-echarts-box">
-        <div class="common-echarts-title">玫瑰工坊 <span>销售额总计：<b>{{parseFloat(5200).toLocaleString()}}</b>元</span></div>
+        <div class="common-echarts-title">玫瑰工坊 <span>销售额总计：<b>{{parseFloat(totle2).toLocaleString()}}</b>元</span></div>
         <Eline class="echarts-with-title" v-if="echarts2.id" :lineData="echarts2"></Eline>
       </div>
       <div class="common-echarts-box">
-        <div class="common-echarts-title">合作社 <span>销售额总计：<b>{{parseFloat(5200).toLocaleString()}}</b>元</span></div>
+        <div class="common-echarts-title">合作社 <span>销售额总计：<b>{{parseFloat(totle3).toLocaleString()}}</b>元</span></div>
         <Eline class="echarts-with-title" v-if="echarts3.id" :lineData="echarts3"></Eline>
       </div>
       <div class="common-echarts-box">
-        <div class="common-echarts-title">网红打卡点 <span>销售额总计：<b>{{parseFloat(5200).toLocaleString()}}</b>元</span></div>
+        <div class="common-echarts-title">网红打卡点 <span>销售额总计：<b>{{parseFloat(totle4).toLocaleString()}}</b>元</span></div>
         <Eline class="echarts-with-title" v-if="echarts4.id" :lineData="echarts4"></Eline>
       </div>
     </div>
@@ -57,7 +42,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { industryfirst4, industrycooperative, industrysales, industryorder } from '@/request/industry-api'
+import { industryfirst2, industrysecond2, industrycooperative, industrysales, industryorder } from '@/request/industry-api'
+import { venueSelect } from '@/request/select-api'
 export default {
   name: 'Industry',
   components: {
@@ -66,12 +52,17 @@ export default {
   data () {
     return {
       echarts1: {},
+      totle1: 0,
       echarts2: {},
+      totle2: 0,
       echarts3: {},
+      totle3: 0,
       echarts4: {},
+      totle4: 0,
       echarts5: {},
       echarts6: {},
       cooperativeList: [],
+      industryList: [],
       cooperativeTab: 0,
       industrytimer: null,
       duration: 60000
@@ -89,20 +80,23 @@ export default {
       red: state => state.color.red,
       white: state => state.color.white,
       lgreen: state => state.color.lgreen
-    })
+    }),
+    cooLength () {
+      return this.cooperativeList.length
+    },
+    industryLength () {
+      return this.industryList.length
+    }
   },
   methods: {
-    // 顶部四个echarts图 各代表场馆销售数据
-    getSales () {
+    // 乡村会客厅echarts图，需传参
+    meetingRoom () {
       let date = new Date()
       let year = date.getFullYear()
-      industryfirst4({
-        year: year
-      }).then((res) => {
-        let COOPERATIVE = res.data.COOPERATIVE
-        let COUNTY_MEETING = res.data.COUNTY_MEETING
-        let INTERNET_CELEBRITIES = res.data.INTERNET_CELEBRITIES
-        let ROSE_SQUARE = res.data.ROSE_SQUARE
+      industryfirst2({
+        bfsId: this.industryList[1].id,
+        year
+      }).then(res => {
         this.echarts1 = {
           id: 'indfirst1',
           title: '',
@@ -113,8 +107,23 @@ export default {
           smooth: true,
           yName: '(元)',
           xData: this.year,
-          data: [Object.values(COUNTY_MEETING).slice(0, this.year.length)]
+          // data: [Object.values(COUNTY_MEETING).slice(0, this.year.length)]
+          data: [Object.values(res.data)]
         }
+        this.totle1 = 0
+        for (let i in res.data) {
+          this.totle1 += res.data[i]
+        }
+      })
+    },
+    // 玫瑰工坊echarts图，需传参
+    rose () {
+      let date = new Date()
+      let year = date.getFullYear()
+      industryfirst2({
+        bfsId: this.industryList[0].id,
+        year
+      }).then(res => {
         this.echarts2 = {
           id: 'indfirst2',
           title: '',
@@ -125,8 +134,23 @@ export default {
           smooth: true,
           yName: '(元)',
           xData: this.year,
-          data: [Object.values(ROSE_SQUARE).slice(0, this.year.length)]
+          // data: [Object.values(ROSE_SQUARE).slice(0, this.year.length)]
+          data: [Object.values(res.data)]
         }
+        this.totle2 = 0
+        for (let i in res.data) {
+          this.totle2 += res.data[i]
+        }
+      })
+    },
+    // 合作社echarts图，需传参
+    cooperative () {
+      let date = new Date()
+      let year = date.getFullYear()
+      industrysecond2({
+        labelId: this.industryList[4].labelId,
+        year
+      }).then(res => {
         this.echarts3 = {
           id: 'indfirst3',
           title: '',
@@ -137,8 +161,23 @@ export default {
           smooth: true,
           yName: '(元)',
           xData: this.year,
-          data: [Object.values(COOPERATIVE).slice(0, this.year.length)]
+          // data: [Object.values(COOPERATIVE).slice(0, this.year.length)]
+          data: [Object.values(res.data)]
         }
+        this.totle3 = 0
+        for (let i in res.data) {
+          this.totle3 += res.data[i]
+        }
+      })
+    },
+    // 网红打卡点echarts图，需传参
+    celebrity () {
+      let date = new Date()
+      let year = date.getFullYear()
+      industrysecond2({
+        labelId: this.industryList[11].labelId,
+        year
+      }).then(res => {
         this.echarts4 = {
           id: 'indfirst4',
           title: '',
@@ -149,7 +188,12 @@ export default {
           smooth: true,
           yName: '(元)',
           xData: this.year,
-          data: [Object.values(INTERNET_CELEBRITIES).slice(0, this.year.length)]
+          // data: [Object.values(INTERNET_CELEBRITIES).slice(0, this.year.length)]
+          data: [Object.values(res.data)]
+        }
+        this.totle4 = 0
+        for (let i in res.data) {
+          this.totle4 += res.data[i]
         }
       })
     },
@@ -157,6 +201,14 @@ export default {
     getCooperative () {
       industrycooperative().then((res) => {
         this.cooperativeList = res.data
+      })
+    },
+    // 获取各产业建筑列表
+    getIndustryList () {
+      venueSelect({
+        facilityId: '1254292656276447234'
+      }).then((res) => {
+        this.industryList = res.data
       })
     },
     // 更改合作社
@@ -206,17 +258,25 @@ export default {
   watch: {
     cooperativeTab () {
       this.getLast2(this.cooperativeList[this.cooperativeTab].id)
+    },
+    cooLength () {
+      this.getLast2(this.cooperativeList[this.cooperativeTab].id)
+    },
+    industryLength () {
+      this.meetingRoom()
+      this.rose()
+      this.cooperative()
+      this.celebrity()
     }
   },
   mounted () {
-    this.getSales()
     this.getCooperative()
-    setTimeout(() => {
-      this.getLast2(this.cooperativeList[this.cooperativeTab].id)
-    }, 100)
+    this.getIndustryList()
     this.industrytimer = setInterval(() => {
-      this.getSales()
-      this.getCooperative()
+      this.meetingRoom()
+      this.rose()
+      this.cooperative()
+      this.celebrity()
       this.getLast2(this.cooperativeList[this.cooperativeTab].id)
     }, this.duration)
   },
@@ -228,8 +288,10 @@ export default {
   activated () {
     if (this.industrytimer) clearInterval(this.industrytimer)
     this.industrytimer = setInterval(() => {
-      this.getSales()
-      this.getCooperative()
+      this.meetingRoom()
+      this.rose()
+      this.cooperative()
+      this.celebrity()
       this.getLast2(this.cooperativeList[this.cooperativeTab].id)
     }, this.duration)
   },
@@ -249,7 +311,6 @@ export default {
       .common-echarts-title
         display: flex
         justify-content: space-between
-        // align-items: flex-end
         font-size: 18px
         @media screen and (max-width: 1920px)
           font-size: 12px
@@ -273,7 +334,6 @@ export default {
       height: 3.7vh
       line-height: 3.7vh
       border: 1px solid $green
-      // background: rgba(74,204,129,0.2)
       border-radius: 2px
       margin: 2px 0
       color: $green

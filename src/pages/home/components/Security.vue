@@ -150,6 +150,21 @@ export default {
           id: '006',
           imgUrl: require('../../../assets/img/face.png'),
           time: '12:22'
+        },
+        {
+          id: '007',
+          imgUrl: require('../../../assets/img/face.png'),
+          time: '12:22'
+        },
+        {
+          id: '008',
+          imgUrl: require('../../../assets/img/face.png'),
+          time: '12:22'
+        },
+        {
+          id: '009',
+          imgUrl: require('../../../assets/img/face.png'),
+          time: '12:22'
         }
       ],
       carlist: [
@@ -170,6 +185,11 @@ export default {
         },
         {
           id: '004',
+          imgUrl: require('../../../assets/img/car.png'),
+          time: '12:22'
+        },
+        {
+          id: '005',
           imgUrl: require('../../../assets/img/car.png'),
           time: '12:22'
         }
@@ -257,36 +277,42 @@ export default {
         {
           id: '004',
           name: '监控4',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          // url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          url: ''
         },
         {
           id: '005',
           name: '监控5',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          // url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          url: ''
         }
       ]
       this.FaceMonitorList = [
         {
           id: '001',
           name: '监控6',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          // url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          url: ''
         },
         {
           id: '002',
           name: '监控7',
           url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          // url: ''
         }
       ]
       this.CarMonitorList = [
         {
           id: '001',
           name: '监控8',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          // url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          url: ''
         },
         {
           id: '002',
           name: '监控9',
           url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          // url: ''
         }
       ]
     },
@@ -332,7 +358,7 @@ export default {
     width: 25%
     height: 0
     padding-bottom: 14%
-    background: #ddd
+    background: #000
     position: relative
     &:nth-child(1)
       width: 50%
@@ -374,7 +400,7 @@ export default {
         position: relative
         .distinguish-img
           img
-            height: 57px
+            // height: 57px
             vertical-align: bottom
             @media screen and (max-width: 1920px)
               height: 36.8px

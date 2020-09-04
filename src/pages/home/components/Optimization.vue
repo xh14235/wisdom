@@ -71,8 +71,8 @@ export default {
         echarts9: {}
       },
       dateType2: 'day',
-      building1: '',
-      building2: ''
+      building1: '1254300251426992128',
+      building2: '1254300251426992128'
     }
   },
   computed: {
