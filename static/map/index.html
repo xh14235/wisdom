@@ -9,7 +9,7 @@
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="Build/UnityLoader.js"></script>
     <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/Buddlepackage.json", {onProgress: UnityProgress});
+      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/BuddlePackage.json", {onProgress: UnityProgress});
     </script>
     <style>
       .footer{display: none;}
@@ -26,24 +26,77 @@
         <div class="title">LMXC</div>
       </div>
     </div>
-    <script>
-      //沙锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷前锟剿凤拷锟斤拷
-      function InitFinished(){
-	  	  console.log('沙锟教硷拷锟斤拷锟斤拷锟?')
-        //top.InitFinished()
-      }
-      //沙锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷前锟剿凤拷锟斤拷
-      function SelectMark(markEnum, id){
-        console.log('选锟斤拷某锟斤拷锟斤拷锟斤拷')
-        console.log(markEnum)
-        console.log(id)
-        //top.SelectMark(markEnum, id)
-      }
-      //前锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷沙锟教凤拷锟斤拷
-      function SelectMarkById(id){
-        unityInstance.SendMessage("Net","SelectMarkById" , id);
-      }
-      //SelectMarkById("锟斤拷锟斤拷_936")
-    </script>
   </body>
 </html>
+
+<script>
+  //3d场景是否加载完毕，当值为true时，可正常调用3d场景接口
+  var isLoaded = false;
+
+
+  //U3D调用前端，表明3D场景加载完毕，3d调用前端
+  function InitFinished(){
+    isLoaded = true
+  }
+
+  //U3D点击建筑物或者标签（标签和建筑物看需求是不是要做区分）,3d调用前端
+  function SelectMark(markName, id){
+    console.log(markName)
+    console.log(id)
+  }
+
+  //对摄像机进行运镜（按照经纬度）,前端调用3d
+  function setCameraSettingWithCoordinate(data){
+    if (isLoaded){
+      var data = JSON.stringify(data)
+      unityInstance.SendMessage("Net","SetCameraSettingWithCoordinate", data);
+    } else {
+      console.log("3D场景加载中...请稍等");
+    }
+  }
+
+   //打标,前端调用3d
+   function setMarkData(data){
+    if (isLoaded){
+      var data = JSON.stringify(data);
+      unityInstance.SendMessage("Net","SetMarkData", data);
+    } else {
+      console.log("3D场景加载中...请稍等");
+    }
+  }
+
+  //清空3d场景中的打标
+  function clearMarks(){
+    if (isLoaded){
+      unityInstance.SendMessage("Net","ClearMarkData");
+    } else {
+      console.log("3D场景加载中...请稍等");
+    }
+  }
+
+
+  //example场景中心切换
+  // var center = { 
+  //   "Distance": "0.8", //3d当中的摄像机离地面的距离
+  //   "PosX": "121.6848", //经度
+  //   "PosY": "31.08706", //纬度
+  //   "Time": 1, //动画运镜时间
+  //   "X": "90", //摄像机横向旋转角度
+  //   "Y": "45" //摄像机纵向旋转角度
+  //   }
+  //   setCameraSettingWithCoordinate(center)
+
+  //example打标
+  // var marks = 
+  //   [ 
+  //     { 
+  //       "Height": "0.2", //标点高度
+  //       "Id": "0", //标点唯一标识
+  //       "Latitude": "31.08706", //纬度
+  //       "Longitude": "121.6848", //经度
+  //       "Name": "936能源管", //标点名称
+  //       "Type": "建筑"
+  //     }
+  //   ];
+  //   setMarkData(marks)
+</script>

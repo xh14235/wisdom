@@ -1,10 +1,10 @@
 <template>
   <div @click="dddd()">
     <div class="main">
-      <!-- <button @click="hideModel()">跳转到936</button> -->
-      <!-- <div class="map">
+      <button @click="hideModel()">跳转到936</button>
+      <div class="map">
         <iframe ref="map" id="map" src="/static/map/index.html" frameborder="0"></iframe>
-      </div> -->
+      </div>
       <div class="main-left">
         <Energy></Energy>
       </div>
@@ -51,12 +51,14 @@ export default {
     })
   },
   methods: {
-    // hideModel () {
-    //   // let gameInstance = this.$el.getElementsByTagName('iframe')[0].contentWindow.gameInstance
-    //   // gameInstance.SendMessage('Net', 'HideAllStation')
-    //   let gameInstance = this.$el.getElementsByTagName('iframe')[0].contentWindow
-    //   gameInstance.SelectMarkById('建筑_936')
-    // },
+    hideModel () {
+      // let gameInstance = this.$el.getElementsByTagName('iframe')[0].contentWindow.gameInstance
+      // gameInstance.SendMessage('Net', 'HideAllStation')
+      // let gameInstance = this.$el.getElementsByTagName('iframe')[0].contentWindow
+      // gameInstance.SelectMarkById('建筑_936')
+      // let data = { "Distance": "3.497281", "PosX": "121.6851", "PosY": "31.08658", "Time": 1.1574446, "X": "31", "Y": "40" }
+      // unityInstance.SendMessage("Net", "SetCameraSettingWithCoordinate", data)
+    },
     login () {
       login({
         name: 'admin',

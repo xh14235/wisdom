@@ -41,12 +41,12 @@ export default {
       let fontTitle = bodyWidth <= 1920 ? 14 : 16
       let fontXy = bodyWidth <= 1920 ? 9 : 12
       let lineWidth = 1.5
-      let verticalAlign = 'top'
+      // let verticalAlign = 'top'
       if (this.enlarge) {
         fontTitle = 32
         fontXy = 24
         lineWidth = 4
-        verticalAlign = 'bottom'
+        // verticalAlign = 'bottom'
       }
       for (let i = 0; i < seriesLength; i++) {
         let areaStyle = null
@@ -138,8 +138,8 @@ export default {
           color: this.lgreen,
           fontSize: fontXy,
           align: 'right',
-          verticalAlign: verticalAlign,
-          paddingBottom: -5
+          verticalAlign: 'middle'
+          // paddingBottom: -5
         },
         axisLabel: {
           show: true,
@@ -180,8 +180,8 @@ export default {
           nameTextStyle: {
             color: this.lgreen,
             fontSize: fontXy,
-            align: 'left',
-            verticalAlign: verticalAlign
+            align: 'left'
+            // verticalAlign: verticalAlign
           },
           axisLabel: {
             show: true,

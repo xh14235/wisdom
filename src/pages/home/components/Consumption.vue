@@ -247,6 +247,7 @@ export default {
           areaColor: true,
           itemStyle: true,
           xData: timeType,
+          yName: '(kWh)',
           data: [cold]
         }
         this.datafirst.echarts5 = {

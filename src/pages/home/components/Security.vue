@@ -262,42 +262,42 @@ export default {
         {
           id: '001',
           name: '监控1',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080&protocol=ws-flv'
         },
         {
           id: '002',
           name: '监控2',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          url: 'http://116.236.30.222:10800/play.html?channel=2&iframe=yes&aspect=1920x1080&protocol=ws-flv'
         },
         {
           id: '003',
           name: '监控3',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080&protocol=ws-flv'
         },
         {
           id: '004',
           name: '监控4',
-          // url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
-          url: ''
+          url: 'http://116.236.30.222:10800/play.html?channel=2&iframe=yes&aspect=1920x1080&protocol=ws-flv'
+          // url: ''
         },
         {
           id: '005',
           name: '监控5',
-          // url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
-          url: ''
+          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080&protocol=ws-flv'
+          // url: ''
         }
       ]
       this.FaceMonitorList = [
         {
           id: '001',
           name: '监控6',
-          // url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
-          url: ''
+          url: 'http://116.236.30.222:10800/play.html?channel=2&iframe=yes&aspect=1920x1080&protocol=ws-flv'
+          // url: ''
         },
         {
           id: '002',
           name: '监控7',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080&protocol=ws-flv'
           // url: ''
         }
       ]
@@ -305,13 +305,13 @@ export default {
         {
           id: '001',
           name: '监控8',
-          // url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
-          url: ''
+          url: 'http://116.236.30.222:10800/play.html?channel=2&iframe=yes&aspect=1920x1080&protocol=ws-flv'
+          // url: ''
         },
         {
           id: '002',
           name: '监控9',
-          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080'
+          url: 'http://116.236.30.222:10800/play.html?channel=2&iframe=yes&aspect=1920x1080&protocol=ws-flv'
           // url: ''
         }
       ]

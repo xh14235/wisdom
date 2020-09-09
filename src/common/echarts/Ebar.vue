@@ -109,7 +109,7 @@ export default {
       let legendLeft = '10%'
       let barWidth = 10
       let itemGap = 15
-      let verticalAlign = 'top'
+      // let verticalAlign = 'top'
       if (this.enlarge) {
         fontTitle = 32
         fontXy = 24
@@ -117,7 +117,7 @@ export default {
         legendLeft = '15%'
         barWidth = 20
         itemGap = 30
-        verticalAlign = 'bottom'
+        // verticalAlign = 'bottom'
       }
       // console.log(barData.data.length)
       for (let i = 0; i < barData.data.length; i++) {
@@ -226,8 +226,7 @@ export default {
             color: this.lgreen,
             fontSize: fontXy,
             align: 'right',
-            verticalAlign: verticalAlign,
-            paddingBottom: -5
+            verticalAlign: 'middle'
           },
           axisLabel: {
             show: true,
