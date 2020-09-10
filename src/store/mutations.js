@@ -67,5 +67,9 @@ export default {
   },
   hideSelectList (state) {
     state.selectListShow = false
+  },
+  // 地图相关
+  getIfr (state, ifr) {
+    state.map.ifr = ifr
   }
 }

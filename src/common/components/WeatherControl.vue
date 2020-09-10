@@ -90,7 +90,6 @@ export default {
   z-index: 2
   width: 28.8vw
   height: 8.5vh
-  // background: #111
   left: 35.6vw
   bottom: 1.75vh
   display: flex
@@ -102,7 +101,6 @@ export default {
     text-align: center
     height: 7vh
     padding-top: 1.5vh
-    // line-height: 7vh
     background-image: url('~@/assets/img/control-center.png')
     background-size: 100% 100%
     cursor: pointer

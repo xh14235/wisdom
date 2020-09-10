@@ -1,27 +1,26 @@
 <template>
-  <div @click="dddd()">
-    <div class="main">
-      <button @click="hideModel()">跳转到936</button>
-      <div class="map">
-        <iframe ref="map" id="map" src="/static/map/index.html" frameborder="0"></iframe>
+  <div @click='hideSelectList()'>
+    <div class='main'>
+      <div class='map'>
+        <iframe ref='map' id='map' src='/static/map/index.html' frameborder='0'></iframe>
       </div>
-      <div class="main-left">
+      <div class='main-left'>
         <Energy></Energy>
       </div>
-      <div class="main-center">
+      <div class='main-center'>
         <Header></Header>
-        <transition name="opacity">
-          <VideoPopup v-if="videoPopupShow"></VideoPopup>
-          <EchartsPopup v-if="echartsPopupShow"></EchartsPopup>
-          <MonitorPopup v-if="monitorPopupShow"></MonitorPopup>
-          <FacePopup v-if="facePopupShow"></FacePopup>
-          <CarPopup v-if="carPopupShow"></CarPopup>
+        <transition name='opacity'>
+          <VideoPopup v-if='videoPopupShow'></VideoPopup>
+          <EchartsPopup v-if='echartsPopupShow'></EchartsPopup>
+          <MonitorPopup v-if='monitorPopupShow'></MonitorPopup>
+          <FacePopup v-if='facePopupShow'></FacePopup>
+          <CarPopup v-if='carPopupShow'></CarPopup>
         </transition>
-        <transition name="opacity">
-          <WeatherControl v-if="weatherControlShow"></WeatherControl>
+        <transition name='opacity'>
+          <WeatherControl v-if='weatherControlShow'></WeatherControl>
         </transition>
       </div>
-      <div class="main-right">
+      <div class='main-right'>
         <Livelihood></Livelihood>
       </div>
     </div>
@@ -40,25 +39,17 @@ export default {
   },
   computed: {
     ...mapState({
-      videoPopupShow: state => state.popup.videoPopupShow,
-      echartsPopupShow: state => state.popup.echartsPopupShow,
-      monitorPopupShow: state => state.popup.monitorPopupShow,
-      facePopupShow: state => state.popup.facePopupShow,
-      carPopupShow: state => state.popup.carPopupShow,
-      echarts: state => state.popup.echarts,
-      selectListShow: state => state.selectListShow,
-      weatherControlShow: state => state.weatherControlShow
+      videoPopupShow: (state) => state.popup.videoPopupShow,
+      echartsPopupShow: (state) => state.popup.echartsPopupShow,
+      monitorPopupShow: (state) => state.popup.monitorPopupShow,
+      facePopupShow: (state) => state.popup.facePopupShow,
+      carPopupShow: (state) => state.popup.carPopupShow,
+      echarts: (state) => state.popup.echarts,
+      selectListShow: (state) => state.selectListShow,
+      weatherControlShow: (state) => state.weatherControlShow
     })
   },
   methods: {
-    hideModel () {
-      // let gameInstance = this.$el.getElementsByTagName('iframe')[0].contentWindow.gameInstance
-      // gameInstance.SendMessage('Net', 'HideAllStation')
-      // let gameInstance = this.$el.getElementsByTagName('iframe')[0].contentWindow
-      // gameInstance.SelectMarkById('建筑_936')
-      // let data = { "Distance": "3.497281", "PosX": "121.6851", "PosY": "31.08658", "Time": 1.1574446, "X": "31", "Y": "40" }
-      // unityInstance.SendMessage("Net", "SetCameraSettingWithCoordinate", data)
-    },
     login () {
       login({
         name: 'admin',
@@ -67,12 +58,12 @@ export default {
         this.mutLogin(res.data)
       })
     },
-    dddd () {
+    hideSelectList () {
       if (this.selectListShow) {
         this.hideSelectList()
       }
     },
-    ...mapMutations(['mutLogin', 'hideSelectList'])
+    ...mapMutations(['mutLogin', 'hideSelectList', 'getIfr'])
   },
   components: {
     Header: () => import('@/common/components/Header'),
@@ -91,8 +82,8 @@ export default {
     _this.timer = setInterval(() => {
       _this.login()
     }, 63103)
-    // console.log(document.body.offsetWidth)
-    // console.log(document.body.clientWidth)
+    let ifr = document.getElementById('map').contentWindow
+    this.getIfr(ifr)
   },
   beforeDestroy () {
     clearInterval(this.timer)
@@ -100,7 +91,7 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus">
+<style scoped lang='stylus'>
 .main
   width: 100vw
   height: 100vh

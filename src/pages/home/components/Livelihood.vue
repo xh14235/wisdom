@@ -68,7 +68,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['tab_right']),
+    ...mapState({
+      tab_right: state => state.tab_right,
+      ifr: state => state.map.ifr
+    }),
     view () {
       let component = ''
       // 动态切换组件
@@ -101,6 +104,40 @@ export default {
     ...mapMutations(['change_right_tab']),
     changeTab (id) {
       this.change_right_tab(id)
+      this.ifr.clearMarks()
+      let data = []
+      switch (id) {
+        case '001':
+          this.ifr.setCameraSettingWithCoordinate({ 'Distance': '3.497281', 'PosX': '121.6851', 'PosY': '31.08658', 'Time': 1.1574446, 'X': '31', 'Y': '40' })
+          data = [
+            {
+              Height: '0.4672162',
+              Id: '0',
+              Latitude: '31.08907',
+              Longitude: '121.6869',
+              Name: '建筑_0',
+              Type: '建 筑'
+            }
+          ]
+          this.ifr.setMarkData(data)
+          break
+        case '002':
+          this.ifr.setCameraSettingWithCoordinate({ 'Distance': '3.417281', 'PosX': '121.6851', 'PosY': '31.08658', 'Time': 1.1574446, 'X': '31', 'Y': '40' })
+          data = [
+            {
+              Height: '0.2458479',
+              Id: '2',
+              Latitude: '31.08621',
+              Longitude: '121.6868',
+              Name: '建筑_2',
+              Type: '建筑'
+            }
+          ]
+          this.ifr.setMarkData(data)
+          break
+        default:
+          break
+      }
     }
   }
 }

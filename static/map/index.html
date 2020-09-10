@@ -45,7 +45,7 @@
     console.log(id)
   }
 
-  //对摄像机进行运镜（按照经纬度）,前端调用3d
+  //对摄像机进行运镜（按照经纬度）,前端调用3d，跳转
   function setCameraSettingWithCoordinate(data){
     if (isLoaded){
       var data = JSON.stringify(data)
@@ -55,7 +55,7 @@
     }
   }
 
-   //打标,前端调用3d
+   //打标,前端调用3d，撒点
    function setMarkData(data){
     if (isLoaded){
       var data = JSON.stringify(data);
@@ -65,7 +65,7 @@
     }
   }
 
-  //清空3d场景中的打标
+  //清空3d场景中的打标，清除撒点
   function clearMarks(){
     if (isLoaded){
       unityInstance.SendMessage("Net","ClearMarkData");
