@@ -174,8 +174,7 @@ export default {
     // 车位剩余情况
     getParking () {
       tripParking().then((res) => {
-        // console.log(res.data)
-        // this.datafirst.echarts3 = []
+        this.datafirst.echarts3 = []
         for (let i = 0; i < res.data.length; i++) {
           this.datafirst.echarts3.push({
             echarts: {
@@ -294,6 +293,7 @@ export default {
       let time = new Date()
       let year = time.getFullYear()
       tripPower({
+        labelId: '',
         year: year
       }).then((res) => {
         console.log(res)
@@ -350,7 +350,6 @@ export default {
   },
   mounted () {
     this.changeTab(0)
-    // this.getLampState()
   },
   // 页面切换时，停止或重启定时器
   deactivated () {

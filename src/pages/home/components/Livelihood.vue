@@ -1,18 +1,18 @@
 <template>
-  <div class="right-wrapper">
-    <div class="right-tab">
+  <div class='right-wrapper'>
+    <div class='right-tab'>
       <span
-        class="right-item"
+        class='right-item'
         :class="{'item-active': item.id === tab_right}"
-        v-for="item of tabRight"
-        :key="item.id"
-        @click="changeTab(item.id)"
+        v-for='item of tabRight'
+        :key='item.id'
+        @click='changeTab(item.id)'
       >{{item.info}}</span>
     </div>
-    <div class="right-box">
-      <transition name="fadeRight" mode="out-in">
+    <div class='right-box'>
+      <transition name='fadeRight' mode='out-in'>
         <keep-alive>
-          <component :is="view"></component>
+          <component :is='view'></component>
         </keep-alive>
       </transition>
     </div>
@@ -105,45 +105,172 @@ export default {
     changeTab (id) {
       this.change_right_tab(id)
       this.ifr.clearMarks()
-      let data = []
+      let markData = []
+      let positionData = {}
       switch (id) {
         case '001':
-          this.ifr.setCameraSettingWithCoordinate({ 'Distance': '3.497281', 'PosX': '121.6851', 'PosY': '31.08658', 'Time': 1.1574446, 'X': '31', 'Y': '40' })
-          data = [
+          markData = [
             {
-              Height: '0.4672162',
-              Id: '0',
-              Latitude: '31.08907',
-              Longitude: '121.6869',
-              Name: '建筑_0',
-              Type: '建 筑'
+              'Height': '0.2',
+              'Id': '1111',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '监控',
+              'Type': '监控',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
             }
           ]
-          this.ifr.setMarkData(data)
+          positionData = {
+            'Distance': '3.497281',
+            'PosX': '121.6851',
+            'PosY': '31.08658',
+            'Time': 1.1574446,
+            'X': '31',
+            'Y': '40'
+          }
           break
         case '002':
-          this.ifr.setCameraSettingWithCoordinate({ 'Distance': '3.417281', 'PosX': '121.6851', 'PosY': '31.08658', 'Time': 1.1574446, 'X': '31', 'Y': '40' })
-          data = [
+          markData = [
+            // {
+            //   'Height': '0.2',
+            //   'Id': '2',
+            //   'Latitude': '31.08831',
+            //   'Longitude': '121.6843',
+            //   'Name': '水质监测点',
+            //   'Type': '水质监测点',
+            //   'Value': '36kW',
+            //   'Other': []
+            // },
+            // {
+            //   'Height': '0.2',
+            //   'Id': '2',
+            //   'Latitude': '31.08831',
+            //   'Longitude': '121.6843',
+            //   'Name': '空气监测点',
+            //   'Type': '空气监测点',
+            //   'Value': '36kW',
+            //   'Other': []
+            // },
             {
-              Height: '0.2458479',
-              Id: '2',
-              Latitude: '31.08621',
-              Longitude: '121.6868',
-              Name: '建筑_2',
-              Type: '建筑'
+              'Height': '0.2',
+              'Id': '2222',
+              'Latitude': '31.08831',
+              'Longitude': '121.6843',
+              'Name': '垃圾回收中心',
+              'Type': '垃圾回收中心',
+              'Value': '36kW',
+              'Other': []
             }
           ]
-          this.ifr.setMarkData(data)
+          positionData = {
+            'Distance': '5',
+            'PosX': '121.6851',
+            'PosY': '31.08658',
+            'Time': 1.1574446,
+            'X': '31',
+            'Y': '40'
+          }
+          break
+        case '003':
+          markData = [
+            {
+              'Height': '0.2',
+              'Id': '1222',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '停车位',
+              'Type': '停车位',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': '3.497281',
+            'PosX': '121.6851',
+            'PosY': '31.08658',
+            'Time': 1.1574446,
+            'X': '31',
+            'Y': '40'
+          }
+          break
+        case '004':
+          markData = [
+            {
+              'Height': '0.2',
+              'Id': '1333',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '网红打卡点',
+              'Type': '网红打卡点',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': '3.497281',
+            'PosX': '121.6851',
+            'PosY': '31.08658',
+            'Time': 1.1574446,
+            'X': '31',
+            'Y': '40'
+          }
+          break
+        case '005':
+          markData = [
+            {
+              'Height': '0.2',
+              'Id': '13334',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '玫瑰工坊',
+              'Type': '玫瑰工坊',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': '3.497281',
+            'PosX': '121.6851',
+            'PosY': '31.08658',
+            'Time': 1.1574446,
+            'X': '31',
+            'Y': '40'
+          }
+          break
+        case '006':
+          markData = [
+            {
+              'Height': '0.2',
+              'Id': '21119',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '936能源馆',
+              'Type': '936能源馆',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': '3.497281',
+            'PosX': '121.6851',
+            'PosY': '31.08658',
+            'Time': 1.1574446,
+            'X': '31',
+            'Y': '40'
+          }
           break
         default:
           break
       }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
     }
   }
 }
 </script>
 
-<style scoped lang="stylus">
+<style scoped lang='stylus'>
 @import '~@/assets/css/common.styl'
 .right-wrapper
   width: 100%

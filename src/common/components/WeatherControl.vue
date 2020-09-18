@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'WeatherControl',
   data () {
@@ -73,12 +74,49 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState({
+      ifr: state => state.map.ifr
+    })
+  },
   methods: {
     changeTab1 (index) {
       this.tab1 = index
+      switch (index) {
+        case 0:
+          this.ifr.setDayTime('9')
+          break
+        case 1:
+          this.ifr.setDayTime('12')
+          break
+        case 2:
+          this.ifr.setDayTime('15')
+          break
+        case 3:
+          this.ifr.setDayTime('24')
+          break
+        default:
+          break
+      }
     },
     changeTab2 (index) {
       this.tab2 = index
+      switch (index) {
+        case 0:
+          this.ifr.setWeather('无')
+          break
+        case 1:
+          this.ifr.setWeather('雨')
+          break
+        case 2:
+          this.ifr.setWeather('雪')
+          break
+        case 3:
+          this.ifr.setWeather('雾霾')
+          break
+        default:
+          break
+      }
     }
   }
 }
