@@ -21,11 +21,14 @@
 </template>
 
 <script>
+// import { set } from 'vue/types/umd'
 import { mapState } from 'vuex'
 export default {
   name: 'WeatherControl',
   data () {
     return {
+      hour: 0,
+      timeTimer: null,
       tab1: 0,
       tab2: 0,
       list1: [
@@ -79,9 +82,16 @@ export default {
       ifr: state => state.map.ifr
     })
   },
+  watch: {
+    hour () {
+      let time = this.hour.toString()
+      this.ifr.setDayTime(time)
+    }
+  },
   methods: {
     changeTab1 (index) {
       this.tab1 = index
+      this.tab2 = 0
       switch (index) {
         case 0:
           this.ifr.setDayTime('9')
@@ -117,7 +127,30 @@ export default {
         default:
           break
       }
+    },
+    getHour () {
+      let time = new Date()
+      this.hour = time.getHours()
+      if (this.hour >= 6 && this.hour < 11) {
+        this.tab1 = 0
+      } else if (this.hour >= 11 && this.hour < 14) {
+        this.tab1 = 1
+      } else if (this.hour >= 14 && this.hour < 18) {
+        this.tab1 = 2
+      } else {
+        this.tab1 = 3
+      }
     }
+  },
+  mounted () {
+    this.getHour()
+    this.timeTimer = setInterval(() => {
+      this.getHour()
+    }, 120000)
+  },
+  beforeDestroy () {
+    clearInterval(this.timeTimer)
+    this.timeTimer = null
   }
 }
 </script>

@@ -56,7 +56,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['tab_left']),
+    ...mapState({
+      tab_left: state => state.tab_left,
+      ifr: state => state.map.ifr
+    }),
     view () {
       let component = ''
       // 动态切换组件
@@ -83,6 +86,82 @@ export default {
     ...mapMutations(['change_left_tab']),
     changeTab (id) {
       this.change_left_tab(id)
+      this.ifr.clearMarks()
+      let markData = []
+      let positionData = {}
+      let energyTab = localStorage.energyTab
+      switch (id) {
+        case '001':
+          if (energyTab === '0') {
+            markData = [
+              {
+                'Height': '0.2',
+                'Id': '1111',
+                'Latitude': '31.08706',
+                'Longitude': '121.6848',
+                'Name': '监控',
+                'Type': '监控',
+                'Value': '36kW',
+                'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+              }
+            ]
+            positionData = {
+              'Distance': '3.497281',
+              'PosX': '121.6851',
+              'PosY': '31.08658',
+              'Time': 1.1574446,
+              'X': '31',
+              'Y': '40'
+            }
+          } else if (energyTab === '1') {
+            markData = [
+              {
+                'Height': '0.2',
+                'Id': '1222',
+                'Latitude': '31.08706',
+                'Longitude': '121.6848',
+                'Name': '停车位',
+                'Type': '停车位',
+                'Value': '36kW',
+                'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+              }
+            ]
+            positionData = {
+              'Distance': '3.497281',
+              'PosX': '121.6851',
+              'PosY': '31.08658',
+              'Time': 1.1574446,
+              'X': '31',
+              'Y': '40'
+            }
+          } else {
+            markData = [
+              {
+                'Height': '0.2',
+                'Id': '21119',
+                'Latitude': '31.08706',
+                'Longitude': '121.6848',
+                'Name': '936能源馆',
+                'Type': '936能源馆',
+                'Value': '36kW',
+                'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+              }
+            ]
+            positionData = {
+              'Distance': '3.497281',
+              'PosX': '121.6851',
+              'PosY': '31.08658',
+              'Time': 1.1574446,
+              'X': '31',
+              'Y': '40'
+            }
+          }
+          break
+        default:
+          break
+      }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
     }
   }
 }

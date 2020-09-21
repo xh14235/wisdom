@@ -198,7 +198,9 @@ export default {
     let _this = this
     _this.getPodiumList()
     setTimeout(() => {
-      _this.getRanking(_this.podiumList[_this.podiumTab].facilityId)
+      if (_this.podiumList.length) {
+        _this.getRanking(_this.podiumList[_this.podiumTab].facilityId)
+      }
     }, 100)
     if (_this.timer) clearInterval(_this.timer)
     _this.timer = setInterval(() => {

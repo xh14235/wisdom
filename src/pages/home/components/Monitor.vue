@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'Monitor',
   components: {
@@ -61,6 +62,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      ifr: state => state.map.ifr
+    }),
     translate () {
       return 'translate(0, -' + this.original_hei * this.current_index + 'vh)'
     }
@@ -72,11 +76,92 @@ export default {
         this.list[index].active = true
         this.current_index = index
         this.subTitleShow = index
+        localStorage.energyTab = index
+        this.gisMethods(index)
       } else {
         this.list[index].active = false
         this.current_index = 0
         this.subTitleShow = -1
+        localStorage.energyTab = 0
       }
+    },
+    // 地图方法
+    gisMethods (index) {
+      this.ifr.clearMarks()
+      let markData = []
+      let positionData = {}
+      switch (index) {
+        case 0:
+          markData = [
+            {
+              'Height': '0.2',
+              'Id': '21119',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '936能源馆',
+              'Type': '936能源馆',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': '3.497281',
+            'PosX': '121.6851',
+            'PosY': '31.08658',
+            'Time': 1.1574446,
+            'X': '31',
+            'Y': '40'
+          }
+          break
+        case 1:
+          markData = [
+            {
+              'Height': '0.2',
+              'Id': '1222',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '停车位',
+              'Type': '停车位',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': '3.497281',
+            'PosX': '121.6851',
+            'PosY': '31.08658',
+            'Time': 1.1574446,
+            'X': '31',
+            'Y': '40'
+          }
+          break
+        case 2:
+          markData = [
+            {
+              'Height': '0.2',
+              'Id': '13334',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '玫瑰工坊',
+              'Type': '玫瑰工坊',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': '3.497281',
+            'PosX': '121.6851',
+            'PosY': '31.08658',
+            'Time': 1.1574446,
+            'X': '31',
+            'Y': '40'
+          }
+          break
+        default:
+          break
+      }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
     },
     // 在组件title中加上当前文字
     changeTitle1 (msg) {
@@ -88,6 +173,9 @@ export default {
     changeTitle3 (msg) {
       this.subTitle3 = msg
     }
+  },
+  mounted () {
+    localStorage.energyTab = 0
   }
 }
 </script>

@@ -140,7 +140,8 @@ export default {
       blue: state => state.color.blue,
       yellow: state => state.color.yellow,
       bgreen: state => state.color.bgreen,
-      red: state => state.color.red
+      red: state => state.color.red,
+      ifr: state => state.map.ifr
     })
   },
   methods: {
@@ -221,6 +222,107 @@ export default {
         default:
           break
       }
+      this.gisMethods(index)
+    },
+    // 地图方法
+    gisMethods (index) {
+      this.ifr.clearMarks()
+      let markData = []
+      let positionData = {}
+      switch (index) {
+        case 0:
+          markData = [
+            {
+              'Height': '0.2',
+              'Id': '21119',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '936能源馆',
+              'Type': '936能源馆',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': '3.497281',
+            'PosX': '121.6851',
+            'PosY': '31.08658',
+            'Time': 1.1574446,
+            'X': '31',
+            'Y': '40'
+          }
+          break
+        case 1:
+          markData = [
+            {
+              'Height': '0.2',
+              'Id': '1222',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '停车位',
+              'Type': '停车位',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': '3.497281',
+            'PosX': '121.6851',
+            'PosY': '31.08658',
+            'Time': 1.1574446,
+            'X': '31',
+            'Y': '40'
+          }
+          break
+        case 2:
+          markData = [
+            {
+              'Height': '0.2',
+              'Id': '13334',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '玫瑰工坊',
+              'Type': '玫瑰工坊',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': '3.497281',
+            'PosX': '121.6851',
+            'PosY': '31.08658',
+            'Time': 1.1574446,
+            'X': '31',
+            'Y': '40'
+          }
+          break
+        case 3:
+          markData = [
+            {
+              'Height': '0.2',
+              'Id': '13334',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '充电桩',
+              'Type': '充电桩',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': '3.497281',
+            'PosX': '121.6851',
+            'PosY': '31.08658',
+            'Time': 1.1574446,
+            'X': '31',
+            'Y': '40'
+          }
+          break
+        default:
+          break
+      }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
     },
     // 判断分页数据是否为空，返回boolean
     getBool (obj) {

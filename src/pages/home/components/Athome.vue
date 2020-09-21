@@ -187,7 +187,8 @@ export default {
       bgreen: state => state.color.bgreen,
       red: state => state.color.red,
       white: state => state.color.white,
-      lgreen: state => state.color.lgreen
+      lgreen: state => state.color.lgreen,
+      ifr: state => state.map.ifr
     })
   },
   methods: {
@@ -201,6 +202,19 @@ export default {
         this.homeList[i].active = false
       }
       this.homeList[index].active = true
+      switch (index) {
+        case 0:
+          this.ifr.setPowerBuilding('节能')
+          break
+        case 1:
+          this.ifr.setPowerBuilding('常规')
+          break
+        case 2:
+          this.ifr.setPowerBuilding('豪华')
+          break
+        default:
+          break
+      }
     },
     changeDate (code) {
       this.dateType = code
@@ -297,6 +311,8 @@ export default {
       this.getEcharts()
       this.getCostList()
     })
+    this.changeHome(0)
+    this.ifr.activePipeNetWork('true')
   },
   // 页面切换时，停止或重启定时器
   deactivated () {

@@ -352,8 +352,8 @@ export default {
   },
   // 页面切换时，停止或重启定时器
   deactivated () {
-    clearInterval(this.analysistimer)
-    this.analysistimer = null
+    clearInterval(this.operationtimer)
+    this.operationtimer = null
   },
   activated () {
     if (this.operationtimer) clearInterval(this.operationtimer)
