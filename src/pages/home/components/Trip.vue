@@ -20,6 +20,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { getCentrePoint } from '@/request/common-api.js'
 import { tripRoad, tripParking, tripElectric, tripPower } from '@/request/trip-api'
 import img1 from '@/assets/img/charging.png'
 import img2 from '@/assets/img/electric-car.png'
@@ -71,7 +72,13 @@ export default {
       blue: state => state.color.blue,
       yellow: state => state.color.yellow,
       bgreen: state => state.color.bgreen,
-      red: state => state.color.red
+      red: state => state.color.red,
+      ifr: state => state.map.ifr,
+      iconHeight: state => state.map.iconHeight,
+      jumpTime: state => state.map.jumpTime,
+      viewX: state => state.map.viewX,
+      viewY: state => state.map.viewY,
+      viewZ: state => state.map.viewZ
     })
   },
   methods: {
@@ -103,6 +110,63 @@ export default {
         default:
           break
       }
+      this.gisMethods(index)
+    },
+    // 地图方法
+    gisMethods (index) {
+      this.ifr.clearMarks()
+      let markData = []
+      let positionData = {}
+      switch (index) {
+        case 0:
+          markData = [
+            {
+              'Height': this.iconHeight,
+              'Id': '21119',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '936能源馆',
+              'Type': '936能源馆',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
+          }
+          break
+        case 1:
+          markData = [
+            {
+              'Height': this.iconHeight,
+              'Id': '1222',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '停车位',
+              'Type': '停车位',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
+          }
+          break
+        default:
+          break
+      }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
     },
     getBool (obj) {
       let boo = 0

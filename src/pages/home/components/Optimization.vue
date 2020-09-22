@@ -23,7 +23,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getTestList } from '@/request/common-api.js'
+import { getTestList, getCentrePoint } from '@/request/common-api.js'
 import { optenergy, optefficiency, optsave, optwork, optprice } from '@/request/optimization-api'
 export default {
   name: 'Optimization',
@@ -86,7 +86,13 @@ export default {
       bgreen: state => state.color.bgreen,
       red: state => state.color.red,
       white: state => state.color.white,
-      lgreen: state => state.color.lgreen
+      lgreen: state => state.color.lgreen,
+      ifr: state => state.map.ifr,
+      iconHeight: state => state.map.iconHeight,
+      jumpTime: state => state.map.jumpTime,
+      viewX: state => state.map.viewX,
+      viewY: state => state.map.viewY,
+      viewZ: state => state.map.viewZ
     })
   },
   methods: {
@@ -155,8 +161,65 @@ export default {
         default:
           break
       }
+      this.gisMethods(index)
     },
-    // 判断分页数据是否为空，返回boolean
+    // 地图方法
+    gisMethods (index) {
+      this.ifr.clearMarks()
+      let markData = []
+      let positionData = {}
+      switch (index) {
+        case 0:
+          markData = [
+            {
+              'Height': this.iconHeight,
+              'Id': '21119',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '936能源馆',
+              'Type': '936能源馆',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
+          }
+          break
+        case 1:
+          markData = [
+            {
+              'Height': this.iconHeight,
+              'Id': '1222',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '停车位',
+              'Type': '停车位',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
+          }
+          break
+        default:
+          break
+      }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
+    },
+    // 根据下拉框组件传来的数据改变视图
     getBool (obj) {
       let boo = 0
       for (let item in obj) {

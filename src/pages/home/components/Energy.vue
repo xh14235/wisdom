@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { getCentrePoint } from '@/request/common-api'
 import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Energy',
@@ -58,7 +59,12 @@ export default {
   computed: {
     ...mapState({
       tab_left: state => state.tab_left,
-      ifr: state => state.map.ifr
+      ifr: state => state.map.ifr,
+      iconHeight: state => state.map.iconHeight,
+      jumpTime: state => state.map.jumpTime,
+      viewX: state => state.map.viewX,
+      viewY: state => state.map.viewY,
+      viewZ: state => state.map.viewZ
     }),
     view () {
       let component = ''
@@ -95,7 +101,7 @@ export default {
           if (energyTab === '0') {
             markData = [
               {
-                'Height': '0.2',
+                'Height': this.iconHeight,
                 'Id': '1111',
                 'Latitude': '31.08706',
                 'Longitude': '121.6848',
@@ -106,17 +112,17 @@ export default {
               }
             ]
             positionData = {
-              'Distance': '3.497281',
-              'PosX': '121.6851',
-              'PosY': '31.08658',
-              'Time': 1.1574446,
-              'X': '31',
-              'Y': '40'
+              'Distance': this.viewZ,
+              'PosX': getCentrePoint(markData).x,
+              'PosY': getCentrePoint(markData).y,
+              'Time': this.jumpTime,
+              'X': this.viewX,
+              'Y': this.viewY
             }
           } else if (energyTab === '1') {
             markData = [
               {
-                'Height': '0.2',
+                'Height': this.iconHeight,
                 'Id': '1222',
                 'Latitude': '31.08706',
                 'Longitude': '121.6848',
@@ -127,17 +133,17 @@ export default {
               }
             ]
             positionData = {
-              'Distance': '3.497281',
-              'PosX': '121.6851',
-              'PosY': '31.08658',
-              'Time': 1.1574446,
-              'X': '31',
-              'Y': '40'
+              'Distance': this.viewZ,
+              'PosX': getCentrePoint(markData).x,
+              'PosY': getCentrePoint(markData).y,
+              'Time': this.jumpTime,
+              'X': this.viewX,
+              'Y': this.viewY
             }
           } else {
             markData = [
               {
-                'Height': '0.2',
+                'Height': this.iconHeight,
                 'Id': '21119',
                 'Latitude': '31.08706',
                 'Longitude': '121.6848',
@@ -148,13 +154,79 @@ export default {
               }
             ]
             positionData = {
-              'Distance': '3.497281',
-              'PosX': '121.6851',
-              'PosY': '31.08658',
-              'Time': 1.1574446,
-              'X': '31',
-              'Y': '40'
+              'Distance': this.viewZ,
+              'PosX': getCentrePoint(markData).x,
+              'PosY': getCentrePoint(markData).y,
+              'Time': this.jumpTime,
+              'X': this.viewX,
+              'Y': this.viewY
             }
+          }
+          break
+        case '002':
+          markData = [
+            {
+              'Height': this.iconHeight,
+              'Id': '21119',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '936能源馆',
+              'Type': '936能源馆',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
+          }
+          break
+        case '003':
+          markData = [
+            {
+              'Height': this.iconHeight,
+              'Id': '21119',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '监控',
+              'Type': '监控',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
+          }
+          break
+        case '004':
+          markData = [
+            {
+              'Height': this.iconHeight,
+              'Id': '21119',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '936能源馆',
+              'Type': '936能源馆',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
           }
           break
         default:

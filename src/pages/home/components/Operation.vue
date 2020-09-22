@@ -28,7 +28,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getTestList } from '@/request/common-api.js'
+import { getTestList, getCentrePoint } from '@/request/common-api.js'
 import { supHead1, suphotline, supcoldline, suphotwaterline } from '@/request/supply-api'
 import { operationCube } from '@/request/operation-api'
 export default {
@@ -75,7 +75,13 @@ export default {
       blue: state => state.color.blue,
       yellow: state => state.color.yellow,
       bgreen: state => state.color.bgreen,
-      red: state => state.color.red
+      red: state => state.color.red,
+      ifr: state => state.map.ifr,
+      iconHeight: state => state.map.iconHeight,
+      jumpTime: state => state.map.jumpTime,
+      viewX: state => state.map.viewX,
+      viewY: state => state.map.viewY,
+      viewZ: state => state.map.viewZ
     })
   },
   methods: {
@@ -100,6 +106,85 @@ export default {
           this.operationLine(3)
         }, this.duration)
       }
+      this.gisMethods(index)
+    },
+    // 地图方法
+    gisMethods (index) {
+      this.ifr.clearMarks()
+      let markData = []
+      let positionData = {}
+      switch (index) {
+        case 0:
+          markData = [
+            {
+              'Height': this.iconHeight,
+              'Id': '21119',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '936能源馆',
+              'Type': '936能源馆',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
+          }
+          break
+        case 1:
+          markData = [
+            {
+              'Height': this.iconHeight,
+              'Id': '1222',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '停车位',
+              'Type': '停车位',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
+          }
+          break
+        case 2:
+          markData = [
+            {
+              'Height': this.iconHeight,
+              'Id': '13334',
+              'Latitude': '31.08706',
+              'Longitude': '121.6848',
+              'Name': '玫瑰工坊',
+              'Type': '玫瑰工坊',
+              'Value': '36kW',
+              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+            }
+          ]
+          positionData = {
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
+          }
+          break
+        default:
+          break
+      }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
     },
     // 根据下拉框组件传来的数据改变视图
     changeSelect1 (code) {

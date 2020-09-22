@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { getCentrePoint } from '@/request/common-api'
 import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Livelihood',
@@ -70,7 +71,12 @@ export default {
   computed: {
     ...mapState({
       tab_right: state => state.tab_right,
-      ifr: state => state.map.ifr
+      ifr: state => state.map.ifr,
+      iconHeight: state => state.map.iconHeight,
+      jumpTime: state => state.map.jumpTime,
+      viewX: state => state.map.viewX,
+      viewY: state => state.map.viewY,
+      viewZ: state => state.map.viewZ
     }),
     view () {
       let component = ''
@@ -111,7 +117,7 @@ export default {
         case '001':
           markData = [
             {
-              'Height': '0.2',
+              'Height': this.iconHeight,
               'Id': '1111',
               'Latitude': '31.08706',
               'Longitude': '121.6848',
@@ -122,38 +128,38 @@ export default {
             }
           ]
           positionData = {
-            'Distance': '3.497281',
-            'PosX': '121.6851',
-            'PosY': '31.08658',
-            'Time': 1.1574446,
-            'X': '31',
-            'Y': '40'
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
           }
           break
         case '002':
           markData = [
-            // {
-            //   'Height': '0.2',
-            //   'Id': '2',
-            //   'Latitude': '31.08831',
-            //   'Longitude': '121.6843',
-            //   'Name': '水质监测点',
-            //   'Type': '水质监测点',
-            //   'Value': '36kW',
-            //   'Other': []
-            // },
-            // {
-            //   'Height': '0.2',
-            //   'Id': '2',
-            //   'Latitude': '31.08831',
-            //   'Longitude': '121.6843',
-            //   'Name': '空气监测点',
-            //   'Type': '空气监测点',
-            //   'Value': '36kW',
-            //   'Other': []
-            // },
             {
-              'Height': '0.2',
+              'Height': this.iconHeight,
+              'Id': '2',
+              'Latitude': '31.08931',
+              'Longitude': '121.6833',
+              'Name': '水质监测点',
+              'Type': '水质监测点',
+              'Value': '36kW',
+              'Other': []
+            },
+            {
+              'Height': this.iconHeight,
+              'Id': '2',
+              'Latitude': '31.08631',
+              'Longitude': '121.6853',
+              'Name': '空气监测点',
+              'Type': '空气监测点',
+              'Value': '36kW',
+              'Other': []
+            },
+            {
+              'Height': this.iconHeight,
               'Id': '2222',
               'Latitude': '31.08831',
               'Longitude': '121.6843',
@@ -164,40 +170,40 @@ export default {
             }
           ]
           positionData = {
-            'Distance': '5',
-            'PosX': '121.6851',
-            'PosY': '31.08658',
-            'Time': 1.1574446,
-            'X': '31',
-            'Y': '40'
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
           }
           break
         case '003':
           markData = [
             {
-              'Height': '0.2',
+              'Height': this.iconHeight,
               'Id': '1222',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '停车位',
-              'Type': '停车位',
+              'Latitude': '31.08732',
+              'Longitude': '121.6849',
+              'Name': '监控',
+              'Type': '监控',
               'Value': '36kW',
               'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
             }
           ]
           positionData = {
-            'Distance': '3.497281',
-            'PosX': '121.6851',
-            'PosY': '31.08658',
-            'Time': 1.1574446,
-            'X': '31',
-            'Y': '40'
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
           }
           break
         case '004':
           markData = [
             {
-              'Height': '0.2',
+              'Height': this.iconHeight,
               'Id': '1333',
               'Latitude': '31.08706',
               'Longitude': '121.6848',
@@ -208,18 +214,18 @@ export default {
             }
           ]
           positionData = {
-            'Distance': '3.497281',
-            'PosX': '121.6851',
-            'PosY': '31.08658',
-            'Time': 1.1574446,
-            'X': '31',
-            'Y': '40'
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
           }
           break
         case '005':
           markData = [
             {
-              'Height': '0.2',
+              'Height': this.iconHeight,
               'Id': '13334',
               'Latitude': '31.08706',
               'Longitude': '121.6848',
@@ -230,18 +236,18 @@ export default {
             }
           ]
           positionData = {
-            'Distance': '3.497281',
-            'PosX': '121.6851',
-            'PosY': '31.08658',
-            'Time': 1.1574446,
-            'X': '31',
-            'Y': '40'
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
           }
           break
         case '006':
           markData = [
             {
-              'Height': '0.2',
+              'Height': this.iconHeight,
               'Id': '21119',
               'Latitude': '31.08706',
               'Longitude': '121.6848',
@@ -252,19 +258,19 @@ export default {
             }
           ]
           positionData = {
-            'Distance': '3.497281',
-            'PosX': '121.6851',
-            'PosY': '31.08658',
-            'Time': 1.1574446,
-            'X': '31',
-            'Y': '40'
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
           }
           break
         default:
           break
       }
-      this.ifr.setCameraSettingWithCoordinate(positionData)
       this.ifr.setMarkData(markData)
+      this.ifr.setCameraSettingWithCoordinate(positionData)
     }
   }
 }

@@ -33,7 +33,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getTestList } from '@/request/common-api.js'
+import { getTestList, getCentrePoint } from '@/request/common-api.js'
 import { supHead1, supHead2, suphotwaterline, suphotwaterpie, supcoldline, supcoldpie, suphotline, suphotpie, supSecond1, supThird1, supThird2, supForth1 } from '@/request/supply-api'
 export default {
   name: 'Supply',
@@ -141,7 +141,12 @@ export default {
       yellow: state => state.color.yellow,
       bgreen: state => state.color.bgreen,
       red: state => state.color.red,
-      ifr: state => state.map.ifr
+      ifr: state => state.map.ifr,
+      iconHeight: state => state.map.iconHeight,
+      jumpTime: state => state.map.jumpTime,
+      viewX: state => state.map.viewX,
+      viewY: state => state.map.viewY,
+      viewZ: state => state.map.viewZ
     })
   },
   methods: {
@@ -233,7 +238,7 @@ export default {
         case 0:
           markData = [
             {
-              'Height': '0.2',
+              'Height': this.iconHeight,
               'Id': '21119',
               'Latitude': '31.08706',
               'Longitude': '121.6848',
@@ -244,18 +249,18 @@ export default {
             }
           ]
           positionData = {
-            'Distance': '3.497281',
-            'PosX': '121.6851',
-            'PosY': '31.08658',
-            'Time': 1.1574446,
-            'X': '31',
-            'Y': '40'
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
           }
           break
         case 1:
           markData = [
             {
-              'Height': '0.2',
+              'Height': this.iconHeight,
               'Id': '1222',
               'Latitude': '31.08706',
               'Longitude': '121.6848',
@@ -266,18 +271,18 @@ export default {
             }
           ]
           positionData = {
-            'Distance': '3.497281',
-            'PosX': '121.6851',
-            'PosY': '31.08658',
-            'Time': 1.1574446,
-            'X': '31',
-            'Y': '40'
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
           }
           break
         case 2:
           markData = [
             {
-              'Height': '0.2',
+              'Height': this.iconHeight,
               'Id': '13334',
               'Latitude': '31.08706',
               'Longitude': '121.6848',
@@ -288,18 +293,18 @@ export default {
             }
           ]
           positionData = {
-            'Distance': '3.497281',
-            'PosX': '121.6851',
-            'PosY': '31.08658',
-            'Time': 1.1574446,
-            'X': '31',
-            'Y': '40'
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
           }
           break
         case 3:
           markData = [
             {
-              'Height': '0.2',
+              'Height': this.iconHeight,
               'Id': '13334',
               'Latitude': '31.08706',
               'Longitude': '121.6848',
@@ -310,12 +315,12 @@ export default {
             }
           ]
           positionData = {
-            'Distance': '3.497281',
-            'PosX': '121.6851',
-            'PosY': '31.08658',
-            'Time': 1.1574446,
-            'X': '31',
-            'Y': '40'
+            'Distance': this.viewZ,
+            'PosX': getCentrePoint(markData).x,
+            'PosY': getCentrePoint(markData).y,
+            'Time': this.jumpTime,
+            'X': this.viewX,
+            'Y': this.viewY
           }
           break
         default:
