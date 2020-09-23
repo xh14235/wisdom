@@ -37,7 +37,8 @@
 </template>
 
 <script>
-import { login } from '@/request/api'
+// import axios from 'axios'
+import { login } from '@/request/common-api'
 import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Login',
@@ -46,7 +47,7 @@ export default {
       username: localStorage.username || '',
       password: localStorage.password || '',
       checkbox: false,
-      msgInfo: '登录失败！账号或者密码错误！',
+      msgInfo: '',
       msgShow: false,
       timer: null,
       logShow: false,
@@ -80,22 +81,47 @@ export default {
         } else {
           localStorage.password = ''
         }
+
+        // axios.post('http://116.236.30.222:9000/admin/admin/portal/login', {
+        //   username: _this.username,
+        //   password: _this.$getRsaCode(_this.password)
+        // }).then(res => {
+        //   console.log(res)
+        //   if (res.data.code === 200) {
+        //     _this.msgShow = false
+        //     let token = res.data.data.tokenHead + res.data.data.token
+        //     _this.mutLogin(token)
+        //     setTimeout(() => {
+        //       _this.$router.push('/home')
+        //     }, 500)
+        //   } else {
+        //     _this.msgShow = true
+        //     _this.msgInfo = res.data.message
+        //   }
+        // }).catch(error => {
+        //   console.log(error)
+        // })
+
         login({
-          name: _this.username,
-          pwd: _this.$getRsaCode(_this.password)
-          // pwd: _this.password
+          username: _this.username,
+          password: _this.$getRsaCode(_this.password)
         }).then((res) => {
-          // console.log(_this.$getRsaCode(_this.password))
-          if (res.data) {
+          if (res.code === 200) {
             _this.msgShow = false
-            _this.mutLogin(res.data)
+            let token = res.data.tokenHead + res.data.token
+            _this.mutLogin(token)
             setTimeout(() => {
               _this.$router.push('/home')
             }, 500)
           } else {
             _this.msgShow = true
-            _this.msgInfo = res.errorMsg
+            _this.msgInfo = res.message
           }
+        }).catch((error) => {
+          console.log(error)
+          console.log(_this.$getRsaCode(_this.password))
+          this.msgShow = true
+          this.msgInfo = '系统维护中...'
         })
       }, 500)
     },
@@ -173,6 +199,8 @@ export default {
           @media screen and (max-width: 1920px)
             margin-top: 15vh
             font-size: 28px
+          @media screen and (max-width: 1366px)
+            font-size: 24px
         .login-title
           margin-top: 3.6vh
           font-size: 48px
@@ -181,6 +209,8 @@ export default {
           text-shadow: 0px 3px 3px rgba(49,54,60,0.75)
           @media screen and (max-width: 1920px)
             font-size: 36px
+          @media screen and (max-width: 1366px)
+            font-size: 24px
         .login-compony
           margin-top: 17.5vh
           font-size: 14px
@@ -234,6 +264,10 @@ export default {
               top: 1.5vh
               width: 15px
               height: 15px
+            @media screen and (max-width: 1366px)
+              top: 1vh
+              width: 15px
+              height: 15px
         .login-checkbox
           position: relative
           overflow: hidden
@@ -271,6 +305,8 @@ export default {
           @media screen and (max-width: 1920px)
             font-size: 16px
             height: 3.5vh
+          @media screen and (max-width: 1366px)
+            font-size: 14px
         .login-msg
           position: absolute
           top: 23vh

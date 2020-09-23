@@ -272,6 +272,9 @@ export default {
       this.ifr.setMarkData(markData)
       this.ifr.setCameraSettingWithCoordinate(positionData)
     }
+  },
+  mounted () {
+    console.log(this.ifr.isLoaded)
   }
 }
 </script>

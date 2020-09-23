@@ -2,7 +2,7 @@
   <div @click='hideSelectList()'>
     <div class='main'>
       <div class='map'>
-        <iframe ref='map' id='map' src='/static/map/index.html' frameborder='0'></iframe>
+        <iframe ref='map' id='map' src='/static/map/index.html' frameborder='0' @load="ifrLoad"></iframe>
       </div>
       <div class='main-left'>
         <Energy></Energy>
@@ -29,7 +29,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import { login } from '@/request/api'
+import { login } from '@/request/common-api'
 export default {
   name: 'Home',
   data () {
@@ -50,12 +50,16 @@ export default {
     })
   },
   methods: {
+    ifrLoad () {
+      let ifrrr = document.getElementById('map').contentWindow
+      console.log(ifrrr.isLoaded)
+    },
     login () {
       login({
-        name: 'admin',
-        pwd: this.$getRsaCode('123456')
+        username: 'portal',
+        password: this.$getRsaCode('admin123')
       }).then((res) => {
-        this.mutLogin(res.data)
+        this.mutLogin(res.data.tokenHead + res.data.token)
       })
     },
     hideSelectList () {

@@ -9,7 +9,7 @@ export const getTestList = (max, length) => {
   return list
 }
 // 登录 获取token
-export const login = params => post('sso/pub/login', params)
+export const login = params => post('admin/admin/portal/login', params)
 // 能源供给
 // 获取当天分布式能源和外来电数据折现图数据
 export const supHead1 = params => get('energy/api/supply/moment/getForeignAndDistributedEnergy', params)

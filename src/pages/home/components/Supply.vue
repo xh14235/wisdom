@@ -344,6 +344,7 @@ export default {
     // 24小时监测 供电 折线图 数据
     supHead1 () {
       supHead1().then((res) => {
+        console.log(res)
         let xData = []
         let list1 = []
         let list2 = []

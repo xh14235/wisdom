@@ -59,15 +59,23 @@ export default {
   background-size: 100% 100%
   text-align center
   padding-top: 2.5vh
+  @media screen and (max-width: 1366px)
+    padding-top: 1vh
   .header-title
-    bigtitle()
+    font-size: 34px
+    line-height: 35px
     cursor: pointer
     @media screen and (max-width: 1920px)
       font-size: 24px
+    @media screen and (max-width: 1366px)
+      font-size: 22px
   .header-time
     font-size: 18px
     margin-top: 15px
     @media screen and (max-width: 1920px)
       font-size: 16px
       margin-top: 5px
+    @media screen and (max-width: 1366px)
+      font-size: 14px
+      margin-top: 0px
 </style>

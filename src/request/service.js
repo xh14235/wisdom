@@ -12,13 +12,13 @@ if (process.env.NODE_ENV === 'development') {
 
 axios.defaults.timeout = 10000
 
-axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
+axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 axios.interceptors.request.use(
   config => {
     let token = store.state.token
     // let token = localStorage.token
-    config.headers.common['token'] = token
+    config.headers.common['Authorization'] = token
     return config
   },
   error => {

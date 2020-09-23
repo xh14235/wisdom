@@ -9,7 +9,7 @@ export const getTestList = (max, length) => {
   return list
 }
 // 登录 获取token
-export const login = params => post('sso/pub/login', params)
+export const login = params => post('admin/admin/portal/login', params)
 // 获取地图中心点
 export const getCentrePoint = params => {
   let maxA = 0

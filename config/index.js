@@ -6,16 +6,15 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/sso': {
+      '/admin': {
         target: 'http://116.236.30.222:9000',
         changeOrigin: true,
         pathRewrite: {
-          '^/sso': '/sso'
+          '^/admin': '/admin'
         }
       },
       '/energy': {
