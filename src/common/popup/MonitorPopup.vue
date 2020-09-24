@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
   name: 'MonitorPopup',
   data () {
@@ -22,17 +22,13 @@ export default {
       defaultUrl: ''
     }
   },
-  computed: {
-    ...mapState({
-      monitorPopupShow: state => state.popup.monitorPopupShow
-    })
-  },
   methods: {
     ...mapMutations(['hideMonitorPopup'])
   },
   mounted () {
+    this.defaultUrl = 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080&protocol=ws-flv'
     // 萤石云
-    this.defaultUrl = '/static/yingshi/index.html?url=' + localStorage.monitorUrl
+    // this.defaultUrl = '/static/yingshi/index.html?url=' + localStorage.monitorUrl
     // jsmpeg
     // this.defaultUrl = '/static/jsmpeg-master/view-stream.html?url=' + localStorage.monitorUrl
   }
@@ -49,8 +45,8 @@ export default {
   // .popup-top
   .popup-close
     position: absolute
-    top: 20px
-    right: 540px
+    top: 76px
+    right: 960px
     cursor: pointer
     border: 1px solid #ffffff
     border-radius: 50%
@@ -64,8 +60,8 @@ export default {
       right: 160px
   .popup-main
     position: absolute
-    left: 540px
-    top: 58px
+    left: 960px
+    top: 106px
     width: 1920px
     height: 1084px
     // margin: 50px auto

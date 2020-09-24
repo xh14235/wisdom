@@ -2,7 +2,8 @@
   <div @click='hideSelectList()'>
     <div class='main'>
       <div class='map'>
-        <iframe ref='map' id='map' src='/static/map/index.html' frameborder='0' @load="ifrLoad"></iframe>
+        <!-- <iframe ref='map' id='map' src='/static/map/index.html' frameborder='0' @load="ifrLoad"></iframe> -->
+        <iframe ref='map' id='map' src='/static/map/index.html' frameborder='0'></iframe>
       </div>
       <div class='main-left'>
         <Energy></Energy>
@@ -49,10 +50,21 @@ export default {
       weatherControlShow: (state) => state.weatherControlShow
     })
   },
+  // watch: {
+  //   monitorPopupShow () {
+  //     alert(this.monitorPopupShow)
+  //   }
+  // },
   methods: {
-    ifrLoad () {
-      let ifrrr = document.getElementById('map').contentWindow
-      console.log(ifrrr.isLoaded)
+    // ifrLoad () {
+    //   let ifr = document.getElementById('map').contentWindow
+    //   console.log(ifr.isLoaded)
+    // },
+    ifrMessage (e) {
+      // console.log(e.data)
+      if (e.data.markName === '监控') {
+        this.showMonitorPopup()
+      }
     },
     login () {
       login({
@@ -67,7 +79,7 @@ export default {
         this.hideSelectList()
       }
     },
-    ...mapMutations(['mutLogin', 'hideSelectList', 'getIfr'])
+    ...mapMutations(['mutLogin', 'hideSelectList', 'getIfr', 'showMonitorPopup'])
   },
   components: {
     Header: () => import('@/common/components/Header'),
@@ -81,16 +93,19 @@ export default {
     Livelihood: () => import('./components/Livelihood')
   },
   mounted () {
+    // alert(this.monitorPopupShow)
     let _this = this
     _this.login()
     _this.timer = setInterval(() => {
       _this.login()
     }, 63103)
     let ifr = document.getElementById('map').contentWindow
-    this.getIfr(ifr)
+    _this.getIfr(ifr)
+    window.addEventListener('message', _this.ifrMessage, false)
   },
   beforeDestroy () {
     clearInterval(this.timer)
+    window.removeEventListener('message', this.ifrMessage, false)
   }
 }
 </script>

@@ -34,6 +34,7 @@ export default {
   },
   data () {
     return {
+      timer: null,
       tabRight: [
         {
           id: '001',
@@ -274,7 +275,45 @@ export default {
     }
   },
   mounted () {
-    console.log(this.ifr.isLoaded)
+    this.timer = setInterval(() => {
+      let isLoaded = localStorage.isLoaded
+      // console.log(222)
+      // console.log(localStorage.isLoaded)
+      if (isLoaded === 'true') {
+        // alert('caozuo')
+        this.ifr.clearMarks()
+        let markData = []
+        let positionData = {}
+        markData = [
+          {
+            'Height': this.iconHeight,
+            'Id': '21119',
+            'Latitude': '31.08706',
+            'Longitude': '121.6848',
+            'Name': '936能源馆',
+            'Type': '936能源馆',
+            'Value': '36kW',
+            'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
+          }
+        ]
+        positionData = {
+          'Distance': this.viewZ,
+          'PosX': getCentrePoint(markData).x,
+          'PosY': getCentrePoint(markData).y,
+          'Time': this.jumpTime,
+          'X': this.viewX,
+          'Y': this.viewY
+        }
+        this.ifr.setMarkData(markData)
+        this.ifr.setCameraSettingWithCoordinate(positionData)
+        clearInterval(this.timer)
+        this.timer = null
+        localStorage.isLoaded = null
+      }
+      // else {
+      //   console.log(11111)
+      // }
+    }, 5000)
   }
 }
 </script>
@@ -308,7 +347,7 @@ export default {
       @media screen and (max-width: 1920px)
         font-size: 14px
       &.item-active
-        background-image: url('~@/assets/img/tab3.png')
+        background-image: url('~@/assets/img/tab3.gif')
         color: $green
         line-height: 3.33333vh
   .right-box

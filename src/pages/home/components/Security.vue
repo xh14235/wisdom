@@ -202,7 +202,7 @@ export default {
   },
   computed: {
     ...mapState({
-      monitorPopupShow: state => state.popup.monitorPopupShow,
+      // monitorPopupShow: state => state.popup.monitorPopupShow,
       changedVideoName: state => state.popup.changedVideoName
     })
   },

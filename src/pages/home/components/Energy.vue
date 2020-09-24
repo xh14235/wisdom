@@ -268,7 +268,7 @@ export default {
       @media screen and (max-width: 1920px)
         font-size: 14px
       &.item-active
-        background-image: url('~@/assets/img/tab1.png')
+        background-image: url('~@/assets/img/tab1.gif')
         color: $green
         line-height: 3.33333vh
   .left-box

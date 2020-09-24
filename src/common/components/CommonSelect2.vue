@@ -78,10 +78,14 @@ export default {
   },
   mounted () {
     // 获取大分类
-    if (this.largeSelect[0]) {
+    if (this.largeSelect.length) {
       this.largeChosen = this.largeSelect[0]
       this.largeSelect[0].active = true
     }
+    // if (this.smallSelect.length) {
+    //   this.smallChosen = this.smallSelect[0]
+    //   this.smallSelect[0].active = true
+    // }
   }
 }
 </script>

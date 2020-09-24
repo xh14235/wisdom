@@ -135,6 +135,7 @@ export default {
     },
     // 根据下拉框组件传来的数据改变视图
     changeSelect2 (chosen) {
+      console.log(chosen)
       this.building2 = chosen.id
       this.consecondbar()
       this.supelectry()

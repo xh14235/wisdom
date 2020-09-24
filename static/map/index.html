@@ -33,16 +33,17 @@
   //3d场景是否加载完毕，当值为true时，可正常调用3d场景接口
   var isLoaded = false;
 
-
   //U3D调用前端，表明3D场景加载完毕，3d调用前端
   function InitFinished(){
     isLoaded = true
+    localStorage.isLoaded = isLoaded
   }
 
   //U3D点击建筑物或者标签（标签和建筑物看需求是不是要做区分）,3d调用前端
   function SelectMark(markName, id){
     console.log(markName)
     console.log(id)
+    window.top.postMessage({markName, id});
   }
 
   //对摄像机进行运镜（按照经纬度）,前端调用3d

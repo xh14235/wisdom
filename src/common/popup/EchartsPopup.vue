@@ -47,6 +47,7 @@ export default {
   },
   mounted () {
     this.echarts = JSON.parse(localStorage.echarts)
+    console.log(this.echarts)
     this.echarts.id = 'sdfsadfasdfasdfadfasd'
   }
 }
