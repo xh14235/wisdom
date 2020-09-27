@@ -33,7 +33,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getTestList, getCentrePoint } from '@/request/common-api.js'
+import { getTestList } from '@/request/common-api.js'
 import { supHead1, supHead2, suphotwaterline, suphotwaterpie, supcoldline, supcoldpie, suphotline, suphotpie, supSecond1, supThird1, supThird2, supForth1 } from '@/request/supply-api'
 export default {
   name: 'Supply',
@@ -227,7 +227,7 @@ export default {
         default:
           break
       }
-      this.gisMethods(index)
+      // this.gisMethods(index)
     },
     // 地图方法
     gisMethods (index) {
@@ -236,92 +236,20 @@ export default {
       let positionData = {}
       switch (index) {
         case 0:
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '21119',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '936能源馆',
-              'Type': '936能源馆',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['Hours24']
+          positionData = this.ifr.sceneCenterConfig['Hours24']
           break
         case 1:
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '1222',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '停车位',
-              'Type': '停车位',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['villagePower']
+          positionData = this.ifr.sceneCenterConfig['villagePower']
           break
         case 2:
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '13334',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '玫瑰工坊',
-              'Type': '玫瑰工坊',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['PowerCenter936']
+          positionData = this.ifr.sceneCenterConfig['PowerCenter936']
           break
         case 3:
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '13334',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '充电桩',
-              'Type': '充电桩',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['PowerItem936']
+          positionData = this.ifr.sceneCenterConfig['PowerItem936']
           break
         default:
           break
@@ -1038,6 +966,9 @@ export default {
   watch: {
     levelActive () {
       this.tab = 0
+    },
+    tab () {
+      this.gisMethods(this.tab)
     }
   },
   mounted () {

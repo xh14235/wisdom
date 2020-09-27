@@ -68,6 +68,7 @@ export default {
     changeSmall (item, index) {
       this.$emit('changeSmall', item, this.largeChosen)
       this.smallChosen = item
+      // console.log(this.smallChosen)
       for (let i = 0; i < this.smallSelect.length; i++) {
         this.smallSelect[i].active = false
       }

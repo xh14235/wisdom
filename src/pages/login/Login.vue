@@ -146,6 +146,7 @@ export default {
     top: 0
     left: 25%
     width: 50%
+    z-index: 1
   .log-btn
     position: absolute
     bottom: 3vh

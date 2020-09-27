@@ -312,7 +312,7 @@ export default {
       this.getCostList()
     })
     this.changeHome(0)
-    this.ifr.activePipeNetWork('true')
+    // this.ifr.activePipeNetWork('true')
   },
   // 页面切换时，停止或重启定时器
   deactivated () {

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { getCentrePoint } from '@/request/common-api'
+// import { getCentrePoint } from '@/request/common-api'
 import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Energy',
@@ -99,135 +99,27 @@ export default {
       switch (id) {
         case '001':
           if (energyTab === '0') {
-            markData = [
-              {
-                'Height': this.iconHeight,
-                'Id': '1111',
-                'Latitude': '31.08706',
-                'Longitude': '121.6848',
-                'Name': '监控',
-                'Type': '监控',
-                'Value': '36kW',
-                'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-              }
-            ]
-            positionData = {
-              'Distance': this.viewZ,
-              'PosX': getCentrePoint(markData).x,
-              'PosY': getCentrePoint(markData).y,
-              'Time': this.jumpTime,
-              'X': this.viewX,
-              'Y': this.viewY
-            }
+            markData = this.ifr.markConfig['Hours24']
+            positionData = this.ifr.sceneCenterConfig['Hours24']
           } else if (energyTab === '1') {
-            markData = [
-              {
-                'Height': this.iconHeight,
-                'Id': '1222',
-                'Latitude': '31.08706',
-                'Longitude': '121.6848',
-                'Name': '停车位',
-                'Type': '停车位',
-                'Value': '36kW',
-                'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-              }
-            ]
-            positionData = {
-              'Distance': this.viewZ,
-              'PosX': getCentrePoint(markData).x,
-              'PosY': getCentrePoint(markData).y,
-              'Time': this.jumpTime,
-              'X': this.viewX,
-              'Y': this.viewY
-            }
+            markData = this.ifr.markConfig['Watching24']
+            positionData = this.ifr.sceneCenterConfig['Watching24']
           } else {
-            markData = [
-              {
-                'Height': this.iconHeight,
-                'Id': '21119',
-                'Latitude': '31.08706',
-                'Longitude': '121.6848',
-                'Name': '936能源馆',
-                'Type': '936能源馆',
-                'Value': '36kW',
-                'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-              }
-            ]
-            positionData = {
-              'Distance': this.viewZ,
-              'PosX': getCentrePoint(markData).x,
-              'PosY': getCentrePoint(markData).y,
-              'Time': this.jumpTime,
-              'X': this.viewX,
-              'Y': this.viewY
-            }
+            markData = this.ifr.markConfig['Hours24']
+            positionData = this.ifr.sceneCenterConfig['Hours24']
           }
           break
         case '002':
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '21119',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '936能源馆',
-              'Type': '936能源馆',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['allVillage']
+          positionData = this.ifr.sceneCenterConfig['allVillage']
           break
         case '003':
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '21119',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '监控',
-              'Type': '监控',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['Hours24']
+          positionData = this.ifr.sceneCenterConfig['Hours24']
           break
         case '004':
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '21119',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '936能源馆',
-              'Type': '936能源馆',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['itemData']
+          positionData = this.ifr.sceneCenterConfig['itemData']
           break
         default:
           break

@@ -23,7 +23,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getCentrePoint } from '@/request/common-api.js'
+// import { getCentrePoint } from '@/request/common-api.js'
 import { tranallfirst, tranallelectric, tranallhotwater, tranallcold, tranallhot, transinglefirst, transingleelectric, transinglehotwater, transinglecold, transinglehot, tranallcost, transinglecost } from '@/request/transaction-api'
 export default {
   name: 'Transaction',
@@ -140,7 +140,7 @@ export default {
         default:
           break
       }
-      this.gisMethods(index)
+      // this.gisMethods(index)
     },
     // 地图方法
     gisMethods (index) {
@@ -149,48 +149,12 @@ export default {
       let positionData = {}
       switch (index) {
         case 0:
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '21119',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '936能源馆',
-              'Type': '936能源馆',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['itemData']
+          positionData = this.ifr.sceneCenterConfig['itemData']
           break
         case 1:
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '1222',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '停车位',
-              'Type': '停车位',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['itemData']
+          positionData = this.ifr.sceneCenterConfig['itemData']
           break
         default:
           break
@@ -575,6 +539,11 @@ export default {
         ]
         this.datasecond.profit = parseInt(res.data.income) - parseInt(res.data.expend)
       })
+    }
+  },
+  watch: {
+    tab () {
+      this.gisMethods(this.tab)
     }
   },
   mounted () {
