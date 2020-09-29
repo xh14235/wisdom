@@ -144,14 +144,19 @@ export default {
     },
     changeSelect3 (item) {
       this.building3 = item.id
-      // console.log(item)
-      // console.log(this.ifr.markConfig.Watching24)
-      // let arr = this.ifr.markConfig.Watching24
-      // for (let index = 0; index < arr.length; index++) {
-      //   if (arr[index].Name.indexOf(item.name) === -1) {
-      //     console.log(index)
-      //   }
-      // }
+      // 下拉框关联地图
+      this.ifr.clearMarks()
+      let markData = []
+      let arr = this.ifr.markConfig.Watching24
+      for (let index = 0; index < arr.length; index++) {
+        if (arr[index].Name.includes(item.name)) {
+          // console.log(index)
+          markData.push(arr[index])
+        }
+      }
+      this.ifr.setMarkData(markData)
+      this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
+
       this.concomparebuilding()
       this.conthird2()
       this.conthird3()
