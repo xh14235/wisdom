@@ -165,20 +165,72 @@ export default {
     // 根据下拉框组件传来的数据改变视图
     changeSelect1 (code) {
       this.building1 = code.id
+      // 下拉框关联地图
+      this.ifr.clearMarks()
+      let markData = []
+      let arr = this.ifr.markConfig.Watching24
+      for (let index = 0; index < arr.length; index++) {
+        if (arr[index].Name.includes(code.name)) {
+          // console.log(index)
+          markData.push(arr[index])
+        }
+      }
+      this.ifr.setMarkData(markData)
+      this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
+
       this.anafirst3()
     },
     changeSelect2 (code) {
       this.building2 = code.id
+      // 下拉框关联地图
+      this.ifr.clearMarks()
+      let markData = []
+      let arr = this.ifr.markConfig.Watching24
+      for (let index = 0; index < arr.length; index++) {
+        if (arr[index].Name.includes(code.name)) {
+          // console.log(index)
+          markData.push(arr[index])
+        }
+      }
+      this.ifr.setMarkData(markData)
+      this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
+
       this.anasecond1()
     },
     changeSelect31 (code) {
       this.building31 = code.id
       this.compareBuilding1 = code.name
+      // 下拉框关联地图
+      this.ifr.clearMarks()
+      let markData = []
+      let arr = this.ifr.markConfig.Watching24
+      for (let index = 0; index < arr.length; index++) {
+        if (arr[index].Name.includes(code.name)) {
+          // console.log(index)
+          markData.push(arr[index])
+        }
+      }
+      this.ifr.setMarkData(markData)
+      this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
+
       this.anathird1()
     },
     changeSelect32 (code) {
       this.building32 = code.id
       this.compareBuilding2 = code.name
+      // 下拉框关联地图
+      this.ifr.clearMarks()
+      let markData = []
+      let arr = this.ifr.markConfig.Watching24
+      for (let index = 0; index < arr.length; index++) {
+        if (arr[index].Name.includes(code.name)) {
+          // console.log(index)
+          markData.push(arr[index])
+        }
+      }
+      this.ifr.setMarkData(markData)
+      this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
+
       this.getcompare2()
     },
     // 消费个体 用能异常 查看上一个异常信息

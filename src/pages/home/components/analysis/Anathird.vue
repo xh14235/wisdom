@@ -88,8 +88,8 @@ export default {
             name: data[i].facilityName
           })
         }
-        this.largeSelect1.splice(1, 1)
-        this.largeSelect2.splice(1, 1)
+        // this.largeSelect1.splice(1, 1)
+        // this.largeSelect2.splice(1, 1)
       })
     },
     getVenueSelect1 (id) {

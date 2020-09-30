@@ -108,12 +108,38 @@ export default {
     // 根据下拉框组件传来的数据改变视图
     changeSelect1 (chosen) {
       this.building1 = chosen.id
+      // 下拉框关联地图
+      this.ifr.clearMarks()
+      let markData = []
+      let arr = this.ifr.markConfig.Watching24
+      for (let index = 0; index < arr.length; index++) {
+        if (arr[index].Name.includes(chosen.name)) {
+          // console.log(index)
+          markData.push(arr[index])
+        }
+      }
+      this.ifr.setMarkData(markData)
+      this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
+
       this.getBoth(1)
       this.getPrice(1)
       this.optsave()
     },
     changeSelect2 (chosen) {
       this.building2 = chosen.id
+      // 下拉框关联地图
+      this.ifr.clearMarks()
+      let markData = []
+      let arr = this.ifr.markConfig.Watching24
+      for (let index = 0; index < arr.length; index++) {
+        if (arr[index].Name.includes(chosen.name)) {
+          // console.log(index)
+          markData.push(arr[index])
+        }
+      }
+      this.ifr.setMarkData(markData)
+      this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
+
       this.getBoth(2)
       this.getPrice(2)
       this.getSex()
