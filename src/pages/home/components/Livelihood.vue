@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { tripParking } from '@/request/trip-api'
 // import { getCentrePoint } from '@/request/common-api'
 import { mapState, mapMutations } from 'vuex'
 export default {
@@ -111,38 +112,94 @@ export default {
     changeTab (id) {
       this.change_right_tab(id)
       this.ifr.clearMarks()
-      let markData = []
-      let positionData = {}
+      // let markData = []
+      // let positionData = {}
       switch (id) {
         case '001':
-          markData = this.ifr.markConfig['security']
-          positionData = this.ifr.sceneCenterConfig['security']
+          this.getAnfang()
           break
         case '002':
-          markData = this.ifr.markConfig['ecology']
-          positionData = this.ifr.sceneCenterConfig['ecology']
+          this.getShengtai()
           break
         case '003':
-          markData = this.ifr.markConfig['realWatching']
-          positionData = this.ifr.sceneCenterConfig['realWatching']
+          this.getChuxing()
           break
         case '004':
-          markData = this.ifr.markConfig['culturalTourism']
-          positionData = this.ifr.sceneCenterConfig['culturalTourism']
+          this.getWenlv()
           break
         case '005':
-          markData = this.ifr.markConfig['industry']
-          positionData = this.ifr.sceneCenterConfig['industry']
+          this.getChanye()
           break
         case '006':
-          markData = this.ifr.markConfig['homeFurnishing']
-          positionData = this.ifr.sceneCenterConfig['homeFurnishing']
+          this.getJiaju()
           break
         default:
           break
       }
+      // this.ifr.setCameraSettingWithCoordinate(positionData)
+    },
+    gisMethods (markData, positionData) {
       this.ifr.setMarkData(markData)
       this.ifr.setCameraSettingWithCoordinate(positionData)
+    },
+    // 安防
+    getAnfang () {
+      let markData = this.ifr.markConfig['security']
+      let positionData = this.ifr.sceneCenterConfig['security']
+      this.gisMethods(markData, positionData)
+    },
+    // 生态
+    getShengtai () {
+      let markData = this.ifr.markConfig['ecology']
+      let positionData = this.ifr.sceneCenterConfig['ecology']
+      this.gisMethods(markData, positionData)
+    },
+    // 出行
+    getChuxing () {
+      tripParking().then((res) => {
+        // console.log(res)
+        if (res.success) {
+          let data = res.data
+          let markers = this.ifr.markConfig['realWatching']
+          let positionData = this.ifr.sceneCenterConfig['realWatching']
+          let markData = markers.map((item, index) => {
+            for (let i = 0; i < data.length; i++) {
+              if (item.Name.includes(data[i].name)) {
+                item.Other = [
+                  {
+                    'Key': '总车位数',
+                    'Value': '' + data[i].totalNum
+                  },
+                  {
+                    'Key': '剩余车位数',
+                    'Value': '' + data[i].laveNumber
+                  }
+                ]
+              }
+            }
+            return item
+          })
+          this.gisMethods(markData, positionData)
+        }
+      })
+    },
+    // 文旅
+    getWenlv () {
+      let markData = this.ifr.markConfig['culturalTourism']
+      let positionData = this.ifr.sceneCenterConfig['culturalTourism']
+      this.gisMethods(markData, positionData)
+    },
+    // 产业
+    getChanye () {
+      let markData = this.ifr.markConfig['industry']
+      let positionData = this.ifr.sceneCenterConfig['industry']
+      this.gisMethods(markData, positionData)
+    },
+    // 家居
+    getJiaju () {
+      let markData = this.ifr.markConfig['homeFurnishing']
+      let positionData = this.ifr.sceneCenterConfig['homeFurnishing']
+      this.gisMethods(markData, positionData)
     }
   }
 }
