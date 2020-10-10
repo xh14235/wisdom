@@ -1,18 +1,18 @@
 <template>
-  <div class='right-wrapper'>
-    <div class='right-tab'>
+  <div class="right-wrapper">
+    <div class="right-tab">
       <span
-        class='right-item'
+        class="right-item"
         :class="{'item-active': item.id === tab_right}"
-        v-for='item of tabRight'
-        :key='item.id'
-        @click='changeTab(item.id)'
+        v-for="item of tabRight"
+        :key="item.id"
+        @click="changeTab(item.id)"
       >{{item.info}}</span>
     </div>
-    <div class='right-box'>
-      <transition name='fadeRight' mode='out-in'>
+    <div class="right-box">
+      <transition name="fadeRight" mode="out-in">
         <keep-alive>
-          <component :is='view'></component>
+          <component :is="view"></component>
         </keep-alive>
       </transition>
     </div>
@@ -20,8 +20,6 @@
 </template>
 
 <script>
-import { tripParking } from '@/request/trip-api'
-// import { getCentrePoint } from '@/request/common-api'
 import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Livelihood',
@@ -70,18 +68,9 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      tab_right: state => state.tab_right,
-      ifr: state => state.map.ifr,
-      iconHeight: state => state.map.iconHeight,
-      jumpTime: state => state.map.jumpTime,
-      viewX: state => state.map.viewX,
-      viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ
-    }),
+    ...mapState(['tab_right']),
     view () {
       let component = ''
-      // 动态切换组件
       switch (this.tab_right) {
         case '001':
           component = 'Security'
@@ -111,95 +100,6 @@ export default {
     ...mapMutations(['change_right_tab']),
     changeTab (id) {
       this.change_right_tab(id)
-      this.ifr.clearMarks()
-      // let markData = []
-      // let positionData = {}
-      switch (id) {
-        case '001':
-          this.getAnfang()
-          break
-        case '002':
-          this.getShengtai()
-          break
-        case '003':
-          this.getChuxing()
-          break
-        case '004':
-          this.getWenlv()
-          break
-        case '005':
-          this.getChanye()
-          break
-        case '006':
-          this.getJiaju()
-          break
-        default:
-          break
-      }
-      // this.ifr.setCameraSettingWithCoordinate(positionData)
-    },
-    gisMethods (markData, positionData) {
-      this.ifr.setMarkData(markData)
-      this.ifr.setCameraSettingWithCoordinate(positionData)
-    },
-    // 安防
-    getAnfang () {
-      let markData = this.ifr.markConfig['security']
-      let positionData = this.ifr.sceneCenterConfig['security']
-      this.gisMethods(markData, positionData)
-    },
-    // 生态
-    getShengtai () {
-      let markData = this.ifr.markConfig['ecology']
-      let positionData = this.ifr.sceneCenterConfig['ecology']
-      this.gisMethods(markData, positionData)
-    },
-    // 出行
-    getChuxing () {
-      tripParking().then((res) => {
-        // console.log(res)
-        if (res.success) {
-          let data = res.data
-          let markers = this.ifr.markConfig['realWatching']
-          let positionData = this.ifr.sceneCenterConfig['realWatching']
-          let markData = markers.map((item, index) => {
-            for (let i = 0; i < data.length; i++) {
-              if (item.Name.includes(data[i].name)) {
-                item.Other = [
-                  {
-                    'Key': '总车位数',
-                    'Value': '' + data[i].totalNum
-                  },
-                  {
-                    'Key': '剩余车位数',
-                    'Value': '' + data[i].laveNumber
-                  }
-                ]
-              }
-            }
-            return item
-          })
-          this.gisMethods(markData, positionData)
-        }
-      })
-    },
-    // 文旅
-    getWenlv () {
-      let markData = this.ifr.markConfig['culturalTourism']
-      let positionData = this.ifr.sceneCenterConfig['culturalTourism']
-      this.gisMethods(markData, positionData)
-    },
-    // 产业
-    getChanye () {
-      let markData = this.ifr.markConfig['industry']
-      let positionData = this.ifr.sceneCenterConfig['industry']
-      this.gisMethods(markData, positionData)
-    },
-    // 家居
-    getJiaju () {
-      let markData = this.ifr.markConfig['homeFurnishing']
-      let positionData = this.ifr.sceneCenterConfig['homeFurnishing']
-      this.gisMethods(markData, positionData)
     }
   }
 }

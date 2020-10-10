@@ -203,7 +203,8 @@ export default {
   computed: {
     ...mapState({
       // monitorPopupShow: state => state.popup.monitorPopupShow,
-      changedVideoName: state => state.popup.changedVideoName
+      changedVideoName: state => state.popup.changedVideoName,
+      ifr: state => state.map.ifr
     })
   },
   watch: {
@@ -316,11 +317,20 @@ export default {
         }
       ]
     },
-    ...mapMutations(['showVideoPopup', 'showMonitorPopup', 'showFacePopup', 'showCarPopup'])
+    ...mapMutations(['showVideoPopup', 'showMonitorPopup', 'showFacePopup', 'showCarPopup']),
+    // 地图方法
+    gisMethods () {
+      this.ifr.clearMarks()
+      let markData = this.ifr.markConfig['security']
+      let positionData = this.ifr.sceneCenterConfig['security']
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
+    }
   },
   mounted () {
     this.getAbnormalList()
     this.getMonitorList()
+    this.gisMethods()
     if (this.securitytimer) clearInterval(this.securitytimer)
     this.securitytimer = setInterval(() => {
       this.getAbnormalList()
@@ -332,6 +342,7 @@ export default {
     this.securitytimer = null
   },
   activated () {
+    this.gisMethods()
     if (this.securitytimer) clearInterval(this.securitytimer)
     this.securitytimer = setInterval(() => {
       this.getAbnormalList()

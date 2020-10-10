@@ -300,12 +300,21 @@ export default {
       }).then((res) => {
         this.costList = res.data
       })
+    },
+    // 地图方法
+    gisMethods () {
+      this.ifr.clearMarks()
+      let markData = this.ifr.markConfig['homeFurnishing']
+      let positionData = this.ifr.sceneCenterConfig['homeFurnishing']
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
     }
   },
   mounted () {
     this.chosenSelect = this.select[0].id
     this.getEcharts()
     this.getCostList()
+    this.gisMethods()
     if (this.hometimer) clearInterval(this.hometimer)
     this.hometimer = setInterval(() => {
       this.getEcharts()
@@ -320,6 +329,7 @@ export default {
     this.hometimer = null
   },
   activated () {
+    this.gisMethods()
     if (this.hometimer) clearInterval(this.hometimer)
     this.hometimer = setInterval(() => {
       this.getEcharts()

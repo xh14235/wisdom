@@ -203,33 +203,60 @@ export default {
     getParking () {
       tripParking().then((res) => {
         this.datafirst.echarts3 = []
-        for (let i = 0; i < res.data.length; i++) {
+        let data = res.data
+        for (let i = 0; i < data.length; i++) {
           this.datafirst.echarts3.push({
             echarts: {
-              id: res.data[i].id,
-              title: '{name|剩余车位}\n{value|' + res.data[i].laveNumber + '}',
+              id: data[i].id,
+              title: '{name|剩余车位}\n{value|' + data[i].laveNumber + '}',
               color: this.green,
               radius: ['75%', '85%'],
               center: ['50%', '50%'],
               titleTop: '30%',
               titleLeft: '50%',
               data: {
-                name: res.data[i].name,
-                value: res.data[i].laveNumber
+                name: data[i].name,
+                value: data[i].laveNumber
               },
-              allNum: res.data[i].totalNum
+              allNum: data[i].totalNum
             }
           })
         }
+        // 地图跳转
+        this.ifr.clearMarks()
+        let markers = this.ifr.markConfig['realWatching']
+        let markData = markers.map((item, index) => {
+          for (let i = 0; i < data.length; i++) {
+            if (item.Name.includes(data[i].name)) {
+              item.Other = [
+                {
+                  'Key': '总车位数',
+                  'Value': '' + data[i].totalNum
+                },
+                {
+                  'Key': '剩余车位数',
+                  'Value': '' + data[i].laveNumber
+                }
+              ]
+            }
+          }
+          return item
+        })
+        // let markData = this.ifr.markConfig['realWatching']
+        let positionData = this.ifr.sceneCenterConfig['realWatching']
+        this.ifr.setMarkData(markData)
+        this.ifr.setCameraSettingWithCoordinate(positionData)
       })
     },
     // 获取电动车船使用次数及智能路灯数量
     getFrequency () {
       tripElectric().then((res) => {
-        let CHARGE_PILE = res.data.CHARGE_PILE
-        let ELECTRIC_CAR = res.data.ELECTRIC_CAR
-        let ELECTRIC_BOAT = res.data.ELECTRIC_BOAT
-        let SMART_STREET_LIGHT = res.data.SMART_STREET_LIGHT
+        let data = res.data
+        console.log(data)
+        let CHARGE_PILE = data.CHARGE_PILE
+        let ELECTRIC_CAR = data.ELECTRIC_CAR
+        let ELECTRIC_BOAT = data.ELECTRIC_BOAT
+        let SMART_STREET_LIGHT = data.SMART_STREET_LIGHT
         this.datasecond.echarts1 = {
           id: 'trip_second1',
           title: '',
@@ -314,6 +341,54 @@ export default {
             imgUrl: require('../../../assets/img/lamp2.png')
           }
         ]
+        // 地图跳转
+        this.ifr.clearMarks()
+        let markData = this.ifr.markConfig['deviceUse']
+        markData[0].Other = [
+          {
+            'Key': '总数',
+            'Value': CHARGE_PILE.total
+          },
+          {
+            'Key': '剩余数',
+            'Value': CHARGE_PILE.lave
+          }
+        ]
+        markData[1].Other = [
+          {
+            'Key': '总数',
+            'Value': ELECTRIC_BOAT.total
+          },
+          {
+            'Key': '剩余数',
+            'Value': ELECTRIC_BOAT.lave
+          }
+        ]
+        markData[2].Other = [
+          {
+            'Key': '总数',
+            'Value': ELECTRIC_CAR.total
+          },
+          {
+            'Key': '剩余数',
+            'Value': ELECTRIC_CAR.lave
+          }
+        ]
+        markData[3].Other = [
+          {
+            'Key': '总数',
+            'Value': SMART_STREET_LIGHT.total
+          },
+          {
+            'Key': '剩余数',
+            'Value': SMART_STREET_LIGHT.lave
+          }
+        ]
+        // console.log(markData)
+        // let markData = this.ifr.markConfig['deviceUse']
+        let positionData = this.ifr.sceneCenterConfig['deviceUse']
+        this.ifr.setMarkData(markData)
+        this.ifr.setCameraSettingWithCoordinate(positionData)
       })
     },
     // 获取耗电统计
@@ -324,8 +399,8 @@ export default {
         labelId: '',
         year: year
       }).then((res) => {
-        console.log(res)
-        let data = res.data.data || []
+        // console.log(res)
+        let data = res.data || []
         this.datasecond.echarts5 = {
           id: 'trip1',
           title: '',
@@ -376,13 +451,14 @@ export default {
       ]
     }
   },
-  watch: {
-    tab () {
-      this.gisMethods(this.tab)
-    }
-  },
+  // watch: {
+  //   tab () {
+  //     this.gisMethods(this.tab)
+  //   }
+  // },
   mounted () {
     this.changeTab(0)
+    // this.gisMethods(0)
   },
   // 页面切换时，停止或重启定时器
   deactivated () {
@@ -393,16 +469,22 @@ export default {
     if (this.triptimer) clearInterval(this.triptimer)
     switch (this.tab) {
       case 0:
+        this.getRoad()
+        this.getParking()
         this.triptimer = setInterval(() => {
           this.getRoad()
           this.getParking()
         }, this.duration)
+        // this.gisMethods(0)
         break
       case 1:
+        this.getFrequency()
+        this.getConsumePower()
         this.triptimer = setInterval(() => {
           this.getFrequency()
           this.getConsumePower()
         }, this.duration)
+        // this.gisMethods(1)
         break
       default:
         break

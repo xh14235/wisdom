@@ -79,7 +79,8 @@ export default {
       bgreen: state => state.color.bgreen,
       red: state => state.color.red,
       white: state => state.color.white,
-      lgreen: state => state.color.lgreen
+      lgreen: state => state.color.lgreen,
+      ifr: state => state.map.ifr
     }),
     cooLength () {
       return this.cooperativeList.length
@@ -89,6 +90,141 @@ export default {
     }
   },
   methods: {
+    // 前四个echarts图
+    first4 () {
+      let date = new Date()
+      let year = date.getFullYear()
+      // 乡村会客厅echarts图，需传参
+      let promise1 = new Promise((resolve, reject) => {
+        industryfirst2({
+          bfsId: this.industryList[1].id,
+          year
+        }).then(res => {
+          this.echarts1 = {
+            id: 'indfirst1',
+            title: '',
+            legendShow: false,
+            legendData: ['水'],
+            color: [this.green],
+            areaColor: true,
+            smooth: true,
+            yName: '(元)',
+            xData: this.year,
+            // data: [Object.values(COUNTY_MEETING).slice(0, this.year.length)]
+            data: [Object.values(res.data)]
+          }
+          this.totle1 = 0
+          for (let i in res.data) {
+            this.totle1 += res.data[i]
+          }
+          resolve(this.totle1)
+        })
+      })
+      // 玫瑰工坊echarts图，需传参
+      let promise2 = new Promise((resolve, reject) => {
+        industryfirst2({
+          bfsId: this.industryList[0].id,
+          year
+        }).then(res => {
+          this.echarts2 = {
+            id: 'indfirst2',
+            title: '',
+            legendShow: false,
+            legendData: ['水'],
+            color: [this.yellow],
+            areaColor: true,
+            smooth: true,
+            yName: '(元)',
+            xData: this.year,
+            // data: [Object.values(ROSE_SQUARE).slice(0, this.year.length)]
+            data: [Object.values(res.data)]
+          }
+          this.totle2 = 0
+          for (let i in res.data) {
+            this.totle2 += res.data[i]
+          }
+          resolve(this.totle2)
+        })
+      })
+      // 合作社echarts图，需传参
+      let promise3 = new Promise((resolve, reject) => {
+        industrysecond2({
+          labelId: this.industryList[4].labelId,
+          year
+        }).then(res => {
+          this.echarts3 = {
+            id: 'indfirst3',
+            title: '',
+            legendShow: false,
+            legendData: ['水'],
+            color: [this.green],
+            areaColor: true,
+            smooth: true,
+            yName: '(元)',
+            xData: this.year,
+            // data: [Object.values(COOPERATIVE).slice(0, this.year.length)]
+            data: [Object.values(res.data)]
+          }
+          this.totle3 = 0
+          for (let i in res.data) {
+            this.totle3 += res.data[i]
+          }
+          resolve(this.totle3)
+        })
+      })
+      // 网红打卡点echarts图，需传参
+      let promise4 = new Promise((resolve, reject) => {
+        industrysecond2({
+          labelId: this.industryList[11].labelId,
+          year
+        }).then(res => {
+          this.echarts4 = {
+            id: 'indfirst4',
+            title: '',
+            legendShow: false,
+            legendData: ['水'],
+            color: [this.yellow],
+            areaColor: true,
+            smooth: true,
+            yName: '(元)',
+            xData: this.year,
+            // data: [Object.values(INTERNET_CELEBRITIES).slice(0, this.year.length)]
+            data: [Object.values(res.data)]
+          }
+          this.totle4 = 0
+          for (let i in res.data) {
+            this.totle4 += res.data[i]
+          }
+          resolve(this.totle4)
+        })
+      })
+      Promise.all([promise1, promise2, promise3, promise4]).then(res => {
+        console.log(res)
+        this.ifr.clearMarks()
+        let markData = this.ifr.markConfig['industry']
+        markData[0].Other = [
+          {
+            'Key': '销售额',
+            'Value': res[3]
+          }
+        ]
+        markData[1].Other = [
+          {
+            'Key': '销售额',
+            'Value': res[1]
+          }
+        ]
+        markData[2].Other = [
+          {
+            'Key': '销售额',
+            'Value': res[0]
+          }
+        ]
+        let positionData = this.ifr.sceneCenterConfig['industry']
+        this.ifr.setMarkData(markData)
+        this.ifr.setCameraSettingWithCoordinate(positionData)
+      })
+    },
     // 乡村会客厅echarts图，需传参
     meetingRoom () {
       let date = new Date()
@@ -124,6 +260,7 @@ export default {
         bfsId: this.industryList[0].id,
         year
       }).then(res => {
+        console.log(res)
         this.echarts2 = {
           id: 'indfirst2',
           title: '',
@@ -254,6 +391,14 @@ export default {
         }
       })
     }
+    // 地图方法
+    // gisMethods () {
+    //   this.ifr.clearMarks()
+    //   let markData = this.ifr.markConfig['industry']
+    //   let positionData = this.ifr.sceneCenterConfig['industry']
+    //   this.ifr.setCameraSettingWithCoordinate(positionData)
+    //   this.ifr.setMarkData(markData)
+    // }
   },
   watch: {
     cooperativeTab () {
@@ -263,20 +408,24 @@ export default {
       this.getLast2(this.cooperativeList[this.cooperativeTab].id)
     },
     industryLength () {
-      this.meetingRoom()
-      this.rose()
-      this.cooperative()
-      this.celebrity()
+      this.first4()
+      // this.meetingRoom()
+      // this.rose()
+      // this.cooperative()
+      // this.celebrity()
     }
   },
   mounted () {
     this.getCooperative()
     this.getIndustryList()
+    this.first4()
+    // this.gisMethods()
     this.industrytimer = setInterval(() => {
-      this.meetingRoom()
-      this.rose()
-      this.cooperative()
-      this.celebrity()
+      this.first4()
+      // this.meetingRoom()
+      // this.rose()
+      // this.cooperative()
+      // this.celebrity()
       this.getLast2(this.cooperativeList[this.cooperativeTab].id)
     }, this.duration)
   },
@@ -286,12 +435,15 @@ export default {
     this.industrytimer = null
   },
   activated () {
+    // this.gisMethods()
     if (this.industrytimer) clearInterval(this.industrytimer)
+    this.first4()
     this.industrytimer = setInterval(() => {
-      this.meetingRoom()
-      this.rose()
-      this.cooperative()
-      this.celebrity()
+      this.first4()
+      // this.meetingRoom()
+      // this.rose()
+      // this.cooperative()
+      // this.celebrity()
       this.getLast2(this.cooperativeList[this.cooperativeTab].id)
     }, this.duration)
   },

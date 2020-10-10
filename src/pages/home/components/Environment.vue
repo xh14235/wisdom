@@ -132,7 +132,8 @@ export default {
       bgreen: state => state.color.bgreen,
       red: state => state.color.red,
       white: state => state.color.white,
-      lgreen: state => state.color.lgreen
+      lgreen: state => state.color.lgreen,
+      ifr: state => state.map.ifr
     })
   },
   methods: {
@@ -228,6 +229,14 @@ export default {
       ecologyWaterQuality().then((res) => {
         this.waterQuality = res.data
       })
+    },
+    // 地图方法
+    gisMethods () {
+      this.ifr.clearMarks()
+      let markData = this.ifr.markConfig['ecology']
+      let positionData = this.ifr.sceneCenterConfig['ecology']
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
     }
   },
   mounted () {
@@ -236,6 +245,7 @@ export default {
     this.getOtherWeather()
     this.getLineData2()
     this.getWaterQuality()
+    this.gisMethods()
     if (this.environtimer) clearInterval(this.environtimer)
     this.environtimer = setInterval(() => {
       this.getRubbishData()
@@ -251,6 +261,7 @@ export default {
     this.environtimer = null
   },
   activated () {
+    this.gisMethods()
     if (this.environtimer) clearInterval(this.environtimer)
     this.environtimer = setInterval(() => {
       this.getRubbishData()

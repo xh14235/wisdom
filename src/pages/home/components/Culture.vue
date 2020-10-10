@@ -142,7 +142,8 @@ export default {
       yellow: state => state.color.yellow,
       bgreen: state => state.color.bgreen,
       red: state => state.color.red,
-      selectListShow: state => state.selectListShow
+      selectListShow: state => state.selectListShow,
+      ifr: state => state.map.ifr
     }),
     formatTime () {
       let year = this.calendarDate.getFullYear()
@@ -391,7 +392,15 @@ export default {
       this.calendarShow = !this.calendarShow
       this.showSelectList()
     },
-    ...mapMutations(['showSelectList'])
+    ...mapMutations(['showSelectList']),
+    // 地图方法
+    gisMethods () {
+      this.ifr.clearMarks()
+      let markData = this.ifr.markConfig['culturalTourism']
+      let positionData = this.ifr.sceneCenterConfig['culturalTourism']
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
+    }
   },
   mounted () {
     this.getPeoplePeak()
@@ -399,6 +408,7 @@ export default {
     this.getSexAgeData()
     this.getTouristByBuilding()
     this.getRanking()
+    this.gisMethods()
     if (this.cultureTimer) clearInterval(this.cultureTimer)
     this.cultureTimer = setInterval(() => {
       this.getPeoplePeak()
@@ -414,6 +424,7 @@ export default {
     this.cultureTimer = null
   },
   activated () {
+    this.gisMethods()
     if (this.cultureTimer) clearInterval(this.sucultureTimerptimer)
     this.cultureTimer = setInterval(() => {
       this.getPeoplePeak()
