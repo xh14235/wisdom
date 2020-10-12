@@ -149,8 +149,8 @@ export default {
       let positionData = {}
       switch (index) {
         case 0:
-          markData = this.ifr.markConfig['itemData']
-          positionData = this.ifr.sceneCenterConfig['itemData']
+          markData = this.ifr.markConfig['villagePower']
+          positionData = this.ifr.sceneCenterConfig['villagePower']
           break
         case 1:
           markData = this.ifr.markConfig['itemData']
@@ -548,6 +548,7 @@ export default {
   },
   mounted () {
     this.changeTab(0)
+    this.gisMethods(0)
   },
   // 页面切换时，停止或重启定时器
   deactivated () {
@@ -558,6 +559,7 @@ export default {
     if (this.trantimer) clearInterval(this.trantimer)
     switch (this.tab) {
       case 0:
+        this.gisMethods(0)
         this.trantimer = setInterval(() => {
           this.tranallfirst()
           this.tranallthird()
@@ -565,6 +567,7 @@ export default {
         }, this.duration)
         break
       case 1:
+        this.gisMethods(1)
         this.trantimer = setInterval(() => {
           this.transinglefirst()
           this.transinglethird()

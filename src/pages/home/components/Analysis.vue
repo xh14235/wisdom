@@ -800,6 +800,7 @@ export default {
   },
   activated () {
     if (this.analysistimer) clearInterval(this.analysistimer)
+    this.gisMethods(this.tab)
     switch (this.tab) {
       case 0:
         this.analysistimer = setInterval(() => {

@@ -614,6 +614,7 @@ export default {
   },
   activated () {
     if (this.contimer) clearInterval(this.contimer)
+    this.gisMethods(this.tab)
     switch (this.tab) {
       case 0:
         this.contimer = setInterval(() => {

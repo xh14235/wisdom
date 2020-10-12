@@ -23,7 +23,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getTestList, getCentrePoint } from '@/request/common-api.js'
+import { getTestList } from '@/request/common-api.js'
 import { optenergy, optefficiency, optsave, optwork, optprice } from '@/request/optimization-api'
 export default {
   name: 'Optimization',
@@ -187,7 +187,7 @@ export default {
         default:
           break
       }
-      this.gisMethods(index)
+      // this.gisMethods(index)
     },
     // 地图方法
     gisMethods (index) {
@@ -196,48 +196,12 @@ export default {
       let positionData = {}
       switch (index) {
         case 0:
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '21119',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '936能源馆',
-              'Type': '936能源馆',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['villagePower']
+          positionData = this.ifr.sceneCenterConfig['villagePower']
           break
         case 1:
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '1222',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '停车位',
-              'Type': '停车位',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['itemData']
+          positionData = this.ifr.sceneCenterConfig['itemData']
           break
         default:
           break
@@ -617,8 +581,14 @@ export default {
       }
     }
   },
+  // watch: {
+  //   tab () {
+  //     this.gisMethods(this.tab)
+  //   }
+  // },
   mounted () {
     this.changeTab(0)
+    // this.gisMethods(0)
   },
   // 页面切换时，停止或重启定时器
   deactivated () {
@@ -627,6 +597,7 @@ export default {
   },
   activated () {
     if (this.opttimer) clearInterval(this.opttimer)
+    // this.gisMethods(this.tab)
     switch (this.tab) {
       case 0:
         this.opttimer = setInterval(() => {

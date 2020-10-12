@@ -4,6 +4,11 @@
       <div class="select1">
         分析对象<CommonSelect2 :largeSelect="largeSelect" :smallSelect="smallSelect" @changeLarge="changeLarge" @changeSmall="changeSmall"></CommonSelect2>
       </div>
+      <!-- <el-cascader
+        v-model="value"
+        :options="options"
+        @change="handleChange"
+      ></el-cascader> -->
     </div>
     <div class="common-echarts-wrapper echarts-margin">
       <div class="common-echarts-box">
@@ -59,6 +64,37 @@ export default {
     return {
       largeSelect: [],
       smallSelect: []
+      // value: [],
+      // options: [
+      //   {
+      //     value: 'zhinan',
+      //     label: '指南',
+      //     children: [
+      //       {
+      //         value: 'yizhi',
+      //         label: '一致'
+      //       },
+      //       {
+      //         value: 'yizhi1',
+      //         label: '一致1'
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     value: 'zhinan',
+      //     label: '指南',
+      //     children: [
+      //       {
+      //         value: 'yizhi',
+      //         label: '一致'
+      //       },
+      //       {
+      //         value: 'yizhi1',
+      //         label: '一致1'
+      //       }
+      //     ]
+      //   }
+      // ]
     }
   },
   props: {
@@ -104,6 +140,9 @@ export default {
     },
     changeSmall (item) {
       this.$emit('changeSelect1', item)
+    },
+    handleChange (value) {
+      console.log(value)
     }
   },
   mounted () {
@@ -114,8 +153,23 @@ export default {
 
 <style scoped lang="stylus">
 @import '~@/assets/css/common.styl'
-.echarts-margin
-  margin: 1vh 0
+// .controller-box >>> .el-cascader
+//   line-height: 2.33333vh
+// .controller-box >>> .el-input__inner
+//   height: 2.33333vh
+//   line-height: 2.33333vh
+//   border: 1px solid $green!important
+//   border-radius: 3px
+//   background: transparent
+//   color: #fff
+// .controller-box >>> .el-input__icon
+//   line-height: 2.33333vh
+// .controller-box >>> .el-cascader__dropdown
+//   border: 0
+// .controller-box >>> .el-popper .popper__arrow
+//   display: none
+// .echarts-margin
+//   margin: 1vh 0
 .title2
   font-weight: 600
   color: $lgreen

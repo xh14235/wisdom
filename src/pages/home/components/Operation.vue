@@ -28,7 +28,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getTestList, getCentrePoint } from '@/request/common-api.js'
+import { getTestList } from '@/request/common-api.js'
 import { supHead1, suphotline, supcoldline, suphotwaterline } from '@/request/supply-api'
 import { operationCube } from '@/request/operation-api'
 export default {
@@ -100,13 +100,15 @@ export default {
         this.operationtimer = setInterval(() => {
           this.getCube936('1254288413020762112')
         }, this.duration)
+        this.ifr.activePipeNetWork('false')
       } else {
         this.operationLine(3)
         this.operationtimer = setInterval(() => {
           this.operationLine(3)
         }, this.duration)
+        this.ifr.activePipeNetWork('false')
       }
-      this.gisMethods(index)
+      // this.gisMethods(index)
     },
     // 地图方法
     gisMethods (index) {
@@ -115,70 +117,16 @@ export default {
       let positionData = {}
       switch (index) {
         case 0:
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '21119',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '936能源馆',
-              'Type': '936能源馆',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['villagePower']
+          positionData = this.ifr.sceneCenterConfig['villagePower']
           break
         case 1:
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '1222',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '停车位',
-              'Type': '停车位',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['itemData']
+          positionData = this.ifr.sceneCenterConfig['itemData']
           break
         case 2:
-          markData = [
-            {
-              'Height': this.iconHeight,
-              'Id': '13334',
-              'Latitude': '31.08706',
-              'Longitude': '121.6848',
-              'Name': '玫瑰工坊',
-              'Type': '玫瑰工坊',
-              'Value': '36kW',
-              'Other': [{'Key': '累计利润', 'Value': '53万元'}, {'Key': '电', 'Value': '77kWh'}, {'Key': '热水', 'Value': '34吨'}]
-            }
-          ]
-          positionData = {
-            'Distance': this.viewZ,
-            'PosX': getCentrePoint(markData).x,
-            'PosY': getCentrePoint(markData).y,
-            'Time': this.jumpTime,
-            'X': this.viewX,
-            'Y': this.viewY
-          }
+          markData = this.ifr.markConfig['itemData']
+          positionData = this.ifr.sceneCenterConfig['itemData']
           break
         default:
           break
@@ -430,10 +378,16 @@ export default {
       }
     }
   },
+  watch: {
+    tab () {
+      this.gisMethods(this.tab)
+    }
+  },
   mounted () {
     this.changeTab(0)
     this.getInfoList()
     this.getAllElectric()
+    this.gisMethods(0)
   },
   // 页面切换时，停止或重启定时器
   deactivated () {
@@ -444,16 +398,20 @@ export default {
     if (this.operationtimer) clearInterval(this.operationtimer)
     switch (this.tab) {
       case 0:
+        this.gisMethods(0)
+        this.ifr.activePipeNetWork('true')
         this.operationtimer = setInterval(() => {
           this.getAllElectric()
         }, this.duration)
         break
       case 1:
+        this.gisMethods(1)
         this.operationtimer = setInterval(() => {
           this.getCube936('1254288413020762112')
         }, this.duration)
         break
       case 2:
+        this.gisMethods(2)
         this.operationtimer = setInterval(() => {
           this.operationLine(3)
         }, this.duration)

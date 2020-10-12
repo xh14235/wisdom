@@ -62,7 +62,7 @@ export default {
     // },
     ifrMessage (e) {
       // console.log(e.data)
-      if (e.data.markName === '监控') {
+      if (e.data.markType === '监控') {
         this.showMonitorPopup()
       }
     },

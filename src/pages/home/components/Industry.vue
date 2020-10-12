@@ -391,14 +391,6 @@ export default {
         }
       })
     }
-    // 地图方法
-    // gisMethods () {
-    //   this.ifr.clearMarks()
-    //   let markData = this.ifr.markConfig['industry']
-    //   let positionData = this.ifr.sceneCenterConfig['industry']
-    //   this.ifr.setCameraSettingWithCoordinate(positionData)
-    //   this.ifr.setMarkData(markData)
-    // }
   },
   watch: {
     cooperativeTab () {

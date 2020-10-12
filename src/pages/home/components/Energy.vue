@@ -92,40 +92,43 @@ export default {
     ...mapMutations(['change_left_tab']),
     changeTab (id) {
       this.change_left_tab(id)
-      this.ifr.clearMarks()
-      let markData = []
-      let positionData = {}
-      let energyTab = localStorage.energyTab
-      switch (id) {
-        case '001':
-          if (energyTab === '0') {
-            markData = this.ifr.markConfig['Hours24']
-            positionData = this.ifr.sceneCenterConfig['Hours24']
-          } else if (energyTab === '1') {
-            markData = this.ifr.markConfig['Watching24']
-            positionData = this.ifr.sceneCenterConfig['Watching24']
-          } else {
-            markData = this.ifr.markConfig['Hours24']
-            positionData = this.ifr.sceneCenterConfig['Hours24']
-          }
-          break
-        case '002':
-          markData = this.ifr.markConfig['allVillage']
-          positionData = this.ifr.sceneCenterConfig['allVillage']
-          break
-        case '003':
-          markData = this.ifr.markConfig['Hours24']
-          positionData = this.ifr.sceneCenterConfig['Hours24']
-          break
-        case '004':
-          markData = this.ifr.markConfig['itemData']
-          positionData = this.ifr.sceneCenterConfig['itemData']
-          break
-        default:
-          break
+      if (id !== '001') {
+        this.ifr.activePipeNetWork('false')
       }
-      this.ifr.setCameraSettingWithCoordinate(positionData)
-      this.ifr.setMarkData(markData)
+    //   this.ifr.clearMarks()
+    //   let markData = []
+    //   let positionData = {}
+    //   let energyTab = localStorage.energyTab
+    //   switch (id) {
+    //     case '001':
+    //       if (energyTab === '0') {
+    //         markData = this.ifr.markConfig['Hours24']
+    //         positionData = this.ifr.sceneCenterConfig['Hours24']
+    //       } else if (energyTab === '1') {
+    //         markData = this.ifr.markConfig['Watching24']
+    //         positionData = this.ifr.sceneCenterConfig['Watching24']
+    //       } else {
+    //         markData = this.ifr.markConfig['Hours24']
+    //         positionData = this.ifr.sceneCenterConfig['Hours24']
+    //       }
+    //       break
+    //     case '002':
+    //       markData = this.ifr.markConfig['allVillage']
+    //       positionData = this.ifr.sceneCenterConfig['allVillage']
+    //       break
+    //     case '003':
+    //       markData = this.ifr.markConfig['Hours24']
+    //       positionData = this.ifr.sceneCenterConfig['Hours24']
+    //       break
+    //     case '004':
+    //       markData = this.ifr.markConfig['itemData']
+    //       positionData = this.ifr.sceneCenterConfig['itemData']
+    //       break
+    //     default:
+    //       break
+    //   }
+    //   this.ifr.setCameraSettingWithCoordinate(positionData)
+    //   this.ifr.setMarkData(markData)
     }
   }
 }

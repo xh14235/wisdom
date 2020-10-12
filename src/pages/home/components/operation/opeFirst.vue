@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'Opefirst',
   components: {
@@ -74,7 +75,10 @@ export default {
   computed: {
     echartsData () {
       return this.echarts.data
-    }
+    },
+    ...mapState({
+      ifr: state => state.map.ifr
+    })
   },
   watch: {
     echartsData () {
@@ -97,9 +101,11 @@ export default {
       switch (id) {
         case '11':
           this.chosenImg = 'all-electric.gif'
+          this.ifr.activePipeNetWork('true')
           break
         case '12':
           this.chosenImg = 'all-hot.gif'
+          this.ifr.activePipeNetWork('false')
           break
         default:
           break
@@ -107,6 +113,7 @@ export default {
     }
   },
   mounted () {
+    this.ifr.activePipeNetWork('true')
     if (this.echarts.data) {
       this.sumList = []
       let len = this.echarts.data[0].length

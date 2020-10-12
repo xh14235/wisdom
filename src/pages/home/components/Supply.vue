@@ -231,6 +231,7 @@ export default {
     },
     // 地图方法
     gisMethods (index) {
+      console.log(index)
       this.ifr.clearMarks()
       let markData = []
       let positionData = {}
@@ -981,6 +982,7 @@ export default {
   },
   activated () {
     if (this.suptimer) clearInterval(this.suptimer)
+    this.gisMethods(this.tab)
     switch (this.tab) {
       case 0:
         this.suptimer = setInterval(() => {

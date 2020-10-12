@@ -128,6 +128,9 @@ export default {
   },
   mounted () {
     localStorage.energyTab = 0
+  },
+  activated () {
+    this.gisMethods(this.current_index)
   }
 }
 </script>

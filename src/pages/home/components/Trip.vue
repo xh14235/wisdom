@@ -113,25 +113,25 @@ export default {
       // this.gisMethods(index)
     },
     // 地图方法
-    gisMethods (index) {
-      this.ifr.clearMarks()
-      let markData = []
-      let positionData = {}
-      switch (index) {
-        case 0:
-          markData = this.ifr.markConfig['realWatching']
-          positionData = this.ifr.sceneCenterConfig['realWatching']
-          break
-        case 1:
-          markData = this.ifr.markConfig['deviceUse']
-          positionData = this.ifr.sceneCenterConfig['deviceUse']
-          break
-        default:
-          break
-      }
-      this.ifr.setCameraSettingWithCoordinate(positionData)
-      this.ifr.setMarkData(markData)
-    },
+    // gisMethods (index) {
+    //   this.ifr.clearMarks()
+    //   let markData = []
+    //   let positionData = {}
+    //   switch (index) {
+    //     case 0:
+    //       markData = this.ifr.markConfig['realWatching']
+    //       positionData = this.ifr.sceneCenterConfig['realWatching']
+    //       break
+    //     case 1:
+    //       markData = this.ifr.markConfig['deviceUse']
+    //       positionData = this.ifr.sceneCenterConfig['deviceUse']
+    //       break
+    //     default:
+    //       break
+    //   }
+    //   this.ifr.setCameraSettingWithCoordinate(positionData)
+    //   this.ifr.setMarkData(markData)
+    // },
     getBool (obj) {
       let boo = 0
       for (let item in obj) {
