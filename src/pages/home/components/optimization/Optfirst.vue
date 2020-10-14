@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { buildingSelect, venueSelect } from '@/request/select-api'
 export default {
   name: 'Optfirst',
@@ -101,6 +102,11 @@ export default {
     list: Object,
     statistics: Array
   },
+  computed: {
+    ...mapState({
+      ifr: state => state.map.ifr
+    })
+  },
   watch: {
     largeSelect () {
       this.getVenueSelect(this.largeSelect[0].id)
@@ -143,10 +149,23 @@ export default {
     },
     handleChange (value) {
       console.log(value)
+    },
+    gisMethods () {
+      this.ifr.clearMarks()
+      let positionData = this.ifr.sceneCenterConfig['Watching24']
+      let markers = this.ifr.markConfig['Watching24']
+      for (let i = 0; i < markers.length; i++) {
+        if (markers[i].Name.includes('烘培馆')) {
+          let markData = [markers[i]]
+          this.ifr.setCameraSettingWithCoordinate(positionData)
+          this.ifr.setMarkData(markData)
+        }
+      }
     }
   },
   mounted () {
     this.getBuildingSelect()
+    this.gisMethods()
   }
 }
 </script>

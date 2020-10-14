@@ -189,26 +189,6 @@ export default {
       }
       // this.gisMethods(index)
     },
-    // 地图方法
-    gisMethods (index) {
-      this.ifr.clearMarks()
-      let markData = []
-      let positionData = {}
-      switch (index) {
-        case 0:
-          markData = this.ifr.markConfig['villagePower']
-          positionData = this.ifr.sceneCenterConfig['villagePower']
-          break
-        case 1:
-          markData = this.ifr.markConfig['itemData']
-          positionData = this.ifr.sceneCenterConfig['itemData']
-          break
-        default:
-          break
-      }
-      this.ifr.setCameraSettingWithCoordinate(positionData)
-      this.ifr.setMarkData(markData)
-    },
     // 根据下拉框组件传来的数据改变视图
     getBool (obj) {
       let boo = 0
@@ -579,6 +559,37 @@ export default {
         yName: '(个)',
         data: [getTestList(150, length)]
       }
+    },
+    // 地图方法
+    gisMethods () {
+      // this.ifr.clearMarks()
+      // let markData = []
+      // let positionData = {}
+      // switch (index) {
+      //   case 0:
+      //     markData = this.ifr.markConfig['villagePower']
+      //     positionData = this.ifr.sceneCenterConfig['villagePower']
+      //     break
+      //   case 1:
+      //     markData = this.ifr.markConfig['itemData']
+      //     positionData = this.ifr.sceneCenterConfig['itemData']
+      //     break
+      //   default:
+      //     break
+      // }
+      // this.ifr.setCameraSettingWithCoordinate(positionData)
+      // this.ifr.setMarkData(markData)
+
+      this.ifr.clearMarks()
+      let positionData = this.ifr.sceneCenterConfig['Watching24']
+      let markers = this.ifr.markConfig['Watching24']
+      for (let i = 0; i < markers.length; i++) {
+        if (markers[i].Name.includes('烘培馆')) {
+          let markData = [markers[i]]
+          this.ifr.setCameraSettingWithCoordinate(positionData)
+          this.ifr.setMarkData(markData)
+        }
+      }
     }
   },
   // watch: {
@@ -588,7 +599,7 @@ export default {
   // },
   mounted () {
     this.changeTab(0)
-    // this.gisMethods(0)
+    this.gisMethods()
   },
   // 页面切换时，停止或重启定时器
   deactivated () {
@@ -597,7 +608,7 @@ export default {
   },
   activated () {
     if (this.opttimer) clearInterval(this.opttimer)
-    // this.gisMethods(this.tab)
+    this.gisMethods()
     switch (this.tab) {
       case 0:
         this.opttimer = setInterval(() => {

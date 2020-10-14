@@ -400,7 +400,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09082",
         "Longitude": "121.6901",
         "Type": "民宿",
-        "Value": "",
+        "Value": "130人",
         "Name": "291稻香馆",
         "Other": []
       },
@@ -410,7 +410,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09104",
         "Longitude": "121.6908",
         "Type": "民宿",
-        "Value": "",
+        "Value": "130人",
         "Name": "烘培馆",
         "Other": []
       },
@@ -420,7 +420,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09141",
         "Longitude": "121.6912",
         "Type": "民宿",
-        "Value": "",
+        "Value": "130人",
         "Name": "甜蜜馆",
         "Other": []
       },
@@ -430,7 +430,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0933",
         "Longitude": "121.6853",
         "Type": "民宿",
-        "Value": "",
+        "Value": "130人",
         "Name": "310稻香馆",
         "Other": []
       },
@@ -440,7 +440,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09285",
         "Longitude": "121.6854",
         "Type": "民宿",
-        "Value": "",
+        "Value": "130人",
         "Name": "304纯真年代",
         "Other": []
       },
@@ -450,7 +450,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08831",
         "Longitude": "121.6839",
         "Type": "民宿",
-        "Value": "",
+        "Value": "130人",
         "Name": "912陶艺馆",
         "Other": []
       },
@@ -460,7 +460,7 @@ var sceneCenterConfig = {
         "Latitude": "31.088",
         "Longitude": "121.6841",
         "Type": "民宿",
-        "Value": "",
+        "Value": "130人",
         "Name": "913彩釉馆",
         "Other": []
       },
@@ -470,7 +470,7 @@ var sceneCenterConfig = {
         "Latitude": "31.088194",
         "Longitude": "121.68459",
         "Type": "民宿",
-        "Value": "",
+        "Value": "130人",
         "Name": "915彩绘馆",
         "Other": []
       },
@@ -480,7 +480,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09072",
         "Longitude": "121.68369",
         "Type": "民宿",
-        "Value": "",
+        "Value": "130人",
         "Name": "443养心馆",
         "Other": []
       },
@@ -490,7 +490,7 @@ var sceneCenterConfig = {
         "Latitude": "31.092755",
         "Longitude": "121.68252",
         "Type": "民宿",
-        "Value": "",
+        "Value": "130人",
         "Name": "428日式和风馆",
         "Other": []
       },
@@ -562,7 +562,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0921",
         "Longitude": "121.6809",
         "Type": "合作社",
-        "Value": "",
+        "Value": "153万元",
         "Name": "乡村会客厅",
         "Other": []
       },
@@ -572,7 +572,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08713",
         "Longitude": "121.69462",
         "Type": "合作社",
-        "Value": "",
+        "Value": "153万元",
         "Name": "阳庆果蔬",
         "Other": []
       },
@@ -582,7 +582,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08665",
         "Longitude": "121.68662",
         "Type": "合作社",
-        "Value": "",
+        "Value": "153万元",
         "Name": "绿妮瓜果",
         "Other": []
       },
@@ -592,7 +592,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09509",
         "Longitude": "121.69077",
         "Type": "合作社",
-        "Value": "",
+        "Value": "153万元",
         "Name": "老乔渔业",
         "Other": []
       },
@@ -602,7 +602,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09507",
         "Longitude": "121.68136",
         "Type": "合作社",
-        "Value": "",
+        "Value": "153万元",
         "Name": "祥根渔业",
         "Other": []
       },
@@ -612,7 +612,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0867",
         "Longitude": "121.67613",
         "Type": "合作社",
-        "Value": "",
+        "Value": "153万元",
         "Name": "道基食用菌",
         "Other": []
       },
@@ -622,7 +622,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08655",
         "Longitude": "121.67415",
         "Type": "合作社",
-        "Value": "",
+        "Value": "153万元",
         "Name": "志磊食用菌",
         "Other": []
       },
@@ -632,7 +632,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08814",
         "Longitude": "121.6821",
         "Type": "合作社",
-        "Value": "",
+        "Value": "153万元",
         "Name": "秀珍水产",
         "Other": []
       },
@@ -642,7 +642,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08379",
         "Longitude": "121.679909",
         "Type": "合作社",
-        "Value": "",
+        "Value": "153万元",
         "Name": "春邱苗木",
         "Other": []
       },
@@ -652,7 +652,7 @@ var sceneCenterConfig = {
         "Latitude": "31.10115",
         "Longitude": "121.69580",
         "Type": "合作社",
-        "Value": "",
+        "Value": "153万元",
         "Name": "亿缘蔬果",
         "Other": []
       }
@@ -676,7 +676,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08768",
         "Longitude": "121.68661",
         "Type": "集中风电",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "集中风电",
         "Other": []
       },
@@ -686,7 +686,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08729",
         "Longitude": "121.68518",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "能源中心",
         "Other": []
       },
@@ -696,7 +696,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0873",
         "Longitude": "121.6851",
         "Type": "外来电",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "外来电",
         "Other": []
       },
@@ -706,7 +706,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0875",
         "Longitude": "121.6827",
         "Type": "集中储能",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "集中储能",
         "Other": []
       },
@@ -716,7 +716,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08626",
         "Longitude": "121.68316",
         "Type": "集中光伏",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "集中光伏",
         "Other": []
       },
@@ -726,7 +726,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08730",
         "Longitude": "121.68512",
         "Type": "冷水机组",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "冷水机组",
         "Other": []
       },
@@ -736,7 +736,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08735",
         "Longitude": "121.6850",
         "Type": "太阳能",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "太阳能",
         "Other": []
       },
@@ -746,7 +746,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08737",
         "Longitude": "121.6851",
         "Type": "生物质锅炉",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "生物质锅炉",
         "Other": []
       },
@@ -756,7 +756,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08736",
         "Longitude": "121.6850",
         "Type": "空气源热泵",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "空气源热泵",
         "Other": []
       },
@@ -766,7 +766,7 @@ var sceneCenterConfig = {
         "Latitude": "31.087144",
         "Longitude": "121.68517",
         "Type": "地埋管",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "地埋管",
         "Other": []
       },
@@ -776,7 +776,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08696",
         "Longitude": "121.68487",
         "Type": "河道抛管",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "河道抛管",
         "Other": []
       }
@@ -788,7 +788,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08768",
         "Longitude": "121.68661",
         "Type": "集中风电",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "集中风电",
         "Other": []
       },
@@ -798,7 +798,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08729",
         "Longitude": "121.68518",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "能源中心",
         "Other": []
       },
@@ -808,7 +808,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0873",
         "Longitude": "121.6851",
         "Type": "外来电",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "外来电",
         "Other": []
       },
@@ -818,7 +818,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0875",
         "Longitude": "121.6827",
         "Type": "集中储能",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "集中储能",
         "Other": []
       },
@@ -828,7 +828,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08626",
         "Longitude": "121.68316",
         "Type": "集中光伏",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "集中光伏",
         "Other": []
       }
@@ -840,7 +840,7 @@ var sceneCenterConfig = {
         "Latitude": "31.087305",
         "Longitude": "121.68518",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "微电网魔方",
         "Other": []
       },
@@ -850,7 +850,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08730",
         "Longitude": "121.6851",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "地源热魔方",
         "Other": []
       },
@@ -860,7 +860,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08728",
         "Longitude": "121.68507",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "水储能魔方",
         "Other": []
       },
@@ -870,7 +870,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08735",
         "Longitude": "121.68505",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "热水源魔方",
         "Other": []
       },
@@ -880,7 +880,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08736",
         "Longitude": "121.68510",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "生物质魔方",
         "Other": []
       },
@@ -890,7 +890,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08737",
         "Longitude": "121.68515",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "电源变魔方",
         "Other": []
       }
@@ -902,7 +902,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08724",
         "Longitude": "121.68526",
         "Type": "集中光伏",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "1号光伏",
         "Other": []
       },
@@ -912,7 +912,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08727",
         "Longitude": "121.68493",
         "Type": "集中光伏",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "2号光伏",
         "Other": []
       },
@@ -922,7 +922,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08671",
         "Longitude": "121.68529",
         "Type": "集中风电",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "1号风电",
         "Other": []
       },
@@ -932,7 +932,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08676",
         "Longitude": "121.68528",
         "Type": "集中风电",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "2号风电",
         "Other": []
       }
@@ -944,7 +944,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08721",
         "Longitude": "121.68405",
         "Type": "民宅",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "945项目部",
         "Other": []
       },
@@ -954,7 +954,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08739",
         "Longitude": "121.68409",
         "Type": "民宅",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "944工程部",
         "Other": []
       },
@@ -964,7 +964,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09082",
         "Longitude": "121.6901",
         "Type": "民宿",
-        "Value": "",
+        "Value": "130人",
         "Name": "291稻香馆",
         "Other": []
       },
@@ -974,7 +974,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09104",
         "Longitude": "121.6908",
         "Type": "民宿",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "烘培馆",
         "Other": []
       },
@@ -984,7 +984,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09141",
         "Longitude": "121.6912",
         "Type": "民宿",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "甜蜜馆",
         "Other": []
       },
@@ -994,7 +994,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0933",
         "Longitude": "121.6853",
         "Type": "民宿",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "310稻香馆",
         "Other": []
       },
@@ -1004,7 +1004,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09285",
         "Longitude": "121.6854",
         "Type": "民宿",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "304纯真年代",
         "Other": []
       },
@@ -1014,7 +1014,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08831",
         "Longitude": "121.6839",
         "Type": "民宿",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "912陶艺馆",
         "Other": []
       },
@@ -1024,7 +1024,7 @@ var sceneCenterConfig = {
         "Latitude": "31.088",
         "Longitude": "121.6841",
         "Type": "民宿",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "913彩釉馆",
         "Other": []
       },
@@ -1034,7 +1034,7 @@ var sceneCenterConfig = {
         "Latitude": "31.088194",
         "Longitude": "121.68459",
         "Type": "民宿",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "915彩绘馆",
         "Other": []
       },
@@ -1044,7 +1044,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09072",
         "Longitude": "121.68369",
         "Type": "民宿",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "443养心馆",
         "Other": []
       },
@@ -1054,7 +1054,7 @@ var sceneCenterConfig = {
         "Latitude": "31.092755",
         "Longitude": "121.68252",
         "Type": "民宿",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "428日式和风馆",
         "Other": []
       },
@@ -1064,7 +1064,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0921",
         "Longitude": "121.6809",
         "Type": "合作社",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "乡村会客厅",
         "Other": []
       },
@@ -1074,7 +1074,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08713",
         "Longitude": "121.69462",
         "Type": "合作社",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "阳庆果蔬",
         "Other": []
       },
@@ -1084,7 +1084,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08665",
         "Longitude": "121.68662",
         "Type": "合作社",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "绿妮瓜果",
         "Other": []
       },
@@ -1094,7 +1094,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09509",
         "Longitude": "121.69077",
         "Type": "合作社",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "老乔渔业",
         "Other": []
       },
@@ -1104,7 +1104,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09507",
         "Longitude": "121.68136",
         "Type": "合作社",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "祥根渔业",
         "Other": []
       },
@@ -1114,7 +1114,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0867",
         "Longitude": "121.67613",
         "Type": "合作社",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "道基食用菌",
         "Other": []
       },
@@ -1124,7 +1124,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08655",
         "Longitude": "121.67415",
         "Type": "合作社",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "志磊食用菌",
         "Other": []
       },
@@ -1134,7 +1134,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08814",
         "Longitude": "121.6821",
         "Type": "合作社",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "秀珍水产",
         "Other": []
       },
@@ -1144,7 +1144,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08379",
         "Longitude": "121.679909",
         "Type": "合作社",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "春邱苗木",
         "Other": []
       },
@@ -1154,7 +1154,7 @@ var sceneCenterConfig = {
         "Latitude": "31.10115",
         "Longitude": "121.69580",
         "Type": "合作社",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "亿缘蔬果",
         "Other": []
       },
@@ -1164,7 +1164,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09283",
         "Longitude": "121.6801",
         "Type": "村委",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "村委",
         "Other": []
       },
@@ -1174,7 +1174,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09068",
         "Longitude": "121.6853",
         "Type": "主题活动广场",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "主题活动广场",
         "Other": []
       },
@@ -1184,7 +1184,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08735",
         "Longitude": "121.6849",
         "Type": "936能源馆",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "936能源馆",
         "Other": []
       },
@@ -1194,7 +1194,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08746",
         "Longitude": "121.6849",
         "Type": "充电桩",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "充电桩",
         "Other": []
       },
@@ -1204,7 +1204,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08722",
         "Longitude": "121.684",
         "Type": "垃圾回收中心",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "垃圾回收中心",
         "Other": []
       },
@@ -1214,7 +1214,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08722",
         "Longitude": "121.6848",
         "Type": "水质监测点",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "水质监测点",
         "Other": []
       },
@@ -1224,7 +1224,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08698",
         "Longitude": "121.6852",
         "Type": "空气监测点",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "空气监测点",
         "Other": []
       },
@@ -1234,7 +1234,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08743",
         "Longitude": "121.68478",
         "Type": "萤火虫",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "萤火虫",
         "Other": []
       },
@@ -1244,7 +1244,7 @@ var sceneCenterConfig = {
         "Latitude": "31.087342",
         "Longitude": "121.685111",
         "Type": "936能源中心",
-        "Value": "",
+        "Value": "27kWh",
         "Name": "936能源中心",
         "Other": []
       }
@@ -1256,7 +1256,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08768",
         "Longitude": "121.68661",
         "Type": "集中风电",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "集中风电",
         "Other": [{"Key":"电","Value":"53kWh"},{"Key":"热","Value":"77kWh"},{"Key":"热水","Value":"34吨"},{"Key":"冷","Value":"kWh"}]
       },
@@ -1266,7 +1266,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08729",
         "Longitude": "121.68518",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "能源中心",
         "Other": [{"Key":"电","Value":"53kWh"},{"Key":"热","Value":"77kWh"},{"Key":"热水","Value":"34吨"},{"Key":"冷","Value":"kWh"}]
       },
@@ -1276,7 +1276,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0873",
         "Longitude": "121.6851",
         "Type": "外来电",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "外来电",
         "Other": [{"Key":"电","Value":"53kWh"},{"Key":"热","Value":"77kWh"},{"Key":"热水","Value":"34吨"},{"Key":"冷","Value":"kWh"}]
       },
@@ -1286,7 +1286,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0875",
         "Longitude": "121.6827",
         "Type": "集中储能",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "集中储能",
         "Other": [{"Key":"电","Value":"53kWh"},{"Key":"热","Value":"77kWh"},{"Key":"热水","Value":"34吨"},{"Key":"冷","Value":"kWh"}]
       },
@@ -1296,7 +1296,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08626",
         "Longitude": "121.68316",
         "Type": "集中光伏",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "集中光伏",
         "Other": [{"Key":"电","Value":"53kWh"},{"Key":"热","Value":"77kWh"},{"Key":"热水","Value":"34吨"},{"Key":"冷","Value":"kWh"}]
       }
@@ -1318,7 +1318,7 @@ var sceneCenterConfig = {
         "Latitude": "31.087305",
         "Longitude": "121.68518",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "微电网魔方",
         "Other": []
       },
@@ -1328,7 +1328,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08730",
         "Longitude": "121.6851",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "地源热魔方",
         "Other": []
       },
@@ -1338,7 +1338,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08728",
         "Longitude": "121.68507",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "水储能魔方",
         "Other": []
       },
@@ -1348,7 +1348,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08735",
         "Longitude": "121.68505",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "热水源魔方",
         "Other": []
       },
@@ -1358,7 +1358,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08736",
         "Longitude": "121.68510",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "生物质魔方",
         "Other": []
       },
@@ -1368,7 +1368,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08737",
         "Longitude": "121.68515",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "237kWh",
         "Name": "电源变魔方",
         "Other": []
       }
@@ -1380,7 +1380,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08768",
         "Longitude": "121.68661",
         "Type": "集中风电",
-        "Value": "",
+        "Value": "56万元",
         "Name": "集中风电"
       },
       { 
@@ -1389,7 +1389,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08729",
         "Longitude": "121.68518",
         "Type": "能源中心",
-        "Value": "",
+        "Value": "56万元",
         "Name": "能源中心"
       },
       { 
@@ -1398,7 +1398,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0873",
         "Longitude": "121.6851",
         "Type": "外来电",
-        "Value": "",
+        "Value": "56万元",
         "Name": "外来电"
       },
       { 
@@ -1407,7 +1407,7 @@ var sceneCenterConfig = {
         "Latitude": "31.0875",
         "Longitude": "121.6827",
         "Type": "集中储能",
-        "Value": "",
+        "Value": "56万元",
         "Name": "集中储能"
       },
       { 
@@ -1416,7 +1416,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08626",
         "Longitude": "121.68316",
         "Type": "集中光伏",
-        "Value": "",
+        "Value": "56万元",
         "Name": "集中光伏"
       }
     ],
@@ -1427,7 +1427,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08735",
         "Longitude": "121.6849",
         "Type": "936能源馆",
-        "Value": "",
+        "Value": "965万元",
         "Name": "936能源馆",
         "Other": []
       }

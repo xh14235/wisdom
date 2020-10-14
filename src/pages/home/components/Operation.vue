@@ -121,8 +121,8 @@ export default {
           positionData = this.ifr.sceneCenterConfig['villagePower']
           break
         case 1:
-          markData = this.ifr.markConfig['itemData']
-          positionData = this.ifr.sceneCenterConfig['itemData']
+          markData = this.ifr.markConfig['distributedPower']
+          positionData = this.ifr.sceneCenterConfig['distributedPower']
           break
         case 2:
           markData = this.ifr.markConfig['itemData']
@@ -380,7 +380,11 @@ export default {
   },
   watch: {
     tab () {
-      this.gisMethods(this.tab)
+      if (this.tab !== 2) {
+        this.gisMethods(this.tab)
+      } else {
+        this.ifr.clearMarks()
+      }
     }
   },
   mounted () {

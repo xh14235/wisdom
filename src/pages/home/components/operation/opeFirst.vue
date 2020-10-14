@@ -96,20 +96,29 @@ export default {
   },
   methods: {
     changeSelect (code) {
+      this.ifr.clearMarks()
+      let markData = []
+      let positionData = {}
       this.$emit('changeSelect1', code)
       let id = code.id
       switch (id) {
         case '11':
           this.chosenImg = 'all-electric.gif'
           this.ifr.activePipeNetWork('true')
+          markData = this.ifr.markConfig['villagePower']
+          positionData = this.ifr.sceneCenterConfig['villagePower']
           break
         case '12':
           this.chosenImg = 'all-hot.gif'
           this.ifr.activePipeNetWork('false')
+          markData = [...this.ifr.markConfig['itemData'], ...this.ifr.markConfig['Watching24']]
+          positionData = this.ifr.sceneCenterConfig['itemData']
           break
         default:
           break
       }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
     }
   },
   mounted () {

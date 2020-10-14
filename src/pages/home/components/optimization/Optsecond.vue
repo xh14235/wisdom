@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { buildingSelect, venueSelect } from '@/request/select-api'
 export default {
   name: 'Optsecond',
@@ -82,6 +83,11 @@ export default {
   props: {
     list: Object,
     statistics: Array
+  },
+  computed: {
+    ...mapState({
+      ifr: state => state.map.ifr
+    })
   },
   watch: {
     largeSelect () {
@@ -128,10 +134,26 @@ export default {
     // },
     changeDate (code) {
       this.$emit('changeDate2', code)
+    },
+    gisMethods () {
+      this.ifr.clearMarks()
+      // let markData = []
+      let positionData = this.ifr.sceneCenterConfig['Watching24']
+      let markers = this.ifr.markConfig['Watching24']
+      // console.log(markers)
+      for (let i = 0; i < markers.length; i++) {
+        if (markers[i].Name.includes('烘培馆')) {
+          let markData = [markers[i]]
+          // console.log(markData)
+          this.ifr.setCameraSettingWithCoordinate(positionData)
+          this.ifr.setMarkData(markData)
+        }
+      }
     }
   },
   mounted () {
     this.getBuildingSelect()
+    this.gisMethods()
   }
 }
 </script>
