@@ -113,7 +113,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import { videoList } from '@/request/select-api'
+import { videoList, abnormalList } from '@/request/security-api'
 export default {
   name: 'Security',
   data () {
@@ -216,6 +216,9 @@ export default {
   methods: {
     // 获取异常报警数据详情列表
     getAbnormalList () {
+      abnormalList().then(res => {
+        // this.abnormalList = res.data
+      })
       this.abnormalList = [
         {
           id: '001',
@@ -256,7 +259,9 @@ export default {
     },
     // 获取摄像头列表 全部摄像头、人脸抓拍及车辆抓拍
     getMonitorList () {
-      videoList().then((res) => {
+      videoList({
+        status: 1
+      }).then((res) => {
         console.log(res.data)
       })
       this.AllMonitorList = [
@@ -325,6 +330,8 @@ export default {
       let positionData = this.ifr.sceneCenterConfig['security']
       this.ifr.setCameraSettingWithCoordinate(positionData)
       this.ifr.setMarkData(markData)
+      this.ifr.showPeopleHeatingItem([])
+      this.ifr.activePipeNetWork('false')
     }
   },
   mounted () {

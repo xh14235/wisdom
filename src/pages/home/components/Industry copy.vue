@@ -66,21 +66,7 @@ export default {
       cooperativeTab: 0,
       industrytimer: null,
       duration: 60000,
-      // 玫瑰工坊、乡村会客厅等
-      p1: null,
-      p2: null,
-      p3: null,
-      p4: null,
-      // 合作社
-      p5: null,
-      p6: null,
-      p7: null,
-      p8: null,
-      p9: null,
-      p10: null,
-      p11: null,
-      p12: null,
-      p13: null
+      promise1: null
     }
   },
   computed: {
@@ -105,41 +91,12 @@ export default {
     }
   },
   methods: {
-    // 获取各产业建筑列表
-    getIndustryList () {
-      venueSelect({
-        facilityId: '1254292656276447234'
-      }).then((res) => {
-        this.industryList = res.data
-        this.meetingRoom()
-        this.rose()
-        this.cooperative()
-        this.celebrity()
-      })
-    },
-    // 获取合作社列表
-    getCooperative () {
-      industrycooperative().then((res) => {
-        this.cooperativeList = res.data
-        this.getSalesVolume(this.cooperativeList[this.cooperativeTab].id)
-        this.getOrders(this.cooperativeList[this.cooperativeTab].id)
-        // promise
-        this.getPromise5(this.cooperativeList[0].id)
-        this.getPromise6(this.cooperativeList[0].id)
-        this.getPromise7(this.cooperativeList[0].id)
-        this.getPromise8(this.cooperativeList[0].id)
-        this.getPromise9(this.cooperativeList[0].id)
-        this.getPromise10(this.cooperativeList[0].id)
-        this.getPromise11(this.cooperativeList[0].id)
-        this.getPromise12(this.cooperativeList[0].id)
-        this.getPromise13(this.cooperativeList[0].id)
-      })
-    },
-    // 乡村会客厅
-    meetingRoom () {
+    // 前四个echarts图
+    first4 () {
       let date = new Date()
       let year = date.getFullYear()
-      this.p1 = new Promise((resolve, reject) => {
+      // 乡村会客厅echarts图，需传参
+      this.promise1 = new Promise((resolve, reject) => {
         industryfirst2({
           bfsId: this.industryList[1].id,
           year
@@ -154,6 +111,7 @@ export default {
             smooth: true,
             yName: '(元)',
             xData: this.year,
+            // data: [Object.values(COUNTY_MEETING).slice(0, this.year.length)]
             data: [Object.values(res.data)]
           }
           this.totle1 = 0
@@ -163,12 +121,8 @@ export default {
           resolve(this.totle1)
         })
       })
-    },
-    // 玫瑰工坊echarts图，需传参
-    rose () {
-      let date = new Date()
-      let year = date.getFullYear()
-      this.p2 = new Promise((resolve, reject) => {
+      // 玫瑰工坊echarts图，需传参
+      let promise2 = new Promise((resolve, reject) => {
         industryfirst2({
           bfsId: this.industryList[0].id,
           year
@@ -183,6 +137,7 @@ export default {
             smooth: true,
             yName: '(元)',
             xData: this.year,
+            // data: [Object.values(ROSE_SQUARE).slice(0, this.year.length)]
             data: [Object.values(res.data)]
           }
           this.totle2 = 0
@@ -192,12 +147,8 @@ export default {
           resolve(this.totle2)
         })
       })
-    },
-    // 合作社echarts图，需传参
-    cooperative () {
-      let date = new Date()
-      let year = date.getFullYear()
-      this.p3 = new Promise((resolve, reject) => {
+      // 合作社echarts图，需传参
+      let promise3 = new Promise((resolve, reject) => {
         industrysecond2({
           labelId: this.industryList[4].labelId,
           year
@@ -212,6 +163,7 @@ export default {
             smooth: true,
             yName: '(元)',
             xData: this.year,
+            // data: [Object.values(COOPERATIVE).slice(0, this.year.length)]
             data: [Object.values(res.data)]
           }
           this.totle3 = 0
@@ -221,12 +173,8 @@ export default {
           resolve(this.totle3)
         })
       })
-    },
-    // 网红打卡点echarts图，需传参
-    celebrity () {
-      let date = new Date()
-      let year = date.getFullYear()
-      this.p4 = new Promise((resolve, reject) => {
+      // 网红打卡点echarts图，需传参
+      let promise4 = new Promise((resolve, reject) => {
         industrysecond2({
           labelId: this.industryList[11].labelId,
           year
@@ -241,6 +189,7 @@ export default {
             smooth: true,
             yName: '(元)',
             xData: this.year,
+            // data: [Object.values(INTERNET_CELEBRITIES).slice(0, this.year.length)]
             data: [Object.values(res.data)]
           }
           this.totle4 = 0
@@ -250,9 +199,164 @@ export default {
           resolve(this.totle4)
         })
       })
+      Promise.all([this.promise1, promise2, promise3, promise4]).then(res => {
+        console.log(res)
+        this.ifr.clearMarks()
+        let markData = this.ifr.markConfig['industry']
+        markData[0].Other = [
+          {
+            'Key': '销售额',
+            'Value': res[3]
+          }
+        ]
+        markData[1].Other = [
+          {
+            'Key': '销售额',
+            'Value': res[1]
+          }
+        ]
+        markData[2].Other = [
+          {
+            'Key': '销售额',
+            'Value': res[0]
+          }
+        ]
+        let positionData = this.ifr.sceneCenterConfig['industry']
+        this.ifr.setMarkData(markData)
+        this.ifr.setCameraSettingWithCoordinate(positionData)
+      })
+    },
+    // 乡村会客厅echarts图，需传参
+    meetingRoom () {
+      let date = new Date()
+      let year = date.getFullYear()
+      industryfirst2({
+        bfsId: this.industryList[1].id,
+        year
+      }).then(res => {
+        this.echarts1 = {
+          id: 'indfirst1',
+          title: '',
+          legendShow: false,
+          legendData: ['水'],
+          color: [this.green],
+          areaColor: true,
+          smooth: true,
+          yName: '(元)',
+          xData: this.year,
+          // data: [Object.values(COUNTY_MEETING).slice(0, this.year.length)]
+          data: [Object.values(res.data)]
+        }
+        this.totle1 = 0
+        for (let i in res.data) {
+          this.totle1 += res.data[i]
+        }
+      })
+    },
+    // 玫瑰工坊echarts图，需传参
+    rose () {
+      let date = new Date()
+      let year = date.getFullYear()
+      industryfirst2({
+        bfsId: this.industryList[0].id,
+        year
+      }).then(res => {
+        console.log(res)
+        this.echarts2 = {
+          id: 'indfirst2',
+          title: '',
+          legendShow: false,
+          legendData: ['水'],
+          color: [this.yellow],
+          areaColor: true,
+          smooth: true,
+          yName: '(元)',
+          xData: this.year,
+          // data: [Object.values(ROSE_SQUARE).slice(0, this.year.length)]
+          data: [Object.values(res.data)]
+        }
+        this.totle2 = 0
+        for (let i in res.data) {
+          this.totle2 += res.data[i]
+        }
+      })
+    },
+    // 合作社echarts图，需传参
+    cooperative () {
+      let date = new Date()
+      let year = date.getFullYear()
+      industrysecond2({
+        labelId: this.industryList[4].labelId,
+        year
+      }).then(res => {
+        this.echarts3 = {
+          id: 'indfirst3',
+          title: '',
+          legendShow: false,
+          legendData: ['水'],
+          color: [this.green],
+          areaColor: true,
+          smooth: true,
+          yName: '(元)',
+          xData: this.year,
+          // data: [Object.values(COOPERATIVE).slice(0, this.year.length)]
+          data: [Object.values(res.data)]
+        }
+        this.totle3 = 0
+        for (let i in res.data) {
+          this.totle3 += res.data[i]
+        }
+      })
+    },
+    // 网红打卡点echarts图，需传参
+    celebrity () {
+      let date = new Date()
+      let year = date.getFullYear()
+      industrysecond2({
+        labelId: this.industryList[11].labelId,
+        year
+      }).then(res => {
+        this.echarts4 = {
+          id: 'indfirst4',
+          title: '',
+          legendShow: false,
+          legendData: ['水'],
+          color: [this.yellow],
+          areaColor: true,
+          smooth: true,
+          yName: '(元)',
+          xData: this.year,
+          // data: [Object.values(INTERNET_CELEBRITIES).slice(0, this.year.length)]
+          data: [Object.values(res.data)]
+        }
+        this.totle4 = 0
+        for (let i in res.data) {
+          this.totle4 += res.data[i]
+        }
+      })
+    },
+    // 获取合作社列表
+    getCooperative () {
+      industrycooperative().then((res) => {
+        console.log(res.data)
+        this.cooperativeList = res.data
+      })
+    },
+    // 获取各产业建筑列表
+    getIndustryList () {
+      venueSelect({
+        facilityId: '1254292656276447234'
+      }).then((res) => {
+        console.log(res)
+        this.industryList = res.data
+      })
+    },
+    // 更改合作社
+    changeCooperative (id, index) {
+      this.cooperativeTab = index
     },
     // 底部两个echarts图 各合作社销售额、订单数 数据
-    getSalesVolume (id) {
+    getLast2 (id) {
       let date = new Date()
       let year = date.getFullYear()
       industrysales({
@@ -272,10 +376,6 @@ export default {
           data: [Object.values(res.data).slice(0, this.year.length)]
         }
       })
-    },
-    getOrders (id) {
-      let date = new Date()
-      let year = date.getFullYear()
       industryorder({
         bfsId: id,
         year: year
@@ -293,237 +393,35 @@ export default {
           data: [Object.values(res.data).slice(0, this.year.length)]
         }
       })
-    },
-    // 更改合作社
-    changeCooperative (id, index) {
-      this.cooperativeTab = index
-    },
-    // 老乔渔业
-    getPromise5 (id) {
-      let date = new Date()
-      let year = date.getFullYear()
-      this.p5 = new Promise((resolve, reject) => {
-        industrysales({
-          bfsId: id,
-          year: year
-        }).then((res) => {
-          resolve(res.data[12])
-        })
-      })
-    },
-    // 祥根渔业
-    getPromise6 (id) {
-      let date = new Date()
-      let year = date.getFullYear()
-      this.p6 = new Promise((resolve, reject) => {
-        industrysales({
-          bfsId: id,
-          year: year
-        }).then((res) => {
-          resolve(res.data[12])
-        })
-      })
-    },
-    // 道基食用菌
-    getPromise7 (id) {
-      let date = new Date()
-      let year = date.getFullYear()
-      this.p7 = new Promise((resolve, reject) => {
-        industrysales({
-          bfsId: id,
-          year: year
-        }).then((res) => {
-          resolve(res.data[12])
-        })
-      })
-    },
-    // 志磊食用菌
-    getPromise8 (id) {
-      let date = new Date()
-      let year = date.getFullYear()
-      this.p8 = new Promise((resolve, reject) => {
-        industrysales({
-          bfsId: id,
-          year: year
-        }).then((res) => {
-          resolve(res.data[12])
-        })
-      })
-    },
-    // 秀珍水产
-    getPromise9 (id) {
-      let date = new Date()
-      let year = date.getFullYear()
-      this.p9 = new Promise((resolve, reject) => {
-        industrysales({
-          bfsId: id,
-          year: year
-        }).then((res) => {
-          resolve(res.data[12])
-        })
-      })
-    },
-    // 春邱苗木
-    getPromise10 (id) {
-      let date = new Date()
-      let year = date.getFullYear()
-      this.p10 = new Promise((resolve, reject) => {
-        industrysales({
-          bfsId: id,
-          year: year
-        }).then((res) => {
-          resolve(res.data[12])
-        })
-      })
-    },
-    // 阳庆果蔬
-    getPromise11 (id) {
-      let date = new Date()
-      let year = date.getFullYear()
-      this.p11 = new Promise((resolve, reject) => {
-        industrysales({
-          bfsId: id,
-          year: year
-        }).then((res) => {
-          resolve(res.data[12])
-        })
-      })
-    },
-    // "绿泥瓜果蔬"
-    getPromise12 (id) {
-      let date = new Date()
-      let year = date.getFullYear()
-      this.p12 = new Promise((resolve, reject) => {
-        industrysales({
-          bfsId: id,
-          year: year
-        }).then((res) => {
-          resolve(res.data[12])
-        })
-      })
-    },
-    // "亿缘蔬果"
-    getPromise13 (id) {
-      let date = new Date()
-      let year = date.getFullYear()
-      this.p13 = new Promise((resolve, reject) => {
-        industrysales({
-          bfsId: id,
-          year: year
-        }).then((res) => {
-          resolve(res.data[12])
-        })
-      })
-    },
-    // 地图方法
-    gisMethod () {
-      Promise.all([this.p1, this.p2, this.p3, this.p4, this.p5, this.p6, this.p7, this.p8, this.p9, this.p10, this.p11, this.p12, this.p13]).then(res => {
-        this.ifr.clearMarks()
-        let markData = this.ifr.markConfig['industry']
-        markData[0].Other = [
-          {
-            'Key': '销售额',
-            'Value': res[3] + '元'
-          }
-        ]
-        markData[1].Other = [
-          {
-            'Key': '销售额',
-            'Value': res[1] + '元'
-          }
-        ]
-        markData[2].Other = [
-          {
-            'Key': '销售额',
-            'Value': res[0] + '元'
-          }
-        ]
-        markData[3].Other = [
-          {
-            'Key': '销售额',
-            'Value': res[2] + '元'
-          }
-        ]
-        markData[4].Other = [
-          {
-            'Key': '销售额',
-            'Value': res[10] + '元'
-          }
-        ]
-        markData[5].Other = [
-          {
-            'Key': '销售额',
-            'Value': res[11] + '元'
-          }
-        ]
-        markData[6].Other = [
-          {
-            'Key': '销售额',
-            'Value': res[4] + '元'
-          }
-        ]
-        markData[7].Other = [
-          {
-            'Key': '销售额',
-            'Value': res[5] + '元'
-          }
-        ]
-        markData[8].Other = [
-          {
-            'Key': '销售额',
-            'Value': res[6] + '元'
-          }
-        ]
-        markData[9].Other = [
-          {
-            'Key': '销售额',
-            'Value': res[7] + '元'
-          }
-        ]
-        markData[10].Other = [
-          {
-            'Key': '销售额',
-            'Value': res[8] + '元'
-          }
-        ]
-        markData[11].Other = [
-          {
-            'Key': '销售额',
-            'Value': res[9] + '元'
-          }
-        ]
-        markData[12].Other = [
-          {
-            'Key': '销售额',
-            'Value': res[12] + '元'
-          }
-        ]
-        let positionData = this.ifr.sceneCenterConfig['industry']
-        this.ifr.setMarkData(markData)
-        this.ifr.setCameraSettingWithCoordinate(positionData)
-        this.ifr.showPeopleHeatingItem([])
-        this.ifr.activePipeNetWork('false')
-      })
     }
   },
   watch: {
     cooperativeTab () {
-      // this.getLast2(this.cooperativeList[this.cooperativeTab].id)
-      this.getSalesVolume(this.cooperativeList[this.cooperativeTab].id)
-      this.getOrders(this.cooperativeList[this.cooperativeTab].id)
+      this.getLast2(this.cooperativeList[this.cooperativeTab].id)
+    },
+    cooLength () {
+      this.getLast2(this.cooperativeList[this.cooperativeTab].id)
+    },
+    industryLength () {
+      this.first4()
+      // this.meetingRoom()
+      // this.rose()
+      // this.cooperative()
+      // this.celebrity()
     }
   },
   mounted () {
-    this.getIndustryList()
     this.getCooperative()
-    setTimeout(() => {
-      this.gisMethod()
-    }, 1000)
+    this.getIndustryList()
+    this.first4()
+    // this.gisMethods()
     this.industrytimer = setInterval(() => {
-      this.meetingRoom()
-      this.rose()
-      this.cooperative()
-      this.celebrity()
+      this.first4()
+      // this.meetingRoom()
+      // this.rose()
+      // this.cooperative()
+      // this.celebrity()
+      this.getLast2(this.cooperativeList[this.cooperativeTab].id)
     }, this.duration)
   },
   // 页面切换时，停止或重启定时器
@@ -532,17 +430,16 @@ export default {
     this.industrytimer = null
   },
   activated () {
-    // this.getIndustryList()
-    // this.getCooperative()
-    setTimeout(() => {
-      this.gisMethod()
-    }, 1000)
+    // this.gisMethods()
     if (this.industrytimer) clearInterval(this.industrytimer)
+    this.first4()
     this.industrytimer = setInterval(() => {
-      this.meetingRoom()
-      this.rose()
-      this.cooperative()
-      this.celebrity()
+      this.first4()
+      // this.meetingRoom()
+      // this.rose()
+      // this.cooperative()
+      // this.celebrity()
+      this.getLast2(this.cooperativeList[this.cooperativeTab].id)
     }, this.duration)
   },
   beforeDestroy () {

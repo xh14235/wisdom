@@ -389,6 +389,8 @@ export default {
         let positionData = this.ifr.sceneCenterConfig['deviceUse']
         this.ifr.setMarkData(markData)
         this.ifr.setCameraSettingWithCoordinate(positionData)
+        this.ifr.showPeopleHeatingItem([])
+        this.ifr.activePipeNetWork('false')
       })
     },
     // 获取耗电统计

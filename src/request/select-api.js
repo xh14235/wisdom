@@ -9,5 +9,3 @@ export const venueSelect = params => get('energy/api/bf/sub/findAllByFacilityId'
 export const areaSelect = params => get('energy/api/supplyFacility/findAll', params)
 // 根据供能区域获取所有cube 信息
 export const cubeSelect = params => get('energy/api/cube/findBySupplyFacilityId', params)
-// 视频配置
-export const videoList = params => get('livelihood/api/security/camera/findAll', params)

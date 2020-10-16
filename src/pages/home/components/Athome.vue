@@ -308,6 +308,8 @@ export default {
       let positionData = this.ifr.sceneCenterConfig['homeFurnishing']
       this.ifr.setCameraSettingWithCoordinate(positionData)
       this.ifr.setMarkData(markData)
+      this.ifr.showPeopleHeatingItem([])
+      this.ifr.activePipeNetWork('false')
     }
   },
   mounted () {

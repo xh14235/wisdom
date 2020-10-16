@@ -171,13 +171,6 @@ export default {
   methods: {
     // 获取人流量峰值 数据
     getPeoplePeak () {
-      // let date = new Date()
-      // let year = date.getFullYear()
-      // let month = date.getMonth() + 1
-      // if (month < 10) month = '0' + month
-      // let day = date.getDate() + 1
-      // if (day < 10) day = '0' + day
-      // let time = year + '-' + month + '-' + day
       culturepeak({
         date: this.formatTime
       }).then((res) => {
@@ -396,10 +389,35 @@ export default {
     // 地图方法
     gisMethods () {
       this.ifr.clearMarks()
-      let markData = this.ifr.markConfig['culturalTourism']
+      let markers = this.ifr.markConfig['culturalTourism']
+      let markData = markers.map((item, index) => {
+        item.Other = [{
+          'Key': '人数',
+          'Value': Math.floor(Math.random() * 500)
+        }]
+        return item
+      })
+      let hotData = markData.map((item, index) => {
+        let item2 = {
+          'Longitude': item.Longitude,
+          'Latitude': item.Latitude,
+          'Height': item.Height
+        }
+        let val = item.Other[0].Value
+        if (val < 50) {
+          item2.Status = 0
+        } else if (val >= 50 && val < 200) {
+          item2.Status = 1
+        } else {
+          item2.Status = 2
+        }
+        return item2
+      })
       let positionData = this.ifr.sceneCenterConfig['culturalTourism']
       this.ifr.setCameraSettingWithCoordinate(positionData)
       this.ifr.setMarkData(markData)
+      this.ifr.showPeopleHeatingItem(hotData)
+      this.ifr.activePipeNetWork('false')
     }
   },
   mounted () {
