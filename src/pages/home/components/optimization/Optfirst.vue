@@ -145,6 +145,7 @@ export default {
       this.getVenueSelect(item.id)
     },
     changeSmall (item) {
+      console.log(item)
       this.$emit('changeSelect1', item)
     },
     handleChange (value) {
@@ -165,7 +166,7 @@ export default {
   },
   mounted () {
     this.getBuildingSelect()
-    this.gisMethods()
+    // this.gisMethods()
   }
 }
 </script>

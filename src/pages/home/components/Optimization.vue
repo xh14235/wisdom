@@ -108,38 +108,12 @@ export default {
     // 根据下拉框组件传来的数据改变视图
     changeSelect1 (chosen) {
       this.building1 = chosen.id
-      // 下拉框关联地图
-      this.ifr.clearMarks()
-      let markData = []
-      let arr = this.ifr.markConfig.Watching24
-      for (let index = 0; index < arr.length; index++) {
-        if (arr[index].Name.includes(chosen.name)) {
-          // console.log(index)
-          markData.push(arr[index])
-        }
-      }
-      this.ifr.setMarkData(markData)
-      this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
-
       this.getBoth(1)
       this.getPrice(1)
       this.optsave()
     },
     changeSelect2 (chosen) {
       this.building2 = chosen.id
-      // 下拉框关联地图
-      this.ifr.clearMarks()
-      let markData = []
-      let arr = this.ifr.markConfig.Watching24
-      for (let index = 0; index < arr.length; index++) {
-        if (arr[index].Name.includes(chosen.name)) {
-          // console.log(index)
-          markData.push(arr[index])
-        }
-      }
-      this.ifr.setMarkData(markData)
-      this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
-
       this.getBoth(2)
       this.getPrice(2)
       this.getSex()
@@ -187,7 +161,6 @@ export default {
         default:
           break
       }
-      // this.gisMethods(index)
     },
     // 根据下拉框组件传来的数据改变视图
     getBool (obj) {
@@ -357,58 +330,95 @@ export default {
     // 能源消费情况 冷热水电数据
     getBoth (page) {
       if (page === 1) {
-        optenergy({
-          buildingFacilitySubId: this.building1,
-          dateType: 'day'
-        }).then((res) => {
-          this.datafirst.echarts1 = {
-            id: 'optfirst1',
-            title: '能源消费-电',
-            legendShow: false,
-            legendData: ['能源消费-电'],
-            color: [this.green],
-            areaColor: false,
-            smooth: true,
-            xData: this.day,
-            yName: '(kWh)',
-            data: [Object.values(res.data.ELECTRICITY).slice(0, this.day.length)]
+        let promise1 = new Promise((resolve, reject) => {
+          optenergy({
+            buildingFacilitySubId: this.building1,
+            dateType: 'day'
+          }).then((res) => {
+            resolve(res.data)
+            this.datafirst.echarts1 = {
+              id: 'optfirst1',
+              title: '能源消费-电',
+              legendShow: false,
+              legendData: ['能源消费-电'],
+              color: [this.green],
+              areaColor: false,
+              smooth: true,
+              xData: this.day,
+              yName: '(kWh)',
+              data: [Object.values(res.data.ELECTRICITY).slice(0, this.day.length)]
+            }
+            this.datafirst.echarts2 = {
+              id: 'optfirst2',
+              title: '能源消费-热水',
+              legendShow: false,
+              legendData: ['能源消费-热水'],
+              color: [this.yellow],
+              areaColor: false,
+              smooth: true,
+              xData: this.day,
+              yName: '(kWh)',
+              data: [Object.values(res.data.HOT_WATER).slice(0, this.day.length)]
+            }
+            this.datafirst.echarts3 = {
+              id: 'optfirst3',
+              title: '能源消费-冷',
+              legendShow: false,
+              legendData: ['能源消费-冷'],
+              color: [this.blue],
+              areaColor: false,
+              smooth: true,
+              xData: this.day,
+              yName: '(kWh)',
+              data: [Object.values(res.data.COLD).slice(0, this.day.length)]
+            }
+            this.datafirst.echarts4 = {
+              id: 'optfirst4',
+              title: '能源消费-热',
+              legendShow: false,
+              legendData: ['能源消费-热'],
+              color: [this.red],
+              areaColor: false,
+              smooth: true,
+              xData: this.day,
+              yName: '(kWh)',
+              data: [Object.values(res.data.HOT).slice(0, this.day.length)]
+            }
+          })
+        })
+        promise1.then(res => {
+          let time = new Date()
+          let hour = time.getHours()
+          console.log(res)
+          this.ifr.clearMarks()
+          let markData = []
+          let arr = this.ifr.markConfig.Watching24
+          for (let index = 0; index < arr.length; index++) {
+            if (arr[index].Name.includes('彩釉')) {
+              markData.push(arr[index])
+            }
           }
-          this.datafirst.echarts2 = {
-            id: 'optfirst2',
-            title: '能源消费-热水',
-            legendShow: false,
-            legendData: ['能源消费-热水'],
-            color: [this.yellow],
-            areaColor: false,
-            smooth: true,
-            xData: this.day,
-            yName: '(kWh)',
-            data: [Object.values(res.data.HOT_WATER).slice(0, this.day.length)]
-          }
-          this.datafirst.echarts3 = {
-            id: 'optfirst3',
-            title: '能源消费-冷',
-            legendShow: false,
-            legendData: ['能源消费-冷'],
-            color: [this.blue],
-            areaColor: false,
-            smooth: true,
-            xData: this.day,
-            yName: '(kWh)',
-            data: [Object.values(res.data.COLD).slice(0, this.day.length)]
-          }
-          this.datafirst.echarts4 = {
-            id: 'optfirst4',
-            title: '能源消费-热',
-            legendShow: false,
-            legendData: ['能源消费-热'],
-            color: [this.red],
-            areaColor: false,
-            smooth: true,
-            xData: this.day,
-            yName: '(kWh)',
-            data: [Object.values(res.data.HOT).slice(0, this.day.length)]
-          }
+          markData[0].Other = [
+            {
+              'Key': '电',
+              'Value': res.ELECTRICITY[hour]
+            },
+            {
+              'Key': '热水',
+              'Value': res.HOT_WATER[hour]
+            },
+            {
+              'Key': '冷',
+              'Value': res.COLD[hour]
+            },
+            {
+              'Key': '热',
+              'Value': res.HOT[hour]
+            }
+          ]
+          console.log(markData)
+          this.ifr.setMarkData(markData)
+          this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
         })
       } else {
         let date
@@ -425,58 +435,95 @@ export default {
           default:
             break
         }
-        optenergy({
-          buildingFacilitySubId: this.building2,
-          dateType: this.dateType2
-        }).then((res) => {
-          this.datasecond.echarts3 = {
-            id: 'optsecond3',
-            title: '能源消费-电',
-            legendShow: false,
-            legendData: ['耗电'],
-            color: [this.green],
-            areaColor: false,
-            smooth: true,
-            xData: date,
-            yName: '(kWh)',
-            data: [Object.values(res.data.ELECTRICITY).slice(0, date.length)]
+        let promise2 = new Promise((resolve, reject) => {
+          optenergy({
+            buildingFacilitySubId: this.building2,
+            dateType: this.dateType2
+          }).then((res) => {
+            resolve(res.data)
+            this.datasecond.echarts3 = {
+              id: 'optsecond3',
+              title: '能源消费-电',
+              legendShow: false,
+              legendData: ['耗电'],
+              color: [this.green],
+              areaColor: false,
+              smooth: true,
+              xData: date,
+              yName: '(kWh)',
+              data: [Object.values(res.data.ELECTRICITY).slice(0, date.length)]
+            }
+            this.datasecond.echarts4 = {
+              id: 'optsecond4',
+              title: '能源消费-热水',
+              legendShow: false,
+              legendData: ['耗热水'],
+              color: [this.yellow],
+              areaColor: false,
+              smooth: true,
+              xData: date,
+              yName: '(kWh)',
+              data: [Object.values(res.data.HOT_WATER).slice(0, date.length)]
+            }
+            this.datasecond.echarts5 = {
+              id: 'optsecond5',
+              title: '能源消费-冷',
+              legendShow: false,
+              legendData: ['耗冷'],
+              color: [this.blue],
+              areaColor: false,
+              smooth: true,
+              xData: date,
+              yName: '(kWh)',
+              data: [Object.values(res.data.HOT).slice(0, date.length)]
+            }
+            this.datasecond.echarts6 = {
+              id: 'optsecond6',
+              title: '能源消费-热',
+              legendShow: false,
+              legendData: ['耗热'],
+              color: [this.red],
+              areaColor: false,
+              smooth: true,
+              yName: '(kWh)',
+              xData: date,
+              data: [Object.values(res.data.COLD).slice(0, date.length)]
+            }
+          })
+        })
+        promise2.then(res => {
+          let time = new Date()
+          let hour = time.getHours()
+          console.log(res)
+          this.ifr.clearMarks()
+          let markData = []
+          let arr = this.ifr.markConfig.Watching24
+          for (let index = 0; index < arr.length; index++) {
+            if (arr[index].Name.includes('彩釉')) {
+              markData.push(arr[index])
+            }
           }
-          this.datasecond.echarts4 = {
-            id: 'optsecond4',
-            title: '能源消费-热水',
-            legendShow: false,
-            legendData: ['耗热水'],
-            color: [this.yellow],
-            areaColor: false,
-            smooth: true,
-            xData: date,
-            yName: '(kWh)',
-            data: [Object.values(res.data.HOT_WATER).slice(0, date.length)]
-          }
-          this.datasecond.echarts5 = {
-            id: 'optsecond5',
-            title: '能源消费-冷',
-            legendShow: false,
-            legendData: ['耗冷'],
-            color: [this.blue],
-            areaColor: false,
-            smooth: true,
-            xData: date,
-            yName: '(kWh)',
-            data: [Object.values(res.data.HOT).slice(0, date.length)]
-          }
-          this.datasecond.echarts6 = {
-            id: 'optsecond6',
-            title: '能源消费-热',
-            legendShow: false,
-            legendData: ['耗热'],
-            color: [this.red],
-            areaColor: false,
-            smooth: true,
-            yName: '(kWh)',
-            xData: date,
-            data: [Object.values(res.data.COLD).slice(0, date.length)]
-          }
+          markData[0].Other = [
+            {
+              'Key': '电',
+              'Value': res.ELECTRICITY[hour]
+            },
+            {
+              'Key': '热水',
+              'Value': res.HOT_WATER[hour]
+            },
+            {
+              'Key': '冷',
+              'Value': res.COLD[hour]
+            },
+            {
+              'Key': '热',
+              'Value': res.HOT[hour]
+            }
+          ]
+          console.log(markData)
+          this.ifr.setMarkData(markData)
+          this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
         })
       }
     },
@@ -559,47 +606,10 @@ export default {
         yName: '(个)',
         data: [getTestList(150, length)]
       }
-    },
-    // 地图方法
-    gisMethods () {
-      // this.ifr.clearMarks()
-      // let markData = []
-      // let positionData = {}
-      // switch (index) {
-      //   case 0:
-      //     markData = this.ifr.markConfig['villagePower']
-      //     positionData = this.ifr.sceneCenterConfig['villagePower']
-      //     break
-      //   case 1:
-      //     markData = this.ifr.markConfig['itemData']
-      //     positionData = this.ifr.sceneCenterConfig['itemData']
-      //     break
-      //   default:
-      //     break
-      // }
-      // this.ifr.setCameraSettingWithCoordinate(positionData)
-      // this.ifr.setMarkData(markData)
-
-      this.ifr.clearMarks()
-      let positionData = this.ifr.sceneCenterConfig['Watching24']
-      let markers = this.ifr.markConfig['Watching24']
-      for (let i = 0; i < markers.length; i++) {
-        if (markers[i].Name.includes('烘培馆')) {
-          let markData = [markers[i]]
-          this.ifr.setCameraSettingWithCoordinate(positionData)
-          this.ifr.setMarkData(markData)
-        }
-      }
     }
   },
-  // watch: {
-  //   tab () {
-  //     this.gisMethods(this.tab)
-  //   }
-  // },
   mounted () {
     this.changeTab(0)
-    this.gisMethods()
   },
   // 页面切换时，停止或重启定时器
   deactivated () {
@@ -608,7 +618,6 @@ export default {
   },
   activated () {
     if (this.opttimer) clearInterval(this.opttimer)
-    this.gisMethods()
     switch (this.tab) {
       case 0:
         this.opttimer = setInterval(() => {

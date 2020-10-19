@@ -153,7 +153,7 @@ export default {
   },
   mounted () {
     this.getBuildingSelect()
-    this.gisMethods()
+    // this.gisMethods()
   }
 }
 </script>
