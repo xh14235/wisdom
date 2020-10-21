@@ -92,11 +92,13 @@ export default {
       this.dateType1 = date
       this.tranallfirst()
       this.tranallthird()
+      this.getAllSales()
     },
     changeDate2 (date) {
       this.dateType2 = date
       this.transinglefirst()
       this.transinglethird()
+      this.getSingleSales()
     },
     // 根据下拉框组件传来的数据改变视图
     changeSelect2 (chosen) {
@@ -104,6 +106,7 @@ export default {
       this.transinglefirst()
       this.transinglethird()
       this.transinglestatistics()
+      this.getSingleSales()
     },
     // 分页切换，显示不同内容
     changeTab (index) {
@@ -116,10 +119,12 @@ export default {
             this.tranallfirst()
             this.tranallthird()
             this.tranallstatistics()
+            this.getAllSales()
             this.trantimer = setInterval(() => {
               this.tranallfirst()
               this.tranallthird()
               this.tranallstatistics()
+              this.getAllSales()
             }, this.duration)
           }
           break
@@ -129,36 +134,50 @@ export default {
               this.transinglefirst()
               this.transinglethird()
               this.transinglestatistics()
+              this.getSingleSales()
             }
             this.trantimer = setInterval(() => {
               this.transinglefirst()
               this.transinglethird()
               this.transinglestatistics()
+              this.getSingleSales()
             }, this.duration)
           }
           break
         default:
           break
       }
-      // this.gisMethods(index)
     },
-    // 地图方法
-    gisMethods (index) {
+    // 全村域 集中光伏、集中风电、集中储能、外来电、能源中心最新交易总额 地图方法
+    getAllSales () {
+      console.log(11)
+      let sales = [41, 22, 45, 24, 43]
       this.ifr.clearMarks()
-      let markData = []
-      let positionData = {}
-      switch (index) {
-        case 0:
-          markData = this.ifr.markConfig['villagePower']
-          positionData = this.ifr.sceneCenterConfig['villagePower']
-          break
-        case 1:
-          markData = this.ifr.markConfig['itemData']
-          positionData = this.ifr.sceneCenterConfig['itemData']
-          break
-        default:
-          break
-      }
+      let markData = this.ifr.markConfig['villagePower']
+      markData.forEach((item, index) => {
+        item.Other = [
+          {
+            'Key': '总交易额',
+            'Value': sales[index] + '元'
+          }
+        ]
+      })
+      let positionData = this.ifr.sceneCenterConfig['villagePower']
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
+    },
+    // 个体数据 能源管最新交易总额 地图方法
+    getSingleSales () {
+      console.log(1)
+      this.ifr.clearMarks()
+      let markData = this.ifr.markConfig['itemData']
+      markData[0].Other = [
+        {
+          'Key': '总交易额',
+          'Value': '53元'
+        }
+      ]
+      let positionData = this.ifr.sceneCenterConfig['itemData']
       this.ifr.setCameraSettingWithCoordinate(positionData)
       this.ifr.setMarkData(markData)
     },
@@ -519,7 +538,6 @@ export default {
       transinglecost({
         year: year,
         supplyFacilityId: this.building2
-        // supplyFacilityId: 1
       }).then((res) => {
         this.datasecond.statistics = [
           {
@@ -541,14 +559,8 @@ export default {
       })
     }
   },
-  watch: {
-    tab () {
-      this.gisMethods(this.tab)
-    }
-  },
   mounted () {
     this.changeTab(0)
-    this.gisMethods(0)
   },
   // 页面切换时，停止或重启定时器
   deactivated () {
@@ -559,19 +571,21 @@ export default {
     if (this.trantimer) clearInterval(this.trantimer)
     switch (this.tab) {
       case 0:
-        this.gisMethods(0)
+        this.getAllSales()
         this.trantimer = setInterval(() => {
           this.tranallfirst()
           this.tranallthird()
           this.tranallstatistics()
+          this.getAllSales()
         }, this.duration)
         break
       case 1:
-        this.gisMethods(1)
+        this.getSingleSales()
         this.trantimer = setInterval(() => {
           this.transinglefirst()
           this.transinglethird()
           this.transinglestatistics()
+          this.getSingleSales()
         }, this.duration)
         break
       default:

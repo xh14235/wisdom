@@ -130,7 +130,7 @@ export default {
     localStorage.energyTab = 0
   },
   activated () {
-    this.gisMethods(this.current_index)
+    // this.gisMethods(this.current_index)
   }
 }
 </script>

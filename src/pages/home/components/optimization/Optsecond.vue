@@ -127,6 +127,7 @@ export default {
       this.getVenueSelect(item.id)
     },
     changeSmall (item) {
+      console.log(item)
       this.$emit('changeSelect2', item)
     },
     // changeSelect (chosen) {
@@ -134,22 +135,19 @@ export default {
     // },
     changeDate (code) {
       this.$emit('changeDate2', code)
-    },
-    gisMethods () {
-      this.ifr.clearMarks()
-      // let markData = []
-      let positionData = this.ifr.sceneCenterConfig['Watching24']
-      let markers = this.ifr.markConfig['Watching24']
-      // console.log(markers)
-      for (let i = 0; i < markers.length; i++) {
-        if (markers[i].Name.includes('烘培馆')) {
-          let markData = [markers[i]]
-          // console.log(markData)
-          this.ifr.setCameraSettingWithCoordinate(positionData)
-          this.ifr.setMarkData(markData)
-        }
-      }
     }
+    // gisMethods () {
+    //   this.ifr.clearMarks()
+    //   let positionData = this.ifr.sceneCenterConfig['Watching24']
+    //   let markers = this.ifr.markConfig['Watching24']
+    //   for (let i = 0; i < markers.length; i++) {
+    //     if (markers[i].Name.includes('烘培馆')) {
+    //       let markData = [markers[i]]
+    //       this.ifr.setCameraSettingWithCoordinate(positionData)
+    //       this.ifr.setMarkData(markData)
+    //     }
+    //   }
+    // }
   },
   mounted () {
     this.getBuildingSelect()

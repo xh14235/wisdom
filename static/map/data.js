@@ -782,7 +782,7 @@ var sceneCenterConfig = {
       }
     ],
     "villagePower":[
-    { 
+      { 
         "Height": "0.01",
         "Id": "45",
         "Latitude": "31.08768",

@@ -72,7 +72,9 @@ export default {
       },
       dateType2: 'day',
       building1: '1254300251426992128',
-      building2: '1254300251426992128'
+      building2: '1254300251426992128',
+      bName1: '烘培馆',
+      bName2: '烘培馆'
     }
   },
   computed: {
@@ -108,12 +110,14 @@ export default {
     // 根据下拉框组件传来的数据改变视图
     changeSelect1 (chosen) {
       this.building1 = chosen.id
+      this.bName1 = chosen.name
       this.getBoth(1)
       this.getPrice(1)
       this.optsave()
     },
     changeSelect2 (chosen) {
       this.building2 = chosen.id
+      this.bName2 = chosen.name
       this.getBoth(2)
       this.getPrice(2)
       this.getSex()
@@ -389,34 +393,34 @@ export default {
         promise1.then(res => {
           let time = new Date()
           let hour = time.getHours()
-          console.log(res)
+          // console.log(res)
           this.ifr.clearMarks()
           let markData = []
           let arr = this.ifr.markConfig.Watching24
           for (let index = 0; index < arr.length; index++) {
-            if (arr[index].Name.includes('彩釉')) {
+            if (arr[index].Name.includes(this.bName1)) {
               markData.push(arr[index])
             }
           }
           markData[0].Other = [
             {
               'Key': '电',
-              'Value': res.ELECTRICITY[hour]
+              'Value': res.ELECTRICITY[hour] + 'kWh'
             },
             {
               'Key': '热水',
-              'Value': res.HOT_WATER[hour]
+              'Value': res.HOT_WATER[hour] + 'kWh'
             },
             {
               'Key': '冷',
-              'Value': res.COLD[hour]
+              'Value': res.COLD[hour] + 'kWh'
             },
             {
               'Key': '热',
-              'Value': res.HOT[hour]
+              'Value': res.HOT[hour] + 'kWh'
             }
           ]
-          console.log(markData)
+          // console.log(markData)
           this.ifr.setMarkData(markData)
           this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
         })
@@ -494,34 +498,34 @@ export default {
         promise2.then(res => {
           let time = new Date()
           let hour = time.getHours()
-          console.log(res)
+          // console.log(res)
           this.ifr.clearMarks()
           let markData = []
           let arr = this.ifr.markConfig.Watching24
           for (let index = 0; index < arr.length; index++) {
-            if (arr[index].Name.includes('彩釉')) {
+            if (arr[index].Name.includes(this.bName2)) {
               markData.push(arr[index])
             }
           }
           markData[0].Other = [
             {
               'Key': '电',
-              'Value': res.ELECTRICITY[hour]
+              'Value': res.ELECTRICITY[hour] + 'kWh'
             },
             {
               'Key': '热水',
-              'Value': res.HOT_WATER[hour]
+              'Value': res.HOT_WATER[hour] + 'kWh'
             },
             {
               'Key': '冷',
-              'Value': res.COLD[hour]
+              'Value': res.COLD[hour] + 'kWh'
             },
             {
               'Key': '热',
-              'Value': res.HOT[hour]
+              'Value': res.HOT[hour] + 'kWh'
             }
           ]
-          console.log(markData)
+          // console.log(markData)
           this.ifr.setMarkData(markData)
           this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
         })
@@ -620,6 +624,7 @@ export default {
     if (this.opttimer) clearInterval(this.opttimer)
     switch (this.tab) {
       case 0:
+        this.getBoth(1)
         this.opttimer = setInterval(() => {
           this.optsave()
           this.getBoth(1)
@@ -627,6 +632,7 @@ export default {
         }, this.duration)
         break
       case 1:
+        this.getBoth(2)
         this.opttimer = setInterval(() => {
           this.getBoth(2)
           this.getPrice(2)

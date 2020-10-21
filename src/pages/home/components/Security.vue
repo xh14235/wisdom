@@ -337,7 +337,7 @@ export default {
   mounted () {
     this.getAbnormalList()
     this.getMonitorList()
-    this.gisMethods()
+    // this.gisMethods()
     if (this.securitytimer) clearInterval(this.securitytimer)
     this.securitytimer = setInterval(() => {
       this.getAbnormalList()
@@ -349,7 +349,7 @@ export default {
     this.securitytimer = null
   },
   activated () {
-    this.gisMethods()
+    // this.gisMethods()
     if (this.securitytimer) clearInterval(this.securitytimer)
     this.securitytimer = setInterval(() => {
       this.getAbnormalList()
