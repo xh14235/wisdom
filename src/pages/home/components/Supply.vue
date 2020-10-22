@@ -125,7 +125,8 @@ export default {
     }
   },
   props: {
-    nextlevel: Array
+    nextlevel: Array,
+    isOpened: Number
   },
   computed: {
     levelActive () {
@@ -227,36 +228,6 @@ export default {
         default:
           break
       }
-      // this.gisMethods(index)
-    },
-    // 地图方法
-    gisMethods (index) {
-      console.log(index)
-      this.ifr.clearMarks()
-      let markData = []
-      let positionData = {}
-      switch (index) {
-        case 0:
-          markData = this.ifr.markConfig['Hours24']
-          positionData = this.ifr.sceneCenterConfig['Hours24']
-          break
-        case 1:
-          markData = this.ifr.markConfig['villagePower']
-          positionData = this.ifr.sceneCenterConfig['villagePower']
-          break
-        case 2:
-          markData = this.ifr.markConfig['PowerCenter936']
-          positionData = this.ifr.sceneCenterConfig['PowerCenter936']
-          break
-        case 3:
-          markData = this.ifr.markConfig['PowerItem936']
-          positionData = this.ifr.sceneCenterConfig['PowerItem936']
-          break
-        default:
-          break
-      }
-      this.ifr.setCameraSettingWithCoordinate(positionData)
-      this.ifr.setMarkData(markData)
     },
     // 判断分页数据是否为空，返回boolean
     getBool (obj) {
@@ -305,30 +276,64 @@ export default {
     supHead2 () {
       let date = new Date()
       let hour = date.getHours() + 1
-      supHead2({
-        hour: hour
-      }).then((res) => {
-        const data = res.data
-        let value = parseInt(data.CONCENTRATED_ENERGY_STORAGE + data.CONCENTRATED_WIND_POWER + data.CONCENTRATED_PHOTOVOLTAIC + data.ENERGY_CENTER)
-        this.datahead.echarts2 = {
-          id: 'consumption_head2',
-          name: '分布式能源',
-          title: '{name|分布式能源}\n{value|' + value + '}{unit|kW}',
-          titleTop: '27%',
-          titleLeft: '48%',
-          legendShow: true,
-          borderWidth: false,
-          labelShow: true,
-          radius: ['40%', '50%'],
-          center: ['50%', '40%'],
-          color: [this.green, this.yellow, this.blue, this.bgreen],
-          data: [
-            { value: data.CONCENTRATED_ENERGY_STORAGE, name: '集中储能' },
-            { value: data.ENERGY_CENTER, name: '能源中心' },
-            { value: data.CONCENTRATED_PHOTOVOLTAIC, name: '集中光伏' },
-            { value: data.CONCENTRATED_WIND_POWER, name: '集中风电' }
-          ]
-        }
+      let promise = new Promise((resolve, reject) => {
+        supHead2({
+          hour: hour
+        }).then((res) => {
+          const data = res.data
+          let value = parseInt(data.CONCENTRATED_ENERGY_STORAGE + data.CONCENTRATED_WIND_POWER + data.CONCENTRATED_PHOTOVOLTAIC + data.ENERGY_CENTER)
+          this.datahead.echarts2 = {
+            id: 'consumption_head2',
+            name: '分布式能源',
+            title: '{name|分布式能源}\n{value|' + value + '}{unit|kW}',
+            titleTop: '27%',
+            titleLeft: '48%',
+            legendShow: true,
+            borderWidth: false,
+            labelShow: true,
+            radius: ['40%', '50%'],
+            center: ['50%', '40%'],
+            color: [this.green, this.yellow, this.blue, this.bgreen],
+            data: [
+              { value: data.CONCENTRATED_ENERGY_STORAGE, name: '集中储能' },
+              { value: data.ENERGY_CENTER, name: '能源中心' },
+              { value: data.CONCENTRATED_PHOTOVOLTAIC, name: '集中光伏' },
+              { value: data.CONCENTRATED_WIND_POWER, name: '集中风电' }
+            ]
+          }
+          resolve(data)
+        })
+      })
+      promise.then(res => {
+        this.ifr.clearMarks()
+        let markData = this.ifr.markConfig['Hours24']
+        markData[0].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.CONCENTRATED_WIND_POWER + 'kWh'
+          }
+        ]
+        markData[1].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.ENERGY_CENTER + 'kWh'
+          }
+        ]
+        markData[3].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.CONCENTRATED_ENERGY_STORAGE + 'kWh'
+          }
+        ]
+        markData[4].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.CONCENTRATED_PHOTOVOLTAIC + 'kWh'
+          }
+        ]
+        let positionData = this.ifr.sceneCenterConfig['Hours24']
+        this.ifr.setCameraSettingWithCoordinate(positionData)
+        this.ifr.setMarkData(markData)
       })
     },
     // 24小时监测 热水 折线图 数据
@@ -360,7 +365,7 @@ export default {
     // 24小时监测 热水 饼图 数据
     suphotwaterpie () {
       let time = new Date()
-      let hour = time.getHours()
+      let hour = time.getHours() + 1
       suphotwaterpie({
         hour: hour
       }).then((res) => {
@@ -414,7 +419,7 @@ export default {
     // 24小时监测 供冷 饼图 数据
     supcoldpie () {
       let time = new Date()
-      let hour = time.getHours()
+      let hour = time.getHours() + 1
       supcoldpie({
         hour: hour
       }).then((res) => {
@@ -469,7 +474,7 @@ export default {
     // 24小时监测 供热 饼图 数据
     suphotpie () {
       let time = new Date()
-      let hour = time.getHours()
+      let hour = time.getHours() + 1
       suphotpie({
         hour: hour
       }).then((res) => {
@@ -509,58 +514,100 @@ export default {
         default:
           break
       }
-      supSecond1({
-        type: this.dateType2
-      }).then((res) => {
-        const data = res.data
-        this.datasecond.echarts1 = {
-          id: 'consecond1',
-          title: '能源中心供电量',
-          legendShow: false,
-          legendData: ['供电'],
-          color: [this.green],
-          areaColor: true,
-          smooth: true,
-          xData: date,
-          yName: '(kWh)',
-          data: [Object.values(data.MIC_POWER_GRID_CUBE).slice(0, date.length)]
-        }
-        this.datasecond.echarts2 = {
-          id: 'consecond2',
-          title: '集中风电供电量',
-          legendShow: false,
-          legendData: ['储能'],
-          color: [this.green],
-          areaColor: true,
-          smooth: true,
-          xData: date,
-          yName: '(kWh)',
-          data: [Object.values(data.CONCENTRATED_WIND_POWER).slice(0, date.length)]
-        }
-        this.datasecond.echarts3 = {
-          id: 'consecond3',
-          title: '集中光伏供电量',
-          legendShow: false,
-          legendData: ['水'],
-          color: [this.yellow],
-          areaColor: true,
-          smooth: true,
-          xData: date,
-          yName: '(kWh)',
-          data: [Object.values(data.CONCENTRATED_PHOTOVOLTAIC).slice(0, date.length)]
-        }
-        this.datasecond.echarts4 = {
-          id: 'consecond4',
-          title: '集中储能供电量',
-          legendShow: false,
-          legendData: ['水'],
-          color: [this.yellow],
-          areaColor: true,
-          smooth: true,
-          xData: date,
-          yName: '(kWh)',
-          data: [Object.values(data.CONCENTRATED_ENERGY_STORAGE).slice(0, date.length)]
-        }
+      let promise = new Promise((resolve, reject) => {
+        supSecond1({
+          type: this.dateType2
+        }).then((res) => {
+          const data = res.data
+          this.datasecond.echarts1 = {
+            id: 'consecond1',
+            title: '能源中心供电量',
+            legendShow: false,
+            legendData: ['供电'],
+            color: [this.green],
+            areaColor: true,
+            smooth: true,
+            xData: date,
+            yName: '(kWh)',
+            data: [Object.values(data.MIC_POWER_GRID_CUBE).slice(0, date.length)]
+          }
+          this.datasecond.echarts2 = {
+            id: 'consecond2',
+            title: '集中风电供电量',
+            legendShow: false,
+            legendData: ['储能'],
+            color: [this.green],
+            areaColor: true,
+            smooth: true,
+            xData: date,
+            yName: '(kWh)',
+            data: [Object.values(data.CONCENTRATED_WIND_POWER).slice(0, date.length)]
+          }
+          this.datasecond.echarts3 = {
+            id: 'consecond3',
+            title: '集中光伏供电量',
+            legendShow: false,
+            legendData: ['水'],
+            color: [this.yellow],
+            areaColor: true,
+            smooth: true,
+            xData: date,
+            yName: '(kWh)',
+            data: [Object.values(data.CONCENTRATED_PHOTOVOLTAIC).slice(0, date.length)]
+          }
+          this.datasecond.echarts4 = {
+            id: 'consecond4',
+            title: '集中储能供电量',
+            legendShow: false,
+            legendData: ['水'],
+            color: [this.yellow],
+            areaColor: true,
+            smooth: true,
+            xData: date,
+            yName: '(kWh)',
+            data: [Object.values(data.CONCENTRATED_ENERGY_STORAGE).slice(0, date.length)]
+          }
+          resolve(res.data)
+        })
+      })
+      promise.then(res => {
+        let time = new Date()
+        let hour = time.getHours() + 1
+        this.ifr.clearMarks()
+        let markData = this.ifr.markConfig['villagePower']
+        markData[0].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.CONCENTRATED_WIND_POWER[hour] + 'kWh'
+          }
+        ]
+        markData[1].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.CONCENTRATED_WIND_POWER[hour] + 'kWh'
+          }
+        ]
+        markData[2].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.MIC_POWER_GRID_CUBE[hour] + 'kWh'
+          }
+        ]
+        markData[3].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.CONCENTRATED_ENERGY_STORAGE[hour] + 'kWh'
+          }
+        ]
+        markData[4].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.CONCENTRATED_PHOTOVOLTAIC[hour] + 'kWh'
+          }
+        ]
+        let positionData = this.ifr.sceneCenterConfig['villagePower']
+        this.ifr.setCameraSettingWithCoordinate(positionData)
+        this.ifr.setMarkData(markData)
       })
     },
     // 全村域能源 能源中心供电量、集中风电供电量、集中光伏供电量、集中储能供电量 未来24小时预测数据
@@ -634,83 +681,132 @@ export default {
         default:
           break
       }
-      supThird1({
-        supplyFacilityId: 1,
-        type: this.dateType3
-      }).then((res) => {
-        const data = res.data
-        this.datathird.echarts1 = {
-          id: 'supthird1',
-          title: '地源热魔方供能量',
-          legendShow: false,
-          legendData: ['水'],
-          smooth: true,
-          areaColor: true,
-          color: [this.green],
-          xData: date,
-          yName: '(kWh)',
-          data: [Object.values(data.GEOTHERMAL_CUBE).slice(0, date.length)]
-        }
-        this.datathird.echarts2 = {
-          id: 'supthird2',
-          title: '生物质魔方供能量',
-          legendShow: false,
-          legendData: ['水'],
-          smooth: true,
-          areaColor: true,
-          color: [this.green],
-          xData: date,
-          yName: '(kWh)',
-          data: [Object.values(data.BIOMASS_CUBE).slice(0, date.length)]
-        }
-        this.datathird.echarts3 = {
-          id: 'supthird3',
-          title: '热水源魔方供能量',
-          legendShow: false,
-          legendData: ['水'],
-          smooth: true,
-          areaColor: true,
-          color: [this.yellow],
-          xData: date,
-          yName: '(kWh)',
-          data: [Object.values(data.HOT_WATER_CUBE).slice(0, date.length)]
-        }
-        this.datathird.echarts4 = {
-          id: 'supthird4',
-          title: '电源变魔方供能量',
-          legendShow: false,
-          legendData: ['水'],
-          smooth: true,
-          areaColor: true,
-          color: [this.yellow],
-          xData: date,
-          yName: '(kWh)',
-          data: [Object.values(data.POWER_SUPPLY_CUBE).slice(0, date.length)]
-        }
-        this.datathird.echarts5 = {
-          id: 'supthird5',
-          title: '微电网魔方供能量',
-          legendShow: false,
-          legendData: ['水'],
-          smooth: true,
-          areaColor: true,
-          color: [this.blue],
-          xData: date,
-          yName: '(kWh)',
-          data: [Object.values(data.MIC_POWER_GRID_CUBE).slice(0, date.length)]
-        }
-        this.datathird.echarts6 = {
-          id: 'supthird6',
-          title: '氢能源魔方供能量',
-          legendShow: false,
-          legendData: ['水'],
-          smooth: true,
-          areaColor: true,
-          color: [this.blue],
-          xData: date,
-          yName: '(kWh)',
-          data: [Object.values(data.HYDROGEN_CUBE).slice(0, date.length)]
-        }
+      let promise = new Promise((resolve, reject) => {
+        supThird1({
+          supplyFacilityId: 1,
+          type: this.dateType3
+        }).then((res) => {
+          const data = res.data
+          // console.log(data)
+          this.datathird.echarts1 = {
+            id: 'supthird1',
+            title: '地源热魔方供能量',
+            legendShow: false,
+            legendData: ['水'],
+            smooth: true,
+            areaColor: true,
+            color: [this.green],
+            xData: date,
+            yName: '(kWh)',
+            data: [Object.values(data.GEOTHERMAL_CUBE).slice(0, date.length)]
+          }
+          this.datathird.echarts2 = {
+            id: 'supthird2',
+            title: '生物质魔方供能量',
+            legendShow: false,
+            legendData: ['水'],
+            smooth: true,
+            areaColor: true,
+            color: [this.green],
+            xData: date,
+            yName: '(kWh)',
+            data: [Object.values(data.BIOMASS_CUBE).slice(0, date.length)]
+          }
+          this.datathird.echarts3 = {
+            id: 'supthird3',
+            title: '热水源魔方供能量',
+            legendShow: false,
+            legendData: ['水'],
+            smooth: true,
+            areaColor: true,
+            color: [this.yellow],
+            xData: date,
+            yName: '(kWh)',
+            data: [Object.values(data.HOT_WATER_CUBE).slice(0, date.length)]
+          }
+          this.datathird.echarts4 = {
+            id: 'supthird4',
+            title: '电源变魔方供能量',
+            legendShow: false,
+            legendData: ['水'],
+            smooth: true,
+            areaColor: true,
+            color: [this.yellow],
+            xData: date,
+            yName: '(kWh)',
+            data: [Object.values(data.POWER_SUPPLY_CUBE).slice(0, date.length)]
+          }
+          this.datathird.echarts5 = {
+            id: 'supthird5',
+            title: '微电网魔方供能量',
+            legendShow: false,
+            legendData: ['水'],
+            smooth: true,
+            areaColor: true,
+            color: [this.blue],
+            xData: date,
+            yName: '(kWh)',
+            data: [Object.values(data.MIC_POWER_GRID_CUBE).slice(0, date.length)]
+          }
+          this.datathird.echarts6 = {
+            id: 'supthird6',
+            title: '氢能源魔方供能量',
+            legendShow: false,
+            legendData: ['水'],
+            smooth: true,
+            areaColor: true,
+            color: [this.blue],
+            xData: date,
+            yName: '(kWh)',
+            data: [Object.values(data.HYDROGEN_CUBE).slice(0, date.length)]
+          }
+          resolve(data)
+        })
+      })
+      promise.then(res => {
+        let time = new Date()
+        let hour = time.getHours() + 1
+        this.ifr.clearMarks()
+        let markData = this.ifr.markConfig['PowerCenter936']
+        markData[0].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.MIC_POWER_GRID_CUBE[hour] + 'kWh'
+          }
+        ]
+        markData[1].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.GEOTHERMAL_CUBE[hour] + 'kWh'
+          }
+        ]
+        markData[2].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.HYDROGEN_CUBE[hour] + 'kWh'
+          }
+        ]
+        markData[3].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.HOT_WATER_CUBE[hour] + 'kWh'
+          }
+        ]
+        markData[4].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.BIOMASS_CUBE[hour] + 'kWh'
+          }
+        ]
+        markData[5].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.POWER_SUPPLY_CUBE[hour] + 'kWh'
+          }
+        ]
+        let positionData = this.ifr.sceneCenterConfig['PowerCenter936']
+        this.ifr.setCameraSettingWithCoordinate(positionData)
+        this.ifr.setMarkData(markData)
       })
     },
     // 储能信息数据 储能量、循环效率、次数统计等
@@ -858,59 +954,96 @@ export default {
         default:
           break
       }
-      supForth1({
-        type: this.dateType4
-      }).then((res) => {
-        let data = res.data
-        this.dataforth.echarts1 = {
-          id: 'supforth1',
-          title: '1号风电供电量',
-          legendShow: false,
-          legendData: ['供电'],
-          color: [this.green],
-          areaColor: true,
-          smooth: true,
-          xData: date,
-          yName: '(kWh)',
-          data: [Object.values(data.WIND_POWER).slice(0, date.length)]
-        }
-        this.dataforth.echarts2 = {
-          id: 'supforth2',
-          title: '1号光伏供电量',
-          legendShow: false,
-          legendData: ['储能'],
-          color: [this.green],
-          areaColor: true,
-          smooth: true,
-          xData: date,
-          yName: '(kWh)',
-          data: [Object.values(data.PHOTOVOLTAIC).slice(0, date.length)]
-        }
+      let promise = new Promise((resolve, reject) => {
+        supForth1({
+          type: this.dateType4
+        }).then((res) => {
+          let data = res.data
+          this.dataforth.echarts1 = {
+            id: 'supforth1',
+            title: '1号风电供电量',
+            legendShow: false,
+            legendData: ['供电'],
+            color: [this.green],
+            areaColor: true,
+            smooth: true,
+            xData: date,
+            yName: '(kWh)',
+            data: [Object.values(data.WIND_POWER).slice(0, date.length)]
+          }
+          this.dataforth.echarts2 = {
+            id: 'supforth2',
+            title: '1号光伏供电量',
+            legendShow: false,
+            legendData: ['储能'],
+            color: [this.green],
+            areaColor: true,
+            smooth: true,
+            xData: date,
+            yName: '(kWh)',
+            data: [Object.values(data.PHOTOVOLTAIC).slice(0, date.length)]
+          }
+          this.dataforth.echarts3 = {
+            id: 'supforth3',
+            title: '2号风电供电量',
+            legendShow: false,
+            legendData: ['水'],
+            color: [this.yellow],
+            areaColor: true,
+            smooth: true,
+            xData: date,
+            yName: '(kWh)',
+            data: [getTestList(150, date.length)]
+          }
+          this.dataforth.echarts4 = {
+            id: 'supforth4',
+            title: '2号光伏供电量',
+            legendShow: false,
+            legendData: ['水'],
+            color: [this.yellow],
+            areaColor: true,
+            smooth: true,
+            xData: date,
+            yName: '(kWh)',
+            data: [getTestList(150, date.length)]
+          }
+          resolve(data)
+        })
       })
-      this.dataforth.echarts3 = {
-        id: 'supforth3',
-        title: '2号风电供电量',
-        legendShow: false,
-        legendData: ['水'],
-        color: [this.yellow],
-        areaColor: true,
-        smooth: true,
-        xData: date,
-        yName: '(kWh)',
-        data: [getTestList(150, date.length)]
-      }
-      this.dataforth.echarts4 = {
-        id: 'supforth4',
-        title: '2号光伏供电量',
-        legendShow: false,
-        legendData: ['水'],
-        color: [this.yellow],
-        areaColor: true,
-        smooth: true,
-        xData: date,
-        yName: '(kWh)',
-        data: [getTestList(150, date.length)]
-      }
+      promise.then(res => {
+        // console.log(res)
+        let time = new Date()
+        let hour = time.getHours() + 1
+        this.ifr.clearMarks()
+        let markData = this.ifr.markConfig['PowerItem936']
+        markData[0].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.PHOTOVOLTAIC[hour] + 'kWh'
+          }
+        ]
+        markData[1].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.PHOTOVOLTAIC[hour] + 'kWh'
+          }
+        ]
+        markData[2].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.WIND_POWER[hour] + 'kWh'
+          }
+        ]
+        markData[3].Other = [
+          {
+            'Key': '供能值',
+            'Value': res.WIND_POWER[hour] + 'kWh'
+          }
+        ]
+        let positionData = this.ifr.sceneCenterConfig['PowerItem936']
+        this.ifr.setCameraSettingWithCoordinate(positionData)
+        this.ifr.setMarkData(markData)
+      })
     },
     // 936能源个体 1号风电供电量、1号光伏供电量、2号风电供电量、2号光伏供电量 未来24小时预测数据
     supForth2 () {
@@ -968,8 +1101,10 @@ export default {
     levelActive () {
       this.tab = 0
     },
-    tab () {
-      this.gisMethods(this.tab)
+    isOpened () {
+      if (this.isOpened === 0) {
+        this.supHead2()
+      }
     }
   },
   mounted () {
@@ -982,7 +1117,6 @@ export default {
   },
   activated () {
     if (this.suptimer) clearInterval(this.suptimer)
-    this.gisMethods(this.tab)
     switch (this.tab) {
       case 0:
         this.suptimer = setInterval(() => {

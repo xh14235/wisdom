@@ -262,7 +262,7 @@ export default {
       videoList({
         status: 1
       }).then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
       })
       this.AllMonitorList = [
         {
@@ -337,7 +337,6 @@ export default {
   mounted () {
     this.getAbnormalList()
     this.getMonitorList()
-    // this.gisMethods()
     if (this.securitytimer) clearInterval(this.securitytimer)
     this.securitytimer = setInterval(() => {
       this.getAbnormalList()
@@ -349,7 +348,7 @@ export default {
     this.securitytimer = null
   },
   activated () {
-    // this.gisMethods()
+    this.gisMethods()
     if (this.securitytimer) clearInterval(this.securitytimer)
     this.securitytimer = setInterval(() => {
       this.getAbnormalList()

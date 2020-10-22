@@ -516,9 +516,9 @@ export default {
   mounted () {
     this.getIndustryList()
     this.getCooperative()
-    setTimeout(() => {
-      this.gisMethod()
-    }, 1000)
+    // setTimeout(() => {
+    //   this.gisMethod()
+    // }, 1000)
     this.industrytimer = setInterval(() => {
       this.meetingRoom()
       this.rose()

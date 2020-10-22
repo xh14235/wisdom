@@ -90,56 +90,47 @@ export default {
       this.tab = index
       this.subTitle = this.list[index].title
       if (this.operationtimer) clearInterval(this.operationtimer)
+      if (index === 0) {
+        this.getAllElectric()
+        this.operationtimer = setInterval(() => {
+          this.getAllElectric()
+        }, this.duration)
+      } else if (index === 1) {
+        this.getCube936('1254288413020762112')
+        this.operationtimer = setInterval(() => {
+          this.getCube936('1254288413020762112')
+        }, this.duration)
+        this.ifr.activePipeNetWork('false')
+      } else {
+        this.operationLine(3)
+        this.operationtimer = setInterval(() => {
+          this.operationLine(3)
+        }, this.duration)
+        this.ifr.activePipeNetWork('false')
+      }
+      // this.gisMethods(index)
+    },
+    // 地图方法
+    gisMethods (index) {
+      this.ifr.clearMarks()
+      let markData = []
+      let positionData = {}
       switch (index) {
         case 0:
-          this.gisAllElectric()
-          this.getAllElectric()
-          this.operationtimer = setInterval(() => {
-            this.getAllElectric()
-          }, this.duration)
-          this.ifr.activePipeNetWork('true')
+          markData = this.ifr.markConfig['villagePower']
+          positionData = this.ifr.sceneCenterConfig['villagePower']
           break
         case 1:
-          this.gis6Cubes()
-          this.getCube936('1254288413020762112')
-          this.operationtimer = setInterval(() => {
-            this.getCube936('1254288413020762112')
-          }, this.duration)
-          this.ifr.activePipeNetWork('false')
+          markData = this.ifr.markConfig['distributedPower']
+          positionData = this.ifr.sceneCenterConfig['distributedPower']
           break
         case 2:
-          this.ifr.clearMarks()
-          this.operationLine(3)
-          this.operationtimer = setInterval(() => {
-            this.operationLine(3)
-          }, this.duration)
-          this.ifr.activePipeNetWork('false')
+          markData = this.ifr.markConfig['itemData']
+          positionData = this.ifr.sceneCenterConfig['itemData']
           break
         default:
           break
       }
-    },
-    // 全村域 电 地图
-    gisAllElectric () {
-      this.ifr.clearMarks()
-      let markData = this.ifr.markConfig['powerDeal']
-      let positionData = this.ifr.sceneCenterConfig['powerDeal']
-      this.ifr.setCameraSettingWithCoordinate(positionData)
-      this.ifr.setMarkData(markData)
-    },
-    // 全村域 冷、热、水 地图
-    gisAllHot () {
-      this.ifr.clearMarks()
-      let markData = this.ifr.markConfig['itemData']
-      let positionData = this.ifr.sceneCenterConfig['itemData']
-      this.ifr.setCameraSettingWithCoordinate(positionData)
-      this.ifr.setMarkData(markData)
-    },
-    // 分布式能源 六个魔方 地图
-    gis6Cubes () {
-      this.ifr.clearMarks()
-      let markData = this.ifr.markConfig['distributedPower']
-      let positionData = this.ifr.sceneCenterConfig['distributedPower']
       this.ifr.setCameraSettingWithCoordinate(positionData)
       this.ifr.setMarkData(markData)
     },
@@ -147,10 +138,8 @@ export default {
     changeSelect1 (code) {
       if (code.id === '11') {
         this.getAllElectric()
-        this.gisAllElectric()
       } else {
         this.getAllHot()
-        this.gisAllHot()
       }
     },
     changeSelect2 (item) {
@@ -389,11 +378,21 @@ export default {
       }
     }
   },
-  // mounted () {
-  //   this.changeTab(0)
-  //   this.getInfoList()
-  //   this.getAllElectric()
-  // },
+  watch: {
+    tab () {
+      if (this.tab !== 2) {
+        this.gisMethods(this.tab)
+      } else {
+        this.ifr.clearMarks()
+      }
+    }
+  },
+  mounted () {
+    this.changeTab(0)
+    this.getInfoList()
+    this.getAllElectric()
+    this.gisMethods(0)
+  },
   // 页面切换时，停止或重启定时器
   deactivated () {
     clearInterval(this.operationtimer)
@@ -403,20 +402,20 @@ export default {
     if (this.operationtimer) clearInterval(this.operationtimer)
     switch (this.tab) {
       case 0:
-        this.gisAllElectric()
+        this.gisMethods(0)
         this.ifr.activePipeNetWork('true')
         this.operationtimer = setInterval(() => {
           this.getAllElectric()
         }, this.duration)
         break
       case 1:
-        this.gis6Cubes()
+        this.gisMethods(1)
         this.operationtimer = setInterval(() => {
           this.getCube936('1254288413020762112')
         }, this.duration)
         break
       case 2:
-        this.ifr.clearMarks()
+        this.gisMethods(2)
         this.operationtimer = setInterval(() => {
           this.operationLine(3)
         }, this.duration)

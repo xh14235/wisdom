@@ -110,28 +110,7 @@ export default {
         default:
           break
       }
-      // this.gisMethods(index)
     },
-    // 地图方法
-    // gisMethods (index) {
-    //   this.ifr.clearMarks()
-    //   let markData = []
-    //   let positionData = {}
-    //   switch (index) {
-    //     case 0:
-    //       markData = this.ifr.markConfig['realWatching']
-    //       positionData = this.ifr.sceneCenterConfig['realWatching']
-    //       break
-    //     case 1:
-    //       markData = this.ifr.markConfig['deviceUse']
-    //       positionData = this.ifr.sceneCenterConfig['deviceUse']
-    //       break
-    //     default:
-    //       break
-    //   }
-    //   this.ifr.setCameraSettingWithCoordinate(positionData)
-    //   this.ifr.setMarkData(markData)
-    // },
     getBool (obj) {
       let boo = 0
       for (let item in obj) {
@@ -453,14 +432,8 @@ export default {
       ]
     }
   },
-  // watch: {
-  //   tab () {
-  //     this.gisMethods(this.tab)
-  //   }
-  // },
   mounted () {
     this.changeTab(0)
-    // this.gisMethods(0)
   },
   // 页面切换时，停止或重启定时器
   deactivated () {
@@ -477,7 +450,6 @@ export default {
           this.getRoad()
           this.getParking()
         }, this.duration)
-        // this.gisMethods(0)
         break
       case 1:
         this.getFrequency()
@@ -486,7 +458,6 @@ export default {
           this.getFrequency()
           this.getConsumePower()
         }, this.duration)
-        // this.gisMethods(1)
         break
       default:
         break

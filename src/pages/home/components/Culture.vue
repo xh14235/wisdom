@@ -426,7 +426,6 @@ export default {
     this.getSexAgeData()
     this.getTouristByBuilding()
     this.getRanking()
-    this.gisMethods()
     if (this.cultureTimer) clearInterval(this.cultureTimer)
     this.cultureTimer = setInterval(() => {
       this.getPeoplePeak()

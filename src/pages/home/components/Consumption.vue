@@ -92,7 +92,8 @@ export default {
     }
   },
   props: {
-    nextlevel: Array
+    nextlevel: Array,
+    isOpened: Number
   },
   computed: {
     levelActive () {
@@ -171,9 +172,11 @@ export default {
           if (this.getBool(this.datahead) && this.getBool(this.datafirst)) {
             this.conusedline()
             this.conusedpie()
+            // this.allBuildings()
             this.contimer = setInterval(() => {
               this.conusedline()
               this.conusedpie()
+              this.allBuildings()
             }, this.duration)
           }
           break
@@ -212,31 +215,6 @@ export default {
         default:
           break
       }
-      // this.gisMethods(index)
-    },
-    // 地图方法
-    gisMethods (index) {
-      this.ifr.clearMarks()
-      let markData = []
-      let positionData = {}
-      switch (index) {
-        case 0:
-          markData = this.ifr.markConfig['Watching24']
-          positionData = this.ifr.sceneCenterConfig['Watching24']
-          break
-        case 1:
-          markData = this.ifr.markConfig['Watching24']
-          positionData = this.ifr.sceneCenterConfig['Watching24']
-          break
-        case 2:
-          markData = this.ifr.markConfig['Watching24']
-          positionData = this.ifr.sceneCenterConfig['Watching24']
-          break
-        default:
-          break
-      }
-      this.ifr.setCameraSettingWithCoordinate(positionData)
-      this.ifr.setMarkData(markData)
     },
     // 判断分页数据是否为空，返回boolean
     getBool (obj) {
@@ -306,6 +284,40 @@ export default {
           yName: '(kWh)',
           data: [hot]
         }
+      })
+    },
+    // 所有建筑供能值
+    allBuildings () {
+      let promise = new Promise((resolve, reject) => {
+        let data = [77, 91, 57]
+        resolve(data)
+      })
+      promise.then(res => {
+        // let time = new Date()
+        // let hour = time.getHours() + 1
+        this.ifr.clearMarks()
+        let markData = this.ifr.markConfig['Watching24']
+        markData[0].Other = [
+          {
+            'Key': '供能值',
+            'Value': res[0] + 'kWh'
+          }
+        ]
+        markData[1].Other = [
+          {
+            'Key': '供能值',
+            'Value': res[1] + 'kWh'
+          }
+        ]
+        markData[2].Other = [
+          {
+            'Key': '供能值',
+            'Value': res[2] + 'kWh'
+          }
+        ]
+        let positionData = this.ifr.sceneCenterConfig['Watching24']
+        this.ifr.setCameraSettingWithCoordinate(positionData)
+        this.ifr.setMarkData(markData)
       })
     },
     // 24小时监测 供电、冷、热、热水 饼图 消费分类数据
@@ -594,14 +606,41 @@ export default {
           data: [Object.values(res.data.FOREIGN_ELECTRICITY).slice(0, this.day.length), Object.values(res.data.ELECTRICITY).slice(0, this.day.length)]
         }
       })
+    },
+    // 地图方法
+    gisMethods (index) {
+      this.ifr.clearMarks()
+      let markData = []
+      let positionData = {}
+      switch (index) {
+        case 0:
+          markData = this.ifr.markConfig['Watching24']
+          positionData = this.ifr.sceneCenterConfig['Watching24']
+          break
+        case 1:
+          markData = this.ifr.markConfig['Watching24']
+          positionData = this.ifr.sceneCenterConfig['Watching24']
+          break
+        case 2:
+          markData = this.ifr.markConfig['Watching24']
+          positionData = this.ifr.sceneCenterConfig['Watching24']
+          break
+        default:
+          break
+      }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
     }
   },
   watch: {
     levelActive () {
       this.tab = 0
     },
-    tab () {
-      this.gisMethods(this.tab)
+    isOpened () {
+      if (this.isOpened === 1) {
+        console.log(1)
+        this.allBuildings()
+      }
     }
   },
   mounted () {
@@ -614,7 +653,6 @@ export default {
   },
   activated () {
     if (this.contimer) clearInterval(this.contimer)
-    this.gisMethods(this.tab)
     switch (this.tab) {
       case 0:
         this.contimer = setInterval(() => {

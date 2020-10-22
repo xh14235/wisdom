@@ -109,7 +109,8 @@ export default {
     }
   },
   props: {
-    nextlevel: Array
+    nextlevel: Array,
+    isOpened: Number
   },
   computed: {
     levelActive () {
@@ -325,7 +326,6 @@ export default {
         default:
           break
       }
-      // this.gisMethods(index)
     },
     // 地图方法
     gisMethods (index) {
@@ -788,6 +788,11 @@ export default {
     },
     tab () {
       this.gisMethods(this.tab)
+    },
+    isOpened () {
+      if (this.isOpened === 2) {
+        this.gisMethods(this.tab)
+      }
     }
   },
   mounted () {
@@ -800,7 +805,6 @@ export default {
   },
   activated () {
     if (this.analysistimer) clearInterval(this.analysistimer)
-    this.gisMethods(this.tab)
     switch (this.tab) {
       case 0:
         this.analysistimer = setInterval(() => {

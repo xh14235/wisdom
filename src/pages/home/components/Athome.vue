@@ -316,7 +316,6 @@ export default {
     this.chosenSelect = this.select[0].id
     this.getEcharts()
     this.getCostList()
-    this.gisMethods()
     if (this.hometimer) clearInterval(this.hometimer)
     this.hometimer = setInterval(() => {
       this.getEcharts()
