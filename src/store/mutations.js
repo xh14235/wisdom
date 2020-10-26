@@ -71,5 +71,14 @@ export default {
   // 地图相关
   getIfr (state, ifr) {
     state.map.ifr = ifr
+  },
+  // 左右定时器
+  chooseLeftTimer (state) {
+    state.leftTimer = true
+    state.rightTimer = false
+  },
+  chooseRightTimer (state) {
+    state.rightTimer = true
+    state.leftTimer = false
   }
 }

@@ -95,7 +95,8 @@ export default {
       red: state => state.color.red,
       white: state => state.color.white,
       lgreen: state => state.color.lgreen,
-      ifr: state => state.map.ifr
+      ifr: state => state.map.ifr,
+      rightTimer: state => state.rightTimer
     }),
     cooLength () {
       return this.cooperativeList.length
@@ -516,9 +517,6 @@ export default {
   mounted () {
     this.getIndustryList()
     this.getCooperative()
-    // setTimeout(() => {
-    //   this.gisMethod()
-    // }, 1000)
     this.industrytimer = setInterval(() => {
       this.meetingRoom()
       this.rose()
@@ -532,11 +530,11 @@ export default {
     this.industrytimer = null
   },
   activated () {
-    // this.getIndustryList()
-    // this.getCooperative()
-    setTimeout(() => {
-      this.gisMethod()
-    }, 1000)
+    if (this.rightTimer) {
+      setTimeout(() => {
+        this.gisMethod()
+      }, 1000)
+    }
     if (this.industrytimer) clearInterval(this.industrytimer)
     this.industrytimer = setInterval(() => {
       this.meetingRoom()

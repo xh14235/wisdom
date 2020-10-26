@@ -143,7 +143,8 @@ export default {
       bgreen: state => state.color.bgreen,
       red: state => state.color.red,
       selectListShow: state => state.selectListShow,
-      ifr: state => state.map.ifr
+      ifr: state => state.map.ifr,
+      rightTimer: state => state.rightTimer
     }),
     formatTime () {
       let year = this.calendarDate.getFullYear()
@@ -441,7 +442,9 @@ export default {
     this.cultureTimer = null
   },
   activated () {
-    this.gisMethods()
+    if (this.rightTimer) {
+      this.gisMethods()
+    }
     if (this.cultureTimer) clearInterval(this.sucultureTimerptimer)
     this.cultureTimer = setInterval(() => {
       this.getPeoplePeak()

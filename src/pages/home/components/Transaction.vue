@@ -46,7 +46,8 @@ export default {
       jumpTime: state => state.map.jumpTime,
       viewX: state => state.map.viewX,
       viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ
+      viewZ: state => state.map.viewZ,
+      leftTimer: state => state.leftTimer
     })
   },
   data () {
@@ -150,36 +151,38 @@ export default {
     },
     // 全村域 集中光伏、集中风电、集中储能、外来电、能源中心最新交易总额 地图方法
     getAllSales () {
-      console.log(11)
-      let sales = [41, 22, 45, 24, 43]
-      this.ifr.clearMarks()
-      let markData = this.ifr.markConfig['villagePower']
-      markData.forEach((item, index) => {
-        item.Other = [
-          {
-            'Key': '总交易额',
-            'Value': sales[index] + '元'
-          }
-        ]
-      })
-      let positionData = this.ifr.sceneCenterConfig['villagePower']
-      this.ifr.setCameraSettingWithCoordinate(positionData)
-      this.ifr.setMarkData(markData)
+      if (this.leftTimer) {
+        let sales = [41, 22, 45, 24, 43]
+        this.ifr.clearMarks()
+        let markData = this.ifr.markConfig['villagePower']
+        markData.forEach((item, index) => {
+          item.Other = [
+            {
+              'Key': '总交易额',
+              'Value': sales[index] + '元'
+            }
+          ]
+        })
+        let positionData = this.ifr.sceneCenterConfig['villagePower']
+        this.ifr.setCameraSettingWithCoordinate(positionData)
+        this.ifr.setMarkData(markData)
+      }
     },
     // 个体数据 能源管最新交易总额 地图方法
     getSingleSales () {
-      console.log(1)
-      this.ifr.clearMarks()
-      let markData = this.ifr.markConfig['itemData']
-      markData[0].Other = [
-        {
-          'Key': '总交易额',
-          'Value': '53元'
-        }
-      ]
-      let positionData = this.ifr.sceneCenterConfig['itemData']
-      this.ifr.setCameraSettingWithCoordinate(positionData)
-      this.ifr.setMarkData(markData)
+      if (this.leftTimer) {
+        this.ifr.clearMarks()
+        let markData = this.ifr.markConfig['itemData']
+        markData[0].Other = [
+          {
+            'Key': '总交易额',
+            'Value': '53元'
+          }
+        ]
+        let positionData = this.ifr.sceneCenterConfig['itemData']
+        this.ifr.setCameraSettingWithCoordinate(positionData)
+        this.ifr.setMarkData(markData)
+      }
     },
     // 根据下拉框组件传来的数据改变视图
     getBool (obj) {

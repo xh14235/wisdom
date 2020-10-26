@@ -188,7 +188,8 @@ export default {
       red: state => state.color.red,
       white: state => state.color.white,
       lgreen: state => state.color.lgreen,
-      ifr: state => state.map.ifr
+      ifr: state => state.map.ifr,
+      rightTimer: state => state.rightTimer
     })
   },
   methods: {
@@ -329,7 +330,9 @@ export default {
     this.hometimer = null
   },
   activated () {
-    this.gisMethods()
+    if (this.rightTimer) {
+      this.gisMethods()
+    }
     if (this.hometimer) clearInterval(this.hometimer)
     this.hometimer = setInterval(() => {
       this.getEcharts()

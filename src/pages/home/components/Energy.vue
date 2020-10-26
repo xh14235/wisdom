@@ -88,12 +88,10 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['change_left_tab']),
+    ...mapMutations(['change_left_tab', 'chooseLeftTimer']),
     changeTab (id) {
       this.change_left_tab(id)
-      // if (id !== '001') {
-      //   this.ifr.activePipeNetWork('false')
-      // }
+      this.chooseLeftTimer()
     }
   }
 }

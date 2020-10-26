@@ -78,7 +78,8 @@ export default {
       jumpTime: state => state.map.jumpTime,
       viewX: state => state.map.viewX,
       viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ
+      viewZ: state => state.map.viewZ,
+      rightTimer: state => state.rightTimer
     })
   },
   methods: {
@@ -202,29 +203,30 @@ export default {
           })
         }
         // 地图跳转
-        this.ifr.clearMarks()
-        let markers = this.ifr.markConfig['realWatching']
-        let markData = markers.map((item, index) => {
-          for (let i = 0; i < data.length; i++) {
-            if (item.Name.includes(data[i].name)) {
-              item.Other = [
-                {
-                  'Key': '总车位数',
-                  'Value': '' + data[i].totalNum
-                },
-                {
-                  'Key': '剩余车位数',
-                  'Value': '' + data[i].laveNumber
-                }
-              ]
+        if (this.rightTimer) {
+          this.ifr.clearMarks()
+          let markers = this.ifr.markConfig['realWatching']
+          let markData = markers.map((item, index) => {
+            for (let i = 0; i < data.length; i++) {
+              if (item.Name.includes(data[i].name)) {
+                item.Other = [
+                  {
+                    'Key': '总车位数',
+                    'Value': '' + data[i].totalNum
+                  },
+                  {
+                    'Key': '剩余车位数',
+                    'Value': '' + data[i].laveNumber
+                  }
+                ]
+              }
             }
-          }
-          return item
-        })
-        // let markData = this.ifr.markConfig['realWatching']
-        let positionData = this.ifr.sceneCenterConfig['realWatching']
-        this.ifr.setMarkData(markData)
-        this.ifr.setCameraSettingWithCoordinate(positionData)
+            return item
+          })
+          let positionData = this.ifr.sceneCenterConfig['realWatching']
+          this.ifr.setMarkData(markData)
+          this.ifr.setCameraSettingWithCoordinate(positionData)
+        }
       })
     },
     // 获取电动车船使用次数及智能路灯数量
@@ -321,55 +323,55 @@ export default {
           }
         ]
         // 地图跳转
-        this.ifr.clearMarks()
-        let markData = this.ifr.markConfig['deviceUse']
-        markData[0].Other = [
-          {
-            'Key': '总数',
-            'Value': CHARGE_PILE.total
-          },
-          {
-            'Key': '剩余数',
-            'Value': CHARGE_PILE.lave
-          }
-        ]
-        markData[1].Other = [
-          {
-            'Key': '总数',
-            'Value': ELECTRIC_BOAT.total
-          },
-          {
-            'Key': '剩余数',
-            'Value': ELECTRIC_BOAT.lave
-          }
-        ]
-        markData[2].Other = [
-          {
-            'Key': '总数',
-            'Value': ELECTRIC_CAR.total
-          },
-          {
-            'Key': '剩余数',
-            'Value': ELECTRIC_CAR.lave
-          }
-        ]
-        markData[3].Other = [
-          {
-            'Key': '总数',
-            'Value': SMART_STREET_LIGHT.total
-          },
-          {
-            'Key': '剩余数',
-            'Value': SMART_STREET_LIGHT.lave
-          }
-        ]
-        // console.log(markData)
-        // let markData = this.ifr.markConfig['deviceUse']
-        let positionData = this.ifr.sceneCenterConfig['deviceUse']
-        this.ifr.setMarkData(markData)
-        this.ifr.setCameraSettingWithCoordinate(positionData)
-        this.ifr.showPeopleHeatingItem([])
-        this.ifr.activePipeNetWork('false')
+        if (this.rightTimer) {
+          this.ifr.clearMarks()
+          let markData = this.ifr.markConfig['deviceUse']
+          markData[0].Other = [
+            {
+              'Key': '总数',
+              'Value': CHARGE_PILE.total
+            },
+            {
+              'Key': '剩余数',
+              'Value': CHARGE_PILE.lave
+            }
+          ]
+          markData[1].Other = [
+            {
+              'Key': '总数',
+              'Value': ELECTRIC_BOAT.total
+            },
+            {
+              'Key': '剩余数',
+              'Value': ELECTRIC_BOAT.lave
+            }
+          ]
+          markData[2].Other = [
+            {
+              'Key': '总数',
+              'Value': ELECTRIC_CAR.total
+            },
+            {
+              'Key': '剩余数',
+              'Value': ELECTRIC_CAR.lave
+            }
+          ]
+          markData[3].Other = [
+            {
+              'Key': '总数',
+              'Value': SMART_STREET_LIGHT.total
+            },
+            {
+              'Key': '剩余数',
+              'Value': SMART_STREET_LIGHT.lave
+            }
+          ]
+          let positionData = this.ifr.sceneCenterConfig['deviceUse']
+          this.ifr.setMarkData(markData)
+          this.ifr.setCameraSettingWithCoordinate(positionData)
+          this.ifr.showPeopleHeatingItem([])
+          this.ifr.activePipeNetWork('false')
+        }
       })
     },
     // 获取耗电统计

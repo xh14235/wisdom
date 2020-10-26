@@ -97,9 +97,10 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['change_right_tab']),
+    ...mapMutations(['change_right_tab', 'chooseRightTimer']),
     changeTab (id) {
       this.change_right_tab(id)
+      this.chooseRightTimer()
     }
   }
 }

@@ -204,7 +204,8 @@ export default {
     ...mapState({
       // monitorPopupShow: state => state.popup.monitorPopupShow,
       changedVideoName: state => state.popup.changedVideoName,
-      ifr: state => state.map.ifr
+      ifr: state => state.map.ifr,
+      rightTimer: state => state.rightTimer
     })
   },
   watch: {
@@ -348,7 +349,9 @@ export default {
     this.securitytimer = null
   },
   activated () {
-    this.gisMethods()
+    if (this.rightTimer) {
+      this.gisMethods()
+    }
     if (this.securitytimer) clearInterval(this.securitytimer)
     this.securitytimer = setInterval(() => {
       this.getAbnormalList()

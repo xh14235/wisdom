@@ -94,7 +94,8 @@ export default {
       jumpTime: state => state.map.jumpTime,
       viewX: state => state.map.viewX,
       viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ
+      viewZ: state => state.map.viewZ,
+      leftTimer: state => state.leftTimer
     })
   },
   methods: {
@@ -394,35 +395,36 @@ export default {
           let time = new Date()
           let hour = time.getHours()
           // console.log(res)
-          this.ifr.clearMarks()
-          let markData = []
-          let arr = this.ifr.markConfig.Watching24
-          for (let index = 0; index < arr.length; index++) {
-            if (arr[index].Name.includes(this.bName1)) {
-              markData.push(arr[index])
+          if (this.leftTimer) {
+            this.ifr.clearMarks()
+            let markData = []
+            let arr = this.ifr.markConfig.Watching24
+            for (let index = 0; index < arr.length; index++) {
+              if (arr[index].Name.includes(this.bName1)) {
+                markData.push(arr[index])
+              }
             }
+            markData[0].Other = [
+              {
+                'Key': '电',
+                'Value': res.ELECTRICITY[hour] + 'kWh'
+              },
+              {
+                'Key': '热水',
+                'Value': res.HOT_WATER[hour] + 'kWh'
+              },
+              {
+                'Key': '冷',
+                'Value': res.COLD[hour] + 'kWh'
+              },
+              {
+                'Key': '热',
+                'Value': res.HOT[hour] + 'kWh'
+              }
+            ]
+            this.ifr.setMarkData(markData)
+            this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
           }
-          markData[0].Other = [
-            {
-              'Key': '电',
-              'Value': res.ELECTRICITY[hour] + 'kWh'
-            },
-            {
-              'Key': '热水',
-              'Value': res.HOT_WATER[hour] + 'kWh'
-            },
-            {
-              'Key': '冷',
-              'Value': res.COLD[hour] + 'kWh'
-            },
-            {
-              'Key': '热',
-              'Value': res.HOT[hour] + 'kWh'
-            }
-          ]
-          // console.log(markData)
-          this.ifr.setMarkData(markData)
-          this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
         })
       } else {
         let date
@@ -498,36 +500,36 @@ export default {
         promise2.then(res => {
           let time = new Date()
           let hour = time.getHours()
-          // console.log(res)
-          this.ifr.clearMarks()
-          let markData = []
-          let arr = this.ifr.markConfig.Watching24
-          for (let index = 0; index < arr.length; index++) {
-            if (arr[index].Name.includes(this.bName2)) {
-              markData.push(arr[index])
+          if (this.leftTimer) {
+            this.ifr.clearMarks()
+            let markData = []
+            let arr = this.ifr.markConfig.Watching24
+            for (let index = 0; index < arr.length; index++) {
+              if (arr[index].Name.includes(this.bName2)) {
+                markData.push(arr[index])
+              }
             }
+            markData[0].Other = [
+              {
+                'Key': '电',
+                'Value': res.ELECTRICITY[hour] + 'kWh'
+              },
+              {
+                'Key': '热水',
+                'Value': res.HOT_WATER[hour] + 'kWh'
+              },
+              {
+                'Key': '冷',
+                'Value': res.COLD[hour] + 'kWh'
+              },
+              {
+                'Key': '热',
+                'Value': res.HOT[hour] + 'kWh'
+              }
+            ]
+            this.ifr.setMarkData(markData)
+            this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
           }
-          markData[0].Other = [
-            {
-              'Key': '电',
-              'Value': res.ELECTRICITY[hour] + 'kWh'
-            },
-            {
-              'Key': '热水',
-              'Value': res.HOT_WATER[hour] + 'kWh'
-            },
-            {
-              'Key': '冷',
-              'Value': res.COLD[hour] + 'kWh'
-            },
-            {
-              'Key': '热',
-              'Value': res.HOT[hour] + 'kWh'
-            }
-          ]
-          // console.log(markData)
-          this.ifr.setMarkData(markData)
-          this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
         })
       }
     },

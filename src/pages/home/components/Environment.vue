@@ -133,7 +133,8 @@ export default {
       red: state => state.color.red,
       white: state => state.color.white,
       lgreen: state => state.color.lgreen,
-      ifr: state => state.map.ifr
+      ifr: state => state.map.ifr,
+      rightTimer: state => state.rightTimer
     })
   },
   methods: {
@@ -241,29 +242,20 @@ export default {
       this.ifr.activePipeNetWork('false')
     }
   },
-  mounted () {
-    this.getRubbishData()
-    this.getLineData1()
-    this.getOtherWeather()
-    this.getLineData2()
-    this.getWaterQuality()
-    this.gisMethods()
-    if (this.environtimer) clearInterval(this.environtimer)
-    this.environtimer = setInterval(() => {
-      this.getRubbishData()
-      this.getLineData1()
-      this.getOtherWeather()
-      this.getLineData2()
-      this.getWaterQuality()
-    }, this.duration)
-  },
   // 页面切换时，停止或重启定时器
   deactivated () {
     clearInterval(this.environtimer)
     this.environtimer = null
   },
   activated () {
-    this.gisMethods()
+    this.getRubbishData()
+    this.getLineData1()
+    this.getOtherWeather()
+    this.getLineData2()
+    this.getWaterQuality()
+    if (this.rightTimer) {
+      this.gisMethods()
+    }
     if (this.environtimer) clearInterval(this.environtimer)
     this.environtimer = setInterval(() => {
       this.getRubbishData()

@@ -147,7 +147,8 @@ export default {
       jumpTime: state => state.map.jumpTime,
       viewX: state => state.map.viewX,
       viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ
+      viewZ: state => state.map.viewZ,
+      leftTimer: state => state.leftTimer
     })
   },
   methods: {
@@ -159,7 +160,6 @@ export default {
     changeDate3 (date) {
       this.dateType3 = date
       this.supThird1()
-      // this.supThird3()
     },
     changeDate4 (date) {
       this.dateType4 = date
@@ -244,7 +244,6 @@ export default {
     // 24小时监测 供电 折线图 数据
     supHead1 () {
       supHead1().then((res) => {
-        // console.log(res)
         let xData = []
         let list1 = []
         let list2 = []
@@ -304,37 +303,39 @@ export default {
           resolve(data)
         })
       })
-      promise.then(res => {
-        this.ifr.clearMarks()
-        let markData = this.ifr.markConfig['Hours24']
-        markData[0].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.CONCENTRATED_WIND_POWER + 'kWh'
-          }
-        ]
-        markData[1].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.ENERGY_CENTER + 'kWh'
-          }
-        ]
-        markData[3].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.CONCENTRATED_ENERGY_STORAGE + 'kWh'
-          }
-        ]
-        markData[4].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.CONCENTRATED_PHOTOVOLTAIC + 'kWh'
-          }
-        ]
-        let positionData = this.ifr.sceneCenterConfig['Hours24']
-        this.ifr.setCameraSettingWithCoordinate(positionData)
-        this.ifr.setMarkData(markData)
-      })
+      if (this.isOpened === 0 && this.leftTimer) {
+        promise.then(res => {
+          this.ifr.clearMarks()
+          let markData = this.ifr.markConfig['Hours24']
+          markData[0].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.CONCENTRATED_WIND_POWER + 'kWh'
+            }
+          ]
+          markData[1].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.ENERGY_CENTER + 'kWh'
+            }
+          ]
+          markData[3].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.CONCENTRATED_ENERGY_STORAGE + 'kWh'
+            }
+          ]
+          markData[4].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.CONCENTRATED_PHOTOVOLTAIC + 'kWh'
+            }
+          ]
+          let positionData = this.ifr.sceneCenterConfig['Hours24']
+          this.ifr.setCameraSettingWithCoordinate(positionData)
+          this.ifr.setMarkData(markData)
+        })
+      }
     },
     // 24小时监测 热水 折线图 数据
     suphotwaterline () {
@@ -424,7 +425,6 @@ export default {
         hour: hour
       }).then((res) => {
         const data = res.data
-        // console.log(data)
         let value = parseInt(data.BURIED_PIPE + data.CHANNEL_THROWING + data.COOL_WATER_UNIT)
         this.datafirst.echarts4 = {
           id: 'consumption_first3',
@@ -570,45 +570,47 @@ export default {
           resolve(res.data)
         })
       })
-      promise.then(res => {
-        let time = new Date()
-        let hour = time.getHours() + 1
-        this.ifr.clearMarks()
-        let markData = this.ifr.markConfig['villagePower']
-        markData[0].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.CONCENTRATED_WIND_POWER[hour] + 'kWh'
-          }
-        ]
-        markData[1].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.CONCENTRATED_WIND_POWER[hour] + 'kWh'
-          }
-        ]
-        markData[2].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.MIC_POWER_GRID_CUBE[hour] + 'kWh'
-          }
-        ]
-        markData[3].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.CONCENTRATED_ENERGY_STORAGE[hour] + 'kWh'
-          }
-        ]
-        markData[4].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.CONCENTRATED_PHOTOVOLTAIC[hour] + 'kWh'
-          }
-        ]
-        let positionData = this.ifr.sceneCenterConfig['villagePower']
-        this.ifr.setCameraSettingWithCoordinate(positionData)
-        this.ifr.setMarkData(markData)
-      })
+      if (this.isOpened === 0 && this.leftTimer) {
+        promise.then(res => {
+          let time = new Date()
+          let hour = time.getHours() + 1
+          this.ifr.clearMarks()
+          let markData = this.ifr.markConfig['villagePower']
+          markData[0].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.CONCENTRATED_WIND_POWER[hour] + 'kWh'
+            }
+          ]
+          markData[1].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.CONCENTRATED_WIND_POWER[hour] + 'kWh'
+            }
+          ]
+          markData[2].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.MIC_POWER_GRID_CUBE[hour] + 'kWh'
+            }
+          ]
+          markData[3].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.CONCENTRATED_ENERGY_STORAGE[hour] + 'kWh'
+            }
+          ]
+          markData[4].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.CONCENTRATED_PHOTOVOLTAIC[hour] + 'kWh'
+            }
+          ]
+          let positionData = this.ifr.sceneCenterConfig['villagePower']
+          this.ifr.setCameraSettingWithCoordinate(positionData)
+          this.ifr.setMarkData(markData)
+        })
+      }
     },
     // 全村域能源 能源中心供电量、集中风电供电量、集中光伏供电量、集中储能供电量 未来24小时预测数据
     conSecond2 () {
@@ -687,7 +689,6 @@ export default {
           type: this.dateType3
         }).then((res) => {
           const data = res.data
-          // console.log(data)
           this.datathird.echarts1 = {
             id: 'supthird1',
             title: '地源热魔方供能量',
@@ -763,56 +764,58 @@ export default {
           resolve(data)
         })
       })
-      promise.then(res => {
-        let time = new Date()
-        let hour = time.getHours() + 1
-        this.ifr.clearMarks()
-        let markData = this.ifr.markConfig['PowerCenter936']
-        markData[0].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.MIC_POWER_GRID_CUBE[hour] + 'kWh'
-          }
-        ]
-        markData[1].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.GEOTHERMAL_CUBE[hour] + 'kWh'
-          }
-        ]
-        markData[2].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.HYDROGEN_CUBE[hour] + 'kWh'
-          }
-        ]
-        markData[3].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.HOT_WATER_CUBE[hour] + 'kWh'
-          }
-        ]
-        markData[4].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.BIOMASS_CUBE[hour] + 'kWh'
-          }
-        ]
-        markData[5].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.POWER_SUPPLY_CUBE[hour] + 'kWh'
-          }
-        ]
-        let positionData = this.ifr.sceneCenterConfig['PowerCenter936']
-        this.ifr.setCameraSettingWithCoordinate(positionData)
-        this.ifr.setMarkData(markData)
-      })
+      if (this.isOpened === 0 && this.leftTimer) {
+        promise.then(res => {
+          let time = new Date()
+          let hour = time.getHours() + 1
+          this.ifr.clearMarks()
+          let markData = this.ifr.markConfig['PowerCenter936']
+          markData[0].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.MIC_POWER_GRID_CUBE[hour] + 'kWh'
+            }
+          ]
+          markData[1].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.GEOTHERMAL_CUBE[hour] + 'kWh'
+            }
+          ]
+          markData[2].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.HYDROGEN_CUBE[hour] + 'kWh'
+            }
+          ]
+          markData[3].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.HOT_WATER_CUBE[hour] + 'kWh'
+            }
+          ]
+          markData[4].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.BIOMASS_CUBE[hour] + 'kWh'
+            }
+          ]
+          markData[5].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.POWER_SUPPLY_CUBE[hour] + 'kWh'
+            }
+          ]
+          let positionData = this.ifr.sceneCenterConfig['PowerCenter936']
+          this.ifr.setCameraSettingWithCoordinate(positionData)
+          this.ifr.setMarkData(markData)
+        })
+      }
     },
     // 储能信息数据 储能量、循环效率、次数统计等
     supThird2 () {
       supThird2().then((res) => {
-        // console.log(res)
+        //
       })
       this.datathird.other = {
         statistics: [
@@ -1010,40 +1013,41 @@ export default {
           resolve(data)
         })
       })
-      promise.then(res => {
-        // console.log(res)
-        let time = new Date()
-        let hour = time.getHours() + 1
-        this.ifr.clearMarks()
-        let markData = this.ifr.markConfig['PowerItem936']
-        markData[0].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.PHOTOVOLTAIC[hour] + 'kWh'
-          }
-        ]
-        markData[1].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.PHOTOVOLTAIC[hour] + 'kWh'
-          }
-        ]
-        markData[2].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.WIND_POWER[hour] + 'kWh'
-          }
-        ]
-        markData[3].Other = [
-          {
-            'Key': '供能值',
-            'Value': res.WIND_POWER[hour] + 'kWh'
-          }
-        ]
-        let positionData = this.ifr.sceneCenterConfig['PowerItem936']
-        this.ifr.setCameraSettingWithCoordinate(positionData)
-        this.ifr.setMarkData(markData)
-      })
+      if (this.isOpened === 0 && this.leftTimer) {
+        promise.then(res => {
+          let time = new Date()
+          let hour = time.getHours() + 1
+          this.ifr.clearMarks()
+          let markData = this.ifr.markConfig['PowerItem936']
+          markData[0].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.PHOTOVOLTAIC[hour] + 'kWh'
+            }
+          ]
+          markData[1].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.PHOTOVOLTAIC[hour] + 'kWh'
+            }
+          ]
+          markData[2].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.WIND_POWER[hour] + 'kWh'
+            }
+          ]
+          markData[3].Other = [
+            {
+              'Key': '供能值',
+              'Value': res.WIND_POWER[hour] + 'kWh'
+            }
+          ]
+          let positionData = this.ifr.sceneCenterConfig['PowerItem936']
+          this.ifr.setCameraSettingWithCoordinate(positionData)
+          this.ifr.setMarkData(markData)
+        })
+      }
     },
     // 936能源个体 1号风电供电量、1号光伏供电量、2号风电供电量、2号光伏供电量 未来24小时预测数据
     supForth2 () {

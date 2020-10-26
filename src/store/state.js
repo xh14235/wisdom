@@ -5,5 +5,7 @@ export default {
   tab_right: '001',
   weatherControlShow: false,
   token: defaultToken,
-  selectListShow: false
+  selectListShow: false,
+  leftTimer: false,
+  rightTimer: false
 }

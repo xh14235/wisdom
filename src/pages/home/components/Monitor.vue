@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Monitor',
   components: {
@@ -75,19 +75,18 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['chooseLeftTimer']),
     // 根据不同组件切换tab高度，并且有动画
     changeHeight (index) {
+      this.chooseLeftTimer()
       if (this.list[index].active === false) {
         this.list[index].active = true
         this.current_index = index
         this.subTitleShow = index
-        // localStorage.energyTab = index
-        // this.gisMethods(index)
       } else {
         this.list[index].active = false
         this.current_index = 0
         this.subTitleShow = -1
-        // localStorage.energyTab = 0
       }
     },
     // 在组件title中加上当前文字
@@ -101,9 +100,6 @@ export default {
       this.subTitle3 = msg
     }
   }
-  // mounted () {
-  //   localStorage.energyTab = 0
-  // }
 }
 </script>
 

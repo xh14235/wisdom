@@ -108,7 +108,6 @@ export default {
         }, this.duration)
         this.ifr.activePipeNetWork('false')
       }
-      // this.gisMethods(index)
     },
     // 地图方法
     gisMethods (index) {
