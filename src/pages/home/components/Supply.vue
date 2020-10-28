@@ -1123,6 +1123,14 @@ export default {
     if (this.suptimer) clearInterval(this.suptimer)
     switch (this.tab) {
       case 0:
+        this.supHead2()
+        this.supHead1()
+        this.suphotwaterline()
+        this.suphotwaterpie()
+        this.supcoldline()
+        this.supcoldpie()
+        this.suphotline()
+        this.suphotpie()
         this.suptimer = setInterval(() => {
           this.supHead2()
           this.supHead1()
@@ -1135,12 +1143,17 @@ export default {
         }, this.duration)
         break
       case 1:
+        this.supSecond1()
+        this.conSecond2()
         this.suptimer = setInterval(() => {
           this.supSecond1()
           this.conSecond2()
         }, this.duration)
         break
       case 2:
+        this.supThird1()
+        this.supThird2()
+        this.supThird3()
         this.suptimer = setInterval(() => {
           this.supThird1()
           this.supThird2()
@@ -1148,6 +1161,8 @@ export default {
         }, this.duration)
         break
       case 3:
+        this.supForth1()
+        this.supForth2()
         this.suptimer = setInterval(() => {
           this.supForth1()
           this.supForth2()

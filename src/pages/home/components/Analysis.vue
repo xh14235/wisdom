@@ -133,7 +133,8 @@ export default {
       jumpTime: state => state.map.jumpTime,
       viewX: state => state.map.viewX,
       viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ
+      viewZ: state => state.map.viewZ,
+      leftTimer: state => state.leftTimer
     })
   },
   methods: {
@@ -166,72 +167,26 @@ export default {
     // 根据下拉框组件传来的数据改变视图
     changeSelect1 (code) {
       this.building1 = code.id
-      // 下拉框关联地图
-      this.ifr.clearMarks()
-      let markData = []
-      let arr = this.ifr.markConfig.Watching24
-      for (let index = 0; index < arr.length; index++) {
-        if (arr[index].Name.includes(code.name)) {
-          // console.log(index)
-          markData.push(arr[index])
-        }
-      }
-      this.ifr.setMarkData(markData)
-      this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
-
       this.anafirst3()
     },
     changeSelect2 (code) {
       this.building2 = code.id
       // 下拉框关联地图
-      this.ifr.clearMarks()
-      let markData = []
-      let arr = this.ifr.markConfig.Watching24
-      for (let index = 0; index < arr.length; index++) {
-        if (arr[index].Name.includes(code.name)) {
-          // console.log(index)
-          markData.push(arr[index])
-        }
-      }
-      this.ifr.setMarkData(markData)
-      this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
-
+      this.singleBuilding(code.name)
       this.anasecond1()
     },
     changeSelect31 (code) {
       this.building31 = code.id
-      this.compareBuilding1 = code.name
       // 下拉框关联地图
-      this.ifr.clearMarks()
-      let markData = []
-      let arr = this.ifr.markConfig.Watching24
-      for (let index = 0; index < arr.length; index++) {
-        if (arr[index].Name.includes(code.name)) {
-          // console.log(index)
-          markData.push(arr[index])
-        }
-      }
-      this.ifr.setMarkData(markData)
-      this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
-
+      this.singleBuilding(code.name)
+      this.compareBuilding1 = code.name
       this.anathird1()
     },
     changeSelect32 (code) {
       this.building32 = code.id
       this.compareBuilding2 = code.name
       // 下拉框关联地图
-      this.ifr.clearMarks()
-      let markData = []
-      let arr = this.ifr.markConfig.Watching24
-      for (let index = 0; index < arr.length; index++) {
-        if (arr[index].Name.includes(code.name)) {
-          // console.log(index)
-          markData.push(arr[index])
-        }
-      }
-      this.ifr.setMarkData(markData)
-      this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
-
+      this.singleBuilding(code.name)
       this.getcompare2()
     },
     // 消费个体 用能异常 查看上一个异常信息
@@ -303,11 +258,13 @@ export default {
           if (this.getBool(this.datasecond)) {
             if (this.building2) {
               this.anasecond1()
+              this.singleBuilding('烘培')
             }
             this.anasecond3()
             this.analysistimer = setInterval(() => {
               this.anasecond1()
               this.anasecond3()
+              this.singleBuilding('烘培')
             }, this.duration)
           }
           break
@@ -316,10 +273,12 @@ export default {
             if (this.building31) {
               this.anathird1()
               this.getcompare2()
+              this.singleBuilding('烘培')
             }
             this.analysistimer = setInterval(() => {
               this.anathird1()
               this.getcompare2()
+              this.singleBuilding('烘培')
             }, this.duration)
           }
           break
@@ -327,29 +286,21 @@ export default {
           break
       }
     },
-    // 地图方法
-    gisMethods (index) {
-      this.ifr.clearMarks()
-      let markData = []
-      let positionData = {}
-      switch (index) {
-        case 0:
-          markData = this.ifr.markConfig['Watching24']
-          positionData = this.ifr.sceneCenterConfig['Watching24']
-          break
-        case 1:
-          markData = this.ifr.markConfig['Watching24']
-          positionData = this.ifr.sceneCenterConfig['Watching24']
-          break
-        case 2:
-          markData = this.ifr.markConfig['Watching24']
-          positionData = this.ifr.sceneCenterConfig['Watching24']
-          break
-        default:
-          break
+    // 单个建筑 地图方法
+    singleBuilding (name) {
+      if (this.isOpened === 2 && this.leftTimer) {
+        this.ifr.clearMarks()
+        let markData = []
+        let arr = this.ifr.markConfig.Watching24
+        for (let index = 0; index < arr.length; index++) {
+          if (arr[index].Name.includes(name)) {
+            markData.push(arr[index])
+          }
+        }
+        // 建筑的冷热水电数据等接口
+        this.ifr.setMarkData(markData)
+        this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
       }
-      this.ifr.setCameraSettingWithCoordinate(positionData)
-      this.ifr.setMarkData(markData)
     },
     // 判断分页数据是否为空，返回boolean
     getBool (obj) {
@@ -786,12 +737,9 @@ export default {
         this.anathird2()
       }
     },
-    tab () {
-      this.gisMethods(this.tab)
-    },
     isOpened () {
       if (this.isOpened === 2) {
-        this.gisMethods(this.tab)
+        this.ifr.clearMarks()
       }
     }
   },
@@ -807,6 +755,12 @@ export default {
     if (this.analysistimer) clearInterval(this.analysistimer)
     switch (this.tab) {
       case 0:
+        this.anahead1()
+        this.anahead2()
+        this.anafirst1()
+        this.anafirst2()
+        this.anafirst3()
+        this.ifr.clearMarks()
         this.analysistimer = setInterval(() => {
           this.anahead1()
           this.anahead2()
@@ -816,14 +770,22 @@ export default {
         }, this.duration)
         break
       case 1:
+        this.anasecond1()
+        this.anasecond3()
+        this.singleBuilding('烘培')
         this.analysistimer = setInterval(() => {
           this.anasecond1()
           this.anasecond3()
+          this.singleBuilding('烘培')
         }, this.duration)
         break
       case 2:
+        this.anathird1()
+        this.singleBuilding('烘培')
+        this.getcompare2()
         this.analysistimer = setInterval(() => {
           this.anathird1()
+          this.singleBuilding('烘培')
           this.getcompare2()
         }, this.duration)
         break

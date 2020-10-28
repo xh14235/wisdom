@@ -213,6 +213,7 @@ export default {
     // 获取全村域 用电 折线图 数据
     getAllElectric () {
       supHead1().then((res) => {
+        console.log(res)
         let time = new Date()
         let hour = time.getHours() + 1
         let DISTRIBUTED_ENERGY = res.data.DISTRIBUTED_ENERGY

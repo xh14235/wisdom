@@ -81,7 +81,8 @@ export default {
       jumpTime: state => state.map.jumpTime,
       viewX: state => state.map.viewX,
       viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ
+      viewZ: state => state.map.viewZ,
+      leftTimer: state => state.leftTimer
     })
   },
   methods: {
@@ -92,16 +93,21 @@ export default {
       if (this.operationtimer) clearInterval(this.operationtimer)
       if (index === 0) {
         this.getAllElectric()
+        this.gisAllElectric()
         this.operationtimer = setInterval(() => {
           this.getAllElectric()
+          this.gisAllElectric()
         }, this.duration)
       } else if (index === 1) {
         this.getCube936('1254288413020762112')
+        this.gis6Cubes()
         this.operationtimer = setInterval(() => {
           this.getCube936('1254288413020762112')
+          this.gis6Cubes()
         }, this.duration)
         this.ifr.activePipeNetWork('false')
       } else {
+        this.ifr.clearMarks()
         this.operationLine(3)
         this.operationtimer = setInterval(() => {
           this.operationLine(3)
@@ -109,36 +115,21 @@ export default {
         this.ifr.activePipeNetWork('false')
       }
     },
-    // 地图方法
-    gisMethods (index) {
-      this.ifr.clearMarks()
-      let markData = []
-      let positionData = {}
-      switch (index) {
-        case 0:
-          markData = this.ifr.markConfig['villagePower']
-          positionData = this.ifr.sceneCenterConfig['villagePower']
-          break
-        case 1:
-          markData = this.ifr.markConfig['distributedPower']
-          positionData = this.ifr.sceneCenterConfig['distributedPower']
-          break
-        case 2:
-          markData = this.ifr.markConfig['itemData']
-          positionData = this.ifr.sceneCenterConfig['itemData']
-          break
-        default:
-          break
-      }
-      this.ifr.setCameraSettingWithCoordinate(positionData)
-      this.ifr.setMarkData(markData)
-    },
     // 根据下拉框组件传来的数据改变视图
     changeSelect1 (code) {
+      if (this.operationtimer) clearInterval(this.operationtimer)
       if (code.id === '11') {
         this.getAllElectric()
+        this.gisAllElectric()
+        this.operationtimer = setInterval(() => {
+          this.gisAllElectric()
+        }, this.duration)
       } else {
         this.getAllHot()
+        this.gisAllHot()
+        this.operationtimer = setInterval(() => {
+          this.gisAllHot()
+        }, this.duration)
       }
     },
     changeSelect2 (item) {
@@ -375,22 +366,59 @@ export default {
         yName: '(kWh)',
         data: [getTestList(150, 24)]
       }
-    }
-  },
-  watch: {
-    tab () {
-      if (this.tab !== 2) {
-        this.gisMethods(this.tab)
-      } else {
+    },
+    // 全村域 电 地图
+    gisAllElectric () {
+      // 需接口
+      if (this.leftTimer) {
         this.ifr.clearMarks()
+        let markData = this.ifr.markConfig['powerDeal']
+        markData.forEach((item, index) => {
+          item.Other = [
+            {
+              'Key': '供能值',
+              'Value': '0kW'
+            }
+          ]
+        })
+        let positionData = this.ifr.sceneCenterConfig['powerDeal']
+        this.ifr.setCameraSettingWithCoordinate(positionData)
+        this.ifr.setMarkData(markData)
+      }
+    },
+    // 全村域 冷、热、水 地图
+    gisAllHot () {
+      // 需接口
+      if (this.leftTimer) {
+        this.ifr.clearMarks()
+        let markData = this.ifr.markConfig['itemData']
+        markData.forEach((item, index) => {
+          item.Other = [
+            {
+              'Key': '供能值',
+              'Value': '0kW'
+            }
+          ]
+        })
+        let positionData = this.ifr.sceneCenterConfig['itemData']
+        this.ifr.setCameraSettingWithCoordinate(positionData)
+        this.ifr.setMarkData(markData)
+      }
+    },
+    // 分布式能源 六个魔方 地图
+    gis6Cubes () {
+      if (this.leftTimer) {
+        this.ifr.clearMarks()
+        let markData = this.ifr.markConfig['distributedPower']
+        let positionData = this.ifr.sceneCenterConfig['distributedPower']
+        this.ifr.setCameraSettingWithCoordinate(positionData)
+        this.ifr.setMarkData(markData)
       }
     }
   },
   mounted () {
     this.changeTab(0)
     this.getInfoList()
-    this.getAllElectric()
-    this.gisMethods(0)
   },
   // 页面切换时，停止或重启定时器
   deactivated () {
@@ -401,20 +429,22 @@ export default {
     if (this.operationtimer) clearInterval(this.operationtimer)
     switch (this.tab) {
       case 0:
-        this.gisMethods(0)
         this.ifr.activePipeNetWork('true')
+        this.gisAllElectric()
         this.operationtimer = setInterval(() => {
           this.getAllElectric()
+          this.gisAllElectric()
         }, this.duration)
         break
       case 1:
-        this.gisMethods(1)
+        this.gis6Cubes()
         this.operationtimer = setInterval(() => {
+          this.gis6Cubes()
           this.getCube936('1254288413020762112')
         }, this.duration)
         break
       case 2:
-        this.gisMethods(2)
+        this.ifr.clearMarks()
         this.operationtimer = setInterval(() => {
           this.operationLine(3)
         }, this.duration)

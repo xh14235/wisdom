@@ -115,7 +115,8 @@ export default {
       jumpTime: state => state.map.jumpTime,
       viewX: state => state.map.viewX,
       viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ
+      viewZ: state => state.map.viewZ,
+      leftTimer: state => state.leftTimer
     })
   },
   methods: {
@@ -170,6 +171,7 @@ export default {
           }
           break
         case 1:
+          this.ifr.clearMarks()
           if (this.getBool(this.datasecond)) {
             if (this.building2) {
               this.consecondbar()
@@ -322,6 +324,7 @@ export default {
             markData.push(arr[index])
           }
         }
+        // 建筑的冷热水电数据等接口
         this.ifr.setMarkData(markData)
         this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
       }
@@ -635,25 +638,41 @@ export default {
     if (this.contimer) clearInterval(this.contimer)
     switch (this.tab) {
       case 0:
+        this.allBuildings()
+        this.conusedline()
+        this.conusedpie()
         this.contimer = setInterval(() => {
+          this.allBuildings()
           this.conusedline()
           this.conusedpie()
         }, this.duration)
         break
       case 1:
+        this.consecondbar()
+        this.supelectry()
+        this.suphotwater()
+        this.supcold()
+        this.suphot()
+        this.ifr.clearMarks()
         this.contimer = setInterval(() => {
           this.consecondbar()
           this.supelectry()
           this.suphotwater()
           this.supcold()
           this.suphot()
+          this.ifr.clearMarks()
         }, this.duration)
         break
       case 2:
+        this.concomparebuilding()
+        this.conthird2()
+        this.conthird3()
+        this.singleBuilding('烘培')
         this.contimer = setInterval(() => {
           this.concomparebuilding()
           this.conthird2()
           this.conthird3()
+          this.singleBuilding('烘培')
         }, this.duration)
         break
       default:

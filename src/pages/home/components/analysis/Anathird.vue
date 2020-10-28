@@ -127,7 +127,6 @@ export default {
     },
     changeSmall1 (item) {
       this.$emit('changeSelect31', item)
-      console.log(item)
     },
     changeLarge2 (item) {
       this.getVenueSelect2(item.id)
