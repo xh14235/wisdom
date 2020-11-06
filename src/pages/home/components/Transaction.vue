@@ -564,6 +564,7 @@ export default {
   },
   mounted () {
     this.changeTab(0)
+    this.ifr.activePipeNetWork('false')
   },
   // 页面切换时，停止或重启定时器
   deactivated () {
@@ -571,6 +572,7 @@ export default {
     this.trantimer = null
   },
   activated () {
+    this.ifr.activePipeNetWork('false')
     if (this.trantimer) clearInterval(this.trantimer)
     switch (this.tab) {
       case 0:

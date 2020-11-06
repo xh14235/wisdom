@@ -437,6 +437,7 @@ export default {
         }, this.duration)
         break
       case 1:
+        this.ifr.activePipeNetWork('false')
         this.gis6Cubes()
         this.operationtimer = setInterval(() => {
           this.gis6Cubes()
@@ -444,6 +445,7 @@ export default {
         }, this.duration)
         break
       case 2:
+        this.ifr.activePipeNetWork('false')
         this.ifr.clearMarks()
         this.operationtimer = setInterval(() => {
           this.operationLine(3)

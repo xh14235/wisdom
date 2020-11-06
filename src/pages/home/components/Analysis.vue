@@ -321,6 +321,7 @@ export default {
       anaRadar({
         hour: hour
       }).then((res) => {
+        console.log(Object.values(res.data.ELECTRICITY))
         this.datahead.echarts1 = {
           id: 'anahead1',
           name: '电',

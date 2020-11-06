@@ -95,15 +95,19 @@ export default {
       switch (index) {
         case 0:
           this.ifr.setDayTime('9')
+          this.ifr.activeLight('false')
           break
         case 1:
           this.ifr.setDayTime('12')
+          this.ifr.activeLight('false')
           break
         case 2:
           this.ifr.setDayTime('15')
+          this.ifr.activeLight('false')
           break
         case 3:
           this.ifr.setDayTime('24')
+          this.ifr.activeLight('true')
           break
         default:
           break

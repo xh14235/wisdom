@@ -2,7 +2,6 @@
   <div @click='hideSelectList()'>
     <div class='main'>
       <div class='map'>
-        <!-- <iframe ref='map' id='map' src='/static/map/index.html' frameborder='0' @load="ifrLoad"></iframe> -->
         <iframe ref='map' id='map' src='/static/map/index.html' frameborder='0'></iframe>
       </div>
       <div class='main-left'>
@@ -51,17 +50,14 @@ export default {
     })
   },
   // watch: {
-  //   monitorPopupShow () {
-  //     alert(this.monitorPopupShow)
+  //   weatherControlShow () {
+  //     if (!this.weatherControlShow) {
+  //       this.ifr.setDayTime('9')
+  //     }
   //   }
   // },
   methods: {
-    // ifrLoad () {
-    //   let ifr = document.getElementById('map').contentWindow
-    //   console.log(ifr.isLoaded)
-    // },
     ifrMessage (e) {
-      // console.log(e.data)
       if (e.data.markType === '监控') {
         this.showMonitorPopup()
       }
@@ -93,7 +89,6 @@ export default {
     Livelihood: () => import('./components/Livelihood')
   },
   mounted () {
-    // alert(this.monitorPopupShow)
     let _this = this
     _this.login()
     _this.timer = setInterval(() => {
