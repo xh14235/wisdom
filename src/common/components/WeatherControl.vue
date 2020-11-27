@@ -170,6 +170,7 @@ export default {
   display: flex
   justify-content: space-between
   align-items: center
+  background: rgba(0, 0, 0, .3)
   .control-center
     flex: 0 0 7vh
     width: 7vh
@@ -193,13 +194,13 @@ export default {
       height: 3px
       background: #fff
       @media screen and (max-width: 1920px)
-        top: 6vh
+        top: 5vh
         left: 9%
         width: 82%
     .control-item
       flex: 0 0 50px
       width: 50px
-      height: 100px
+      height: 8.5vh
       display: flex
       flex-direction: column
       justify-content: space-between

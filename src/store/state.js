@@ -1,4 +1,4 @@
-let defaultToken = localStorage.token || ''
+let defaultToken = sessionStorage.token || ''
 
 export default {
   tab_left: '001',

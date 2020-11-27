@@ -12,7 +12,7 @@ export default {
   },
   mutLogin (state, token) {
     state.token = token
-    localStorage.token = token
+    sessionStorage.token = token
   },
   mutWeather (state, weather) {
     state.weather.today = weather.data.shift()
