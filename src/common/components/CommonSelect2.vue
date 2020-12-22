@@ -38,6 +38,7 @@ export default {
     smallSelect () {
       this.smallChosen = this.smallSelect[0]
       this.smallSelect[0].active = true
+      // console.log(this.smallChosen)
     },
     // 页面切换时，获取大分类
     largeSelect () {

@@ -30,7 +30,7 @@
 import { mapState } from 'vuex'
 import { getTestList } from '@/request/common-api.js'
 import { concomparebuilding } from '@/request/consumption-api.js'
-import { anaRadar, anaAbnormalNum, anaAbnormalType, anaAbnormalList, anaNewestSeq, anaAbnormalSeq, anacompareday } from '@/request/analysis-api'
+import { anaRadar, anaAbnormalNum, anaAbnormalType, anaNewestSeq, anaAbnormalSeq, anacompareday } from '@/request/analysis-api'
 export default {
   name: 'Analysis',
   components: {
@@ -76,7 +76,6 @@ export default {
       },
       datafirst: {
         abnormalType: [],
-        abnormalDetail: [],
         abnormalEnergy: []
       },
       datasecond: {
@@ -105,7 +104,11 @@ export default {
       legend2: '昨天',
       compareBuilding1: '936能源馆',
       compareBuilding2: '915彩绘馆',
-      seq: ''
+      seq: '',
+      selectName1: '烘培',
+      selectName2: '烘培',
+      selectName31: '烘培',
+      selectName32: '烘培'
     }
   },
   props: {
@@ -129,11 +132,6 @@ export default {
       white: state => state.color.white,
       lgreen: state => state.color.lgreen,
       ifr: state => state.map.ifr,
-      iconHeight: state => state.map.iconHeight,
-      jumpTime: state => state.map.jumpTime,
-      viewX: state => state.map.viewX,
-      viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ,
       leftTimer: state => state.leftTimer
     })
   },
@@ -166,28 +164,99 @@ export default {
     },
     // 根据下拉框组件传来的数据改变视图
     changeSelect1 (code) {
-      this.building1 = code.id
+      this.building1 = code.value
+      this.selectName1 = code.label
+      // 下拉框关联地图
+      this.gisMethods(this.selectName1)
       this.anafirst3()
     },
     changeSelect2 (code) {
-      this.building2 = code.id
+      this.building2 = code.value
+      this.selectName2 = code.label
       // 下拉框关联地图
-      this.singleBuilding(code.name)
+      this.gisMethods(this.selectName2)
       this.anasecond1()
     },
     changeSelect31 (code) {
-      this.building31 = code.id
+      this.building31 = code.value
+      this.selectName31 = code.label
       // 下拉框关联地图
-      this.singleBuilding(code.name)
-      this.compareBuilding1 = code.name
+      this.gisMethods(this.selectName31)
+      this.compareBuilding1 = code.label
       this.anathird1()
     },
     changeSelect32 (code) {
-      this.building32 = code.id
-      this.compareBuilding2 = code.name
+      this.building32 = code.value
+      this.selectName32 = code.label
+      this.compareBuilding2 = code.label
       // 下拉框关联地图
-      this.singleBuilding(code.name)
+      this.gisMethods(this.selectName32)
       this.getcompare2()
+    },
+    // 分页切换，显示不同内容
+    changeTab (index, title) {
+      this.tab = index
+      this.$emit('changeTitle', title)
+      if (this.analysistimer) clearInterval(this.analysistimer)
+      switch (index) {
+        case 0:
+          if (this.getBool(this.datahead) && this.getBool(this.datafirst)) {
+            this.anahead1()
+            this.anahead2()
+            this.anafirst1()
+            this.gisMethods(this.selectName1)
+            if (this.building1) {
+              this.anafirst3()
+            }
+            this.analysistimer = setInterval(() => {
+              this.anahead1()
+              this.anahead2()
+              this.anafirst1()
+              this.anafirst3()
+            }, this.duration)
+          }
+          break
+        case 1:
+          if (this.getBool(this.datasecond)) {
+            this.gisMethods(this.selectName2)
+            if (this.building2) {
+              this.anasecond1()
+            }
+            this.anasecond3()
+            this.analysistimer = setInterval(() => {
+              this.anasecond1()
+              this.anasecond3()
+            }, this.duration)
+          }
+          break
+        case 2:
+          if (this.getBool(this.datasecond)) {
+            this.gisMethods(this.selectName31)
+            if (this.building31) {
+              this.anathird1()
+              this.getcompare2()
+            }
+            this.analysistimer = setInterval(() => {
+              this.anathird1()
+              this.getcompare2()
+            }, this.duration)
+          }
+          break
+        default:
+          break
+      }
+    },
+    // 判断分页数据是否为空，返回boolean
+    getBool (obj) {
+      let boo = 0
+      for (let item in obj) {
+        boo += Object.keys(obj[item]).length
+      }
+      if (boo === obj.length) {
+        return false
+      } else {
+        return true
+      }
     },
     // 消费个体 用能异常 查看上一个异常信息
     mut (index, nownum) {
@@ -230,90 +299,6 @@ export default {
         console.log(res)
       })
     },
-    // 分页切换，显示不同内容
-    changeTab (index, title) {
-      this.tab = index
-      this.$emit('changeTitle', title)
-      if (this.analysistimer) clearInterval(this.analysistimer)
-      switch (index) {
-        case 0:
-          if (this.getBool(this.datahead) && this.getBool(this.datafirst)) {
-            this.anahead1()
-            this.anahead2()
-            this.anafirst1()
-            this.anafirst2()
-            if (this.building1) {
-              this.anafirst3()
-            }
-            this.analysistimer = setInterval(() => {
-              this.anahead1()
-              this.anahead2()
-              this.anafirst1()
-              this.anafirst2()
-              this.anafirst3()
-            }, this.duration)
-          }
-          break
-        case 1:
-          if (this.getBool(this.datasecond)) {
-            if (this.building2) {
-              this.anasecond1()
-              this.singleBuilding('烘培')
-            }
-            this.anasecond3()
-            this.analysistimer = setInterval(() => {
-              this.anasecond1()
-              this.anasecond3()
-              this.singleBuilding('烘培')
-            }, this.duration)
-          }
-          break
-        case 2:
-          if (this.getBool(this.datasecond)) {
-            if (this.building31) {
-              this.anathird1()
-              this.getcompare2()
-              this.singleBuilding('烘培')
-            }
-            this.analysistimer = setInterval(() => {
-              this.anathird1()
-              this.getcompare2()
-              this.singleBuilding('烘培')
-            }, this.duration)
-          }
-          break
-        default:
-          break
-      }
-    },
-    // 单个建筑 地图方法
-    singleBuilding (name) {
-      if (this.isOpened === 2 && this.leftTimer) {
-        this.ifr.clearMarks()
-        let markData = []
-        let arr = this.ifr.markConfig.Watching24
-        for (let index = 0; index < arr.length; index++) {
-          if (arr[index].Name.includes(name)) {
-            markData.push(arr[index])
-          }
-        }
-        // 建筑的冷热水电数据等接口
-        this.ifr.setMarkData(markData)
-        this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
-      }
-    },
-    // 判断分页数据是否为空，返回boolean
-    getBool (obj) {
-      let boo = 0
-      for (let item in obj) {
-        boo += Object.keys(obj[item]).length
-      }
-      if (boo === obj.length) {
-        return false
-      } else {
-        return true
-      }
-    },
     // 获取用能异常 四个雷达图 数据
     anahead1 () {
       let time = new Date()
@@ -321,7 +306,6 @@ export default {
       anaRadar({
         hour: hour
       }).then((res) => {
-        console.log(Object.values(res.data.ELECTRICITY))
         this.datahead.echarts1 = {
           id: 'anahead1',
           name: '电',
@@ -385,15 +369,6 @@ export default {
     anafirst1 () {
       anaAbnormalType().then((res) => {
         this.datafirst.abnormalType = res.data
-      })
-    },
-    // 用能异常 列表 详情 数据
-    anafirst2 () {
-      anaAbnormalList({
-        page: 1,
-        size: 10
-      }).then((res) => {
-        this.datafirst.abnormalDetail = res.data
       })
     },
     // 获取用能异常 统计数据 冷热水单异常及上次下次查看
@@ -722,6 +697,36 @@ export default {
         let data = res.data
         this.compare2 = data
       })
+    },
+    // 单个建筑 地图方法
+    gisMethods (name) {
+      this.ifr.clearMarks()
+      let markData = []
+      let arr = this.ifr.markConfig.Watching24
+      for (let index = 0; index < arr.length; index++) {
+        if (arr[index].Name.includes(name)) {
+          markData.push(arr[index])
+        }
+      }
+      this.ifr.setMarkData(markData)
+      let positionData = {
+        'Distance': '1.953',
+        'PosX': markData[0].Longitude,
+        'PosY': markData[0].Latitude,
+        'Time': 1,
+        'X': '184.1298',
+        'Y': '54.2352'
+      }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      // 隐藏热力图
+      this.ifr.showPeopleHeatingItem([])
+      // 隐藏能留图
+      this.ifr.activePipeNetWork('false')
+      // 清除道路状态
+      let road = localStorage.road.split(',')
+      road.forEach(item => {
+        this.ifr.setRoadStatus(item + '_0')
+      })
     }
   },
   watch: {
@@ -740,7 +745,7 @@ export default {
     },
     isOpened () {
       if (this.isOpened === 2) {
-        this.ifr.clearMarks()
+        this.gisMethods(this.selectName1)
       }
     }
   },
@@ -753,46 +758,7 @@ export default {
     this.analysistimer = null
   },
   activated () {
-    if (this.analysistimer) clearInterval(this.analysistimer)
-    switch (this.tab) {
-      case 0:
-        this.anahead1()
-        this.anahead2()
-        this.anafirst1()
-        this.anafirst2()
-        this.anafirst3()
-        this.ifr.clearMarks()
-        this.analysistimer = setInterval(() => {
-          this.anahead1()
-          this.anahead2()
-          this.anafirst1()
-          this.anafirst2()
-          this.anafirst3()
-        }, this.duration)
-        break
-      case 1:
-        this.anasecond1()
-        this.anasecond3()
-        this.singleBuilding('烘培')
-        this.analysistimer = setInterval(() => {
-          this.anasecond1()
-          this.anasecond3()
-          this.singleBuilding('烘培')
-        }, this.duration)
-        break
-      case 2:
-        this.anathird1()
-        this.singleBuilding('烘培')
-        this.getcompare2()
-        this.analysistimer = setInterval(() => {
-          this.anathird1()
-          this.singleBuilding('烘培')
-          this.getcompare2()
-        }, this.duration)
-        break
-      default:
-        break
-    }
+    this.changeTab(this.tab, this.list[this.tab].title)
   },
   beforeDestroy () {
     clearInterval(this.analysistimer)

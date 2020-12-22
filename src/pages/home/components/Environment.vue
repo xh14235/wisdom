@@ -12,7 +12,7 @@
     <div class="controller-box">
       <div class="line-title">PM2.5</div>
       <div class="select1">
-        空气监测点<CommonSelect :select="select1" @selectChange="changeSelect1"></CommonSelect>
+        空气监测点<Select :options="select1" @changeValue="changeSelect1"></Select>
       </div>
     </div>
     <div class="echarts-box">
@@ -43,7 +43,7 @@
     <div class="controller-box">
       <div class="line-title">PH值</div>
       <div class="select1">
-        水质监测点<CommonSelect :select="select2" @selectChange="changeSelect2"></CommonSelect>
+        水质监测点<Select :options="select2" @changeValue="changeSelect2"></Select>
       </div>
     </div>
     <div class="echarts-box">
@@ -92,7 +92,7 @@ export default {
     Epie: () => import('@/common/echarts/Epie'),
     Eline: () => import('@/common/echarts/Eline'),
     Weather: () => import('@/common/components/Weather'),
-    CommonSelect: () => import('@/common/components/CommonSelect')
+    Select: () => import('@/common/components/Select')
   },
   data () {
     return {
@@ -103,16 +103,14 @@ export default {
       pieData1: {},
       select1: [
         {
-          id: '001',
           value: '1254300251431186436',
-          info: '936能源馆'
+          label: '936能源馆'
         }
       ],
       select2: [
         {
-          id: '001',
           value: '1254300251431186436',
-          info: '936能源馆'
+          label: '936能源馆'
         }
       ],
       otherWeather: {},
@@ -197,16 +195,6 @@ export default {
     // 获取水质ph值 折线图数据
     getLineData2 () {
       ecologyPH().then((res) => {
-        // console.log(res)
-        // let data = res.data.slice(0, this.day.length)
-        // let list = []
-        // for (let i = 0; i < 24; i++) {
-        //   if (data[i]) {
-        //     list.push(data[i].value)
-        //   } else {
-        //     list.push(0)
-        //   }
-        // }
         let data = res.data
         let list = []
         for (let i = 0; i < data.length; i++) {
@@ -238,15 +226,18 @@ export default {
       let positionData = this.ifr.sceneCenterConfig['ecology']
       this.ifr.setCameraSettingWithCoordinate(positionData)
       this.ifr.setMarkData(markData)
+      // 隐藏热力图
       this.ifr.showPeopleHeatingItem([])
+      // 隐藏能留图
       this.ifr.activePipeNetWork('false')
+      // 清除道路状态
+      let road = localStorage.road.split(',')
+      road.forEach(item => {
+        this.ifr.setRoadStatus(item + '_0')
+      })
     }
   },
   // 页面切换时，停止或重启定时器
-  deactivated () {
-    clearInterval(this.environtimer)
-    this.environtimer = null
-  },
   activated () {
     this.getRubbishData()
     this.getLineData1()
@@ -265,7 +256,7 @@ export default {
       this.getWaterQuality()
     }, this.duration)
   },
-  beforeDestroy () {
+  deactivated () {
     clearInterval(this.environtimer)
     this.environtimer = null
   }
@@ -286,9 +277,6 @@ export default {
       display: flex
       justify-content: flex-end
       align-items: center
-      .select-box
-        flex: auto
-        // width: 60%
     .line-title
       flex: 0 0 50%
       width: 50%

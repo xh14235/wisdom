@@ -5,24 +5,42 @@
     </div>
     <div class="common-echarts-wrapper">
       <div class="common-echarts-box">
-        <Eline v-if="peoplePeakEcharts.id" :lineData="peoplePeakEcharts"></Eline>
+        <Eline
+          v-if="peoplePeakEcharts.id"
+          :lineData="peoplePeakEcharts"
+        ></Eline>
       </div>
       <div class="common-echarts-box">
         <div class="today-tourist">
-          <div class="today-tourist-box" v-for="(item, index) of todayTourist" :key="item.id">
+          <div
+            class="today-tourist-box"
+            v-for="(item, index) of todayTourist"
+            :key="item.id"
+          >
             <div class="today-tourist-title">
-              <img :src="item.imgUrl" alt="">{{item.title}}
+              <img :src="item.imgUrl" alt="" />{{ item.title }}
             </div>
             <div class="today-tourist-detail">
               <div class="today-tourist-left">
-                <b :class="{'leave': index === 1}">{{parseFloat(item.num).toLocaleString()}}</b>人
+                <b :class="{ leave: index === 1 }">{{
+                  parseFloat(item.num).toLocaleString()
+                }}</b
+                >人
               </div>
               <div class="today-tourist-right">
                 <p>2小时增长</p>
                 <p class="today-percent">
-                  {{item.percent}}%
-                  <img v-if="item.percent >= 0" src="../../../assets/img/tourist-add.png" alt="">
-                  <img v-else src="../../../assets/img/tourist-reduce.png" alt="">
+                  {{ item.percent }}%
+                  <img
+                    v-if="item.percent >= 0"
+                    src="../../../assets/img/tourist-add.png"
+                    alt=""
+                  />
+                  <img
+                    v-else
+                    src="../../../assets/img/tourist-reduce.png"
+                    alt=""
+                  />
                 </p>
               </div>
             </div>
@@ -34,7 +52,7 @@
       <div>游客人数统计</div>
     </div>
     <div class="select-wrapper">
-      <p class="chosenDate" @click.stop="ShowCalendar()">{{formatTime}}</p>
+      <p class="chosenDate" @click.stop="ShowCalendar()">{{ formatTime }}</p>
     </div>
     <div class="calendar-wrapper" v-show="calendarShow && selectListShow">
       <el-calendar v-model="calendarDate"></el-calendar>
@@ -44,11 +62,25 @@
         <div class="title2">游客信息分析</div>
         <Statistics2 v-if="sexData.length" :statistics="sexData"></Statistics2>
         <div class="age-wrapper">
-          <div class="age-all">游客总数：<b>{{parseFloat(ageData.all).toLocaleString()}}</b>人</div>
+          <div class="age-all">
+            游客总数：<b>{{ parseFloat(ageData.all).toLocaleString() }}</b
+            >人
+          </div>
           <div class="age-detail">
-            <div class="age-box" v-for="(item, index) of ageData.list" :key="item.id">
-              <span class="age-title" :class="{'age-green': index % 2 === 0, 'age-yellow': index % 2 === 1}">{{item.title}}：</span>
-              <span class="age-num">{{item.num}}%</span>
+            <div
+              class="age-box"
+              v-for="(item, index) of ageData.list"
+              :key="item.id"
+            >
+              <span
+                class="age-title"
+                :class="{
+                  'age-green': index % 2 === 0,
+                  'age-yellow': index % 2 === 1
+                }"
+                >{{ item.title }}：</span
+              >
+              <span class="age-num">{{ item.num }}%</span>
             </div>
           </div>
         </div>
@@ -63,16 +95,38 @@
         <div class="title2">游客人数分布</div>
         <div class="sort-box">
           <div class="sort-circle">
-            <img class="sort-outer rotate" src="../../../assets/img/statistics-rotate.png" alt="">
-            <img class="sort-inner" src="../../../assets/img/tourist-icon.png" alt="">
+            <img
+              class="sort-outer rotate"
+              src="../../../assets/img/statistics-rotate.png"
+              alt=""
+            />
+            <img
+              class="sort-inner"
+              src="../../../assets/img/tourist-icon.png"
+              alt=""
+            />
           </div>
           <div class="sort-right">
-            <div class="sort-detail" v-for="(item, index) of buildingTourist" :key="item.id">
+            <div
+              class="sort-detail"
+              v-for="(item, index) of buildingTourist"
+              :key="item.id"
+            >
               <div class="sort-title">
-                <p>{{item.building}}</p>
-                <img :src="require('../../../assets/img/tourist-line' + (index + 1) + '.png')" alt="">
+                <p>{{ item.building }}</p>
+                <img
+                  :src="
+                    require('../../../assets/img/tourist-line' +
+                      (index + 1) +
+                      '.png')
+                  "
+                  alt=""
+                />
               </div>
-              <div class="sort-num"><b>{{item.num}}</b>人</div>
+              <div class="sort-num">
+                <b>{{ item.num }}</b
+                >人
+              </div>
             </div>
           </div>
         </div>
@@ -103,7 +157,7 @@
 import img1 from '@/assets/img/tourist-arrive.png'
 import img2 from '@/assets/img/tourist-leave.png'
 import { mapState, mapMutations } from 'vuex'
-import { culturepeak, cultureinout, culturecalendar, culturesexage } from '@/request/culture-api'
+import { culturepeak, cultureinout, culturesexage } from '@/request/culture-api'
 export default {
   name: 'Culture',
   components: {
@@ -161,7 +215,6 @@ export default {
       this.getSexAgeData()
       this.getRanking()
       this.getTouristByBuilding()
-      // this.getCalendar()
     },
     selectListShow () {
       if (this.selectListShow === false) {
@@ -170,6 +223,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['showSelectList']),
     // 获取人流量峰值 数据
     getPeoplePeak () {
       culturepeak({
@@ -206,7 +260,7 @@ export default {
       if (second < 10) second = '0' + second
       let dateTime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
       cultureinout({
-        dateTime: dateTime
+        dateTime
       }).then((res) => {
         let data = res.data
         let percentEnter = (data.ENTER - data.OLD_ENTER) * 100 / (data.OLD_ENTER !== 0 ? data.OLD_ENTER : 1)
@@ -228,26 +282,6 @@ export default {
           }
         ]
       })
-    },
-    // 获取日历数据
-    getCalendar () {
-      culturecalendar({
-        date: this.formatTime
-      }).then((res) => {
-        let data = Object.values(res.data)
-        this.calendar = []
-        for (let i = 0; i < data.length; i++) {
-          this.calendar.push({
-            id: '00' + (i + 1),
-            date: i + 1,
-            num: data[i]
-          })
-        }
-        // console.log(this.calendar)
-      })
-    },
-    random (max) {
-      return Math.floor(Math.random() * max)
     },
     // 获取游客人数分布 按建筑 数据
     getTouristByBuilding () {
@@ -325,13 +359,6 @@ export default {
     },
     // 获取游客性别年龄统计 数据
     getSexAgeData () {
-      // let date = new Date()
-      // let year = date.getFullYear()
-      // let month = date.getMonth() + 1
-      // if (month < 10) month = '0' + month
-      // let day = date.getDate() + 1
-      // if (day < 10) day = '0' + day
-      // let time = year + '-' + month + '-' + day
       culturesexage({
         date: this.formatTime
       }).then((res) => {
@@ -386,7 +413,6 @@ export default {
       this.calendarShow = !this.calendarShow
       this.showSelectList()
     },
-    ...mapMutations(['showSelectList']),
     // 地图方法
     gisMethods () {
       this.ifr.clearMarks()
@@ -402,7 +428,7 @@ export default {
         let item2 = {
           'Longitude': item.Longitude,
           'Latitude': item.Latitude,
-          'Height': item.Height
+          'Height': String(item.Height / 100)
         }
         let val = item.Other[0].Value
         if (val < 50) {
@@ -417,31 +443,24 @@ export default {
       let positionData = this.ifr.sceneCenterConfig['culturalTourism']
       this.ifr.setCameraSettingWithCoordinate(positionData)
       this.ifr.setMarkData(markData)
+      // 显示热力图
       this.ifr.showPeopleHeatingItem(hotData)
+      // 隐藏能留图
       this.ifr.activePipeNetWork('false')
+      // 清除道路状态
+      let road = localStorage.road.split(',')
+      road.forEach(item => {
+        this.ifr.setRoadStatus(item + '_0')
+      })
     }
   },
-  mounted () {
+  // 页面切换时，停止或重启定时器
+  activated () {
     this.getPeoplePeak()
     this.getTodayTourist()
     this.getSexAgeData()
     this.getTouristByBuilding()
     this.getRanking()
-    if (this.cultureTimer) clearInterval(this.cultureTimer)
-    this.cultureTimer = setInterval(() => {
-      this.getPeoplePeak()
-      this.getTodayTourist()
-      this.getSexAgeData()
-      this.getTouristByBuilding()
-      this.getRanking()
-    }, this.duration)
-  },
-  // 页面切换时，停止或重启定时器
-  deactivated () {
-    clearInterval(this.cultureTimer)
-    this.cultureTimer = null
-  },
-  activated () {
     if (this.rightTimer) {
       this.gisMethods()
     }
@@ -454,7 +473,7 @@ export default {
       this.getRanking()
     }, this.duration)
   },
-  beforeDestroy () {
+  deactivated () {
     clearInterval(this.cultureTimer)
     this.cultureTimer = null
   }
@@ -471,9 +490,8 @@ export default {
   display: flex
   justify-content: space-between
   align-items: top
-  @media screen and (max-width: 1920px) {
+  @media screen and (max-width: 1920px)
     font-size: 14px
-  }
   span
     font-size: 14px
     @media screen and (max-width: 1920px)
@@ -485,7 +503,7 @@ export default {
 .culture-wrapper >>> .el-calendar__body th
   color: #fff
 .culture-wrapper >>> .el-calendar-table td.is-selected
-  background-color: rgba(255,255,255,.3)
+  background-color: rgba(255, 255, 255, 0.3)
 .culture-wrapper >>> .el-calendar-table .el-calendar-day
   height: 4vh
   line-height: 4vh
@@ -495,8 +513,6 @@ export default {
   background: #286846
   font-size: 12px
   padding: 3px 5px
-.culture-wrapper >>> .el-button:focus, .el-button:hover
-  background-color: rgba(255,255,255,.3)
 .culture-wrapper
   position: relative
   .select-wrapper
@@ -515,7 +531,7 @@ export default {
       border-radius: 3px
       text-indent: 5px
       &::after
-        content: ""
+        content: ''
         display: block
         width: 2.33333vh
         height: 2.33333vh
@@ -529,7 +545,6 @@ export default {
     top: 32vh
     right: 0
     width: 15vw
-    // height: 25vh
     z-index: 1
   .common-echarts-wrapper
     margin-top: 2vh
@@ -550,7 +565,7 @@ export default {
             flex: 0 0 50%
             width: 50%
             text-align: center
-            background: rgba(69,80,74,.5)
+            background: rgba(69, 80, 74, 0.5)
             .age-title
               font-size: 14px
               @media screen and (max-width: 1920px)
@@ -565,7 +580,7 @@ export default {
         justify-content: space-between
         height: 22vh
         .today-tourist-box
-          border: 1px solid rgba(69,80,74,1)
+          border: 1px solid rgba(69, 80, 74, 1)
           padding: 1.5vh 0.7vw
           .today-tourist-title
             font-size: 18px

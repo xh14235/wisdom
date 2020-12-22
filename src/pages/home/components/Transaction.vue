@@ -23,7 +23,6 @@
 
 <script>
 import { mapState } from 'vuex'
-// import { getCentrePoint } from '@/request/common-api.js'
 import { tranallfirst, tranallelectric, tranallhotwater, tranallcold, tranallhot, transinglefirst, transingleelectric, transinglehotwater, transinglecold, transinglehot, tranallcost, transinglecost } from '@/request/transaction-api'
 export default {
   name: 'Transaction',
@@ -42,11 +41,6 @@ export default {
       bgreen: state => state.color.bgreen,
       red: state => state.color.red,
       ifr: state => state.map.ifr,
-      iconHeight: state => state.map.iconHeight,
-      jumpTime: state => state.map.jumpTime,
-      viewX: state => state.map.viewX,
-      viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ,
       leftTimer: state => state.leftTimer
     })
   },
@@ -93,17 +87,15 @@ export default {
       this.dateType1 = date
       this.tranallfirst()
       this.tranallthird()
-      this.getAllSales()
     },
     changeDate2 (date) {
       this.dateType2 = date
       this.transinglefirst()
       this.transinglethird()
-      this.getSingleSales()
     },
     // 根据下拉框组件传来的数据改变视图
     changeSelect2 (chosen) {
-      this.building2 = chosen.id
+      this.building2 = chosen.value
       this.transinglefirst()
       this.transinglethird()
       this.transinglestatistics()
@@ -120,12 +112,10 @@ export default {
             this.tranallfirst()
             this.tranallthird()
             this.tranallstatistics()
-            this.getAllSales()
             this.trantimer = setInterval(() => {
               this.tranallfirst()
               this.tranallthird()
               this.tranallstatistics()
-              this.getAllSales()
             }, this.duration)
           }
           break
@@ -135,53 +125,19 @@ export default {
               this.transinglefirst()
               this.transinglethird()
               this.transinglestatistics()
-              this.getSingleSales()
             }
             this.trantimer = setInterval(() => {
               this.transinglefirst()
               this.transinglethird()
               this.transinglestatistics()
-              this.getSingleSales()
             }, this.duration)
           }
           break
         default:
           break
       }
-    },
-    // 全村域 集中光伏、集中风电、集中储能、外来电、能源中心最新交易总额 地图方法
-    getAllSales () {
       if (this.leftTimer) {
-        let sales = [41, 22, 45, 24, 43]
-        this.ifr.clearMarks()
-        let markData = this.ifr.markConfig['villagePower']
-        markData.forEach((item, index) => {
-          item.Other = [
-            {
-              'Key': '总交易额',
-              'Value': sales[index] + '元'
-            }
-          ]
-        })
-        let positionData = this.ifr.sceneCenterConfig['villagePower']
-        this.ifr.setCameraSettingWithCoordinate(positionData)
-        this.ifr.setMarkData(markData)
-      }
-    },
-    // 个体数据 能源管最新交易总额 地图方法
-    getSingleSales () {
-      if (this.leftTimer) {
-        this.ifr.clearMarks()
-        let markData = this.ifr.markConfig['itemData']
-        markData[0].Other = [
-          {
-            'Key': '总交易额',
-            'Value': '53元'
-          }
-        ]
-        let positionData = this.ifr.sceneCenterConfig['itemData']
-        this.ifr.setCameraSettingWithCoordinate(positionData)
-        this.ifr.setMarkData(markData)
+        this.gisMethods()
       }
     },
     // 根据下拉框组件传来的数据改变视图
@@ -357,23 +313,25 @@ export default {
       tranallcost({
         year: year
       }).then((res) => {
+        let income = res.data ? res.data.income : 0
+        let expend = res.data ? res.data.expend : 0
         this.datafirst.statistics = [
           {
             title: '收支统计',
             name: '累计收入',
-            num: parseInt(res.data.income),
+            num: parseInt(income),
             unit: '元',
             imgUrl: require('../../../assets/img/income.png')
           },
           {
             title: '收支统计',
             name: '累计支出',
-            num: parseInt(res.data.expend),
+            num: parseInt(expend),
             unit: '元',
             imgUrl: require('../../../assets/img/expend.png')
           }
         ]
-        this.datafirst.profit = parseInt(res.data.income) - parseInt(res.data.expend)
+        this.datafirst.profit = parseInt(income) - parseInt(expend)
       })
     },
     // 单个单位 外来电 消耗及费用 折线图 数据
@@ -542,62 +500,80 @@ export default {
         year: year,
         supplyFacilityId: this.building2
       }).then((res) => {
+        let income = res.data ? res.data.income : 0
+        let expend = res.data ? res.data.expend : 0
         this.datasecond.statistics = [
           {
             title: '收支统计',
             name: '累计收入',
-            num: parseInt(res.data.income),
+            num: parseInt(income),
             unit: '元',
             imgUrl: require('../../../assets/img/income.png')
           },
           {
             title: '收支统计',
             name: '累计支出',
-            num: parseInt(res.data.expend),
+            num: parseInt(expend),
             unit: '元',
             imgUrl: require('../../../assets/img/expend.png')
           }
         ]
-        this.datasecond.profit = parseInt(res.data.income) - parseInt(res.data.expend)
+        this.datasecond.profit = parseInt(income) - parseInt(expend)
+      })
+    },
+    // 地图方法
+    gisMethods () {
+      this.ifr.clearMarks()
+      let positionData
+      let markData
+      switch (this.tab) {
+        case 0:
+          positionData = this.ifr.sceneCenterConfig['villagePower']
+          let sales = [41, 22, 45, 24, 43]
+          this.ifr.clearMarks()
+          let markers = this.ifr.markConfig['villagePower']
+          markData = markers.map((item, index) => {
+            item.Other = [
+              {
+                'Key': '总交易额',
+                'Value': sales[index] + '元'
+              }
+            ]
+            return item
+          })
+          this.ifr.setMarkData(markData)
+          break
+        case 1:
+          positionData = this.ifr.sceneCenterConfig['itemData']
+          markData = this.ifr.markConfig['itemData']
+          markData[0].Other = [
+            {
+              'Key': '总交易额',
+              'Value': '53元'
+            }
+          ]
+          this.ifr.setMarkData(markData)
+          break
+        default:
+          break
+      }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      // 隐藏热力图
+      this.ifr.showPeopleHeatingItem([])
+      // 隐藏能留图
+      this.ifr.activePipeNetWork('false')
+      // 清除道路状态
+      let road = localStorage.road.split(',')
+      road.forEach(item => {
+        this.ifr.setRoadStatus(item + '_0')
       })
     }
   },
-  mounted () {
-    this.changeTab(0)
-    this.ifr.activePipeNetWork('false')
-  },
   // 页面切换时，停止或重启定时器
-  deactivated () {
-    clearInterval(this.trantimer)
-    this.trantimer = null
-  },
   activated () {
-    this.ifr.activePipeNetWork('false')
-    if (this.trantimer) clearInterval(this.trantimer)
-    switch (this.tab) {
-      case 0:
-        this.getAllSales()
-        this.trantimer = setInterval(() => {
-          this.tranallfirst()
-          this.tranallthird()
-          this.tranallstatistics()
-          this.getAllSales()
-        }, this.duration)
-        break
-      case 1:
-        this.getSingleSales()
-        this.trantimer = setInterval(() => {
-          this.transinglefirst()
-          this.transinglethird()
-          this.transinglestatistics()
-          this.getSingleSales()
-        }, this.duration)
-        break
-      default:
-        break
-    }
+    this.changeTab(this.tab)
   },
-  beforeDestroy () {
+  deactivated () {
     clearInterval(this.trantimer)
     this.trantimer = null
   }

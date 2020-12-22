@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <CommonSelect :select="select" @selectChange="changeSelect"></CommonSelect>
+    <Select :options="select" @changeValue="changeSelect"></Select>
     <div class="opera-title">
       <div class="opera-name">电气拓扑图</div>
     </div>
@@ -49,19 +49,19 @@ export default {
   name: 'Opefirst',
   components: {
     Eline: () => import('@/common/echarts/Eline'),
-    CommonSelect: () => import('@/common/components/CommonSelect')
+    Select: () => import('@/common/components/Select')
   },
   data () {
     return {
       chosenImg: 'all-electric.gif',
       select: [
         {
-          id: '11',
-          info: '电'
+          value: '11',
+          label: '电'
         },
         {
-          id: '12',
-          info: '冷/热/热水'
+          value: '12',
+          label: '冷/热/热水'
         }
       ],
       sumList: []
@@ -93,6 +93,17 @@ export default {
   methods: {
     changeSelect (code) {
       this.$emit('changeSelect1', code)
+      let cube = code.label
+      switch (cube) {
+        case '电':
+          this.chosenImg = 'all-electric.gif'
+          break
+        case '冷/热/热水':
+          this.chosenImg = 'all-hot.gif'
+          break
+        default:
+          break
+      }
     }
   },
   mounted () {
@@ -116,7 +127,7 @@ export default {
 @import '~@/assets/css/common.styl'
 .wrapper
   position: relative
-  .select-box
+  .select-wrapper
     position: absolute
     top: -3.5vh
     right: 0

@@ -5,19 +5,23 @@ import App from './App'
 import router from './router'
 import store from './store'
 import echarts from 'echarts'
-import ElementUI from 'element-ui'
+// import ElementUI from 'element-ui'
+import element from '../element/index'
 import vueJsonp from 'vue-jsonp'
 // 加密登录
 import JSEncrypt from 'jsencrypt'
 import 'default-passive-events'
+// css
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/reset.css'
 import '@/assets/css/common.css'
 import '@/assets/css/transition.css'
+import '@/assets/css/element.css'
 
 Vue.config.productionTip = false
 Vue.prototype.$echarts = echarts
-Vue.use(ElementUI)
+// Vue.use(ElementUI)
+Vue.use(element)
 Vue.use(vueJsonp)
 
 /* eslint-disable no-new */

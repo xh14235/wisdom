@@ -21,7 +21,6 @@
 </template>
 
 <script>
-// import { set } from 'vue/types/umd'
 import { mapState } from 'vuex'
 export default {
   name: 'WeatherControl',
@@ -163,28 +162,30 @@ export default {
 .control-wrapper
   position: fixed
   z-index: 2
-  width: 28.8vw
-  height: 8.5vh
-  left: 35.6vw
-  bottom: 1.75vh
+  width: 30vw
+  height: 12vh
+  padding: 1.5vh 1.3vw
+  left: 35vw
+  bottom: 1vh
   display: flex
   justify-content: space-between
   align-items: center
   background: rgba(0, 0, 0, .3)
+  border-radius: 30px
   .control-center
-    flex: 0 0 7vh
-    width: 7vh
+    flex: 0 0 7.6vh
+    width: 7.6vh
     text-align: center
-    height: 7vh
-    padding-top: 1.5vh
+    height: 7.6vh
+    padding-top: 1.7vh
     background-image: url('~@/assets/img/control-center.png')
     background-size: 100% 100%
     cursor: pointer
   .control-box
     display: flex
     justify-content: space-between
-    flex: 0 0 12.3vw
-    width: 12.3vw
+    flex: 0 0 12vw
+    width: 12vw
     position: relative
     .control-line
       position: absolute
@@ -194,7 +195,7 @@ export default {
       height: 3px
       background: #fff
       @media screen and (max-width: 1920px)
-        top: 5vh
+        top: 5.2vh
         left: 9%
         width: 82%
     .control-item

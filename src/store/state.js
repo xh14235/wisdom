@@ -6,6 +6,6 @@ export default {
   weatherControlShow: false,
   token: defaultToken,
   selectListShow: false,
-  leftTimer: false,
+  leftTimer: true,
   rightTimer: false
 }

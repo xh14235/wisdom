@@ -3,7 +3,7 @@
     <div class="title2">历史对比</div>
     <div class="controller-box">
       <div class="select1">
-        分析对象<CommonSelect2 v-if="smallSelect1.length" :largeSelect="largeSelect1" :smallSelect="smallSelect1" :defaultValue="smallSelect1[0].name" @changeLarge="changeLarge1" @changeSmall="changeSmall1"></CommonSelect2>
+        分析对象<Cascader :options="options2" @changeValue="changeSelect1"></Cascader>
       </div>
       <DateType @getDateType="changeDate"></DateType>
     </div>
@@ -24,7 +24,7 @@
     <div class="title2">对象对比</div>
     <div class="controller-box">
       <div class="select1">
-        分析对象2<CommonSelect2 v-if="smallSelect2.length" :largeSelect="largeSelect2" :smallSelect="smallSelect2" :defaultValue="smallSelect2[1].name" @changeLarge="changeLarge2" @changeSmall="changeSmall2"></CommonSelect2>
+        分析对象2<Cascader :options="options2" :compare="22" @changeValue="changeSelect2"></Cascader>
       </div>
     </div>
     <div class="common-echarts-wrapper forecast">
@@ -51,14 +51,12 @@ export default {
   components: {
     Eline: () => import('@/common/echarts/Eline'),
     DateType: () => import('@/common/components/DateType'),
-    CommonSelect2: () => import('@/common/components/CommonSelect2')
+    Cascader: () => import('@/common/components/Cascader')
   },
   data () {
     return {
-      largeSelect1: [],
-      smallSelect1: [],
-      largeSelect2: [],
-      smallSelect2: []
+      options1: [],
+      options2: []
     }
   },
   props: {
@@ -76,62 +74,40 @@ export default {
     getBuildingSelect () {
       buildingSelect().then((res) => {
         let data = res.data
-        this.largeSelect1 = []
-        this.largeSelect2 = []
+        this.options = []
         for (let i = 0; i < data.length; i++) {
-          this.largeSelect1.push({
-            id: data[i].facilityId,
-            name: data[i].facilityName
+          this.options1.push({
+            value: data[i].facilityId,
+            label: data[i].facilityName,
+            children: []
           })
-          this.largeSelect2.push({
-            id: data[i].facilityId,
-            name: data[i].facilityName
+          this.options2.push({
+            value: data[i].facilityId,
+            label: data[i].facilityName,
+            children: []
+          })
+          venueSelect({
+            facilityId: data[i].facilityId
+          }).then(res => {
+            let data = res.data
+            for (let j = 0; j < data.length; j++) {
+              this.options1[i].children.push({
+                value: data[j].id,
+                label: data[j].name
+              })
+              this.options2[i].children.push({
+                value: data[j].id,
+                label: data[j].name
+              })
+            }
           })
         }
-        // this.largeSelect1.splice(1, 1)
-        // this.largeSelect2.splice(1, 1)
       })
     },
-    getVenueSelect1 (id) {
-      venueSelect({
-        facilityId: id
-      }).then((res) => {
-        let data = res.data
-        this.smallSelect1 = []
-        for (let i = 0; i < data.length; i++) {
-          this.smallSelect1.push({
-            id: data[i].id,
-            name: data[i].name
-          })
-        }
-        // this.$emit('changeSelect31', this.smallSelect1[0])
-      })
-    },
-    getVenueSelect2 (id) {
-      venueSelect({
-        facilityId: id
-      }).then((res) => {
-        let data = res.data
-        this.smallSelect2 = []
-        for (let i = 0; i < data.length; i++) {
-          this.smallSelect2.push({
-            id: data[i].id,
-            name: data[i].name
-          })
-        }
-        // this.$emit('changeSelect32', this.smallSelect2[1])
-      })
-    },
-    changeLarge1 (item) {
-      this.getVenueSelect1(item.id)
-    },
-    changeSmall1 (item) {
+    changeSelect1 (item) {
       this.$emit('changeSelect31', item)
     },
-    changeLarge2 (item) {
-      this.getVenueSelect2(item.id)
-    },
-    changeSmall2 (item) {
+    changeSelect2 (item) {
       this.$emit('changeSelect32', item)
     },
     changeDate (code) {

@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <CommonSelect2 :largeSelect="largeSelect" :smallSelect="smallSelect" @changeLarge="changeLarge" @changeSmall="changeSmall(arguments)"></CommonSelect2>
+    <Cascader :options="options" @changeValue="changeSelect"></Cascader>
     <div class="opera-title">
       <div class="opera-name">电气拓扑图</div>
     </div>
@@ -50,14 +50,13 @@ export default {
   name: 'Opesecond',
   components: {
     Eline: () => import('@/common/echarts/Eline'),
-    CommonSelect2: () => import('@/common/components/CommonSelect2')
+    Cascader: () => import('@/common/components/Cascader')
   },
   data () {
     return {
       chosenImg: 'earch-hot-cube.gif',
-      largeSelect: [],
-      smallSelect: [],
-      sumList: []
+      sumList: [],
+      options: []
     }
   },
   props: {
@@ -68,17 +67,6 @@ export default {
     largeSelect () {
       this.getCubeSelect(this.largeSelect[0].id)
     },
-    // line () {
-    //   this.sumList = []
-    //   for (let i = 0; i < this.echarts.data.length; i++) {
-    //     this.sumList.push({
-    //       id: 'd0' + i,
-    //       title: this.echarts.legendData[i],
-    //       num: this.echarts.data[i][23].value,
-    //       unit: 'kW'
-    //     })
-    //   }
-    // },
     echartsData () {
       this.sumList = []
       let len = this.echarts.data[0].length
@@ -100,22 +88,31 @@ export default {
   methods: {
     getAreaSelect () {
       areaSelect().then((res) => {
-        this.largeSelect = res.data
+        let data = res.data
+        this.options = []
+        for (let i = 0; i < data.length; i++) {
+          this.options.push({
+            value: data[i].id,
+            label: data[i].name,
+            children: []
+          })
+          cubeSelect({
+            supplyFacilityId: data[i].id
+          }).then(res => {
+            let data = res.data
+            for (let j = 0; j < data.length; j++) {
+              this.options[i].children.push({
+                value: data[j].id,
+                label: data[j].name
+              })
+            }
+          })
+        }
       })
     },
-    getCubeSelect (id) {
-      cubeSelect({
-        supplyFacilityId: id
-      }).then((res) => {
-        this.smallSelect = res.data
-      })
-    },
-    changeLarge (item) {
-      this.getCubeSelect(item.id)
-    },
-    changeSmall (item) {
-      this.$emit('changeSelect2', item)
-      let cube = item[0].name
+    changeSelect (value) {
+      this.$emit('changeSelect2', value)
+      let cube = value.label
       switch (cube) {
         case '地源热魔方':
           this.chosenImg = 'earch-hot-cube.gif'
@@ -152,17 +149,6 @@ export default {
   },
   mounted () {
     this.getAreaSelect()
-    // if (this.echarts.data) {
-    //   this.sumList = []
-    //   for (let i = 0; i < this.echarts.data.length; i++) {
-    //     this.sumList.push({
-    //       id: 'd0' + i,
-    //       title: this.echarts.legendData[i],
-    //       num: this.echarts.data[i][23].value,
-    //       unit: 'kW'
-    //     })
-    //   }
-    // }
     if (this.echarts.data) {
       this.sumList = []
       let len = this.echarts.data[0].length
@@ -183,7 +169,7 @@ export default {
 @import '~@/assets/css/common.styl'
 .wrapper
   position: relative
-  .select-box
+  .cascader-wrapper
     position: absolute
     top: -3.5vh
     right: 0

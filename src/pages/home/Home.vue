@@ -30,11 +30,14 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import { login } from '@/request/common-api'
+import { abnormalList } from '@/request/security-api'
+import { anaAbnormalList } from '@/request/analysis-api'
 export default {
   name: 'Home',
   data () {
     return {
-      timer: null
+      timer: null,
+      timer2: null
     }
   },
   computed: {
@@ -49,13 +52,6 @@ export default {
       weatherControlShow: (state) => state.weatherControlShow
     })
   },
-  // watch: {
-  //   weatherControlShow () {
-  //     if (!this.weatherControlShow) {
-  //       this.ifr.setDayTime('9')
-  //     }
-  //   }
-  // },
   methods: {
     ifrMessage (e) {
       if (e.data.markType === '监控') {
@@ -75,7 +71,28 @@ export default {
         this.hideSelectList()
       }
     },
-    ...mapMutations(['mutLogin', 'hideSelectList', 'getIfr', 'showMonitorPopup'])
+    // 获取异常报警数据详情列表
+    getAbnormalList () {
+      abnormalList().then(({data}) => {
+        data.map((item) => {
+          let time = item.actualTime
+          time = time.slice(5, 7) + '月' + time.slice(8, 10) + '日 ' + time.slice(11, 20)
+          item.actualTime = time
+          return item
+        })
+        this.setMonitorList(data)
+      })
+    },
+    // 用能异常 列表 详情 数据
+    getEnergyList () {
+      anaAbnormalList({
+        page: 1,
+        size: 10
+      }).then((res) => {
+        this.setEnergyList(res.data)
+      })
+    },
+    ...mapMutations(['mutLogin', 'hideSelectList', 'getIfr', 'showMonitorPopup', 'setMonitorList', 'setEnergyList'])
   },
   components: {
     Header: () => import('@/common/components/Header'),
@@ -89,17 +106,23 @@ export default {
     Livelihood: () => import('./components/Livelihood')
   },
   mounted () {
-    let _this = this
-    _this.login()
-    _this.timer = setInterval(() => {
-      _this.login()
-    }, 63103)
+    this.login()
+    this.getAbnormalList()
+    this.getEnergyList()
+    this.timer = setInterval(() => {
+      this.login()
+    }, 6553103)
+    this.timer2 = setInterval(() => {
+      this.getAbnormalList()
+      this.getEnergyList()
+    }, 60000)
     let ifr = document.getElementById('map').contentWindow
-    _this.getIfr(ifr)
-    window.addEventListener('message', _this.ifrMessage, false)
+    this.getIfr(ifr)
+    window.addEventListener('message', this.ifrMessage, false)
   },
   beforeDestroy () {
     clearInterval(this.timer)
+    this.timer = null
     window.removeEventListener('message', this.ifrMessage, false)
   }
 }
@@ -109,8 +132,7 @@ export default {
 .main
   width: 100vw
   height: 100vh
-  background-image: url('~@/assets/img/bg-all.jpg')
-  background-size: 100% 100%
+  background: #000
   position: relative
   button
     position: absolute

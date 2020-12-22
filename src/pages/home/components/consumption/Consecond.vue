@@ -10,7 +10,7 @@
     <div class="controller-box">
       <div class="controller-title">排行榜TOP10</div>
       <div class="select1">
-        分析类型<CommonSelect v-if="select" :select="select" @selectChange="changeSelect"></CommonSelect>
+        分析类型<Select v-if="select" :options="select" @changeValue="changeSelect"></Select>
       </div>
     </div>
     <div class="common-echarts-wrapper">
@@ -40,7 +40,7 @@ export default {
   name: 'Supsecond',
   components: {
     DateType: () => import('@/common/components/DateType'),
-    CommonSelect: () => import('@/common/components/CommonSelect'),
+    Select: () => import('@/common/components/Select'),
     Ranking: () => import('@/common/components/Ranking'),
     Ebar: () => import('@/common/echarts/Ebar')
   },
@@ -65,8 +65,8 @@ export default {
         this.select = []
         for (let i = 0; i < data.length; i++) {
           this.select.push({
-            id: data[i].facilityId,
-            info: data[i].facilityName
+            value: data[i].facilityId,
+            label: data[i].facilityName
           })
         }
         this.$emit('changeSelect2', this.select[0])

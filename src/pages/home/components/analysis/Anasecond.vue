@@ -2,7 +2,7 @@
   <div>
     <div class="controller-box">
       <div class="select1">
-        分析对象<CommonSelect2 :largeSelect="largeSelect" :smallSelect="smallSelect" @changeLarge="changeLarge" @changeSmall="changeSmall"></CommonSelect2>
+        分析对象<Cascader :options="options" @changeValue="changeSelect2"></Cascader>
       </div>
       <DateType @getDateType="changeDate"></DateType>
     </div>
@@ -19,18 +19,6 @@
       <div class="common-echarts-box">
         <Eline v-if="list.echarts4.id" :lineData="list.echarts4"></Eline>
       </div>
-      <!-- <div class="common-echarts-box">
-        <Eline v-if="list.echarts5.id" :lineData="list.echarts5"></Eline>
-      </div>
-      <div class="common-echarts-box">
-        <Eline v-if="list.echarts6.id" :lineData="list.echarts6"></Eline>
-      </div>
-      <div class="common-echarts-box">
-        <Eline v-if="list.echarts7.id" :lineData="list.echarts7"></Eline>
-      </div>
-      <div class="common-echarts-box">
-        <Eline v-if="list.echarts8.id" :lineData="list.echarts8"></Eline>
-      </div> -->
     </div>
     <div class="common-title">
       <div>未来24小时预测</div>
@@ -59,7 +47,7 @@ export default {
   components: {
     Eline: () => import('@/common/echarts/Eline'),
     DateType: () => import('@/common/components/DateType'),
-    CommonSelect2: () => import('@/common/components/CommonSelect2')
+    Cascader: () => import('@/common/components/Cascader')
   },
   props: {
     list: Object
@@ -76,44 +64,36 @@ export default {
   },
   data () {
     return {
-      largeSelect: [],
-      smallSelect: []
+      value: '',
+      options: []
     }
   },
   methods: {
     getBuildingSelect () {
       buildingSelect().then((res) => {
         let data = res.data
-        this.largeSelect = []
+        this.options = []
         for (let i = 0; i < data.length; i++) {
-          this.largeSelect.push({
-            id: data[i].facilityId,
-            name: data[i].facilityName
+          this.options.push({
+            value: data[i].facilityId,
+            label: data[i].facilityName,
+            children: []
+          })
+          venueSelect({
+            facilityId: data[i].facilityId
+          }).then(res => {
+            let data = res.data
+            for (let j = 0; j < data.length; j++) {
+              this.options[i].children.push({
+                value: data[j].id,
+                label: data[j].name
+              })
+            }
           })
         }
-        // this.largeSelect.splice(1, 1)
       })
     },
-    getVenueSelect (id) {
-      venueSelect({
-        facilityId: id
-      }).then((res) => {
-        let data = res.data
-        this.smallSelect = []
-        for (let i = 0; i < data.length; i++) {
-          this.smallSelect.push({
-            id: data[i].id,
-            name: data[i].name
-          })
-        }
-        // 大分类改变，默认选中小分类第一个，并请求数据，去掉该功能
-        // this.$emit('changeSelect2', this.smallSelect[0])
-      })
-    },
-    changeLarge (item) {
-      this.getVenueSelect(item.id)
-    },
-    changeSmall (item) {
+    changeSelect2 (item) {
       this.$emit('changeSelect2', item)
     },
     changeDate (code) {

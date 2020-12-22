@@ -25,7 +25,7 @@
       <div>今年合作社销量</div>
     </div>
     <div class="tab-wrapper">
-      <div class="tab-box" :class="{'active': index === cooperativeTab}" v-for="(item, index) of cooperativeList" :key="item.id" @click="changeCooperative(item.id, index)">{{item.name}}</div>
+      <div class="tab-box" :class="{'active': index === cooperativeTab}" v-for="(item, index) of cooperativeList" :key="item.id" @click="changeCooperative(item, index)">{{item.name}}</div>
     </div>
     <div class="common-echarts-wrapper">
       <div class="common-echarts-box">
@@ -33,7 +33,7 @@
         <Eline class="echarts-with-title" v-if="echarts5.id" :lineData="echarts5"></Eline>
       </div>
       <div class="common-echarts-box">
-        <div class="common-echarts-title">订单数 <span>总计：<b>{{parseFloat(5200).toLocaleString()}}</b>元</span></div>
+        <div class="common-echarts-title">订单数 <span>总计：<b>{{parseFloat(152).toLocaleString()}}</b>个</span></div>
         <Eline class="echarts-with-title" v-if="echarts6.id" :lineData="echarts6"></Eline>
       </div>
     </div>
@@ -97,13 +97,7 @@ export default {
       lgreen: state => state.color.lgreen,
       ifr: state => state.map.ifr,
       rightTimer: state => state.rightTimer
-    }),
-    cooLength () {
-      return this.cooperativeList.length
-    },
-    industryLength () {
-      return this.industryList.length
-    }
+    })
   },
   methods: {
     // 获取各产业建筑列表
@@ -289,15 +283,34 @@ export default {
           color: [this.yellow],
           areaColor: true,
           smooth: true,
-          yName: '(元)',
+          yName: '(个)',
           xData: this.year,
           data: [Object.values(res.data).slice(0, this.year.length)]
         }
       })
     },
     // 更改合作社
-    changeCooperative (id, index) {
+    changeCooperative (item, index) {
       this.cooperativeTab = index
+      // 跳转到单个撒点
+      this.ifr.clearMarks()
+      let markData = []
+      let arr = this.ifr.markConfig.Watching24
+      for (let index = 0; index < arr.length; index++) {
+        if (arr[index].Name.includes(item.name)) {
+          markData.push(arr[index])
+        }
+      }
+      this.ifr.setMarkData(markData)
+      let center = {
+        'Distance': '1.953',
+        'PosX': markData[0].Longitude,
+        'PosY': markData[0].Latitude,
+        'Time': 1,
+        'X': '184.1298',
+        'Y': '54.2352'
+      }
+      this.ifr.setCameraSettingWithCoordinate(center)
     },
     // 老乔渔业
     getPromise5 (id) {
@@ -502,39 +515,33 @@ export default {
         let positionData = this.ifr.sceneCenterConfig['industry']
         this.ifr.setMarkData(markData)
         this.ifr.setCameraSettingWithCoordinate(positionData)
+        // 隐藏热力图
         this.ifr.showPeopleHeatingItem([])
+        // 隐藏能留图
         this.ifr.activePipeNetWork('false')
+        // 清除道路状态
+        let road = localStorage.road.split(',')
+        road.forEach(item => {
+          this.ifr.setRoadStatus(item + '_0')
+        })
       })
     }
   },
   watch: {
     cooperativeTab () {
-      // this.getLast2(this.cooperativeList[this.cooperativeTab].id)
       this.getSalesVolume(this.cooperativeList[this.cooperativeTab].id)
       this.getOrders(this.cooperativeList[this.cooperativeTab].id)
     }
   },
-  mounted () {
-    this.getIndustryList()
-    this.getCooperative()
-    this.industrytimer = setInterval(() => {
-      this.meetingRoom()
-      this.rose()
-      this.cooperative()
-      this.celebrity()
-    }, this.duration)
-  },
   // 页面切换时，停止或重启定时器
-  deactivated () {
-    clearInterval(this.industrytimer)
-    this.industrytimer = null
-  },
   activated () {
     if (this.rightTimer) {
       setTimeout(() => {
         this.gisMethod()
       }, 1000)
     }
+    this.getIndustryList()
+    this.getCooperative()
     if (this.industrytimer) clearInterval(this.industrytimer)
     this.industrytimer = setInterval(() => {
       this.meetingRoom()
@@ -543,7 +550,7 @@ export default {
       this.celebrity()
     }, this.duration)
   },
-  beforeDestroy () {
+  deactivated () {
     clearInterval(this.industrytimer)
     this.industrytimer = null
   }
@@ -586,6 +593,7 @@ export default {
       margin: 2px 0
       color: $green
       font-size: 18px
+      cursor: pointer
       @media screen and (max-width: 1920px)
         font-size: 14px
         height: 2.5vh

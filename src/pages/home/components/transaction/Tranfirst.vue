@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- <div class="common-title">
-      <div>能源交易</div>
-    </div> -->
     <div class="controller-box">
       <div class="title2"></div>
       <DateType @getDateType="changeDate"></DateType>
@@ -47,22 +44,6 @@
 <script>
 export default {
   name: 'Tranfirst',
-  data () {
-    return {
-      select: [
-        {
-          id: '001',
-          value: '1254300251431186436',
-          info: '能源管'
-        },
-        {
-          id: '002',
-          value: '1254300251431186436',
-          info: '能源管'
-        }
-      ]
-    }
-  },
   props: {
     list: Object
   },
@@ -72,13 +53,6 @@ export default {
     Eline: () => import('@/common/echarts/Eline'),
     Ebar: () => import('@/common/echarts/Ebar')
   },
-  // computed: {
-  //   profit () {
-  //     if (this.list.statistics) {
-  //       return this.list.statistics[0].num - this.list.statistics[1].num
-  //     }
-  //   }
-  // },
   methods: {
     changeDate (code) {
       this.$emit('changeDate1', code)

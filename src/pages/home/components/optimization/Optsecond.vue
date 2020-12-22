@@ -1,11 +1,8 @@
 <template>
   <div>
-    <!-- <div class="common-title">
-      <div>用能优化</div>
-    </div> -->
     <div class="controller-box">
       <div class="select1">
-        分析对象<CommonSelect2 :largeSelect="largeSelect" :smallSelect="smallSelect" @changeLarge="changeLarge" @changeSmall="changeSmall"></CommonSelect2>
+        分析对象<Cascader :options="options" @changeValue="changeSelect2"></Cascader>
       </div>
       <DateType @getDateType="changeDate"></DateType>
     </div>
@@ -26,13 +23,9 @@
         <Eline v-if="list.echarts1.id" :lineData="list.echarts1"></Eline>
       </div>
       <div class="common-echarts-box">
-        <!-- <Esex v-if="list.echarts2.id" :barData="list.echarts2"></Esex> -->
         <Statistics2 v-if="list.echarts2.length" :statistics="list.echarts2"></Statistics2>
         <p class="all-num" v-if="list.echarts2.length">访客总数：{{list.echarts2[0].num + list.echarts2[1].num}}人</p>
       </div>
-    <!-- </div>
-    <div class="title2">能源消耗分析</div>
-    <div class="common-echarts-wrapper"> -->
       <div class="common-echarts-box">
         <Eline v-if="list.echarts3.id" :lineData="list.echarts3"></Eline>
       </div>
@@ -45,24 +38,17 @@
       <div class="common-echarts-box">
         <Eline v-if="list.echarts6.id" :lineData="list.echarts6"></Eline>
       </div>
-    <!-- </div>
-    <div class="title2">功率变化分析</div>
-    <div class="common-echarts-wrapper"> -->
       <div class="common-echarts-box">
         <Eline v-if="list.echarts7.id" :lineData="list.echarts7"></Eline>
       </div>
       <div class="common-echarts-box">
         <Eline v-if="list.echarts8.id" :lineData="list.echarts8"></Eline>
       </div>
-      <!-- <div class="common-echarts-box echarts-box2">
-        <Eline v-if="list.echarts9.id" :lineData="list.echarts9"></Eline>
-      </div> -->
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import { buildingSelect, venueSelect } from '@/request/select-api'
 export default {
   name: 'Optsecond',
@@ -72,86 +58,52 @@ export default {
     DateType: () => import('@/common/components/DateType'),
     Eline: () => import('@/common/echarts/Eline'),
     Esex: () => import('@/common/echarts/Esex'),
-    CommonSelect2: () => import('@/common/components/CommonSelect2')
+    Cascader: () => import('@/common/components/Cascader')
   },
   data () {
     return {
-      largeSelect: [],
-      smallSelect: []
+      value: '',
+      options: []
     }
   },
   props: {
     list: Object,
     statistics: Array
   },
-  computed: {
-    ...mapState({
-      ifr: state => state.map.ifr
-    })
-  },
-  watch: {
-    largeSelect () {
-      this.getVenueSelect(this.largeSelect[0].id)
-    }
-  },
   methods: {
     getBuildingSelect () {
       buildingSelect().then((res) => {
         let data = res.data
-        this.largeSelect = []
+        this.options = []
         for (let i = 0; i < data.length; i++) {
-          this.largeSelect.push({
-            id: data[i].facilityId,
-            name: data[i].facilityName
+          this.options.push({
+            value: data[i].facilityId,
+            label: data[i].facilityName,
+            children: []
+          })
+          venueSelect({
+            facilityId: data[i].facilityId
+          }).then(res => {
+            let data = res.data
+            for (let j = 0; j < data.length; j++) {
+              this.options[i].children.push({
+                value: data[j].id,
+                label: data[j].name
+              })
+            }
           })
         }
-        // this.largeSelect.splice(1, 1)
       })
     },
-    getVenueSelect (id) {
-      venueSelect({
-        facilityId: id
-      }).then((res) => {
-        let data = res.data
-        this.smallSelect = []
-        for (let i = 0; i < data.length; i++) {
-          this.smallSelect.push({
-            id: data[i].id,
-            name: data[i].name
-          })
-        }
-        // this.$emit('changeSelect2', this.smallSelect[0])
-      })
+    changeSelect2 (value) {
+      this.$emit('changeSelect2', value)
     },
-    changeLarge (item) {
-      this.getVenueSelect(item.id)
-    },
-    changeSmall (item) {
-      console.log(item)
-      this.$emit('changeSelect2', item)
-    },
-    // changeSelect (chosen) {
-    //   this.$emit('changeDate2', chosen)
-    // },
     changeDate (code) {
       this.$emit('changeDate2', code)
     }
-    // gisMethods () {
-    //   this.ifr.clearMarks()
-    //   let positionData = this.ifr.sceneCenterConfig['Watching24']
-    //   let markers = this.ifr.markConfig['Watching24']
-    //   for (let i = 0; i < markers.length; i++) {
-    //     if (markers[i].Name.includes('烘培馆')) {
-    //       let markData = [markers[i]]
-    //       this.ifr.setCameraSettingWithCoordinate(positionData)
-    //       this.ifr.setMarkData(markData)
-    //     }
-    //   }
-    // }
   },
   mounted () {
     this.getBuildingSelect()
-    // this.gisMethods()
   }
 }
 </script>

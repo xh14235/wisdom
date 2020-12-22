@@ -1,11 +1,9 @@
 <template>
   <div>
-    <!-- <div class="common-title">
-      <div>能源交易</div>
-    </div> -->
     <div class="controller-box">
       <div class="select">
-        分析对象：<CommonSelect v-if="select.length" :select="select" @selectChange="changeSelect"></CommonSelect>
+        <!-- 分析对象：<CommonSelect v-if="select.length" :select="select" @selectChange="changeSelect"></CommonSelect> -->
+        分析对象：<Select v-if="select.length" :options="select" @changeValue="changeSelect"></Select>
       </div>
       <DateType @getDateType="changeDate"></DateType>
     </div>
@@ -26,13 +24,6 @@
     <div class="common-echarts-wrapper statistics">
       <div class="common-echarts-box statistics1">
         <div class="statistics-wrap">
-          <!-- <img src="../../../../assets/img/profit.png" alt="">
-          <div class="statistics-box">
-            <div class="statistics-num">
-              <span>{{list.profit}}</span>元
-            </div>
-            <p>累计利润</p>
-          </div> -->
           <div class="statistics-left">
             <img class="img-outer rotate" src="../../../../assets/img/statistics-rotate.png" alt="">
             <img class="img-inner" src="../../../../assets/img/statistics-profit.png" alt="">
@@ -68,19 +59,9 @@ export default {
   components: {
     Statistics2: () => import('@/common/components/Statistics2'),
     DateType: () => import('@/common/components/DateType'),
-    CommonSelect: () => import('@/common/components/CommonSelect'),
+    Select: () => import('@/common/components/Select'),
     Eline: () => import('@/common/echarts/Eline'),
     Ebar: () => import('@/common/echarts/Ebar')
-  },
-  // computed: {
-  //   profit () {
-  //     return this.list.statistics[0].num - this.list.statistics[1].num
-  //   }
-  // },
-  watch: {
-    select () {
-      this.$emit('changeSelect2', this.select[0])
-    }
   },
   methods: {
     changeDate (code) {
@@ -95,10 +76,11 @@ export default {
         this.select = []
         for (let i = 0; i < data.length; i++) {
           this.select.push({
-            id: data[i].id,
-            info: data[i].name
+            value: data[i].id,
+            label: data[i].name
           })
         }
+        this.$emit('changeSelect2', this.select[0])
       })
     }
   },
@@ -127,22 +109,6 @@ export default {
       flex: 0 0 100%
       width: 100%
       height: 22vh
-    // &.statistics
-    //   height: 14vh
-    // .statistics-wrap
-    //   display: flex
-    //   justify-content: center
-    //   align-items: flex-end
-    //   height: 10vh
-    //   .statistics-box
-    //     flex: 0 0 40%
-    //     width: 40%
-    //     text-align: center
-    //     .statistics-num
-    //       span
-    //         color: $yellow
-    //         font-size: 20px
-    //         font-weight: 600
 .statistics
   justify-content: space-around
   .common-echarts-box

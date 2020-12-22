@@ -63,7 +63,8 @@ export default {
       // 全村域热水、冷、热
       list1: [],
       list2: [],
-      list3: []
+      list3: [],
+      firstPage: '11'
     }
   },
   computed: {
@@ -77,11 +78,6 @@ export default {
       bgreen: state => state.color.bgreen,
       red: state => state.color.red,
       ifr: state => state.map.ifr,
-      iconHeight: state => state.map.iconHeight,
-      jumpTime: state => state.map.jumpTime,
-      viewX: state => state.map.viewX,
-      viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ,
       leftTimer: state => state.leftTimer
     })
   },
@@ -93,48 +89,45 @@ export default {
       if (this.operationtimer) clearInterval(this.operationtimer)
       if (index === 0) {
         this.getAllElectric()
-        this.gisAllElectric()
+        this.gisMethods()
         this.operationtimer = setInterval(() => {
           this.getAllElectric()
-          this.gisAllElectric()
         }, this.duration)
       } else if (index === 1) {
         this.getCube936('1254288413020762112')
-        this.gis6Cubes()
+        this.gisMethods()
         this.operationtimer = setInterval(() => {
           this.getCube936('1254288413020762112')
-          this.gis6Cubes()
         }, this.duration)
-        this.ifr.activePipeNetWork('false')
       } else {
         this.ifr.clearMarks()
         this.operationLine(3)
         this.operationtimer = setInterval(() => {
           this.operationLine(3)
         }, this.duration)
-        this.ifr.activePipeNetWork('false')
       }
     },
     // 根据下拉框组件传来的数据改变视图
     changeSelect1 (code) {
       if (this.operationtimer) clearInterval(this.operationtimer)
-      if (code.id === '11') {
+      this.firstPage = code.value
+      if (code.value === '11') {
         this.getAllElectric()
-        this.gisAllElectric()
+        this.gisMethods()
         this.operationtimer = setInterval(() => {
-          this.gisAllElectric()
+          this.getAllElectric()
         }, this.duration)
       } else {
         this.getAllHot()
-        this.gisAllHot()
+        this.gisMethods()
         this.operationtimer = setInterval(() => {
-          this.gisAllHot()
+          this.getAllHot()
         }, this.duration)
       }
     },
     changeSelect2 (item) {
-      if (item[1].id === '1') {
-        this.getCube936(item[0].id)
+      if (item.value === '1') {
+        this.getCube936(item.id)
       } else {
         this.operationLine(2)
       }
@@ -363,99 +356,93 @@ export default {
         areaColor: false,
         smooth: true,
         xData: this.day,
-        yName: '(kWh)',
+        yName: '(kW)',
         data: [getTestList(150, 24)]
       }
     },
-    // 全村域 电 地图
-    gisAllElectric () {
-      // 需接口
-      if (this.leftTimer) {
-        this.ifr.clearMarks()
-        let markData = this.ifr.markConfig['powerDeal']
-        markData.forEach((item, index) => {
-          item.Other = [
-            {
-              'Key': '供能值',
-              'Value': '0kW'
+    gisMethods () {
+      this.ifr.clearMarks()
+      let markData
+      let positionData
+      switch (this.tab) {
+        case 0:
+          if (this.firstPage === '11') {
+            markData = this.ifr.markConfig['powerDeal']
+            markData.forEach((item, index) => {
+              item.Other = [
+                {
+                  'Key': '供能值',
+                  'Value': '0kW'
+                }
+              ]
+            })
+            positionData = {
+              'Distance': '1.0',
+              'PosX': '121.6851',
+              'PosY': '31.08737',
+              'Time': 1,
+              'X': '184.1298',
+              'Y': '54.2352'
             }
-          ]
-        })
-        let positionData = this.ifr.sceneCenterConfig['powerDeal']
-        this.ifr.setCameraSettingWithCoordinate(positionData)
-        this.ifr.setMarkData(markData)
-      }
-    },
-    // 全村域 冷、热、水 地图
-    gisAllHot () {
-      // 需接口
-      if (this.leftTimer) {
-        this.ifr.clearMarks()
-        let markData = this.ifr.markConfig['itemData']
-        markData.forEach((item, index) => {
-          item.Other = [
-            {
-              'Key': '供能值',
-              'Value': '0kW'
+            // 显示能留图
+            this.ifr.activePipeNetWork('true')
+          } else {
+            markData = this.ifr.markConfig['itemData']
+            markData.forEach((item, index) => {
+              item.Other = [
+                {
+                  'Key': '供能值',
+                  'Value': '0kW'
+                }
+              ]
+            })
+            positionData = {
+              'Distance': '1.0',
+              'PosX': '121.6851',
+              'PosY': '31.08737',
+              'Time': 1,
+              'X': '184.1298',
+              'Y': '54.2352'
             }
-          ]
-        })
-        let positionData = this.ifr.sceneCenterConfig['itemData']
-        this.ifr.setCameraSettingWithCoordinate(positionData)
-        this.ifr.setMarkData(markData)
+            // 显示能留图
+            this.ifr.activePipeNetWork('true')
+          }
+          break
+        case 1:
+          markData = this.ifr.markConfig['distributedPower']
+          positionData = {
+            'Distance': '1.953',
+            'PosX': markData[0].Longitude,
+            'PosY': markData[0].Latitude,
+            'Time': 1,
+            'X': '184.1298',
+            'Y': '54.2352'
+          }
+          // 隐藏能留图
+          this.ifr.activePipeNetWork('false')
+          break
+        default:
+          // 隐藏能留图
+          this.ifr.activePipeNetWork('false')
+          break
       }
-    },
-    // 分布式能源 六个魔方 地图
-    gis6Cubes () {
-      if (this.leftTimer) {
-        this.ifr.clearMarks()
-        let markData = this.ifr.markConfig['distributedPower']
-        let positionData = this.ifr.sceneCenterConfig['distributedPower']
-        this.ifr.setCameraSettingWithCoordinate(positionData)
-        this.ifr.setMarkData(markData)
-      }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      this.ifr.setMarkData(markData)
+      // 隐藏热力图
+      this.ifr.showPeopleHeatingItem([])
+      // 清除道路状态
+      let road = localStorage.road.split(',')
+      road.forEach(item => {
+        this.ifr.setRoadStatus(item + '_0')
+      })
     }
-  },
-  mounted () {
-    this.changeTab(0)
-    this.getInfoList()
   },
   // 页面切换时，停止或重启定时器
-  deactivated () {
-    clearInterval(this.operationtimer)
-    this.operationtimer = null
-  },
   activated () {
-    if (this.operationtimer) clearInterval(this.operationtimer)
-    switch (this.tab) {
-      case 0:
-        this.ifr.activePipeNetWork('true')
-        this.gisAllElectric()
-        this.operationtimer = setInterval(() => {
-          this.getAllElectric()
-          this.gisAllElectric()
-        }, this.duration)
-        break
-      case 1:
-        this.ifr.activePipeNetWork('false')
-        this.gis6Cubes()
-        this.operationtimer = setInterval(() => {
-          this.gis6Cubes()
-          this.getCube936('1254288413020762112')
-        }, this.duration)
-        break
-      case 2:
-        this.ifr.activePipeNetWork('false')
-        this.ifr.clearMarks()
-        this.operationtimer = setInterval(() => {
-          this.operationLine(3)
-        }, this.duration)
-        break
-      default:
-        break
-    }
+    this.getInfoList()
+    this.changeTab(0)
   },
-  beforeDestroy () {
+  deactivated () {
     clearInterval(this.operationtimer)
     this.operationtimer = null
   }

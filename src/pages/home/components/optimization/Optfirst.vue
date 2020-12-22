@@ -2,13 +2,8 @@
   <div>
     <div class="controller-box">
       <div class="select1">
-        分析对象<CommonSelect2 :largeSelect="largeSelect" :smallSelect="smallSelect" @changeLarge="changeLarge" @changeSmall="changeSmall"></CommonSelect2>
+        分析对象<Cascader :options="options" @changeValue="changeSelect1"></Cascader>
       </div>
-      <!-- <el-cascader
-        v-model="value"
-        :options="options"
-        @change="handleChange"
-      ></el-cascader> -->
     </div>
     <div class="common-echarts-wrapper echarts-margin">
       <div class="common-echarts-box">
@@ -52,144 +47,61 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import { buildingSelect, venueSelect } from '@/request/select-api'
 export default {
   name: 'Optfirst',
   components: {
     Statistics: () => import('@/common/components/Statistics'),
     Eline: () => import('@/common/echarts/Eline'),
-    CommonSelect2: () => import('@/common/components/CommonSelect2')
+    Cascader: () => import('@/common/components/Cascader')
   },
   data () {
     return {
-      largeSelect: [],
-      smallSelect: []
-      // value: [],
-      // options: [
-      //   {
-      //     value: 'zhinan',
-      //     label: '指南',
-      //     children: [
-      //       {
-      //         value: 'yizhi',
-      //         label: '一致'
-      //       },
-      //       {
-      //         value: 'yizhi1',
-      //         label: '一致1'
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     value: 'zhinan',
-      //     label: '指南',
-      //     children: [
-      //       {
-      //         value: 'yizhi',
-      //         label: '一致'
-      //       },
-      //       {
-      //         value: 'yizhi1',
-      //         label: '一致1'
-      //       }
-      //     ]
-      //   }
-      // ]
+      value: '',
+      options: []
     }
   },
   props: {
     list: Object,
     statistics: Array
   },
-  computed: {
-    ...mapState({
-      ifr: state => state.map.ifr
-    })
-  },
-  watch: {
-    largeSelect () {
-      this.getVenueSelect(this.largeSelect[0].id)
-    }
-  },
   methods: {
     getBuildingSelect () {
       buildingSelect().then((res) => {
         let data = res.data
-        this.largeSelect = []
+        this.options = []
         for (let i = 0; i < data.length; i++) {
-          this.largeSelect.push({
-            id: data[i].facilityId,
-            name: data[i].facilityName
+          this.options.push({
+            value: data[i].facilityId,
+            label: data[i].facilityName,
+            children: []
+          })
+          venueSelect({
+            facilityId: data[i].facilityId
+          }).then(res => {
+            let data = res.data
+            for (let j = 0; j < data.length; j++) {
+              this.options[i].children.push({
+                value: data[j].id,
+                label: data[j].name
+              })
+            }
           })
         }
-        // this.largeSelect.splice(1, 1)
       })
     },
-    getVenueSelect (id) {
-      venueSelect({
-        facilityId: id
-      }).then((res) => {
-        let data = res.data
-        this.smallSelect = []
-        for (let i = 0; i < data.length; i++) {
-          this.smallSelect.push({
-            id: data[i].id,
-            name: data[i].name
-          })
-        }
-        // this.$emit('changeSelect1', this.smallSelect[0])
-      })
-    },
-    changeLarge (item) {
-      this.getVenueSelect(item.id)
-    },
-    changeSmall (item) {
-      console.log(item)
-      this.$emit('changeSelect1', item)
-    },
-    handleChange (value) {
-      console.log(value)
-    },
-    gisMethods () {
-      this.ifr.clearMarks()
-      let positionData = this.ifr.sceneCenterConfig['Watching24']
-      let markers = this.ifr.markConfig['Watching24']
-      for (let i = 0; i < markers.length; i++) {
-        if (markers[i].Name.includes('烘培馆')) {
-          let markData = [markers[i]]
-          this.ifr.setCameraSettingWithCoordinate(positionData)
-          this.ifr.setMarkData(markData)
-        }
-      }
+    changeSelect1 (value) {
+      this.$emit('changeSelect1', value)
     }
   },
   mounted () {
     this.getBuildingSelect()
-    // this.gisMethods()
   }
 }
 </script>
 
 <style scoped lang="stylus">
 @import '~@/assets/css/common.styl'
-// .controller-box >>> .el-cascader
-//   line-height: 2.33333vh
-// .controller-box >>> .el-input__inner
-//   height: 2.33333vh
-//   line-height: 2.33333vh
-//   border: 1px solid $green!important
-//   border-radius: 3px
-//   background: transparent
-//   color: #fff
-// .controller-box >>> .el-input__icon
-//   line-height: 2.33333vh
-// .controller-box >>> .el-cascader__dropdown
-//   border: 0
-// .controller-box >>> .el-popper .popper__arrow
-//   display: none
-// .echarts-margin
-//   margin: 1vh 0
 .title2
   font-weight: 600
   color: $lgreen
@@ -214,8 +126,6 @@ export default {
     width: 46%
     display: flex
     align-items: center
-    .select-box
-      flex: auto
   .today-tourist
     flex: 0 0 46%
     width: 46%

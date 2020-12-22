@@ -24,7 +24,6 @@
     <div class="common-title">
       <div>耗电统计</div>
     </div>
-    <!-- <DateType @getDateType="changeDate"></DateType> -->
     <div class="common-echarts-wrapper">
       <div class="common-echarts-box echarts2">
         <div class="common-echarts-title"><b>今年充电桩耗电</b><span>共计：<b>{{num1}}</b>kWh</span></div>
@@ -34,30 +33,6 @@
         <div class="common-echarts-title"><b>今年智能路灯耗电</b><span>共计：<b>{{num1}}</b>kWh</span></div>
         <Eline class="echarts-with-title" v-if="list.echarts6.id" :lineData="list.echarts6"></Eline>
       </div>
-      <!-- <div class="common-echarts-box">
-        <Eline :lineData="list.echarts7"></Eline>
-      </div> -->
-      <!-- <div class="common-echarts-box">
-        <div class="lamp-title">智能路灯数量统计</div>
-        <div class="lamp-box">
-          <div class="lamp-all">
-            路灯总数
-            <p>582</p>
-          </div>
-          <div class="lamp-num">
-            <p>
-              <img src="../../../../assets/img/lamp1.png" alt="">
-              <span>正常</span>
-              <b>580</b>
-            </p>
-            <p>
-              <img src="../../../../assets/img/lamp0.png" alt="">
-              <span>维护</span>
-              <b>2</b>
-            </p>
-          </div>
-        </div>
-      </div> -->
     </div>
     <div class="common-title">
       <div>智能路灯</div>
@@ -71,7 +46,6 @@
           </div>
           <div class="statistics-right">
             <div class="statistics-num">
-              <!-- <span>{{parseFloat(lampNum).toLocaleString()}}</span>个 -->
               <span>{{lampNum}}</span>个
             </div>
             <img src="../../../../assets/img/statistics-line.png" alt="">
@@ -93,7 +67,6 @@ export default {
     Epie: () => import('@/common/echarts/Epie'),
     Eline: () => import('@/common/echarts/Eline'),
     Statistics2: () => import('@/common/components/Statistics2')
-    // DateType: () => import('@/common/components/DateType')
   },
   props: {
     list: Object
@@ -135,11 +108,6 @@ export default {
       let num = this.list.statistics[0].num + this.list.statistics[1].num
       return num
     }
-  },
-  methods: {
-    changeDate (code) {
-      this.$emit('changeDate', code)
-    }
   }
 }
 </script>
@@ -148,7 +116,8 @@ export default {
 @import '~@/assets/css/common.styl'
 .common-echarts-wrapper
   .common-echarts-box
-    height: 18vh
+    height: 17vh
+    margin-bottom: 1vh
     &.echarts2
       height: 23vh
       margin-bottom: 2vh
@@ -267,5 +236,4 @@ export default {
   .statistics-box2
     flex: 0 0 9.5vw
     width: 9.5vw
-    // height: 8vh
 </style>

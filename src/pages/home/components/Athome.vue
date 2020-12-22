@@ -3,7 +3,7 @@
     <div class="common-title">
       <div>智能家居</div>
     </div>
-    <CommonSelect :select="select" @selectChange="changeSelect"></CommonSelect>
+    <Select :options="select" @changeValue="changeSelect"></Select>
     <div class="home-type">
       <div class="type-box" v-for="(item, index) of homeList" :key="item.id">
         <div class="box" :class="{'active': item.active}" @click="changeHome(index)">
@@ -94,7 +94,7 @@ export default {
   components: {
     DateType: () => import('@/common/components/DateType'),
     Eline: () => import('@/common/echarts/Eline'),
-    CommonSelect: () => import('@/common/components/CommonSelect')
+    Select: () => import('@/common/components/Select')
   },
   data () {
     return {
@@ -161,8 +161,8 @@ export default {
       ],
       select: [
         {
-          id: '1254300251431186436',
-          info: '936能源馆'
+          value: '1254300251431186436',
+          label: '936能源馆'
         }
       ],
       lineData1: {},
@@ -194,7 +194,7 @@ export default {
   },
   methods: {
     changeSelect (chosen) {
-      this.chosenSelect = chosen.id
+      this.chosenSelect = chosen.value
       this.getEcharts()
       this.getCostList()
     },
@@ -309,27 +309,23 @@ export default {
       let positionData = this.ifr.sceneCenterConfig['homeFurnishing']
       this.ifr.setCameraSettingWithCoordinate(positionData)
       this.ifr.setMarkData(markData)
+      // 隐藏热力图
       this.ifr.showPeopleHeatingItem([])
+      // 隐藏能留图
       this.ifr.activePipeNetWork('false')
+      // 清除道路状态
+      let road = localStorage.road.split(',')
+      road.forEach(item => {
+        this.ifr.setRoadStatus(item + '_0')
+      })
     }
   },
-  mounted () {
-    this.chosenSelect = this.select[0].id
+  // 页面切换时，停止或重启定时器
+  activated () {
+    this.chosenSelect = this.select[0].value
     this.getEcharts()
     this.getCostList()
-    if (this.hometimer) clearInterval(this.hometimer)
-    this.hometimer = setInterval(() => {
-      this.getEcharts()
-      this.getCostList()
-    })
     this.changeHome(0)
-  },
-  // 页面切换时，停止或重启定时器
-  deactivated () {
-    clearInterval(this.hometimer)
-    this.hometimer = null
-  },
-  activated () {
     if (this.rightTimer) {
       this.gisMethods()
     }
@@ -339,7 +335,7 @@ export default {
       this.getCostList()
     }, this.duration)
   },
-  beforeDestroy () {
+  deactivated () {
     clearInterval(this.hometimer)
     this.hometimer = null
   }
@@ -348,7 +344,7 @@ export default {
 
 <style scoped lang="stylus">
 @import '~@/assets/css/common.styl'
-.select-box, .date-type
+.select-wrapper, .date-type
   position: relative
   left: 16vw
   top: -3.5vh
@@ -390,13 +386,14 @@ export default {
     .list
       width: 14vh
       display: flex
-      justify-content: space-around
+      justify-content: center
       align-items: center
       .list-item
+        flex: 0 0 25%
+        width: 25%
         height: 3vh
         margin-bottom: 2vh
         display: flex
-        // justify-content: space-around
         align-items: center
         img
           @media screen and (max-width: 1920px) {

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "babel-plugin-component": "^1.1.1",
     "default-passive-events": "^1.0.10",
     "echarts": "^4.7.0",
     "element-ui": "^2.13.1",

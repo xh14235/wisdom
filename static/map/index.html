@@ -1,84 +1,100 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | LMXC</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-    <script src="TemplateData/UnityProgress.js"></script>
-    <script src="Build/UnityLoader.js"></script>
-    <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/BuddlePackage.json", {onProgress: UnityProgress});
-    </script>
-    <style>
-      .footer{display: none;}
-      .webgl-content{width: 100vw; height: 100vh;}
-      #unityContainer{width: 100vw!important; height: 100vh!important;}
-    </style>
-  </head>
-  <body>
-    <div class="webgl-content">
-      <div id="unityContainer" style="width: 960px; height: 600px"></div>
-      <div class="footer">
-        <div class="webgl-logo"></div>
-        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
-        <div class="title">LMXC</div>
-      </div>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Unity WebGL Player | LMXC</title>
+  <link rel="shortcut icon" href="TemplateData/favicon.ico">
+  <link rel="stylesheet" href="TemplateData/style.css">
+  <script src="TemplateData/UnityProgress.js"></script>
+  <script src="Build/UnityLoader.js"></script>
+  <script>
+    var unityInstance = UnityLoader.instantiate("unityContainer", "Build/BuddlePackage.json", { onProgress: UnityProgress });
+  </script>
+  <style>
+    .footer {
+      display: none;
+    }
+
+    .webgl-content {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #unityContainer {
+      width: 100vw !important;
+      height: 100vh !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="webgl-content">
+    <div id="unityContainer" style="width: 960px; height: 600px"></div>
+    <div class="footer">
+      <div class="webgl-logo"></div>
+      <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
+      <div class="title">LMXC</div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
 <script src="./data.js"></script>
 <script>
   //3d场景是否加载完毕，当值为true时，可正常调用3d场景接口
   var isLoaded = false;
   //U3D调用前端，表明3D场景加载完毕，3d调用前端
-  function InitFinished(){
+  function InitFinished() {
     isLoaded = true
     // //模拟进入安防场景,好比真实场景中通过接口获取该场景下所有打点数据
     // //获取场景相关数据：分为两部分：1、打点坐标和业务数据，2、场景中心点位置数据（每个场景固定）
-    var marks = markConfig["security"]
-    var securityCenter = sceneCenterConfig["security"]
     //第一步先打点
+    var marks = markConfig["security"]
     setMarkData(marks)
     //第二步视角移动到中心位置
+    var securityCenter = sceneCenterConfig["security"]
+    //限高限角度
+    securityCenter.MaxDistance = "3.258"
+    securityCenter.YMinLimit = "45"
     setCameraSettingWithCoordinate(securityCenter)
   }
 
   //U3D点击建筑物或者标签（标签和建筑物看需求是不是要做区分）,3d调用前端
-  function SelectMark(markType, id){
+  function SelectMark(markType, id) {
     //如果父窗口存在，调用父窗口回调方法，进行下一步业务处理
-    if(parent && parent.selectMart){
+    if (parent && parent.selectMart) {
       //父窗口需要预先在全局作用域内定义好名为selectMark的方法
       parent.selectMart(markType, id)
     }
-    window.top.postMessage({markType, id});
+    window.top.postMessage({ markType, id });
   }
 
   //对摄像机进行运镜（按照经纬度）,前端调用3d
-  function setCameraSettingWithCoordinate(data){
-    if (isLoaded){
+  function setCameraSettingWithCoordinate(data) {
+    if (isLoaded) {
       var data = JSON.stringify(data)
-      unityInstance.SendMessage("Net","SetCameraSettingWithCoordinate", data);
+      unityInstance.SendMessage("Net", "SetCameraSettingWithCoordinate", data);
     } else {
       console.log("3D场景加载中...请稍等");
     }
   }
 
-   //打标,前端调用3d，前端调用3d
-   function setMarkData(data){
-    if (isLoaded){
+  //打标,前端调用3d，前端调用3d
+  function setMarkData(data) {
+    if (isLoaded) {
       var data = JSON.stringify(data);
-      unityInstance.SendMessage("Net","SetMarkData", data);
+      unityInstance.SendMessage("Net", "SetMarkData", data);
     } else {
       console.log("3D场景加载中...请稍等");
     }
   }
 
   //清空3d场景中的打标，前端调用3d
-  function clearMarks(){
-    if (isLoaded){
-      unityInstance.SendMessage("Net","ClearMarkData");
+  function clearMarks() {
+    if (isLoaded) {
+      unityInstance.SendMessage("Net", "ClearMarkData");
     } else {
       console.log("3D场景加载中...请稍等");
     }
@@ -86,9 +102,9 @@
 
   //设置936能源馆的样式，前端调用3d
   //data:"节能","常规","豪华"
-  function setPowerBuilding(data){
-    if (isLoaded){
-      unityInstance.SendMessage("Net","SetStyle", data);
+  function setPowerBuilding(data) {
+    if (isLoaded) {
+      unityInstance.SendMessage("Net", "SetStyle", data);
     } else {
       console.log("3D场景加载中...请稍等");
     }
@@ -96,9 +112,9 @@
 
   //设置时间，前端调用3d
   //data:时间为24小时制，可以设置任意时间点的字符串，比如"9","18"
-  function setDayTime(data){
-    if (isLoaded){
-      unityInstance.SendMessage("Net","SetDayTime", data);
+  function setDayTime(data) {
+    if (isLoaded) {
+      unityInstance.SendMessage("Net", "SetDayTime", data);
     } else {
       console.log("3D场景加载中...请稍等");
     }
@@ -106,10 +122,10 @@
 
   //设置能流图，前端调用3d
   //data:"true"、"false"
-  function activePipeNetWork(data){
-    if (isLoaded){
-      unityInstance.SendMessage("Net","ActivePipeNetWork", data);
-      unityInstance.SendMessage("Net","SetPipeStatus", '["0","1","2","3","4"]');
+  function activePipeNetWork(data) {
+    if (isLoaded) {
+      unityInstance.SendMessage("Net", "ActivePipeNetWork", data);
+      unityInstance.SendMessage("Net", "SetPipeStatus", '["0","1","2","3","4"]');
     } else {
       console.log("3D场景加载中...请稍等");
     }
@@ -117,9 +133,9 @@
 
   //路灯打开，前端调用3d
   //data:"true"、"false"
-  function activeLight(data){
-    if (isLoaded){
-      unityInstance.SendMessage("Net","ActiveLight", data);
+  function activeLight(data) {
+    if (isLoaded) {
+      unityInstance.SendMessage("Net", "ActiveLight", data);
     } else {
       console.log("3D场景加载中...请稍等");
     }
@@ -127,9 +143,9 @@
 
   //设置道路状态，前端调用3d
   //data:路名_状态，例如"鹿明湖路_1",状态：0：无拥堵状态显示就是正常的道路、1：通畅、2：较拥堵、3：拥堵不通
-  function setRoadStatus(data){
-    if (isLoaded){
-      unityInstance.SendMessage("Net","SetRoadStatus", data);
+  function setRoadStatus(data) {
+    if (isLoaded) {
+      unityInstance.SendMessage("Net", "SetRoadStatus", data);
     } else {
       console.log("3D场景加载中...请稍等");
     }
@@ -138,10 +154,10 @@
   //设置热力图效果，前端调用3d
   //data:[{"Longitude":"121.6844","Latitude":"31.08633","Height":"0.08368874","Status":"2"}],Status: 0：正常, 1：稀疏，2:密集
   //去除热力图可以传[]
-  function showPeopleHeatingItem(data){
-    if (isLoaded){
+  function showPeopleHeatingItem(data) {
+    if (isLoaded) {
       var data = JSON.stringify(data);
-      unityInstance.SendMessage("Net","ShowPeopleHeatingItem", data);
+      unityInstance.SendMessage("Net", "ShowPeopleHeatingItem", data);
     } else {
       console.log("3D场景加载中...请稍等");
     }
@@ -149,9 +165,9 @@
 
   //隐藏指定标签，前端调用3d
   //data: Type加上id,例如："能源报警_1"
-  function hideMarkById(data){
-    if (isLoaded){
-      unityInstance.SendMessage("Net","HideMarkById", data);
+  function hideMarkById(data) {
+    if (isLoaded) {
+      unityInstance.SendMessage("Net", "HideMarkById", data);
     } else {
       console.log("3D场景加载中...请稍等");
     }
@@ -159,9 +175,9 @@
 
   //设置天气，前端调用3d
   //data:"雾霾"、"雨"、"雪"、"无"
-  function setWeather(data){
-    if (isLoaded){
-      unityInstance.SendMessage("Net","SetWeather", data);
+  function setWeather(data) {
+    if (isLoaded) {
+      unityInstance.SendMessage("Net", "SetWeather", data);
     } else {
       console.log("3D场景加载中...请稍等");
     }

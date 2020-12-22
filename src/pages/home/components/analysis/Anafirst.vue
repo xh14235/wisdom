@@ -17,7 +17,7 @@
         <span>状态</span>
       </div>
       <div class="table-body">
-        <p v-for="item of list.abnormalDetail" :key="item.id">
+        <p v-for="item of energyList" :key="item.id">
           <span>{{getTime(item.time)}}</span>
           <span v-if="item.type === 'ELECTRICITY'">电</span>
           <span v-if="item.type === 'HOT_WATER'">热水</span>
@@ -32,7 +32,7 @@
       <div>用能异常-消费个体</div>
     </div>
     <div class="select-add">
-      分析对象<CommonSelect2 :largeSelect="largeSelect" :smallSelect="smallSelect" @changeLarge="changeLarge" @changeSmall="changeSmall"></CommonSelect2>
+      分析对象<Cascader :options="options" @changeValue="changeSelect1"></Cascader>
     </div>
     <div class="single-wrapper">
       <div class="single-box" v-for="(item, index) of list.abnormalEnergy" :key='item.id'>
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { buildingSelect, venueSelect } from '@/request/select-api'
 export default {
   name: 'Anafirst',
@@ -64,7 +65,12 @@ export default {
     list: Object
   },
   components: {
-    CommonSelect2: () => import('@/common/components/CommonSelect2')
+    Cascader: () => import('@/common/components/Cascader')
+  },
+  computed: {
+    ...mapState({
+      energyList: state => state.map.energyList
+    })
   },
   data () {
     return {
@@ -80,8 +86,7 @@ export default {
           info: '光伏'
         }
       ],
-      largeSelect: [],
-      smallSelect: []
+      options: []
     }
   },
   watch: {
@@ -106,45 +111,34 @@ export default {
     getBuildingSelect () {
       buildingSelect().then((res) => {
         let data = res.data
-        this.largeSelect = []
+        this.options = []
         for (let i = 0; i < data.length; i++) {
-          this.largeSelect.push({
-            id: data[i].facilityId,
-            name: data[i].facilityName
+          this.options.push({
+            value: data[i].facilityId,
+            label: data[i].facilityName,
+            children: []
+          })
+          venueSelect({
+            facilityId: data[i].facilityId
+          }).then(res => {
+            let data = res.data
+            for (let j = 0; j < data.length; j++) {
+              this.options[i].children.push({
+                value: data[j].id,
+                label: data[j].name
+              })
+            }
           })
         }
-        // this.largeSelect.splice(1, 1)
       })
     },
-    getVenueSelect (id) {
-      venueSelect({
-        facilityId: id
-      }).then((res) => {
-        let data = res.data
-        this.smallSelect = []
-        for (let i = 0; i < data.length; i++) {
-          this.smallSelect.push({
-            id: data[i].id,
-            name: data[i].name
-          })
-        }
-        // this.$emit('changeSelect1', this.smallSelect[0])
-      })
-    },
-    changeLarge (item) {
-      this.getVenueSelect(item.id)
-    },
-    changeSmall (item) {
+    changeSelect1 (item) {
       this.$emit('changeSelect1', item)
     }
   },
   mounted () {
     this.getBuildingSelect()
   }
-  // mounted () {
-  //   let cmd = new ActiveXObject('WScript.Shell')
-  //   cmd.run('cmd.exe /k cd C:/')
-  // }
 }
 </script>
 
@@ -169,7 +163,7 @@ export default {
   top: 61vh
   display: flex
   align-items: center
-  .select-box
+  .cascader-wrapper
     width: 8vw
 .common-table
   height: 23vh

@@ -1,8 +1,6 @@
 <template>
   <div class="common-echarts-wrapper">
-    <!-- <div class="common-echarts-box" @click="showEchartsPopup(list.echarts1, 'line')"> -->
     <div class="common-echarts-box">
-    <!-- <div class="common-echarts-box"> -->
       <div class="common-echarts-title">供电</div>
       <Eline class="echarts-with-title" v-if="list.echarts1.id" :lineData="list.echarts1"></Eline>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <CommonSelect :select="select" @selectChange="changeSelect"></CommonSelect>
+    <Select :options="select" @changeValue="changeSelect"></Select>
     <div class="opera-title">
       <div class="opera-name">电气拓扑图</div>
     </div>
@@ -49,15 +49,15 @@ export default {
   name: 'Opethird',
   components: {
     Eline: () => import('@/common/echarts/Eline'),
-    CommonSelect: () => import('@/common/components/CommonSelect')
+    Select: () => import('@/common/components/Select')
   },
   data () {
     return {
       chosenImg: 'operation.gif',
       select: [
         {
-          id: '31',
-          info: '代运维'
+          value: '31',
+          label: '代运维'
         }
       ],
       sumList: []
@@ -73,17 +73,6 @@ export default {
     }
   },
   watch: {
-    // line () {
-    //   this.sumList = []
-    //   for (let i = 0; i < this.echarts.data.length; i++) {
-    //     this.sumList.push({
-    //       id: 'd0' + i,
-    //       title: this.echarts.legendData[i],
-    //       num: this.echarts.data[i][23].value,
-    //       unit: 'kW'
-    //     })
-    //   }
-    // },
     echartsData () {
       this.sumList = []
       let len = this.echarts.data[0].length
@@ -103,17 +92,6 @@ export default {
     }
   },
   mounted () {
-    // if (this.echarts.data) {
-    //   this.sumList = []
-    //   for (let i = 0; i < this.echarts.data.length; i++) {
-    //     this.sumList.push({
-    //       id: 'd0' + i,
-    //       title: this.echarts.legendData[i],
-    //       num: this.echarts.data[i][23],
-    //       unit: 'kW'
-    //     })
-    //   }
-    // }
     if (this.echarts.data) {
       this.sumList = []
       let len = this.echarts.data[0].length
@@ -134,7 +112,7 @@ export default {
 @import '~@/assets/css/common.styl'
 .wrapper
   position: relative
-  .select-box
+  .select-wrapper
     position: absolute
     top: -3.5vh
     right: 0

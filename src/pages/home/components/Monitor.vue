@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
   name: 'Monitor',
   components: {
@@ -62,14 +62,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      ifr: state => state.map.ifr,
-      iconHeight: state => state.map.iconHeight,
-      jumpTime: state => state.map.jumpTime,
-      viewX: state => state.map.viewX,
-      viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ
-    }),
     translate () {
       return 'translate(0, -' + this.original_hei * this.current_index + 'vh)'
     }

@@ -2,7 +2,7 @@
   <div>
     <div class="controller-box">
       <div class="select1">
-        分析对象<CommonSelect2 :largeSelect="largeSelect" :smallSelect="smallSelect" @changeLarge="changeLarge" @changeSmall="changeSmall"></CommonSelect2>
+        分析对象<Cascader :options="options" @changeValue="changeSelect3"></Cascader>
       </div>
       <DateType @getDateType="changeDate3"></DateType>
     </div>
@@ -37,12 +37,12 @@ export default {
     Eline: () => import('@/common/echarts/Eline'),
     Ebar: () => import('@/common/echarts/Ebar'),
     DateType: () => import('@/common/components/DateType'),
-    CommonSelect2: () => import('@/common/components/CommonSelect2')
+    Cascader: () => import('@/common/components/Cascader')
   },
   data () {
     return {
-      largeSelect: [],
-      smallSelect: []
+      value: '',
+      options: []
     }
   },
   props: {
@@ -57,35 +57,28 @@ export default {
     getBuildingSelect () {
       buildingSelect().then((res) => {
         let data = res.data
-        this.largeSelect = []
+        this.options = []
         for (let i = 0; i < data.length; i++) {
-          this.largeSelect.push({
-            id: data[i].facilityId,
-            name: data[i].facilityName
+          this.options.push({
+            value: data[i].facilityId,
+            label: data[i].facilityName,
+            children: []
+          })
+          venueSelect({
+            facilityId: data[i].facilityId
+          }).then(res => {
+            let data = res.data
+            for (let j = 0; j < data.length; j++) {
+              this.options[i].children.push({
+                value: data[j].id,
+                label: data[j].name
+              })
+            }
           })
         }
-        // this.largeSelect.splice(1, 1)
       })
     },
-    getVenueSelect (id) {
-      venueSelect({
-        facilityId: id
-      }).then((res) => {
-        let data = res.data
-        this.smallSelect = []
-        for (let i = 0; i < data.length; i++) {
-          this.smallSelect.push({
-            id: data[i].id,
-            name: data[i].name
-          })
-        }
-        // this.$emit('changeSelect3', this.smallSelect[0])
-      })
-    },
-    changeLarge (item) {
-      this.getVenueSelect(item.id)
-    },
-    changeSmall (item) {
+    changeSelect3 (item) {
       this.$emit('changeSelect3', item)
     },
     changeDate3 (code) {
@@ -109,7 +102,7 @@ export default {
     width: 50%
     display: flex
     align-items: center
-    .select-box
+    .cascader-wrapper
       flex: auto
 .common-echarts-wrapper
   .common-echarts-box

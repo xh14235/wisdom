@@ -49,7 +49,6 @@ export default {
     }
   },
   props: {
-    // list: Array,
     month: String
   },
   watch: {
@@ -58,27 +57,6 @@ export default {
     }
   },
   methods: {
-    addList (month) {
-      // let idHead = 'idhead'
-      // let num = 0
-      // for (let i = 0; i < this.list.length; i++) {
-      //   if (this.list[i].id.indexOf('idhead') !== -1) {
-      //     num++
-      //   }
-      // }
-      // this.list.splice(0, num)
-      // let time = new Date()
-      // let year = time.getFullYear()
-      // month = Number(month) || (time.getMonth() + 1)
-      // let day = new Date(year, month - 1, 1).getDay()
-      // for (let i = 0; i < day; i++) {
-      //   this.list.unshift({
-      //     id: idHead + (i + 1),
-      //     date: '',
-      //     num: 0
-      //   })
-      // }
-    },
     getCalendarList () {
       culturecalendar({
         date: this.month
@@ -107,8 +85,10 @@ export default {
     }
   },
   mounted () {
-    // this.addList(this.month)
     this.getCalendarList()
+  },
+  beforeDestroy () {
+    this.calendarList = []
   }
 }
 </script>

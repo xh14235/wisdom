@@ -48,6 +48,7 @@ export default {
       dateType3: 'day',
       building2: '1254292656272252928',
       building3: '1254300251426992128',
+      selectName: '烘培',
       list: [
         {
           id: '01',
@@ -88,7 +89,8 @@ export default {
         echarts4: {},
         echarts5: {},
         echarts6: {}
-      }
+      },
+      promise1: null
     }
   },
   props: {
@@ -111,11 +113,6 @@ export default {
       white: state => state.color.white,
       lgreen: state => state.color.lgreen,
       ifr: state => state.map.ifr,
-      iconHeight: state => state.map.iconHeight,
-      jumpTime: state => state.map.jumpTime,
-      viewX: state => state.map.viewX,
-      viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ,
       leftTimer: state => state.leftTimer
     })
   },
@@ -137,7 +134,7 @@ export default {
     },
     // 根据下拉框组件传来的数据改变视图
     changeSelect2 (chosen) {
-      this.building2 = chosen.id
+      this.building2 = chosen.value
       this.consecondbar()
       this.supelectry()
       this.supcold()
@@ -145,12 +142,13 @@ export default {
       this.suphotwater()
     },
     changeSelect3 (item) {
-      this.building3 = item.id
+      this.building3 = item.value
+      this.selectName = item.label
       this.concomparebuilding()
       this.conthird2()
       this.conthird3()
       // 下拉框关联地图
-      this.singleBuilding(item.name)
+      this.gisMethods()
     },
     // 分页切换，显示不同内容
     changeTab (index, title) {
@@ -162,9 +160,7 @@ export default {
           if (this.getBool(this.datahead) && this.getBool(this.datafirst)) {
             this.conusedline()
             this.conusedpie()
-            this.allBuildings()
             this.contimer = setInterval(() => {
-              this.allBuildings()
               this.conusedline()
               this.conusedpie()
             }, this.duration)
@@ -195,18 +191,19 @@ export default {
               this.concomparebuilding()
               this.conthird2()
               this.conthird3()
-              this.singleBuilding('烘培')
             }
             this.contimer = setInterval(() => {
               this.concomparebuilding()
               this.conthird2()
               this.conthird3()
-              this.singleBuilding('烘培')
             }, this.duration)
           }
           break
         default:
           break
+      }
+      if (this.leftTimer && this.isOpened === 1) {
+        this.gisMethods()
       }
     },
     // 判断分页数据是否为空，返回boolean
@@ -278,56 +275,6 @@ export default {
           data: [hot]
         }
       })
-    },
-    // 所有建筑供能值
-    allBuildings () {
-      let promise = new Promise((resolve, reject) => {
-        let data = [77, 91, 57]
-        resolve(data)
-      })
-      if (this.isOpened === 1 && this.leftTimer) {
-        promise.then(res => {
-          this.ifr.clearMarks()
-          let markData = this.ifr.markConfig['Watching24']
-          markData[0].Other = [
-            {
-              'Key': '供能值',
-              'Value': res[0] + 'kWh'
-            }
-          ]
-          markData[1].Other = [
-            {
-              'Key': '供能值',
-              'Value': res[1] + 'kWh'
-            }
-          ]
-          markData[2].Other = [
-            {
-              'Key': '供能值',
-              'Value': res[2] + 'kWh'
-            }
-          ]
-          let positionData = this.ifr.sceneCenterConfig['Watching24']
-          this.ifr.setCameraSettingWithCoordinate(positionData)
-          this.ifr.setMarkData(markData)
-        })
-      }
-    },
-    // 单个建筑
-    singleBuilding (name) {
-      if (this.isOpened === 1 && this.leftTimer) {
-        this.ifr.clearMarks()
-        let markData = []
-        let arr = this.ifr.markConfig.Watching24
-        for (let index = 0; index < arr.length; index++) {
-          if (arr[index].Name.includes(name)) {
-            markData.push(arr[index])
-          }
-        }
-        // 建筑的冷热水电数据等接口
-        this.ifr.setMarkData(markData)
-        this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
-      }
     },
     // 24小时监测 供电、冷、热、热水 饼图 消费分类数据
     conusedpie () {
@@ -614,6 +561,71 @@ export default {
           data: [Object.values(res.data.FOREIGN_ELECTRICITY).slice(0, this.day.length), Object.values(res.data.ELECTRICITY).slice(0, this.day.length)]
         }
       })
+    },
+    gisMethods () {
+      this.ifr.clearMarks()
+      let positionData
+      switch (this.tab) {
+        case 0:
+          positionData = this.ifr.sceneCenterConfig['Watching24']
+          this.promise1 = new Promise((resolve, reject) => {
+            let data = [77, 91, 57]
+            resolve(data)
+          })
+          this.promise1.then(res => {
+            let markData = this.ifr.markConfig['Watching24']
+            markData.forEach((item, i) => {
+              if (res[i]) {
+                item.Other = [
+                  {
+                    'Key': '供能值',
+                    'Value': res[i] + 'kWh'
+                  }
+                ]
+              } else {
+                item.Other = [
+                  {
+                    'Key': '供能值',
+                    'Value': '0kWh'
+                  }
+                ]
+              }
+            })
+            this.ifr.setMarkData(markData)
+          })
+          break
+        case 2:
+          let markData = []
+          let arr = this.ifr.markConfig.Watching24
+          for (let index = 0; index < arr.length; index++) {
+            if (arr[index].Name.includes(this.selectName)) {
+              markData.push(arr[index])
+            }
+          }
+          // 建筑的冷热水电数据等接口
+          this.ifr.setMarkData(markData)
+          positionData = {
+            'Distance': '1.953',
+            'PosX': markData[0].Longitude,
+            'PosY': markData[0].Latitude,
+            'Time': 1,
+            'X': '184.1298',
+            'Y': '54.2352'
+          }
+          break
+        default:
+          break
+      }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      // 隐藏热力图
+      this.ifr.showPeopleHeatingItem([])
+      // 隐藏能留图
+      this.ifr.activePipeNetWork('false')
+      // 清除道路状态
+      let road = localStorage.road.split(',')
+      road.forEach(item => {
+        this.ifr.setRoadStatus(item + '_0')
+      })
     }
   },
   watch: {
@@ -622,7 +634,7 @@ export default {
     },
     isOpened () {
       if (this.isOpened === 1) {
-        this.allBuildings()
+        this.gisMethods()
       }
     }
   },
@@ -635,49 +647,7 @@ export default {
     this.contimer = null
   },
   activated () {
-    if (this.contimer) clearInterval(this.contimer)
-    switch (this.tab) {
-      case 0:
-        this.allBuildings()
-        this.conusedline()
-        this.conusedpie()
-        this.contimer = setInterval(() => {
-          this.allBuildings()
-          this.conusedline()
-          this.conusedpie()
-        }, this.duration)
-        break
-      case 1:
-        this.consecondbar()
-        this.supelectry()
-        this.suphotwater()
-        this.supcold()
-        this.suphot()
-        this.ifr.clearMarks()
-        this.contimer = setInterval(() => {
-          this.consecondbar()
-          this.supelectry()
-          this.suphotwater()
-          this.supcold()
-          this.suphot()
-          this.ifr.clearMarks()
-        }, this.duration)
-        break
-      case 2:
-        this.concomparebuilding()
-        this.conthird2()
-        this.conthird3()
-        this.singleBuilding('烘培')
-        this.contimer = setInterval(() => {
-          this.concomparebuilding()
-          this.conthird2()
-          this.conthird3()
-          this.singleBuilding('烘培')
-        }, this.duration)
-        break
-      default:
-        break
-    }
+    this.changeTab(this.tab, this.list[this.tab].title)
   },
   beforeDestroy () {
     clearInterval(this.contimer)

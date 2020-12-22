@@ -1,22 +1,22 @@
 <template>
-  <div class="wrapper">
-    <div class="common-title">
+  <div class='wrapper'>
+    <div class='common-title'>
       <div>用能优化 <span>({{subTitle}})</span></div>
     </div>
-    <div class="common-pages">
-      <div class="common-page" v-if="this.tab === 0">
-        <transition name="fade" mode="out-in">
-          <Optfirst :list="datafirst" :statistics="price1" @changeSelect1="changeSelect1"></Optfirst>
+    <div class='common-pages'>
+      <div class='common-page' v-if='this.tab === 0'>
+        <transition name='fade' mode='out-in'>
+          <Optfirst :list='datafirst' :statistics='price1' @changeSelect1='changeSelect1'></Optfirst>
         </transition>
       </div>
-      <div class="common-page" v-else-if="this.tab === 1">
-        <transition name="fade" mode="out-in">
-          <Optsecond :list="datasecond" :statistics="price2" @changeDate2="changeDate2" @changeSelect2="changeSelect2"></Optsecond>
+      <div class='common-page' v-else-if='this.tab === 1'>
+        <transition name='fade' mode='out-in'>
+          <Optsecond :list='datasecond' :statistics='price2' @changeDate2='changeDate2' @changeSelect2='changeSelect2'></Optsecond>
         </transition>
       </div>
     </div>
-    <div class="common-tab">
-      <span :class="{'active': tab === index}" v-for="(item, index) of list" :key="item.id" @click="changeTab(index)">{{item.title}}</span>
+    <div class='common-tab'>
+      <span :class='{"active": tab === index}' v-for='(item, index) of list' :key='item.id' @click='changeTab(index)'>{{item.title}}</span>
     </div>
   </div>
 </template>
@@ -74,7 +74,9 @@ export default {
       building1: '1254300251426992128',
       building2: '1254300251426992128',
       bName1: '烘培馆',
-      bName2: '烘培馆'
+      bName2: '烘培馆',
+      promise1: null,
+      promise2: null
     }
   },
   computed: {
@@ -90,11 +92,6 @@ export default {
       white: state => state.color.white,
       lgreen: state => state.color.lgreen,
       ifr: state => state.map.ifr,
-      iconHeight: state => state.map.iconHeight,
-      jumpTime: state => state.map.jumpTime,
-      viewX: state => state.map.viewX,
-      viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ,
       leftTimer: state => state.leftTimer
     })
   },
@@ -102,28 +99,29 @@ export default {
     // 根据年月日组件传来的日期类型改变视图
     changeDate2 (date) {
       this.dateType2 = date
-      this.getBoth(2)
-      this.getPrice(2)
+      this.getBoth()
+      this.getPrice()
       this.optSecondOrder()
       this.getSex()
-      // this.optwork()
     },
     // 根据下拉框组件传来的数据改变视图
     changeSelect1 (chosen) {
-      this.building1 = chosen.id
-      this.bName1 = chosen.name
-      this.getBoth(1)
-      this.getPrice(1)
+      this.building1 = chosen.value
+      this.bName1 = chosen.label
+      this.getBoth()
+      this.getPrice()
       this.optsave()
+      this.gisMethods()
     },
     changeSelect2 (chosen) {
-      this.building2 = chosen.id
-      this.bName2 = chosen.name
-      this.getBoth(2)
-      this.getPrice(2)
+      this.building2 = chosen.value
+      this.bName2 = chosen.label
+      this.getBoth()
+      this.getPrice()
       this.getSex()
       this.optwork()
       this.optSecondOrder()
+      this.gisMethods()
     },
     // 分页切换，显示不同内容
     changeTab (index) {
@@ -135,28 +133,28 @@ export default {
           if (this.getBool(this.datafirst)) {
             if (this.building1) {
               this.optsave()
-              this.getBoth(1)
-              this.getPrice(1)
+              this.getBoth()
+              this.getPrice()
             }
             this.opttimer = setInterval(() => {
               this.optsave()
-              this.getBoth(1)
-              this.getPrice(1)
+              this.getBoth()
+              this.getPrice()
             }, this.duration)
           }
           break
         case 1:
           if (this.getBool(this.datasecond)) {
             if (this.building2) {
-              this.getBoth(2)
-              this.getPrice(2)
+              this.getBoth()
+              this.getPrice()
               this.optSecondOrder()
               this.getSex()
               this.optwork()
             }
             this.opttimer = setInterval(() => {
-              this.getBoth(2)
-              this.getPrice(2)
+              this.getBoth()
+              this.getPrice()
               this.optSecondOrder()
               this.getSex()
               this.optwork()
@@ -165,6 +163,9 @@ export default {
           break
         default:
           break
+      }
+      if (this.leftTimer) {
+        this.gisMethods()
       }
     },
     // 根据下拉框组件传来的数据改变视图
@@ -333,9 +334,9 @@ export default {
       })
     },
     // 能源消费情况 冷热水电数据
-    getBoth (page) {
-      if (page === 1) {
-        let promise1 = new Promise((resolve, reject) => {
+    getBoth () {
+      if (this.tab === 0) {
+        this.promise1 = new Promise((resolve, reject) => {
           optenergy({
             buildingFacilitySubId: this.building1,
             dateType: 'day'
@@ -391,41 +392,6 @@ export default {
             }
           })
         })
-        promise1.then(res => {
-          let time = new Date()
-          let hour = time.getHours()
-          // console.log(res)
-          if (this.leftTimer) {
-            this.ifr.clearMarks()
-            let markData = []
-            let arr = this.ifr.markConfig.Watching24
-            for (let index = 0; index < arr.length; index++) {
-              if (arr[index].Name.includes(this.bName1)) {
-                markData.push(arr[index])
-              }
-            }
-            markData[0].Other = [
-              {
-                'Key': '电',
-                'Value': res.ELECTRICITY[hour] + 'kWh'
-              },
-              {
-                'Key': '热水',
-                'Value': res.HOT_WATER[hour] + 'kWh'
-              },
-              {
-                'Key': '冷',
-                'Value': res.COLD[hour] + 'kWh'
-              },
-              {
-                'Key': '热',
-                'Value': res.HOT[hour] + 'kWh'
-              }
-            ]
-            this.ifr.setMarkData(markData)
-            this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
-          }
-        })
       } else {
         let date
         switch (this.dateType2) {
@@ -441,7 +407,7 @@ export default {
           default:
             break
         }
-        let promise2 = new Promise((resolve, reject) => {
+        this.promise2 = new Promise((resolve, reject) => {
           optenergy({
             buildingFacilitySubId: this.building2,
             dateType: this.dateType2
@@ -497,45 +463,20 @@ export default {
             }
           })
         })
-        promise2.then(res => {
-          let time = new Date()
-          let hour = time.getHours()
-          if (this.leftTimer) {
-            this.ifr.clearMarks()
-            let markData = []
-            let arr = this.ifr.markConfig.Watching24
-            for (let index = 0; index < arr.length; index++) {
-              if (arr[index].Name.includes(this.bName2)) {
-                markData.push(arr[index])
-              }
-            }
-            markData[0].Other = [
-              {
-                'Key': '电',
-                'Value': res.ELECTRICITY[hour] + 'kWh'
-              },
-              {
-                'Key': '热水',
-                'Value': res.HOT_WATER[hour] + 'kWh'
-              },
-              {
-                'Key': '冷',
-                'Value': res.COLD[hour] + 'kWh'
-              },
-              {
-                'Key': '热',
-                'Value': res.HOT[hour] + 'kWh'
-              }
-            ]
-            this.ifr.setMarkData(markData)
-            this.ifr.setCameraSettingWithCoordinate(this.ifr.sceneCenterConfig['Watching24'])
-          }
-        })
       }
+      // 隐藏热力图
+      this.ifr.showPeopleHeatingItem([])
+      // 隐藏能留图
+      this.ifr.activePipeNetWork('false')
+      // 清除道路状态
+      let road = localStorage.road.split(',')
+      road.forEach(item => {
+        this.ifr.setRoadStatus(item + '_0')
+      })
     },
     // 能源价格比较 数据 使用前与使用后
-    getPrice (page) {
-      if (page === 1) {
+    getPrice () {
+      if (this.tab === 0) {
         optprice({
           dateType: 'day',
           buildingFacilitySubId: this.building1,
@@ -612,11 +553,104 @@ export default {
         yName: '(个)',
         data: [getTestList(150, length)]
       }
+    },
+    gisMethods () {
+      let time = new Date()
+      let hour = time.getHours()
+      switch (this.tab) {
+        case 0:
+          this.promise1.then(res => {
+            this.ifr.clearMarks()
+            let markData = []
+            let arr = this.ifr.markConfig.Watching24
+            for (let index = 0; index < arr.length; index++) {
+              if (arr[index].Name.includes(this.bName1)) {
+                markData.push(arr[index])
+              }
+            }
+            markData[0].Other = [
+              {
+                'Key': '电',
+                'Value': res.ELECTRICITY[hour] + 'kWh'
+              },
+              {
+                'Key': '热水',
+                'Value': res.HOT_WATER[hour] + 'kWh'
+              },
+              {
+                'Key': '冷',
+                'Value': res.COLD[hour] + 'kWh'
+              },
+              {
+                'Key': '热',
+                'Value': res.HOT[hour] + 'kWh'
+              }
+            ]
+            this.ifr.setMarkData(markData)
+            let center = {
+              'Distance': '1.953',
+              'PosX': markData[0].Longitude,
+              'PosY': markData[0].Latitude,
+              'Time': 1,
+              'X': '184.1298',
+              'Y': '54.2352'
+            }
+            this.ifr.setCameraSettingWithCoordinate(center)
+          })
+          break
+        case 1:
+          this.promise2.then(res => {
+            this.ifr.clearMarks()
+            let markData = []
+            let arr = this.ifr.markConfig.Watching24
+            for (let index = 0; index < arr.length; index++) {
+              if (arr[index].Name.includes(this.bName2)) {
+                markData.push(arr[index])
+              }
+            }
+            markData[0].Other = [
+              {
+                'Key': '电',
+                'Value': res.ELECTRICITY[hour] + 'kWh'
+              },
+              {
+                'Key': '热水',
+                'Value': res.HOT_WATER[hour] + 'kWh'
+              },
+              {
+                'Key': '冷',
+                'Value': res.COLD[hour] + 'kWh'
+              },
+              {
+                'Key': '热',
+                'Value': res.HOT[hour] + 'kWh'
+              }
+            ]
+            this.ifr.setMarkData(markData)
+            let center = {
+              'Distance': '1.953',
+              'PosX': markData[0].Longitude,
+              'PosY': markData[0].Latitude,
+              'Time': 1,
+              'X': '184.1298',
+              'Y': '54.2352'
+            }
+            this.ifr.setCameraSettingWithCoordinate(center)
+          })
+          break
+        default:
+          break
+      }
+      // 隐藏热力图
+      this.ifr.showPeopleHeatingItem([])
+      // 隐藏能留图
+      this.ifr.activePipeNetWork('false')
+      // 清除道路状态
+      let road = localStorage.road.split(',')
+      road.forEach(item => {
+        this.ifr.setRoadStatus(item + '_0')
+      })
     }
-  },
-  mounted () {
-    this.changeTab(0)
-    this.ifr.activePipeNetWork('false')
   },
   // 页面切换时，停止或重启定时器
   deactivated () {
@@ -624,39 +658,12 @@ export default {
     this.opttimer = null
   },
   activated () {
-    this.ifr.activePipeNetWork('false')
-    if (this.opttimer) clearInterval(this.opttimer)
-    switch (this.tab) {
-      case 0:
-        this.getBoth(1)
-        this.opttimer = setInterval(() => {
-          this.optsave()
-          this.getBoth(1)
-          this.getPrice(1)
-        }, this.duration)
-        break
-      case 1:
-        this.getBoth(2)
-        this.opttimer = setInterval(() => {
-          this.getBoth(2)
-          this.getPrice(2)
-          this.optSecondOrder()
-          this.getSex()
-          this.optwork()
-        }, this.duration)
-        break
-      default:
-        break
-    }
-  },
-  beforeDestroy () {
-    clearInterval(this.opttimer)
-    this.opttimer = null
+    this.changeTab(this.tab)
   }
 }
 </script>
 
-<style scoped lang="stylus">
+<style scoped lang='stylus'>
 .wrapper
   width: 100%
   height: 90vh

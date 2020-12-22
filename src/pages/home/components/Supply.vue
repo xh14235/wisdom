@@ -121,7 +121,11 @@ export default {
         echarts6: {},
         echarts7: {},
         echarts8: {}
-      }
+      },
+      promise1: null,
+      promise2: null,
+      promise3: null,
+      promise4: null
     }
   },
   props: {
@@ -143,11 +147,6 @@ export default {
       bgreen: state => state.color.bgreen,
       red: state => state.color.red,
       ifr: state => state.map.ifr,
-      iconHeight: state => state.map.iconHeight,
-      jumpTime: state => state.map.jumpTime,
-      viewX: state => state.map.viewX,
-      viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ,
       leftTimer: state => state.leftTimer
     })
   },
@@ -228,6 +227,9 @@ export default {
         default:
           break
       }
+      if (this.leftTimer && this.isOpened === 0) {
+        this.gisMethods()
+      }
     },
     // 判断分页数据是否为空，返回boolean
     getBool (obj) {
@@ -275,7 +277,7 @@ export default {
     supHead2 () {
       let date = new Date()
       let hour = date.getHours() + 1
-      let promise = new Promise((resolve, reject) => {
+      this.promise1 = new Promise((resolve, reject) => {
         supHead2({
           hour: hour
         }).then((res) => {
@@ -303,39 +305,6 @@ export default {
           resolve(data)
         })
       })
-      if (this.isOpened === 0 && this.leftTimer) {
-        promise.then(res => {
-          this.ifr.clearMarks()
-          let markData = this.ifr.markConfig['Hours24']
-          markData[0].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.CONCENTRATED_WIND_POWER + 'kWh'
-            }
-          ]
-          markData[1].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.ENERGY_CENTER + 'kWh'
-            }
-          ]
-          markData[3].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.CONCENTRATED_ENERGY_STORAGE + 'kWh'
-            }
-          ]
-          markData[4].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.CONCENTRATED_PHOTOVOLTAIC + 'kWh'
-            }
-          ]
-          let positionData = this.ifr.sceneCenterConfig['Hours24']
-          this.ifr.setCameraSettingWithCoordinate(positionData)
-          this.ifr.setMarkData(markData)
-        })
-      }
     },
     // 24小时监测 热水 折线图 数据
     suphotwaterline () {
@@ -514,7 +483,7 @@ export default {
         default:
           break
       }
-      let promise = new Promise((resolve, reject) => {
+      this.promise2 = new Promise((resolve, reject) => {
         supSecond1({
           type: this.dateType2
         }).then((res) => {
@@ -570,47 +539,6 @@ export default {
           resolve(res.data)
         })
       })
-      if (this.isOpened === 0 && this.leftTimer) {
-        promise.then(res => {
-          let time = new Date()
-          let hour = time.getHours() + 1
-          this.ifr.clearMarks()
-          let markData = this.ifr.markConfig['villagePower']
-          markData[0].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.CONCENTRATED_WIND_POWER[hour] + 'kWh'
-            }
-          ]
-          markData[1].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.CONCENTRATED_WIND_POWER[hour] + 'kWh'
-            }
-          ]
-          markData[2].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.MIC_POWER_GRID_CUBE[hour] + 'kWh'
-            }
-          ]
-          markData[3].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.CONCENTRATED_ENERGY_STORAGE[hour] + 'kWh'
-            }
-          ]
-          markData[4].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.CONCENTRATED_PHOTOVOLTAIC[hour] + 'kWh'
-            }
-          ]
-          let positionData = this.ifr.sceneCenterConfig['villagePower']
-          this.ifr.setCameraSettingWithCoordinate(positionData)
-          this.ifr.setMarkData(markData)
-        })
-      }
     },
     // 全村域能源 能源中心供电量、集中风电供电量、集中光伏供电量、集中储能供电量 未来24小时预测数据
     conSecond2 () {
@@ -683,7 +611,7 @@ export default {
         default:
           break
       }
-      let promise = new Promise((resolve, reject) => {
+      this.promise3 = new Promise((resolve, reject) => {
         supThird1({
           supplyFacilityId: 1,
           type: this.dateType3
@@ -764,53 +692,6 @@ export default {
           resolve(data)
         })
       })
-      if (this.isOpened === 0 && this.leftTimer) {
-        promise.then(res => {
-          let time = new Date()
-          let hour = time.getHours() + 1
-          this.ifr.clearMarks()
-          let markData = this.ifr.markConfig['PowerCenter936']
-          markData[0].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.MIC_POWER_GRID_CUBE[hour] + 'kWh'
-            }
-          ]
-          markData[1].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.GEOTHERMAL_CUBE[hour] + 'kWh'
-            }
-          ]
-          markData[2].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.HYDROGEN_CUBE[hour] + 'kWh'
-            }
-          ]
-          markData[3].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.HOT_WATER_CUBE[hour] + 'kWh'
-            }
-          ]
-          markData[4].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.BIOMASS_CUBE[hour] + 'kWh'
-            }
-          ]
-          markData[5].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.POWER_SUPPLY_CUBE[hour] + 'kWh'
-            }
-          ]
-          let positionData = this.ifr.sceneCenterConfig['PowerCenter936']
-          this.ifr.setCameraSettingWithCoordinate(positionData)
-          this.ifr.setMarkData(markData)
-        })
-      }
     },
     // 储能信息数据 储能量、循环效率、次数统计等
     supThird2 () {
@@ -957,7 +838,7 @@ export default {
         default:
           break
       }
-      let promise = new Promise((resolve, reject) => {
+      this.promise4 = new Promise((resolve, reject) => {
         supForth1({
           type: this.dateType4
         }).then((res) => {
@@ -1013,41 +894,6 @@ export default {
           resolve(data)
         })
       })
-      if (this.isOpened === 0 && this.leftTimer) {
-        promise.then(res => {
-          let time = new Date()
-          let hour = time.getHours() + 1
-          this.ifr.clearMarks()
-          let markData = this.ifr.markConfig['PowerItem936']
-          markData[0].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.PHOTOVOLTAIC[hour] + 'kWh'
-            }
-          ]
-          markData[1].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.PHOTOVOLTAIC[hour] + 'kWh'
-            }
-          ]
-          markData[2].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.WIND_POWER[hour] + 'kWh'
-            }
-          ]
-          markData[3].Other = [
-            {
-              'Key': '供能值',
-              'Value': res.WIND_POWER[hour] + 'kWh'
-            }
-          ]
-          let positionData = this.ifr.sceneCenterConfig['PowerItem936']
-          this.ifr.setCameraSettingWithCoordinate(positionData)
-          this.ifr.setMarkData(markData)
-        })
-      }
     },
     // 936能源个体 1号风电供电量、1号光伏供电量、2号风电供电量、2号光伏供电量 未来24小时预测数据
     supForth2 () {
@@ -1099,6 +945,170 @@ export default {
         yName: '(kW)',
         data: [getTestList(150, 24)]
       }
+    },
+    gisMethods () {
+      this.ifr.clearMarks()
+      let markData
+      let positionData
+      let time = new Date()
+      let hour = time.getHours() + 1
+      switch (this.tab) {
+        case 0:
+          positionData = this.ifr.sceneCenterConfig['Hours24']
+          this.promise1.then(res => {
+            markData = this.ifr.markConfig['Hours24']
+            markData[0].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.CONCENTRATED_WIND_POWER + 'kWh'
+              }
+            ]
+            markData[1].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.ENERGY_CENTER + 'kWh'
+              }
+            ]
+            markData[3].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.CONCENTRATED_ENERGY_STORAGE + 'kWh'
+              }
+            ]
+            markData[4].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.CONCENTRATED_PHOTOVOLTAIC + 'kWh'
+              }
+            ]
+            this.ifr.setMarkData(markData)
+          })
+          break
+        case 1:
+          positionData = this.ifr.sceneCenterConfig['villagePower']
+          this.promise2.then(res => {
+            this.ifr.clearMarks()
+            let markData = this.ifr.markConfig['villagePower']
+            markData[0].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.CONCENTRATED_WIND_POWER[hour] + 'kWh'
+              }
+            ]
+            markData[1].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.CONCENTRATED_WIND_POWER[hour] + 'kWh'
+              }
+            ]
+            markData[2].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.MIC_POWER_GRID_CUBE[hour] + 'kWh'
+              }
+            ]
+            markData[3].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.CONCENTRATED_ENERGY_STORAGE[hour] + 'kWh'
+              }
+            ]
+            markData[4].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.CONCENTRATED_PHOTOVOLTAIC[hour] + 'kWh'
+              }
+            ]
+            this.ifr.setMarkData(markData)
+          })
+          break
+        case 2:
+          positionData = this.ifr.sceneCenterConfig['PowerCenter936']
+          this.promise3.then(res => {
+            let markData = this.ifr.markConfig['PowerCenter936']
+            markData[0].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.MIC_POWER_GRID_CUBE[hour] + 'kWh'
+              }
+            ]
+            markData[1].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.GEOTHERMAL_CUBE[hour] + 'kWh'
+              }
+            ]
+            markData[2].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.HYDROGEN_CUBE[hour] + 'kWh'
+              }
+            ]
+            markData[3].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.HOT_WATER_CUBE[hour] + 'kWh'
+              }
+            ]
+            markData[4].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.BIOMASS_CUBE[hour] + 'kWh'
+              }
+            ]
+            markData[5].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.POWER_SUPPLY_CUBE[hour] + 'kWh'
+              }
+            ]
+            this.ifr.setMarkData(markData)
+          })
+          break
+        case 3:
+          positionData = this.ifr.sceneCenterConfig['PowerItem936']
+          this.promise4.then(res => {
+            let markData = this.ifr.markConfig['PowerItem936']
+            markData[0].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.PHOTOVOLTAIC[hour] + 'kWh'
+              }
+            ]
+            markData[1].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.PHOTOVOLTAIC[hour] + 'kWh'
+              }
+            ]
+            markData[2].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.WIND_POWER[hour] + 'kWh'
+              }
+            ]
+            markData[3].Other = [
+              {
+                'Key': '供能值',
+                'Value': res.WIND_POWER[hour] + 'kWh'
+              }
+            ]
+            this.ifr.setMarkData(markData)
+          })
+          break
+        default:
+          break
+      }
+      this.ifr.setCameraSettingWithCoordinate(positionData)
+      // 隐藏热力图
+      this.ifr.showPeopleHeatingItem([])
+      // 隐藏能留图
+      this.ifr.activePipeNetWork('false')
+      // 清除道路状态
+      let road = localStorage.road.split(',')
+      road.forEach(item => {
+        this.ifr.setRoadStatus(item + '_0')
+      })
     }
   },
   watch: {
@@ -1107,72 +1117,22 @@ export default {
     },
     isOpened () {
       if (this.isOpened === 0) {
-        this.supHead2()
+        this.gisMethods()
       }
     }
   },
   mounted () {
     this.changeTab(0, this.list[0].title)
   },
-  // 页面切换时，停止或重启定时器
-  deactivated () {
+  beforeDestroy () {
     clearInterval(this.suptimer)
     this.suptimer = null
   },
+  // 页面切换时，停止或重启定时器
   activated () {
-    if (this.suptimer) clearInterval(this.suptimer)
-    switch (this.tab) {
-      case 0:
-        this.supHead2()
-        this.supHead1()
-        this.suphotwaterline()
-        this.suphotwaterpie()
-        this.supcoldline()
-        this.supcoldpie()
-        this.suphotline()
-        this.suphotpie()
-        this.suptimer = setInterval(() => {
-          this.supHead2()
-          this.supHead1()
-          this.suphotwaterline()
-          this.suphotwaterpie()
-          this.supcoldline()
-          this.supcoldpie()
-          this.suphotline()
-          this.suphotpie()
-        }, this.duration)
-        break
-      case 1:
-        this.supSecond1()
-        this.conSecond2()
-        this.suptimer = setInterval(() => {
-          this.supSecond1()
-          this.conSecond2()
-        }, this.duration)
-        break
-      case 2:
-        this.supThird1()
-        this.supThird2()
-        this.supThird3()
-        this.suptimer = setInterval(() => {
-          this.supThird1()
-          this.supThird2()
-          this.supThird3()
-        }, this.duration)
-        break
-      case 3:
-        this.supForth1()
-        this.supForth2()
-        this.suptimer = setInterval(() => {
-          this.supForth1()
-          this.supForth2()
-        }, this.duration)
-        break
-      default:
-        break
-    }
+    this.changeTab(this.tab, this.list[this.tab].title)
   },
-  beforeDestroy () {
+  deactivated () {
     clearInterval(this.suptimer)
     this.suptimer = null
   }
