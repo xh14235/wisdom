@@ -5,6 +5,7 @@ const popup = {
     monitorPopupShow: false,
     facePopupShow: false,
     carPopupShow: false,
+    alarmPopupShow: false,
     changedVideoName: ''
   }
 }

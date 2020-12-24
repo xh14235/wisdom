@@ -4,39 +4,9 @@
       <div>实时监控</div>
     </div>
     <div class="monitor-wrapper">
-      <div class="monitor-box">
-        <div class="monitor-bg">
-          <!-- <iframe id="video1" width="100%" height="100%" src="/static/rtmp/video01.html" frameborder="0"></iframe> -->
-            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws1" frameborder="0"></iframe> -->
-        </div>
-        <div class="monitor-title" @click="showVideoPopup()">监控1</div>
-      </div>
-      <div class="monitor-box">
-        <div class="monitor-box2">
-          <div class="monitor-bg">
-            <!-- <iframe id="video2" width="100%" height="100%" src="/static/rtmp/video02.html" frameborder="0"></iframe> -->
-            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
-          </div>
-          <div class="monitor-title">监控2</div>
-        </div>
-        <div class="monitor-box2">
-          <div class="monitor-bg">
-            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
-          </div>
-          <div class="monitor-title">监控3</div>
-        </div>
-        <div class="monitor-box2">
-          <div class="monitor-bg">
-            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
-          </div>
-          <div class="monitor-title">监控4</div>
-        </div>
-        <div class="monitor-box2">
-          <div class="monitor-bg">
-            <!-- <iframe id="video3" width="100%" height="100%" :src="defaultUrl + ws2" frameborder="0"></iframe> -->
-          </div>
-          <div class="monitor-title">监控5</div>
-        </div>
+      <div class="monitor-box" v-for="(item, index) of AllMonitorList" :key="item.id">
+        <iframe class="monitor-iframe" :src="item.url" frameborder=0 allowfullscreen allow="autoplay"></iframe>
+        <div class="monitor-title" @click="showVideoPopup(index)">{{item.name}}</div>
       </div>
     </div>
     <div class="traffic">
@@ -93,6 +63,7 @@
 </template>
 
 <script>
+import { videoList } from '@/request/security-api'
 export default {
   name: 'Tripfirst',
   props: {
@@ -104,6 +75,7 @@ export default {
   data () {
     return {
       podiumTab: 0,
+      AllMonitorList: [],
       timer: null
     }
   },
@@ -123,6 +95,46 @@ export default {
         }
         this.podiumTab++
       }, 5000)
+    },
+    // 获取摄像头列表 全部摄像头、人脸抓拍及车辆抓拍
+    getMonitorList () {
+      videoList({
+        status: 1
+      }).then((res) => {
+        // 暂无数据
+        // console.log(res.data)
+      })
+      this.AllMonitorList = [
+        {
+          id: '001',
+          name: '监控1',
+          url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080&protocol=ws-flv'
+        },
+        {
+          id: '002',
+          name: '监控2',
+          // url: 'http://116.236.30.222:10800/play.html?channel=2&iframe=yes&aspect=1920x1080&protocol=ws-flv'
+          url: ''
+        },
+        {
+          id: '003',
+          name: '监控3',
+          // url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080&protocol=ws-flv'
+          url: ''
+        },
+        {
+          id: '004',
+          name: '监控4',
+          // url: 'http://116.236.30.222:10800/play.html?channel=2&iframe=yes&aspect=1920x1080&protocol=ws-flv'
+          url: ''
+        },
+        {
+          id: '005',
+          name: '监控5',
+          // url: 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080&protocol=ws-flv'
+          url: ''
+        }
+      ]
     }
   },
   mounted () {
@@ -134,6 +146,7 @@ export default {
       }
       this.$emit('emitTab', this.podiumTab)
     }, 5000)
+    this.getMonitorList()
   },
   beforeDestroy () {
     console.log('beforeDestroy')
@@ -146,46 +159,35 @@ export default {
 .monitor-wrapper
   width: 100%
   margin: 3vh 0
-  display: flex
-  justify-content: space-between
+  &:after
+    content: ""
+    display: block
+    clear: both
   .monitor-box
-    flex: 0 0 50%
-    width: 50%
+    float: left
+    width: 25%
+    height: 0
+    padding-bottom: 14%
+    background: #000
     position: relative
-    .monitor-bg
+    &:nth-child(1)
+      width: 50%
+      padding-bottom: 28%
+    .monitor-iframe
+      position: absolute
+      left: 0
+      top: 0
       width: 100%
-      height: 0
-      padding-bottom: 56.25%
-      background-image: url('~@/assets/img/novideo1.png')
-      background-size: 100% 100%
-      position: relative
-      @media screen and (max-width: 1920px)
-        padding-bottom: 71%
+      height: 100%
     .monitor-title
       position: absolute
       left: 0
-      bottom: 0
+      top: 0
       width: 100%
       height: 3vh
       line-height: 3vh
       text-align: center
       background: rgba(0, 0, 0, 0.5)
-      @media screen and (max-width: 1920px)
-        height: 2.5vh
-        line-height: 2.5vh
-    .monitor-box2
-      float: left
-      width: 50%
-      overflow: hidden
-      position: relative
-      .monitor-bg
-        width: 100%
-        height: 0
-        padding-bottom: 56.25%
-        background-image: url('~@/assets/img/novideo2.png')
-        background-size: 100% 100%
-        @media screen and (max-width: 1920px)
-          padding-bottom: 71%
 .traffic
   display: flex
   justify-content space-between

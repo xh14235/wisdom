@@ -987,7 +987,6 @@ export default {
         case 1:
           positionData = this.ifr.sceneCenterConfig['villagePower']
           this.promise2.then(res => {
-            this.ifr.clearMarks()
             let markData = this.ifr.markConfig['villagePower']
             markData[0].Other = [
               {
@@ -1109,6 +1108,9 @@ export default {
       road.forEach(item => {
         this.ifr.setRoadStatus(item + '_0')
       })
+      setTimeout(() => {
+        this.ifr.setMarkData(JSON.parse(sessionStorage.getItem('alarmMarkers')))
+      }, 0)
     }
   },
   watch: {

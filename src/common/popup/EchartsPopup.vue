@@ -58,9 +58,6 @@ export default {
   width: 40vw
   height: 60vh
   margin: 20vh auto
-  .popup-top
-    .popup-close
-      cursor: pointer
   .popup-main
     position: relative
     width: 40vw

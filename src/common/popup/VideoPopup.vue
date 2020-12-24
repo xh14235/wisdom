@@ -6,8 +6,8 @@
         <div class="popup-close" @click="hideVideoPopup()">&times;</div>
       </div>
       <div class="popup-main">
-        <div class="select-wrapper">
-          分析类型 <CommonSelect v-if="videoList.length" :select="videoList"  @selectChange="changeSelect"></CommonSelect>
+        <div class="select-box">
+          分析类型 <Select v-if="videoList.length" :options="videoList"  @changeValue="changeSelect"></Select>
         </div>
         <div class="btn-wrapper">
           <div class="btn-item btn-confirm" @click="confirm()">确定</div>
@@ -30,7 +30,7 @@ export default {
     }
   },
   components: {
-    CommonSelect: () => import('@/common/components/CommonSelect')
+    Select: () => import('@/common/components/Select')
   },
   methods: {
     ...mapMutations(['hideVideoPopup', 'changeVideoName']),
@@ -40,8 +40,8 @@ export default {
         this.videoList = []
         for (let i = 0; i < data.length; i++) {
           this.videoList.push({
-            id: data[i].id,
-            info: data[i].area
+            value: data[i].id,
+            label: data[i].area
           })
         }
       })
@@ -51,7 +51,7 @@ export default {
       this.hideVideoPopup()
     },
     changeSelect (item) {
-      this.videoName = item.info
+      this.videoName = item.label
     }
   },
   mounted () {
@@ -69,10 +69,12 @@ export default {
   height: 28vh
   margin: 34vh auto
   .popup-main
-    .select-wrapper
+    .select-box
       display: flex
       justify-content: center
       align-items: center
+      width: 60%
+      margin: 0 auto
       margin-top: 4.5vh
     .btn-wrapper
       display: flex

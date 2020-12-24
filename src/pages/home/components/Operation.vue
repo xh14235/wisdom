@@ -100,8 +100,8 @@ export default {
           this.getCube936('1254288413020762112')
         }, this.duration)
       } else {
-        this.ifr.clearMarks()
         this.operationLine(3)
+        this.gisMethods()
         this.operationtimer = setInterval(() => {
           this.operationLine(3)
         }, this.duration)
@@ -435,6 +435,9 @@ export default {
       road.forEach(item => {
         this.ifr.setRoadStatus(item + '_0')
       })
+      setTimeout(() => {
+        this.ifr.setMarkData(JSON.parse(sessionStorage.getItem('alarmMarkers')))
+      }, 0)
     }
   },
   // 页面切换时，停止或重启定时器

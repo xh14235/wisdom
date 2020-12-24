@@ -15,6 +15,7 @@
           <MonitorPopup v-if='monitorPopupShow'></MonitorPopup>
           <FacePopup v-if='facePopupShow'></FacePopup>
           <CarPopup v-if='carPopupShow'></CarPopup>
+          <AlarmPopup v-if='alarmPopupShow'></AlarmPopup>
         </transition>
         <transition name='opacity'>
           <WeatherControl v-if='weatherControlShow'></WeatherControl>
@@ -47,6 +48,7 @@ export default {
       monitorPopupShow: (state) => state.popup.monitorPopupShow,
       facePopupShow: (state) => state.popup.facePopupShow,
       carPopupShow: (state) => state.popup.carPopupShow,
+      alarmPopupShow: (state) => state.popup.alarmPopupShow,
       echarts: (state) => state.popup.echarts,
       selectListShow: (state) => state.selectListShow,
       weatherControlShow: (state) => state.weatherControlShow
@@ -56,6 +58,12 @@ export default {
     ifrMessage (e) {
       if (e.data.markType === '监控') {
         this.showMonitorPopup()
+      } else if (e.data.markType === '能源报警') {
+        this.showAlarmPopup()
+        sessionStorage.setItem('markType', '能源报警')
+      } else if (e.data.markType === '民生报警') {
+        this.showAlarmPopup()
+        sessionStorage.setItem('markType', '民生报警')
       }
     },
     login () {
@@ -92,7 +100,7 @@ export default {
         this.setEnergyList(res.data)
       })
     },
-    ...mapMutations(['mutLogin', 'hideSelectList', 'getIfr', 'showMonitorPopup', 'setMonitorList', 'setEnergyList'])
+    ...mapMutations(['mutLogin', 'hideSelectList', 'getIfr', 'showMonitorPopup', 'setMonitorList', 'setEnergyList', 'showAlarmPopup'])
   },
   components: {
     Header: () => import('@/common/components/Header'),
@@ -102,6 +110,7 @@ export default {
     MonitorPopup: () => import('@/common/popup/MonitorPopup'),
     FacePopup: () => import('@/common/popup/FacePopup'),
     CarPopup: () => import('@/common/popup/CarPopup'),
+    AlarmPopup: () => import('@/common/popup/AlarmPopup'),
     Energy: () => import('./components/Energy'),
     Livelihood: () => import('./components/Livelihood')
   },

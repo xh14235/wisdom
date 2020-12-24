@@ -311,6 +311,9 @@ export default {
         'Y': '54.2352'
       }
       this.ifr.setCameraSettingWithCoordinate(center)
+      setTimeout(() => {
+        this.ifr.setMarkData(JSON.parse(sessionStorage.getItem('alarmMarkers')))
+      }, 0)
     },
     // 老乔渔业
     getPromise5 (id) {
@@ -524,6 +527,9 @@ export default {
         road.forEach(item => {
           this.ifr.setRoadStatus(item + '_0')
         })
+        setTimeout(() => {
+          this.ifr.setMarkData(JSON.parse(sessionStorage.getItem('alarmMarkers')))
+        }, 0)
       })
     }
   },

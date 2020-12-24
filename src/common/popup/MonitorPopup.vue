@@ -41,13 +41,10 @@ export default {
   height: 100vh
   background: #000
   position: relative
-  // margin: 15vh auto
-  // .popup-top
   .popup-close
     position: absolute
     top: 76px
     right: 960px
-    cursor: pointer
     border: 1px solid #ffffff
     border-radius: 50%
     width: 30px
@@ -64,10 +61,6 @@ export default {
     top: 106px
     width: 1920px
     height: 1084px
-    // margin: 50px auto
-    // display: flex
-    // justify-content: center
-    // align-items: center
     @media screen and (max-width: 1920px)
       top: 88px
       left: 160px

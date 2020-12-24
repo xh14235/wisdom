@@ -62,6 +62,12 @@ export default {
   hideCarPopup (state) {
     state.popup.carPopupShow = false
   },
+  showAlarmPopup (state) {
+    state.popup.alarmPopupShow = true
+  },
+  hideAlarmPopup (state) {
+    state.popup.alarmPopupShow = false
+  },
   showSelectList (state) {
     state.selectListShow = true
   },

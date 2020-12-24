@@ -1,18 +1,21 @@
 <template>
-  <div class="left-wrapper">
-    <div class="left-tab">
+  <div class='left-wrapper'>
+    <!-- <audio muted loop ref='audio'>
+      <source src="../../../assets/video/test.mp3" type="audio/mpeg">
+    </audio> -->
+    <div class='left-tab'>
       <span
-        class="left-item"
-        :class="{'item-active': item.id === tab_left}"
-        v-for="item of tabLeft"
-        :key="item.id"
-        @click="changeTab(item.id)"
+        class='left-item'
+        :class='{"item-active": item.id === tab_left}'
+        v-for='item of tabLeft'
+        :key='item.id'
+        @click='changeTab(item.id)'
       >{{item.info}}</span>
     </div>
-    <div class="left-box">
-      <transition name="fade" mode="out-in">
+    <div class='left-box'>
+      <transition name='fade' mode='out-in'>
         <keep-alive>
-          <component :is="view"></component>
+          <component :is='view'></component>
         </keep-alive>
       </transition>
     </div>
@@ -31,6 +34,8 @@ export default {
   },
   data () {
     return {
+      isLoaded: false,
+      marker: [],
       tabLeft: [
         {
           id: '001',
@@ -59,11 +64,8 @@ export default {
     ...mapState({
       tab_left: state => state.tab_left,
       ifr: state => state.map.ifr,
-      iconHeight: state => state.map.iconHeight,
-      jumpTime: state => state.map.jumpTime,
-      viewX: state => state.map.viewX,
-      viewY: state => state.map.viewY,
-      viewZ: state => state.map.viewZ
+      monitorList: state => state.map.monitorList,
+      energyList: state => state.map.energyList
     }),
     view () {
       let component = ''
@@ -88,16 +90,74 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['change_left_tab', 'chooseLeftTimer']),
+    ...mapMutations(['change_left_tab', 'chooseLeftTimer', 'tPlay']),
     changeTab (id) {
       this.change_left_tab(id)
       this.chooseLeftTimer()
+    },
+    // 地图初始化路灯开关状态
+    lampStatus () {
+      let time = new Date()
+      let hour = time.getHours()
+      if (hour >= 18 || hour < 6) {
+        this.ifr.activeLight('true')
+      } else {
+        this.ifr.activeLight('false')
+      }
+    },
+    // 用能异常预警
+    alarmEnergy () {
+      this.marker = []
+      if (this.monitorList.length) {
+        this.marker.push({
+          'Height': '0.01',
+          'Id': '450000',
+          'Latitude': '31.08718',
+          'Longitude': '121.6838',
+          'Type': '能源报警',
+          'Value': '',
+          'Name': '能源报警',
+          'Other': []
+        })
+      }
+      if (this.energyList.length) {
+        this.marker.push({
+          'Height': '0.01',
+          'Id': '210000',
+          'Latitude': '31.08739',
+          'Longitude': '121.685',
+          'Type': '民生报警',
+          'Value': '',
+          'Name': '民生报警',
+          'Other': []
+        })
+      }
+      sessionStorage.setItem('alarmMarkers', JSON.stringify(this.marker))
+      this.ifr.setMarkData(this.marker)
+      this.tPlay()
+    },
+    ifrMessage (e) {
+      this.isLoaded = e.data.isLoaded
     }
+  },
+  watch: {
+    isLoaded () {
+      if (this.isLoaded) {
+        this.lampStatus()
+        this.alarmEnergy()
+      }
+    }
+  },
+  mounted () {
+    window.addEventListener('message', this.ifrMessage, false)
+  },
+  beforeDestroy () {
+    window.removeEventListener('message', this.ifrMessage, false)
   }
 }
 </script>
 
-<style scoped lang="stylus">
+<style scoped lang='stylus'>
 @import '~@/assets/css/common.styl'
 .left-wrapper
   width: 100%

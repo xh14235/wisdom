@@ -168,6 +168,9 @@ export default {
           break
         case 1:
           this.ifr.clearMarks()
+          setTimeout(() => {
+            this.ifr.setMarkData(JSON.parse(sessionStorage.getItem('alarmMarkers')))
+          }, 0)
           if (this.getBool(this.datasecond)) {
             if (this.building2) {
               this.consecondbar()
@@ -626,6 +629,9 @@ export default {
       road.forEach(item => {
         this.ifr.setRoadStatus(item + '_0')
       })
+      setTimeout(() => {
+        this.ifr.setMarkData(JSON.parse(sessionStorage.getItem('alarmMarkers')))
+      }, 0)
     }
   },
   watch: {

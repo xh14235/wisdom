@@ -228,10 +228,19 @@ export default {
       this.promiseFrequency = new Promise((resolve, reject) => {
         tripElectric().then((res) => {
           let data = res.data
+          console.log(data)
+          data = {
+            CHARGE_PILE: {lave: 1, maintenance: 0, total: 2, usingCount: 1},
+            ELECTRIC_BICYCLE: {lave: 0, maintenance: 0, total: 12, usingCount: 3},
+            ELECTRIC_BOAT: {lave: 0, maintenance: 0, total: 6, usingCount: 1},
+            ELECTRIC_CAR: {lave: 0, maintenance: 0, total: 10, usingCount: 2},
+            SMART_STREET_LIGHT: {lave: 0, maintenance: 3, total: 300, usingCount: 0}
+          }
           if (data) {
             let CHARGE_PILE = data.CHARGE_PILE
             let ELECTRIC_CAR = data.ELECTRIC_CAR
             let ELECTRIC_BOAT = data.ELECTRIC_BOAT
+            let ELECTRIC_BICYCLE = data.ELECTRIC_BICYCLE
             let SMART_STREET_LIGHT = data.SMART_STREET_LIGHT
             this.datasecond.echarts1 = {
               id: 'trip_second1',
@@ -244,9 +253,9 @@ export default {
               center: ['50%', '50%'],
               color: [this.blue, this.green, this.yellow],
               data: [
-                { value: CHARGE_PILE.total - CHARGE_PILE.maintenance - CHARGE_PILE.lave, name: '使用中' },
+                { value: CHARGE_PILE.usingCount, name: '使用中' },
                 { value: CHARGE_PILE.maintenance, name: '维护中' },
-                { value: CHARGE_PILE.lave, name: '空闲中' }
+                { value: CHARGE_PILE.total - CHARGE_PILE.usingCount, name: '空闲中' }
               ],
               usingCount: CHARGE_PILE.usingCount
             }
@@ -261,9 +270,9 @@ export default {
               center: ['50%', '50%'],
               color: [this.blue, this.green, this.yellow],
               data: [
-                { value: ELECTRIC_CAR.total - ELECTRIC_CAR.maintenance - ELECTRIC_CAR.lave, name: '使用中' },
+                { value: ELECTRIC_CAR.usingCount, name: '使用中' },
                 { value: ELECTRIC_CAR.maintenance, name: '维护中' },
-                { value: ELECTRIC_CAR.lave, name: '空闲中' }
+                { value: ELECTRIC_CAR.total - ELECTRIC_CAR.usingCount, name: '空闲中' }
               ],
               usingCount: ELECTRIC_CAR.usingCount
             }
@@ -278,9 +287,9 @@ export default {
               center: ['50%', '50%'],
               color: [this.blue, this.green, this.yellow],
               data: [
-                { value: ELECTRIC_BOAT.total - ELECTRIC_BOAT.maintenance - ELECTRIC_BOAT.lave, name: '使用中' },
+                { value: ELECTRIC_BOAT.usingCount, name: '使用中' },
                 { value: ELECTRIC_BOAT.maintenance, name: '维护中' },
-                { value: ELECTRIC_BOAT.lave, name: '空闲中' }
+                { value: ELECTRIC_BOAT.total - ELECTRIC_BOAT.usingCount, name: '空闲中' }
               ],
               usingCount: ELECTRIC_BOAT.usingCount
             }
@@ -295,11 +304,11 @@ export default {
               center: ['50%', '50%'],
               color: [this.blue, this.green, this.yellow],
               data: [
-                { value: SMART_STREET_LIGHT.total - SMART_STREET_LIGHT.maintenance - SMART_STREET_LIGHT.lave, name: '使用中' },
-                { value: SMART_STREET_LIGHT.maintenance, name: '维护中' },
-                { value: SMART_STREET_LIGHT.lave, name: '空闲中' }
+                { value: ELECTRIC_BICYCLE.usingCount, name: '使用中' },
+                { value: ELECTRIC_BICYCLE.maintenance, name: '维护中' },
+                { value: ELECTRIC_BICYCLE.total - ELECTRIC_BICYCLE.usingCount, name: '空闲中' }
               ],
-              usingCount: SMART_STREET_LIGHT.usingCount
+              usingCount: ELECTRIC_BICYCLE.usingCount
             }
             this.datasecond.statistics = [
               {
@@ -330,7 +339,16 @@ export default {
         labelId: '',
         year: year
       }).then((res) => {
-        let data = res.data || []
+        let data = res.data
+        let arr1 = []
+        let arr2 = []
+        if (data) {
+          arr1 = Object.values(data.CHARGING_PILE).slice(0, this.year.length)
+          arr2 = Object.values(data.SMART_LIGHT).slice(0, this.year.length)
+        } else {
+          arr1 = [122, 532, 164, 265, 145, 236, 336, 462, 245, 436, 256, 411]
+          arr2 = [236, 289, 371, 245, 436, 122, 532, 164, 265, 145, 256, 411]
+        }
         this.datasecond.echarts5 = {
           id: 'trip1',
           title: '',
@@ -343,7 +361,7 @@ export default {
           smooth: true,
           xData: this.year,
           yName: '(kWh)',
-          data: [Object.values(data.CHARGING_PILE).slice(0, this.year.length)]
+          data: [arr1]
         }
         this.datasecond.echarts6 = {
           id: 'trip2',
@@ -357,28 +375,9 @@ export default {
           smooth: true,
           xData: this.year,
           yName: '(kWh)',
-          data: [Object.values(data.SMART_LIGHT).slice(0, this.year.length)]
+          data: [arr2]
         }
       })
-    },
-    // 获取路灯状态
-    getLampState () {
-      this.datasecond.statistics = [
-        {
-          title: '路灯状态',
-          name: '正常路灯',
-          num: 1532,
-          unit: '个',
-          imgUrl: require('../../../assets/img/lamp1.png')
-        },
-        {
-          title: '路灯状态',
-          name: '维护路灯',
-          num: 23,
-          unit: '个',
-          imgUrl: require('../../../assets/img/lamp2.png')
-        }
-      ]
     },
     // 地图方法
     gisMethods () {
@@ -475,6 +474,9 @@ export default {
         })
         localStorage.road = road
       })
+      setTimeout(() => {
+        this.ifr.setMarkData(JSON.parse(sessionStorage.getItem('alarmMarkers')))
+      }, 0)
     }
   },
   // 页面切换时，停止或重启定时器

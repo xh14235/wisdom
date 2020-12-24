@@ -33,6 +33,7 @@ export default {
   },
   data () {
     return {
+      isLoaded: false,
       tabRight: [
         {
           id: '001',
@@ -68,7 +69,9 @@ export default {
     }
   },
   computed: {
-    ...mapState(['tab_right']),
+    ...mapState({
+      tab_right: state => state.tab_right
+    }),
     view () {
       let component = ''
       switch (this.tab_right) {

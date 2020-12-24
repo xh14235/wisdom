@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <video class="video-bg" src="../../assets/video/login.mp4" autoplay loop muted></video>
+    <video class="video-bg" src="../../assets/video/login.mp4" autoplay loop :muted="muted"></video>
     <Header></Header>
     <div class="log-btn" @click="logToggle()" v-show="logBtnShow"><img src="../../assets/img/login.png" alt="">登录</div>
     <div class="login-wrapper">
@@ -58,7 +58,10 @@ export default {
     Header: () => import('@/common/components/Header')
   },
   computed: {
-    ...mapState(['token'])
+    ...mapState({
+      token: state => state.token,
+      muted: state => state.audio.muted
+    })
   },
   methods: {
     logToggle () {
@@ -81,27 +84,6 @@ export default {
         } else {
           localStorage.password = ''
         }
-
-        // axios.post('http://116.236.30.222:9000/admin/admin/portal/login', {
-        //   username: _this.username,
-        //   password: _this.$getRsaCode(_this.password)
-        // }).then(res => {
-        //   console.log(res)
-        //   if (res.data.code === 200) {
-        //     _this.msgShow = false
-        //     let token = res.data.data.tokenHead + res.data.data.token
-        //     _this.mutLogin(token)
-        //     setTimeout(() => {
-        //       _this.$router.push('/home')
-        //     }, 500)
-        //   } else {
-        //     _this.msgShow = true
-        //     _this.msgInfo = res.data.message
-        //   }
-        // }).catch(error => {
-        //   console.log(error)
-        // })
-
         login({
           username: _this.username,
           password: _this.$getRsaCode(_this.password)
@@ -125,7 +107,13 @@ export default {
         })
       }, 500)
     },
-    ...mapMutations(['mutLogin'])
+    ...mapMutations(['mutLogin', 'fPlay', 'fMuted'])
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.fMuted()
+      vm.fPlay()
+    })
   }
 }
 </script>

@@ -596,6 +596,9 @@ export default {
               'Y': '54.2352'
             }
             this.ifr.setCameraSettingWithCoordinate(center)
+            setTimeout(() => {
+              this.ifr.setMarkData(JSON.parse(sessionStorage.getItem('alarmMarkers')))
+            }, 0)
           })
           break
         case 1:
@@ -636,6 +639,9 @@ export default {
               'Y': '54.2352'
             }
             this.ifr.setCameraSettingWithCoordinate(center)
+            setTimeout(() => {
+              this.ifr.setMarkData(JSON.parse(sessionStorage.getItem('alarmMarkers')))
+            }, 0)
           })
           break
         default:

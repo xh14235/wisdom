@@ -229,6 +229,9 @@ export default {
       road.forEach(item => {
         this.ifr.setRoadStatus(item + '_0')
       })
+      setTimeout(() => {
+        this.ifr.setMarkData(JSON.parse(sessionStorage.getItem('alarmMarkers')))
+      }, 0)
     },
     // 获取人脸抓拍列表
     getFaceList () {

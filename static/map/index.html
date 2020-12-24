@@ -48,6 +48,7 @@
   //U3D调用前端，表明3D场景加载完毕，3d调用前端
   function InitFinished() {
     isLoaded = true
+    window.top.postMessage({isLoaded})
     // //模拟进入安防场景,好比真实场景中通过接口获取该场景下所有打点数据
     // //获取场景相关数据：分为两部分：1、打点坐标和业务数据，2、场景中心点位置数据（每个场景固定）
     //第一步先打点
@@ -167,6 +168,7 @@
   //data: Type加上id,例如："能源报警_1"
   function hideMarkById(data) {
     if (isLoaded) {
+      console.log('hide')
       unityInstance.SendMessage("Net", "HideMarkById", data);
     } else {
       console.log("3D场景加载中...请稍等");

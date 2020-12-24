@@ -9,6 +9,7 @@ import lists from './list'
 import weather from './weather'
 import popup from './popup'
 import map from './map'
+import audio from './audio'
 
 Vue.use(Vuex)
 
@@ -21,7 +22,8 @@ const MainStore = new Vuex.Store({
     lists,
     weather,
     popup,
-    map
+    map,
+    audio
   }
 })
 

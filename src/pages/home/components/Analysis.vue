@@ -204,7 +204,9 @@ export default {
             this.anahead1()
             this.anahead2()
             this.anafirst1()
-            this.gisMethods(this.selectName1)
+            if (this.leftTimer && this.isOpened === 2) {
+              this.gisMethods(this.selectName1)
+            }
             if (this.building1) {
               this.anafirst3()
             }
@@ -218,7 +220,9 @@ export default {
           break
         case 1:
           if (this.getBool(this.datasecond)) {
-            this.gisMethods(this.selectName2)
+            if (this.leftTimer && this.isOpened === 2) {
+              this.gisMethods(this.selectName2)
+            }
             if (this.building2) {
               this.anasecond1()
             }
@@ -231,7 +235,9 @@ export default {
           break
         case 2:
           if (this.getBool(this.datasecond)) {
-            this.gisMethods(this.selectName31)
+            if (this.leftTimer && this.isOpened === 2) {
+              this.gisMethods(this.selectName31)
+            }
             if (this.building31) {
               this.anathird1()
               this.getcompare2()
@@ -727,6 +733,9 @@ export default {
       road.forEach(item => {
         this.ifr.setRoadStatus(item + '_0')
       })
+      setTimeout(() => {
+        this.ifr.setMarkData(JSON.parse(sessionStorage.getItem('alarmMarkers')))
+      }, 0)
     }
   },
   watch: {
