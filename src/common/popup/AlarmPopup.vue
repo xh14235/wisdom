@@ -73,14 +73,15 @@ export default {
       this.fMuted()
       let alarmMarkers = JSON.parse(sessionStorage.getItem('alarmMarkers'))
       let markType = sessionStorage.getItem('markType')
+      let alarmMarkers2 = []
       for (let i = 0; i < alarmMarkers.length; i++) {
         if (alarmMarkers[i].Type === markType) {
-          alarmMarkers.splice(i, 1)
+          alarmMarkers2 = alarmMarkers.splice(i, 1)
         }
       }
       sessionStorage.setItem('alarmMarkers', JSON.stringify(alarmMarkers))
-      console.log(markType + '_' + alarmMarkers[0].Id)
-      this.ifr.hideMarkById()
+      let alarmType = markType + '_' + alarmMarkers2[0].Id
+      this.ifr.hideMarkById(alarmType)
       if (alarmMarkers.length) {
         this.tMuted()
         this.tPlay()

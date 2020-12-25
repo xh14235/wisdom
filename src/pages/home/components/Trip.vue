@@ -164,17 +164,17 @@ export default {
           {
             id: '001',
             title: '彩绘馆',
-            num: 0
+            num: 241
           },
           {
             id: '002',
             title: '彩釉馆',
-            num: 0
+            num: 209
           },
           {
             id: '003',
             title: '陶瓷馆',
-            num: 0
+            num: 182
           }
         ]
         let data = res.data

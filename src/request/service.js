@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'development') {
   axios.defaults.baseURL = 'http://116.236.30.222:9000/'
 }
 
-axios.defaults.timeout = 10000
+axios.defaults.timeout = 20000
 
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 

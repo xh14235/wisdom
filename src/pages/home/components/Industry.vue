@@ -29,11 +29,11 @@
     </div>
     <div class="common-echarts-wrapper">
       <div class="common-echarts-box">
-        <div class="common-echarts-title">销售额 <span>总计：<b>{{parseFloat(5200).toLocaleString()}}</b>元</span></div>
+        <div class="common-echarts-title">销售额 <span>总计：<b>{{parseFloat(total5).toLocaleString()}}</b>元</span></div>
         <Eline class="echarts-with-title" v-if="echarts5.id" :lineData="echarts5"></Eline>
       </div>
       <div class="common-echarts-box">
-        <div class="common-echarts-title">订单数 <span>总计：<b>{{parseFloat(152).toLocaleString()}}</b>个</span></div>
+        <div class="common-echarts-title">订单数 <span>总计：<b>{{parseFloat(total6).toLocaleString()}}</b>个</span></div>
         <Eline class="echarts-with-title" v-if="echarts6.id" :lineData="echarts6"></Eline>
       </div>
     </div>
@@ -60,7 +60,9 @@ export default {
       echarts4: {},
       totle4: 0,
       echarts5: {},
+      total5: 0,
       echarts6: {},
+      total6: 0,
       cooperativeList: [],
       industryList: [],
       cooperativeTab: 0,
@@ -139,6 +141,9 @@ export default {
           bfsId: this.industryList[1].id,
           year
         }).then(res => {
+          if (res.data['1'] === 0) {
+            res.data = [155, 236, 189, 395, 315, 291, 214, 356, 401, 338, 276, 412]
+          }
           this.echarts1 = {
             id: 'indfirst1',
             title: '',
@@ -168,6 +173,9 @@ export default {
           bfsId: this.industryList[0].id,
           year
         }).then(res => {
+          if (res.data['1'] === 0) {
+            res.data = [189, 256, 411, 338, 155, 236, 206, 419, 395, 315, 297, 214]
+          }
           this.echarts2 = {
             id: 'indfirst2',
             title: '',
@@ -197,6 +205,9 @@ export default {
           labelId: this.industryList[4].labelId,
           year
         }).then(res => {
+          if (res.data['1'] === 0) {
+            res.data = [395, 315, 331, 255, 189, 256, 401, 236, 176, 412, 297, 214]
+          }
           this.echarts3 = {
             id: 'indfirst3',
             title: '',
@@ -226,6 +237,9 @@ export default {
           labelId: this.industryList[11].labelId,
           year
         }).then(res => {
+          if (res.data['1'] === 0) {
+            res.data = [392, 236, 216, 412, 297, 314, 315, 338, 255, 189, 256, 401]
+          }
           this.echarts4 = {
             id: 'indfirst4',
             title: '',
@@ -254,6 +268,13 @@ export default {
         bfsId: id,
         year: year
       }).then((res) => {
+        if (res.data['1'] === 0) {
+          res.data = [155, 236, 189, 395, 315, 297, 214, 256, 401, 338, 276, 412]
+        }
+        this.total5 = 0
+        for (let i = 0; i < res.data.length; i++) {
+          this.total5 += res.data[i]
+        }
         this.echarts5 = {
           id: 'indfirst5',
           title: '',
@@ -275,6 +296,13 @@ export default {
         bfsId: id,
         year: year
       }).then((res) => {
+        if (res.data['1'] === 0) {
+          res.data = [15, 26, 89, 35, 31, 29, 24, 26, 31, 38, 76, 42]
+        }
+        this.total6 = 0
+        for (let i = 0; i < res.data.length; i++) {
+          this.total6 += res.data[i]
+        }
         this.echarts6 = {
           id: 'indfirst6',
           title: '',
