@@ -1,4 +1,6 @@
 import { get, post } from './service'
+// 处理监控报警
+export const handleMonitoring = params => post('livelihood/api/security/warn/handler', params)
 
 // 模拟数据，随机产生数组
 export const getTestList = (max, length) => {

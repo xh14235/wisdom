@@ -67,6 +67,20 @@ export default {
       monitorList: state => state.map.monitorList,
       energyList: state => state.map.energyList
     }),
+    monitor1 () {
+      if (this.monitorList.length) {
+        return this.monitorList[0].id
+      } else {
+        return '0'
+      }
+    },
+    energy1 () {
+      if (this.energyList.length) {
+        return this.energyList[0].id
+      } else {
+        return '0'
+      }
+    },
     view () {
       let component = ''
       // 动态切换组件
@@ -90,7 +104,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['change_left_tab', 'chooseLeftTimer', 'tPlay']),
+    ...mapMutations(['change_left_tab', 'chooseLeftTimer', 'tPlay', 'fPlay', 'tMuted', 'fMuted']),
     changeTab (id) {
       this.change_left_tab(id)
       this.chooseLeftTimer()
@@ -107,8 +121,27 @@ export default {
     },
     // 用能异常预警
     alarmEnergy () {
+      this.fPlay()
+      this.tMuted()
       this.marker = []
+      // 加判断 异常监控
       if (this.monitorList.length) {
+        this.monitorList.forEach(item => {
+          if (item.status === 'UNPROCESSED' && !this.marker.length) {
+            this.marker.push({
+              'Height': '0.01',
+              'Id': item.id,
+              'Latitude': '31.08739',
+              'Longitude': '121.685',
+              'Type': '民生报警',
+              'Value': '',
+              'Name': '民生报警',
+              'Other': []
+            })
+          }
+        })
+      }
+      if (this.energyList.length) {
         this.marker.push({
           'Height': '0.01',
           'Id': '450000',
@@ -120,20 +153,9 @@ export default {
           'Other': []
         })
       }
-      if (this.energyList.length) {
-        this.marker.push({
-          'Height': '0.01',
-          'Id': '210000',
-          'Latitude': '31.08739',
-          'Longitude': '121.685',
-          'Type': '民生报警',
-          'Value': '',
-          'Name': '民生报警',
-          'Other': []
-        })
-      }
       sessionStorage.setItem('alarmMarkers', JSON.stringify(this.marker))
       this.ifr.setMarkData(this.marker)
+      // this.fMuted()
       this.tPlay()
     },
     ifrMessage (e) {
@@ -144,6 +166,16 @@ export default {
     isLoaded () {
       if (this.isLoaded) {
         this.lampStatus()
+        this.alarmEnergy()
+      }
+    },
+    monitor1 () {
+      if (this.isLoaded) {
+        this.alarmEnergy()
+      }
+    },
+    energy1 () {
+      if (this.isLoaded) {
         this.alarmEnergy()
       }
     }

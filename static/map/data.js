@@ -41,12 +41,12 @@ var sceneCenterConfig = {
       "Y": "47.59999"
     },
     "industry":{ //民生-产业
-      "Distance": "1.071141",
-      "PosX": "121.69077",
-      "PosY": "31.09509",
+      "Distance": "3.258",
+      "PosX": "121.6847",
+      "PosY": "31.08871",
       "Time": 1,
-      "X": "168.5296",
-      "Y": "58.4"
+      "X": "167.3296",
+      "Y": "45"
     },
     "homeFurnishing":{ //民生-家居
       "Distance": "0.63",
@@ -273,7 +273,7 @@ var sceneCenterConfig = {
         "Id": "10",
         "Latitude": "31.08714",
         "Longitude": "121.6848",
-        "Type": "水质检测点",
+        "Type": "水质监测点",
         "Value": "",
         "Name": "水质检测点",
         "Other": []
@@ -572,7 +572,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09031",
         "Longitude": "121.69",
         "Type": "合作社",
-        "Value": "153万元",
+        "Value": "",
         "Name": "乡村会客厅",
         "Other": []
       },
@@ -582,7 +582,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08683",
         "Longitude": "121.6947",
         "Type": "合作社",
-        "Value": "153万元",
+        "Value": "",
         "Name": "阳庆果蔬",
         "Other": []
       },
@@ -592,7 +592,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08665",
         "Longitude": "121.68662",
         "Type": "合作社",
-        "Value": "153万元",
+        "Value": "",
         "Name": "绿妮瓜果蔬",
         "Other": []
       },
@@ -602,7 +602,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09552",
         "Longitude": "121.6909",
         "Type": "合作社",
-        "Value": "153万元",
+        "Value": "",
         "Name": "老乔渔业",
         "Other": []
       },
@@ -612,7 +612,7 @@ var sceneCenterConfig = {
         "Latitude": "31.09541",
         "Longitude": "121.6814",
         "Type": "合作社",
-        "Value": "153万元",
+        "Value": "",
         "Name": "祥根渔业",
         "Other": []
       },
@@ -622,7 +622,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08648",
         "Longitude": "121.6763",
         "Type": "合作社",
-        "Value": "153万元",
+        "Value": "",
         "Name": "道基食用菌",
         "Other": []
       },
@@ -632,7 +632,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08645",
         "Longitude": "121.6739",
         "Type": "合作社",
-        "Value": "153万元",
+        "Value": "",
         "Name": "志磊食用菌",
         "Other": []
       },
@@ -642,7 +642,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08824",
         "Longitude": "121.6822",
         "Type": "合作社",
-        "Value": "153万元",
+        "Value": "",
         "Name": "秀珍水产",
         "Other": []
       },
@@ -652,7 +652,7 @@ var sceneCenterConfig = {
         "Latitude": "31.08395",
         "Longitude": "121.6793",
         "Type": "合作社",
-        "Value": "153万元",
+        "Value": "",
         "Name": "春邱苗木",
         "Other": []
       },
@@ -662,7 +662,7 @@ var sceneCenterConfig = {
         "Latitude": "31.10114",
         "Longitude": "121.69580",
         "Type": "合作社",
-        "Value": "153万元",
+        "Value": "",
         "Name": "亿缘蔬果",
         "Other": []
       }
@@ -1263,7 +1263,7 @@ var sceneCenterConfig = {
         "Id": "10",
         "Latitude": "31.08714",
         "Longitude": "121.6848",
-        "Type": "水质检测点",
+        "Type": "水质监测点",
         "Value": "",
         "Name": "水质检测点",
         "Other": []

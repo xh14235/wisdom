@@ -27,7 +27,11 @@
         </div>
         <div class="info">
           <span>{{time}}</span>
-          <span>{{event}}</span>
+          <span v-if="event === 'ELECTRICITY'">电</span>
+          <span v-else-if="event === 'COLD'">冷</span>
+          <span v-else-if="event === 'HOT'">热</span>
+          <span v-else-if="event === 'HOT_WATER'">热水</span>
+          <span v-else>{{event}}</span>
           <span>{{address}}</span>
         </div>
         <div class="controller">
@@ -41,7 +45,10 @@
 </template>
 
 <script>
+// import qs from 'qs'
 import { mapState, mapMutations } from 'vuex'
+import { handleMonitoring } from '@/request/api'
+import { abnormalList } from '@/request/security-api'
 export default {
   name: 'AlarmPopup',
   data () {
@@ -60,7 +67,7 @@ export default {
     })
   },
   methods: {
-    ...mapMutations(['hideAlarmPopup', 'tMuted', 'fMuted', 'fPlay', 'tMuted', 'tPlay']),
+    ...mapMutations(['hideAlarmPopup', 'setMonitorList', 'tMuted', 'fMuted', 'fPlay', 'tPlay']),
     changeMuted () {
       if (this.muted) {
         this.fMuted()
@@ -70,7 +77,7 @@ export default {
     },
     hideAlarm () {
       this.fPlay()
-      this.fMuted()
+      // this.tMuted()
       let alarmMarkers = JSON.parse(sessionStorage.getItem('alarmMarkers'))
       let markType = sessionStorage.getItem('markType')
       let alarmMarkers2 = []
@@ -80,10 +87,27 @@ export default {
         }
       }
       sessionStorage.setItem('alarmMarkers', JSON.stringify(alarmMarkers))
+      var params = new URLSearchParams()
+      params.append('id', alarmMarkers2[0].Id)
+      if (markType === '民生报警') {
+        handleMonitoring(params).then(res => {
+          if (res.success) {
+            abnormalList().then(({data}) => {
+              data.map((item) => {
+                let time = item.actualTime
+                time = time.slice(5, 7) + '月' + time.slice(8, 10) + '日 ' + time.slice(11, 20)
+                item.actualTime = time
+                return item
+              })
+              this.setMonitorList(data)
+            })
+          }
+        })
+      }
       let alarmType = markType + '_' + alarmMarkers2[0].Id
       this.ifr.hideMarkById(alarmType)
       if (alarmMarkers.length) {
-        this.tMuted()
+        // this.fMuted()
         this.tPlay()
       }
       this.hideAlarmPopup()

@@ -714,14 +714,26 @@ export default {
           markData.push(arr[index])
         }
       }
-      this.ifr.setMarkData(markData)
-      let positionData = {
-        'Distance': '1.953',
-        'PosX': markData[0].Longitude,
-        'PosY': markData[0].Latitude,
-        'Time': 1,
-        'X': '184.1298',
-        'Y': '54.2352'
+      let positionData = {}
+      if (this.tab !== 0) {
+        this.ifr.setMarkData(markData)
+        positionData = {
+          'Distance': '1.953',
+          'PosX': markData[0].Longitude,
+          'PosY': markData[0].Latitude,
+          'Time': 1,
+          'X': '184.1298',
+          'Y': '54.2352'
+        }
+      } else {
+        positionData = {
+          'Distance': '1.953',
+          'PosX': '121.6849',
+          'PosY': '31.08755',
+          'Time': 1,
+          'X': '184.1298',
+          'Y': '54.2352'
+        }
       }
       this.ifr.setCameraSettingWithCoordinate(positionData)
       // 隐藏热力图

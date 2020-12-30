@@ -329,6 +329,7 @@ export default {
           markData.push(arr[index])
         }
       }
+      console.log(markData)
       this.ifr.setMarkData(markData)
       let center = {
         'Distance': '1.953',
@@ -341,7 +342,7 @@ export default {
       this.ifr.setCameraSettingWithCoordinate(center)
       setTimeout(() => {
         this.ifr.setMarkData(JSON.parse(sessionStorage.getItem('alarmMarkers')))
-      }, 0)
+      }, 100)
     },
     // 老乔渔业
     getPromise5 (id) {
@@ -463,6 +464,14 @@ export default {
     // 地图方法
     gisMethod () {
       Promise.all([this.p1, this.p2, this.p3, this.p4, this.p5, this.p6, this.p7, this.p8, this.p9, this.p10, this.p11, this.p12, this.p13]).then(res => {
+        console.log(res)
+        res.map(item => {
+          if (item === null) {
+            item = 0
+          }
+          return item
+        })
+        console.log(res)
         this.ifr.clearMarks()
         let markData = this.ifr.markConfig['industry']
         markData[0].Other = [
