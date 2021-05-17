@@ -154,19 +154,23 @@
 </template>
 
 <script>
-import img1 from '@/assets/img/tourist-arrive.png'
-import img2 from '@/assets/img/tourist-leave.png'
-import { mapState, mapMutations } from 'vuex'
-import { culturepeak, cultureinout, culturesexage } from '@/request/culture-api'
+import img1 from "@/assets/img/tourist-arrive.png";
+import img2 from "@/assets/img/tourist-leave.png";
+import { mapState, mapMutations } from "vuex";
+import {
+  culturepeak,
+  cultureinout,
+  culturesexage
+} from "@/request/culture-api";
 export default {
-  name: 'Culture',
+  name: "Culture",
   components: {
-    Eline: () => import('@/common/echarts/Eline'),
-    Ranking: () => import('@/common/components/Ranking'),
-    Statistics2: () => import('@/common/components/Statistics2'),
-    Calendar: () => import('@/common/components/Calendar')
+    Eline: () => import("@/common/echarts/Eline"),
+    Ranking: () => import("@/common/components/Ranking"),
+    Statistics2: () => import("@/common/components/Statistics2"),
+    Calendar: () => import("@/common/components/Calendar")
   },
-  data () {
+  data() {
     return {
       peoplePeakEcharts: {},
       todayTourist: [],
@@ -184,7 +188,7 @@ export default {
       calendarShow: false,
       cultureTimer: null,
       duration: 60000
-    }
+    };
   },
   computed: {
     ...mapState({
@@ -200,180 +204,223 @@ export default {
       ifr: state => state.map.ifr,
       rightTimer: state => state.rightTimer
     }),
-    formatTime () {
-      let year = this.calendarDate.getFullYear()
-      let month = this.calendarDate.getMonth() + 1
-      if (month < 10) month = '0' + month
-      let day = this.calendarDate.getDate()
-      if (day < 10) day = '0' + day
-      return year + '-' + month + '-' + day
+    formatTime() {
+      let year = this.calendarDate.getFullYear();
+      let month = this.calendarDate.getMonth() + 1;
+      if (month < 10) month = "0" + month;
+      let day = this.calendarDate.getDate();
+      if (day < 10) day = "0" + day;
+      return year + "-" + month + "-" + day;
     }
   },
   watch: {
-    formatTime () {
-      this.calendarShow = false
-      this.getSexAgeData()
-      this.getRanking()
-      this.getTouristByBuilding()
+    formatTime() {
+      this.calendarShow = false;
+      this.getSexAgeData();
+      this.getRanking();
+      this.getTouristByBuilding();
     },
-    selectListShow () {
+    selectListShow() {
       if (this.selectListShow === false) {
-        this.calendarShow = false
+        this.calendarShow = false;
       }
     }
   },
   methods: {
-    ...mapMutations(['showSelectList']),
+    ...mapMutations(["showSelectList"]),
     // 获取人流量峰值 数据
-    getPeoplePeak () {
+    getPeoplePeak() {
       culturepeak({
         date: this.formatTime
-      }).then((res) => {
-        if (res.data['1'] === 0) {
-          res.data = [392, 236, 216, 412, 297, 314, 315, 338, 255, 189, 256, 401, 155, 236, 189, 395, 315, 297, 214, 256, 401, 338, 276, 412, 227]
+      }).then(res => {
+        if (res.data["1"] === 0) {
+          res.data = [
+            392,
+            236,
+            216,
+            412,
+            297,
+            314,
+            315,
+            338,
+            255,
+            189,
+            256,
+            401,
+            155,
+            236,
+            189,
+            395,
+            315,
+            297,
+            214,
+            256,
+            401,
+            338,
+            276,
+            412,
+            227
+          ];
         }
         this.peoplePeakEcharts = {
-          id: 'culline12',
-          title: '今日游客峰值警报',
+          id: "culline12",
+          title: "今日游客峰值警报",
           legendShow: false,
           markLine: true,
-          legendData: ['储能'],
+          legendData: ["储能"],
           color: [this.green],
           areaColor: true,
           smooth: true,
-          yName: '(人)',
+          yName: "(人)",
           xData: this.day,
           data: [Object.values(res.data).slice(0, this.day.length)]
-        }
-      })
+        };
+      });
     },
     // 当天游客人数统计 数据
-    getTodayTourist () {
-      let date = new Date()
-      let year = date.getFullYear()
-      let month = date.getMonth() + 1
-      if (month < 10) month = '0' + month
-      let day = date.getDate()
-      if (day < 10) day = '0' + day
-      let hour = date.getHours()
-      if (hour < 10) hour = '0' + hour
-      let minute = date.getMinutes()
-      if (minute < 10) minute = '0' + minute
-      let second = date.getSeconds()
-      if (second < 10) second = '0' + second
-      let dateTime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
+    getTodayTourist() {
+      let date = new Date();
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      if (month < 10) month = "0" + month;
+      let day = date.getDate();
+      if (day < 10) day = "0" + day;
+      let hour = date.getHours();
+      if (hour < 10) hour = "0" + hour;
+      let minute = date.getMinutes();
+      if (minute < 10) minute = "0" + minute;
+      let second = date.getSeconds();
+      if (second < 10) second = "0" + second;
+      let dateTime =
+        year +
+        "-" +
+        month +
+        "-" +
+        day +
+        " " +
+        hour +
+        ":" +
+        minute +
+        ":" +
+        second;
       cultureinout({
         dateTime
-      }).then((res) => {
-        let data = res.data
+      }).then(res => {
+        let data = res.data;
         if (data.ENTER === 0) {
           data = {
             ENTER: 523,
             OLD_ENTER: 683,
             OLD_OUT: 683,
             OUT: 356
-          }
+          };
         }
-        let percentEnter = ((data.ENTER - data.OLD_ENTER) * 100 / (data.OLD_ENTER !== 0 ? data.OLD_ENTER : 1)).toFixed(1)
-        let percentOut = ((data.OUT - data.OLD_OUT) * 100 / (data.OLD_OUT !== 0 ? data.OLD_OUT : 1)).toFixed(1)
+        let percentEnter = (
+          ((data.ENTER - data.OLD_ENTER) * 100) /
+          (data.OLD_ENTER !== 0 ? data.OLD_ENTER : 1)
+        ).toFixed(1);
+        let percentOut = (
+          ((data.OUT - data.OLD_OUT) * 100) /
+          (data.OLD_OUT !== 0 ? data.OLD_OUT : 1)
+        ).toFixed(1);
         this.todayTourist = [
           {
-            id: '001',
-            title: '今日到达',
+            id: "001",
+            title: "今日到达",
             imgUrl: img1,
             num: data.ENTER,
             percent: percentEnter
           },
           {
-            id: '002',
-            title: '今日离开',
+            id: "002",
+            title: "今日离开",
             imgUrl: img2,
             num: data.OUT,
             percent: percentOut
           }
-        ]
-      })
+        ];
+      });
     },
     // 获取游客人数分布 按建筑 数据
-    getTouristByBuilding () {
+    getTouristByBuilding() {
       this.buildingTourist = [
         {
-          id: '01',
-          building: '民宿',
+          id: "01",
+          building: "民宿",
           num: 180
         },
         {
-          id: '02',
-          building: '共建',
+          id: "02",
+          building: "共建",
           num: 120
         },
         {
-          id: '03',
-          building: '产业',
+          id: "03",
+          building: "产业",
           num: 59
         }
-      ]
+      ];
     },
     // 获取排行榜 数据
-    getRanking () {
+    getRanking() {
       this.ranking1 = [
         {
-          id: '001',
-          buildingFacilitySubName: '912陶艺馆',
+          id: "001",
+          buildingFacilitySubName: "912陶艺馆",
           value: 120
         },
         {
-          id: '002',
-          buildingFacilitySubName: '913彩釉馆',
+          id: "002",
+          buildingFacilitySubName: "913彩釉馆",
           value: 100
         },
         {
-          id: '003',
-          buildingFacilitySubName: '914彩绘馆',
+          id: "003",
+          buildingFacilitySubName: "914彩绘馆",
           value: 88
         }
-      ]
+      ];
       this.ranking2 = [
         {
-          id: '001',
-          buildingFacilitySubName: '936能源馆',
+          id: "001",
+          buildingFacilitySubName: "936能源馆",
           value: 126
         },
         {
-          id: '002',
-          buildingFacilitySubName: '活动广场',
+          id: "002",
+          buildingFacilitySubName: "活动广场",
           value: 70
         },
         {
-          id: '003',
-          buildingFacilitySubName: '村委',
+          id: "003",
+          buildingFacilitySubName: "村委",
           value: 46
         }
-      ]
+      ];
       this.ranking3 = [
         {
-          id: '001',
-          buildingFacilitySubName: '玫瑰工坊',
+          id: "001",
+          buildingFacilitySubName: "玫瑰工坊",
           value: 166
         },
         {
-          id: '002',
-          buildingFacilitySubName: '绿泥瓜果',
+          id: "002",
+          buildingFacilitySubName: "绿泥瓜果",
           value: 120
         },
         {
-          id: '003',
-          buildingFacilitySubName: '果蔬',
+          id: "003",
+          buildingFacilitySubName: "果蔬",
           value: 90
         }
-      ]
+      ];
     },
     // 获取游客性别年龄统计 数据
-    getSexAgeData () {
+    getSexAgeData() {
       culturesexage({
         date: this.formatTime
-      }).then((res) => {
-        let data = res.data
+      }).then(res => {
+        let data = res.data;
         if (data.boy === 0) {
           data = {
             boy: 235,
@@ -382,126 +429,130 @@ export default {
             two: 241,
             three: 124,
             four: 36
-          }
+          };
         }
-        let all = data.boy + data.girl
+        let all = data.boy + data.girl;
         // if (all === 0) all = 1
         this.sexData = [
           {
-            title: '男女比例',
-            name: '男性占比',
-            num: parseInt(data.boy * 100 / all),
-            unit: '%',
-            imgUrl: require('../../../assets/img/boy.png')
+            title: "男女比例",
+            name: "男性占比",
+            num: parseInt((data.boy * 100) / all),
+            unit: "%",
+            imgUrl: require("../../../assets/img/boy.png")
           },
           {
-            title: '男女比例',
-            name: '女性占比',
-            num: parseInt(data.girl * 100 / all),
-            unit: '%',
-            imgUrl: require('../../../assets/img/girl.png')
+            title: "男女比例",
+            name: "女性占比",
+            num: parseInt((data.girl * 100) / all),
+            unit: "%",
+            imgUrl: require("../../../assets/img/girl.png")
           }
-        ]
+        ];
         this.ageData = {
           all: data.one + data.two + data.three + data.four,
           list: [
             {
-              id: '01',
-              title: '20岁以下',
-              num: parseInt(data.one * 100 / all)
+              id: "01",
+              title: "20岁以下",
+              num: parseInt((data.one * 100) / all)
             },
             {
-              id: '02',
-              title: '21-25岁',
-              num: parseInt(data.two * 100 / all)
+              id: "02",
+              title: "21-25岁",
+              num: parseInt((data.two * 100) / all)
             },
             {
-              id: '03',
-              title: '26-30岁',
-              num: parseInt(data.three * 100 / all)
+              id: "03",
+              title: "26-30岁",
+              num: parseInt((data.three * 100) / all)
             },
             {
-              id: '04',
-              title: '30岁以上',
-              num: parseInt(data.four * 100 / all)
+              id: "04",
+              title: "30岁以上",
+              num: parseInt((data.four * 100) / all)
             }
           ]
-        }
-      })
+        };
+      });
     },
     // 显示日历选择器 数据
-    ShowCalendar () {
-      this.calendarShow = !this.calendarShow
-      this.showSelectList()
+    ShowCalendar() {
+      this.calendarShow = !this.calendarShow;
+      this.showSelectList();
     },
     // 地图方法
-    gisMethods () {
-      this.ifr.clearMarks()
-      let markers = this.ifr.markConfig['culturalTourism']
+    gisMethods() {
+      this.ifr.clearMarks();
+      let markers = this.ifr.markConfig["culturalTourism"];
       let markData = markers.map((item, index) => {
-        item.Other = [{
-          'Key': '人数',
-          'Value': Math.floor(Math.random() * 500)
-        }]
-        return item
-      })
+        item.Other = [
+          {
+            Key: "人数",
+            Value: Math.floor(Math.random() * 500)
+          }
+        ];
+        return item;
+      });
       let hotData = markData.map((item, index) => {
         let item2 = {
-          'Longitude': item.Longitude,
-          'Latitude': item.Latitude,
-          'Height': String(item.Height / 100)
-        }
-        let val = item.Other[0].Value
+          Longitude: item.Longitude,
+          Latitude: item.Latitude,
+          Height: String(item.Height / 100)
+        };
+        let val = item.Other[0].Value;
         if (val < 50) {
-          item2.Status = 0
+          item2.Status = 0;
         } else if (val >= 50 && val < 200) {
-          item2.Status = 1
+          item2.Status = 1;
         } else {
-          item2.Status = 2
+          item2.Status = 2;
         }
-        return item2
-      })
-      let positionData = this.ifr.sceneCenterConfig['culturalTourism']
-      this.ifr.setCameraSettingWithCoordinate(positionData)
-      this.ifr.setMarkData(markData)
+        return item2;
+      });
+      let positionData = this.ifr.sceneCenterConfig["culturalTourism"];
+      this.ifr.setCameraSettingWithCoordinate(positionData);
+      this.ifr.setMarkData(markData);
       // 显示热力图
-      this.ifr.showPeopleHeatingItem(hotData)
+      this.ifr.showPeopleHeatingItem(hotData);
       // 隐藏能留图
-      this.ifr.activePipeNetWork('false')
+      this.ifr.activePipeNetWork("false");
       // 清除道路状态
-      let road = localStorage.road.split(',')
+      let road = localStorage.road.split(",");
       road.forEach(item => {
-        this.ifr.setRoadStatus(item + '_0')
-      })
+        this.ifr.setRoadStatus(item + "_0");
+      });
       setTimeout(() => {
-        this.ifr.setMarkData(JSON.parse(sessionStorage.getItem('alarmMarkers')))
-      }, 0)
+        this.ifr.setMarkData(
+          JSON.parse(sessionStorage.getItem("alarmMarkers"))
+        );
+      }, 0);
     }
   },
   // 页面切换时，停止或重启定时器
-  activated () {
-    this.getPeoplePeak()
-    this.getTodayTourist()
-    this.getSexAgeData()
-    this.getTouristByBuilding()
-    this.getRanking()
+  activated() {
+    this.getPeoplePeak();
+    this.getTodayTourist();
+    this.getSexAgeData();
+    this.getTouristByBuilding();
+    this.getRanking();
     if (this.rightTimer) {
-      this.gisMethods()
+      this.gisMethods();
     }
-    if (this.cultureTimer) clearInterval(this.sucultureTimerptimer)
+    if (this.cultureTimer) clearInterval(this.sucultureTimerptimer);
     this.cultureTimer = setInterval(() => {
-      this.getPeoplePeak()
-      this.getTodayTourist()
-      this.getSexAgeData()
-      this.getTouristByBuilding()
-      this.getRanking()
-    }, this.duration)
+      this.getPeoplePeak();
+      this.getTodayTourist();
+      this.getSexAgeData();
+      this.getTouristByBuilding();
+      this.getRanking();
+    }, this.duration);
   },
-  deactivated () {
-    clearInterval(this.cultureTimer)
-    this.cultureTimer = null
+  deactivated() {
+    clearInterval(this.cultureTimer);
+    this.cultureTimer = null;
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">

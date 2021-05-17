@@ -13,38 +13,39 @@
 </template>
 
 <script>
+// 下拉框组件
 export default {
-  name: 'Select',
-  data () {
+  name: "Select",
+  data() {
     return {
-      value: '',
+      value: "",
       selected: {}
-    }
+    };
   },
   props: {
     options: Array
   },
   methods: {
-    handleChange () {
-      this.selected = this.recursion(this.options, this.value)
-      this.$emit('changeValue', this.selected)
+    handleChange() {
+      this.selected = this.recursion(this.options, this.value);
+      this.$emit("changeValue", this.selected);
     },
-    recursion (arr, val) {
-      let selected = {}
+    recursion(arr, val) {
+      let selected = {};
       arr.forEach(item => {
         if (item.value.includes(this.value)) {
-          selected = item
+          selected = item;
         }
-      })
-      return selected
+      });
+      return selected;
     }
   },
-  mounted () {
+  mounted() {
     setTimeout(() => {
-      this.value = this.options[0].value
-    }, 1000)
+      this.value = this.options[0].value;
+    }, 1000);
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

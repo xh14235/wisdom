@@ -6,12 +6,36 @@
         <div class="popup-close" @click="hideEchartsPopup()">&times;</div>
       </div>
       <div class="popup-main">
-        <Eline v-if="echarts.id && dataType === 'line'" :lineData="echarts" :enlarge="true"></Eline>
-        <Epie v-if="echarts.id && dataType === 'pie'" :pieData="echarts" :enlarge="true"></Epie>
-        <Epie2 v-if="echarts.id && dataType === 'pie2'" :pieData="echarts" :enlarge="true"></Epie2>
-        <Ebar v-if="echarts.id && dataType === 'bar'" :barData="echarts" :enlarge="true"></Ebar>
-        <Egauge v-if="echarts.id && dataType === 'gauge'" :gaugeData="echarts" :enlarge="true"></Egauge>
-        <Eradar v-if="echarts.id && dataType === 'radar'" :radarData="echarts" :enlarge="true"></Eradar>
+        <Eline
+          v-if="echarts.id && dataType === 'line'"
+          :lineData="echarts"
+          :enlarge="true"
+        ></Eline>
+        <Epie
+          v-if="echarts.id && dataType === 'pie'"
+          :pieData="echarts"
+          :enlarge="true"
+        ></Epie>
+        <Epie2
+          v-if="echarts.id && dataType === 'pie2'"
+          :pieData="echarts"
+          :enlarge="true"
+        ></Epie2>
+        <Ebar
+          v-if="echarts.id && dataType === 'bar'"
+          :barData="echarts"
+          :enlarge="true"
+        ></Ebar>
+        <Egauge
+          v-if="echarts.id && dataType === 'gauge'"
+          :gaugeData="echarts"
+          :enlarge="true"
+        ></Egauge>
+        <Eradar
+          v-if="echarts.id && dataType === 'radar'"
+          :radarData="echarts"
+          :enlarge="true"
+        ></Eradar>
         <!-- <Esex v-if="echarts.id && dataType === 'sex'" :barData="echarts"></Esex> -->
         <div class="mask"></div>
       </div>
@@ -20,37 +44,38 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+// echarts图放大显示组件
+import { mapMutations } from "vuex";
 export default {
-  name: 'EchartsPopup',
+  name: "EchartsPopup",
   components: {
-    Eline: () => import('@/common/echarts/Eline'),
-    Epie: () => import('@/common/echarts/Epie'),
-    Epie2: () => import('@/common/echarts/Epie2'),
-    Ebar: () => import('@/common/echarts/Ebar'),
-    Egauge: () => import('@/common/echarts/Egauge'),
-    Eradar: () => import('@/common/echarts/Eradar')
+    Eline: () => import("@/common/echarts/Eline"),
+    Epie: () => import("@/common/echarts/Epie"),
+    Epie2: () => import("@/common/echarts/Epie2"),
+    Ebar: () => import("@/common/echarts/Ebar"),
+    Egauge: () => import("@/common/echarts/Egauge"),
+    Eradar: () => import("@/common/echarts/Eradar")
     // Esex: () => import('@/common/echarts/Esex'),
   },
-  data () {
+  data() {
     return {
       echarts: {}
-    }
+    };
   },
   computed: {
-    dataType () {
-      return localStorage.dataType
+    dataType() {
+      return localStorage.dataType;
     }
   },
   methods: {
-    ...mapMutations(['hideEchartsPopup'])
+    ...mapMutations(["hideEchartsPopup"])
   },
-  mounted () {
-    this.echarts = JSON.parse(localStorage.echarts)
-    console.log(this.echarts)
-    this.echarts.id = 'sdfsadfasdfasdfadfasd'
+  mounted() {
+    this.echarts = JSON.parse(localStorage.echarts);
+    console.log(this.echarts);
+    this.echarts.id = "sdfsadfasdfasdfadfasd";
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -75,5 +100,5 @@ export default {
       width: 40vw
       height: 57.5vh
       z-index: 1
-      background: rgba(255,255,255,0)
+      background: rgba(255, 255, 255, 0)
 </style>

@@ -8,7 +8,7 @@
       <div class="popup-main">
         <div class="person">
           <div class="person-img">
-            <img src="../../assets/img/alarm-baoan.png" alt="">
+            <img src="../../assets/img/alarm-baoan.png" alt="" />
           </div>
           <div class="person-info">
             <div class="person-name">
@@ -16,27 +16,35 @@
               <span>安保负责人</span>
             </div>
             <div class="person-number">
-              <img src="../../assets/img/alarm-phone.png" alt="">
+              <img src="../../assets/img/alarm-phone.png" alt="" />
               <span>13912341234</span>
             </div>
             <div class="person-distance">
-              <img src="../../assets/img/alarm-distance.png" alt="">
+              <img src="../../assets/img/alarm-distance.png" alt="" />
               <span>距离1.3km</span>
             </div>
           </div>
         </div>
         <div class="info">
-          <span>{{time}}</span>
+          <span>{{ time }}</span>
           <span v-if="event === 'ELECTRICITY'">电</span>
           <span v-else-if="event === 'COLD'">冷</span>
           <span v-else-if="event === 'HOT'">热</span>
           <span v-else-if="event === 'HOT_WATER'">热水</span>
-          <span v-else>{{event}}</span>
-          <span>{{address}}</span>
+          <span v-else>{{ event }}</span>
+          <span>{{ address }}</span>
         </div>
         <div class="controller">
-          <img src="../../assets/img/alarm-monitor.png" alt="">
-          <img :src="muted ? require('../../assets/img/alarm-mute.png') : require('../../assets/img/alarm-muted.png')" alt="" @click="changeMuted()">
+          <img src="../../assets/img/alarm-monitor.png" alt="" />
+          <img
+            :src="
+              muted
+                ? require('../../assets/img/alarm-mute.png')
+                : require('../../assets/img/alarm-muted.png')
+            "
+            alt=""
+            @click="changeMuted()"
+          />
           <div @click="hideAlarm()">解除报警</div>
         </div>
       </div>
@@ -45,18 +53,19 @@
 </template>
 
 <script>
+// 报警详情弹窗
 // import qs from 'qs'
-import { mapState, mapMutations } from 'vuex'
-import { handleMonitoring } from '@/request/api'
-import { abnormalList } from '@/request/security-api'
+import { mapState, mapMutations } from "vuex";
+import { handleMonitoring } from "@/request/api";
+import { abnormalList } from "@/request/security-api";
 export default {
-  name: 'AlarmPopup',
-  data () {
+  name: "AlarmPopup",
+  data() {
     return {
-      time: '',
-      event: '',
-      address: ''
-    }
+      time: "",
+      event: "",
+      address: ""
+    };
   },
   computed: {
     ...mapState({
@@ -67,69 +76,81 @@ export default {
     })
   },
   methods: {
-    ...mapMutations(['hideAlarmPopup', 'setMonitorList', 'tMuted', 'fMuted', 'fPlay', 'tPlay']),
-    changeMuted () {
+    ...mapMutations([
+      "hideAlarmPopup",
+      "setMonitorList",
+      "tMuted",
+      "fMuted",
+      "fPlay",
+      "tPlay"
+    ]),
+    changeMuted() {
       if (this.muted) {
-        this.fMuted()
+        this.fMuted();
       } else {
-        this.tMuted()
+        this.tMuted();
       }
     },
-    hideAlarm () {
-      this.fPlay()
+    hideAlarm() {
+      this.fPlay();
       // this.tMuted()
-      let alarmMarkers = JSON.parse(sessionStorage.getItem('alarmMarkers'))
-      let markType = sessionStorage.getItem('markType')
-      let alarmMarkers2 = []
+      let alarmMarkers = JSON.parse(sessionStorage.getItem("alarmMarkers"));
+      let markType = sessionStorage.getItem("markType");
+      let alarmMarkers2 = [];
       for (let i = 0; i < alarmMarkers.length; i++) {
         if (alarmMarkers[i].Type === markType) {
-          alarmMarkers2 = alarmMarkers.splice(i, 1)
+          alarmMarkers2 = alarmMarkers.splice(i, 1);
         }
       }
-      sessionStorage.setItem('alarmMarkers', JSON.stringify(alarmMarkers))
-      var params = new URLSearchParams()
-      params.append('id', alarmMarkers2[0].Id)
-      if (markType === '民生报警') {
+      sessionStorage.setItem("alarmMarkers", JSON.stringify(alarmMarkers));
+      var params = new URLSearchParams();
+      params.append("id", alarmMarkers2[0].Id);
+      if (markType === "民生报警") {
         handleMonitoring(params).then(res => {
           if (res.success) {
-            abnormalList().then(({data}) => {
-              data.map((item) => {
-                let time = item.actualTime
-                time = time.slice(5, 7) + '月' + time.slice(8, 10) + '日 ' + time.slice(11, 20)
-                item.actualTime = time
-                return item
-              })
-              this.setMonitorList(data)
-            })
+            abnormalList().then(({ data }) => {
+              data.map(item => {
+                let time = item.actualTime;
+                time =
+                  time.slice(5, 7) +
+                  "月" +
+                  time.slice(8, 10) +
+                  "日 " +
+                  time.slice(11, 20);
+                item.actualTime = time;
+                return item;
+              });
+              this.setMonitorList(data);
+            });
           }
-        })
+        });
       }
-      let alarmType = markType + '_' + alarmMarkers2[0].Id
-      this.ifr.hideMarkById(alarmType)
+      let alarmType = markType + "_" + alarmMarkers2[0].Id;
+      this.ifr.hideMarkById(alarmType);
       if (alarmMarkers.length) {
         // this.fMuted()
-        this.tPlay()
+        this.tPlay();
       }
-      this.hideAlarmPopup()
+      this.hideAlarmPopup();
     }
   },
-  mounted () {
-    switch (sessionStorage.getItem('markType')) {
-      case '能源报警':
-        this.time = this.energyList[0].time
-        this.event = this.energyList[0].type
-        this.address = this.energyList[0].buildingSubName
-        break
-      case '民生报警':
-        this.time = this.monitorList[0].actualTime
-        this.event = this.monitorList[0].warnName
-        this.address = this.monitorList[0].area
-        break
+  mounted() {
+    switch (sessionStorage.getItem("markType")) {
+      case "能源报警":
+        this.time = this.energyList[0].time;
+        this.event = this.energyList[0].type;
+        this.address = this.energyList[0].buildingSubName;
+        break;
+      case "民生报警":
+        this.time = this.monitorList[0].actualTime;
+        this.event = this.monitorList[0].warnName;
+        this.address = this.monitorList[0].area;
+        break;
       default:
-        break
+        break;
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

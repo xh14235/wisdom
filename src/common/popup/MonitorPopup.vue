@@ -7,32 +7,40 @@
         <div class="popup-close" @click="hideMonitorPopup()">&times;</div>
       </div> -->
       <div class="popup-main">
-        <iframe id="video1" width="100%" height="100%" :src="defaultUrl" frameborder="0"></iframe>
+        <iframe
+          id="video1"
+          width="100%"
+          height="100%"
+          :src="defaultUrl"
+          frameborder="0"
+        ></iframe>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+// 监控放大显示组件
+import { mapMutations } from "vuex";
 export default {
-  name: 'MonitorPopup',
-  data () {
+  name: "MonitorPopup",
+  data() {
     return {
-      defaultUrl: ''
-    }
+      defaultUrl: ""
+    };
   },
   methods: {
-    ...mapMutations(['hideMonitorPopup'])
+    ...mapMutations(["hideMonitorPopup"])
   },
-  mounted () {
-    this.defaultUrl = 'http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080&protocol=ws-flv'
+  mounted() {
+    this.defaultUrl =
+      "http://116.236.30.222:10800/play.html?channel=1&iframe=yes&aspect=1920x1080&protocol=ws-flv";
     // 萤石云
     // this.defaultUrl = '/static/yingshi/index.html?url=' + localStorage.monitorUrl
     // jsmpeg
     // this.defaultUrl = '/static/jsmpeg-master/view-stream.html?url=' + localStorage.monitorUrl
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

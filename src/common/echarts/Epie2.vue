@@ -1,58 +1,61 @@
 <template>
-  <div class="echarts-kuang" @click="showEchartsPopup({data: pieData, type: 'pie2'})">
+  <div
+    class="echarts-kuang"
+    @click="showEchartsPopup({ data: pieData, type: 'pie2' })"
+  >
     <div :id="pieData.id" class="echarts-id"></div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations } from "vuex";
 export default {
-  name: 'Epie2',
+  name: "Epie2",
   props: {
     pieData: Object,
     enlarge: Boolean
   },
   computed: {
-    fatherData () {
-      return this.pieData
+    fatherData() {
+      return this.pieData;
     },
     ...mapState({
-      green: (state) => state.color.green,
-      blue: (state) => state.color.blue,
-      yellow: (state) => state.color.yellow,
-      bgreen: (state) => state.color.bgreen,
-      red: (state) => state.color.red,
-      white: (state) => state.color.white,
-      lgreen: (state) => state.color.lgreen
+      green: state => state.color.green,
+      blue: state => state.color.blue,
+      yellow: state => state.color.yellow,
+      bgreen: state => state.color.bgreen,
+      red: state => state.color.red,
+      white: state => state.color.white,
+      lgreen: state => state.color.lgreen
     })
   },
   watch: {
-    fatherData () {
-      this.drawPie(this.fatherData)
+    fatherData() {
+      this.drawPie(this.fatherData);
     }
   },
-  mounted () {
+  mounted() {
     if (this.pieData) {
-      this.drawPie(this.pieData)
+      this.drawPie(this.pieData);
     }
   },
   methods: {
-    ...mapMutations(['showEchartsPopup']),
-    drawPie (pieData) {
-      let bodyWidth = document.body.offsetWidth
-      let fontSize1 = 14
-      let fontSize2 = 16
-      let titleTop = pieData.titleTop
+    ...mapMutations(["showEchartsPopup"]),
+    drawPie(pieData) {
+      let bodyWidth = document.body.offsetWidth;
+      let fontSize1 = 14;
+      let fontSize2 = 16;
+      let titleTop = pieData.titleTop;
       if (bodyWidth <= 1920) {
-        fontSize1 = 10
-        fontSize2 = 12
+        fontSize1 = 10;
+        fontSize2 = 12;
       }
       if (this.enlarge) {
-        fontSize1 = 24
-        fontSize2 = 28
-        titleTop = '40%'
+        fontSize1 = 24;
+        fontSize2 = 28;
+        titleTop = "40%";
       }
-      let myChart = this.$echarts.init(document.getElementById(pieData.id))
+      let myChart = this.$echarts.init(document.getElementById(pieData.id));
       let option = {
         title: {
           text: pieData.title, // 饼图中间数字
@@ -70,38 +73,38 @@ export default {
               }
             }
           },
-          textAlign: 'center',
+          textAlign: "center",
           top: titleTop,
           left: pieData.titleLeft,
           right: pieData.titleRight,
           bottom: pieData.titleBottom
         },
         tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b}: {c} ({d}%)'
+          trigger: "item",
+          formatter: "{a} <br/>{b}: {c} ({d}%)"
         },
         legend: {
           show: false,
-          orient: 'vertical',
+          orient: "vertical",
           left: 10,
-          data: ['直接访问', '邮件营销']
+          data: ["直接访问", "邮件营销"]
         },
         series: [
           {
             name: pieData.data.name,
-            type: 'pie',
+            type: "pie",
             radius: pieData.radius,
             center: pieData.center,
             avoidLabelOverlap: false,
             label: {
               show: false,
-              position: 'center'
+              position: "center"
             },
             emphasis: {
               label: {
                 show: true,
-                fontSize: '30',
-                fontWeight: 'bold'
+                fontSize: "30",
+                fontWeight: "bold"
               }
             },
             labelLine: {
@@ -117,7 +120,7 @@ export default {
                       colorStops: [
                         {
                           offset: 0,
-                          color: 'transparent' // 0% 处的颜色
+                          color: "transparent" // 0% 处的颜色
                         },
                         {
                           offset: 1,
@@ -133,26 +136,26 @@ export default {
                 name: pieData.data.value,
                 itemStyle: {
                   normal: {
-                    color: 'transparent'
+                    color: "transparent"
                   }
                 }
               }
             ]
           }
         ]
-      }
-      myChart.setOption(option)
+      };
+      myChart.setOption(option);
       // 只有页面最后一个echarts图会改变尺寸
       // window.onresize = function () {
       //   myChart.resize()
       // }
       // 多个echarts图都可以改变尺寸
-      window.addEventListener('resize', () => {
-        myChart.resize()
-      })
+      window.addEventListener("resize", () => {
+        myChart.resize();
+      });
     }
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">

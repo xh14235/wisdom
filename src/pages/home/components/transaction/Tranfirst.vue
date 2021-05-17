@@ -22,20 +22,32 @@
       <div class="common-echarts-box statistics1">
         <div class="statistics-wrap">
           <div class="statistics-left">
-            <img class="img-outer rotate" src="../../../../assets/img/statistics-rotate.png" alt="">
-            <img class="img-inner" src="../../../../assets/img/statistics-profit.png" alt="">
+            <img
+              class="img-outer rotate"
+              src="../../../../assets/img/statistics-rotate.png"
+              alt=""
+            />
+            <img
+              class="img-inner"
+              src="../../../../assets/img/statistics-profit.png"
+              alt=""
+            />
           </div>
           <div class="statistics-right">
             <div class="statistics-num">
-              <span>{{parseFloat(list.profit).toLocaleString()}}</span>元
+              <span>{{ parseFloat(list.profit).toLocaleString() }}</span
+              >元
             </div>
-            <img src="../../../../assets/img/statistics-line.png" alt="">
+            <img src="../../../../assets/img/statistics-line.png" alt="" />
             <p>累计利润</p>
           </div>
         </div>
       </div>
       <div class="common-echarts-box statistics2">
-        <Statistics2 v-if="list.statistics.length" :statistics="list.statistics"></Statistics2>
+        <Statistics2
+          v-if="list.statistics.length"
+          :statistics="list.statistics"
+        ></Statistics2>
       </div>
     </div>
   </div>
@@ -43,22 +55,22 @@
 
 <script>
 export default {
-  name: 'Tranfirst',
+  name: "Tranfirst",
   props: {
     list: Object
   },
   components: {
-    Statistics2: () => import('@/common/components/Statistics2'),
-    DateType: () => import('@/common/components/DateType'),
-    Eline: () => import('@/common/echarts/Eline'),
-    Ebar: () => import('@/common/echarts/Ebar')
+    Statistics2: () => import("@/common/components/Statistics2"),
+    DateType: () => import("@/common/components/DateType"),
+    Eline: () => import("@/common/echarts/Eline"),
+    Ebar: () => import("@/common/echarts/Ebar")
   },
   methods: {
-    changeDate (code) {
-      this.$emit('changeDate1', code)
+    changeDate(code) {
+      this.$emit("changeDate1", code);
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -98,21 +110,19 @@ export default {
         width: 5.75vh
         height: 5.75vh
         flex: 0 0 5.75vh
-        @media screen and (max-width: 1920px) {
+        @media screen and (max-width: 1920px)
           width: 4vh
           height: 4vh
           flex: 0 0 4vh
-        }
         .img-outer
           position: absolute
           width: 5.75vh
           height: 5.75vh
           top: 0
           left: 0
-          @media screen and (max-width: 1920px) {
+          @media screen and (max-width: 1920px)
             width: 4vh
             height: 4vh
-          }
         .img-inner
           position: absolute
           width: 2.5vh
@@ -120,11 +130,10 @@ export default {
           top: 50%
           left: 50%
           transform: translate(-1.25vh, -1.25vh)
-          @media screen and (max-width: 1920px) {
+          @media screen and (max-width: 1920px)
             width: 2vh
             height: 2vh
             transform: translate(-1vh, -1vh)
-          }
       .statistics-right
         display: flex
         flex-direction: column
@@ -132,17 +141,15 @@ export default {
         font-size: 14px
         img
           width: 100%
-        @media screen and (max-width: 1920px) {
+        @media screen and (max-width: 1920px)
           font-size: 12px
-        }
         .statistics-num
           span
             font-size: 24px
             font-weight: 600
             color: $yellow
-            @media screen and (max-width: 1920px) {
+            @media screen and (max-width: 1920px)
               font-size: 16px
-            }
   .statistics2
     flex: 0 0 9.5vw
     width: 9.5vw

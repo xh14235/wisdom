@@ -8,34 +8,49 @@
         <span>{{item.unit}}</span></div>
       <p>{{item.name}}</p>
     </div> -->
-    <div class="stat-title">{{statistics[0].title}}</div>
+    <div class="stat-title">{{ statistics[0].title }}</div>
     <div class="stat-box">
       <div class="stat-info-left">
-        <div class="stat-info-title">{{statistics[0].name}}</div>
-        <div class="stat-info-num"><b>{{parseFloat(statistics[0].num).toLocaleString()}}</b>{{statistics[0].unit}}</div>
+        <div class="stat-info-title">{{ statistics[0].name }}</div>
+        <div class="stat-info-num">
+          <b>{{ parseFloat(statistics[0].num).toLocaleString() }}</b
+          >{{ statistics[0].unit }}
+        </div>
       </div>
-      <img class="stat-arrow-left" src="../../assets/img/arrow-left.png" alt="">
+      <img
+        class="stat-arrow-left"
+        src="../../assets/img/arrow-left.png"
+        alt=""
+      />
       <div class="stat-img">
-        <img class="stat-img-left" :src="statistics[0].imgUrl" alt="">
+        <img class="stat-img-left" :src="statistics[0].imgUrl" alt="" />
         <div class="stat-line"></div>
-        <img class="stat-img-right" :src="statistics[1].imgUrl" alt="">
+        <img class="stat-img-right" :src="statistics[1].imgUrl" alt="" />
       </div>
-      <img class="stat-arrow-right" src="../../assets/img/arrow-right.png" alt="">
+      <img
+        class="stat-arrow-right"
+        src="../../assets/img/arrow-right.png"
+        alt=""
+      />
       <div class="stat-info-right">
-        <div class="stat-info-title">{{statistics[1].name}}</div>
-        <div class="stat-info-num"><b>{{parseFloat(statistics[1].num).toLocaleString()}}</b>{{statistics[1].unit}}</div>
+        <div class="stat-info-title">{{ statistics[1].name }}</div>
+        <div class="stat-info-num">
+          <b>{{ parseFloat(statistics[1].num).toLocaleString() }}</b
+          >{{ statistics[1].unit }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// 数据统计对比组件，中间两个icon
 export default {
-  name: 'Statistics2',
+  name: "Statistics2",
   props: {
     statistics: Array
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -54,9 +69,8 @@ export default {
     background-image: url('../../assets/img/stat-title-bg.png')
     background-size: 100% 100%
     font-size: 14px
-    @media screen and (max-width: 1920px) {
+    @media screen and (max-width: 1920px)
       font-size: 12px
-    }
   .stat-box
     display: flex
     justify-content: space-between
@@ -64,9 +78,8 @@ export default {
     height: 6vh
     .stat-arrow-left, .stat-arrow-right
       width: 31px
-      @media screen and (max-width: 1920px) {
+      @media screen and (max-width: 1920px)
         width: 15px
-      }
     .stat-img
       display: flex
       justify-content: space-between
@@ -77,9 +90,8 @@ export default {
       top: 1vh
       .stat-img-left, .stat-img-right
         width: 29px
-        @media screen and (max-width: 1920px) {
+        @media screen and (max-width: 1920px)
           width: 18px
-        }
       .stat-line
         width: 1px
         height: 2vh
@@ -89,19 +101,16 @@ export default {
     text-align: center
     .stat-info-title
       font-size: 14px
-      @media screen and (max-width: 1920px) {
+      @media screen and (max-width: 1920px)
         font-size: 12px
-      }
     .stat-info-num
       font-size: 14px
-      @media screen and (max-width: 1920px) {
+      @media screen and (max-width: 1920px)
         font-size: 12px
-      }
       b
         font-size: 18px
-        @media screen and (max-width: 1920px) {
+        @media screen and (max-width: 1920px)
           font-size: 14px
-        }
   .stat-info-left
     .stat-info-title
       color: $green

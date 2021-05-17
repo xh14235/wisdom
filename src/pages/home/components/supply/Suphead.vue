@@ -2,30 +2,38 @@
   <div class="common-echarts-wrapper">
     <div class="common-echarts-box">
       <div class="common-echarts-title">供电</div>
-      <Eline class="echarts-with-title" v-if="list.echarts1.id" :lineData="list.echarts1"></Eline>
+      <Eline
+        class="echarts-with-title"
+        v-if="list.echarts1.id"
+        :lineData="list.echarts1"
+      ></Eline>
     </div>
     <div class="common-echarts-box">
       <div class="common-echarts-title"></div>
-      <Epie class="echarts-with-title" v-if="list.echarts2.id" :pieData="list.echarts2"></Epie>
+      <Epie
+        class="echarts-with-title"
+        v-if="list.echarts2.id"
+        :pieData="list.echarts2"
+      ></Epie>
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations } from "vuex";
 export default {
-  name: 'Conhead',
+  name: "Conhead",
   components: {
-    Epie: () => import('@/common/echarts/Epie'),
-    Eline: () => import('@/common/echarts/Eline')
+    Epie: () => import("@/common/echarts/Epie"),
+    Eline: () => import("@/common/echarts/Eline")
   },
   props: {
     list: Object
   },
   methods: {
-    ...mapMutations(['showEchartsPopup'])
+    ...mapMutations(["showEchartsPopup"])
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">

@@ -7,7 +7,12 @@
       </div>
       <div class="popup-main">
         <div class="select-box">
-          分析类型 <Select v-if="videoList.length" :options="videoList"  @changeValue="changeSelect"></Select>
+          分析类型
+          <Select
+            v-if="videoList.length"
+            :options="videoList"
+            @changeValue="changeSelect"
+          ></Select>
         </div>
         <div class="btn-wrapper">
           <div class="btn-item btn-confirm" @click="confirm()">确定</div>
@@ -19,48 +24,49 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
-import { videoList } from '@/request/api'
+// 选择摄像头组件
+import { mapMutations } from "vuex";
+import { videoList } from "@/request/api";
 export default {
-  name: 'VideoPopup',
-  data () {
+  name: "VideoPopup",
+  data() {
     return {
       videoList: [],
-      videoName: ''
-    }
+      videoName: ""
+    };
   },
   components: {
-    Select: () => import('@/common/components/Select')
+    Select: () => import("@/common/components/Select")
   },
   methods: {
-    ...mapMutations(['hideVideoPopup', 'changeVideoName']),
-    getVideoList () {
-      videoList().then((res) => {
-        let data = res.data
-        this.videoList = []
+    ...mapMutations(["hideVideoPopup", "changeVideoName"]),
+    getVideoList() {
+      videoList().then(res => {
+        let data = res.data;
+        this.videoList = [];
         for (let i = 0; i < data.length; i++) {
           this.videoList.push({
             value: data[i].id,
             label: data[i].area
-          })
+          });
         }
-      })
+      });
     },
-    confirm () {
-      this.changeVideoName(this.videoName)
-      this.hideVideoPopup()
+    confirm() {
+      this.changeVideoName(this.videoName);
+      this.hideVideoPopup();
     },
-    changeSelect (item) {
-      this.videoName = item.label
+    changeSelect(item) {
+      this.videoName = item.label;
     }
   },
-  mounted () {
-    this.getVideoList()
+  mounted() {
+    this.getVideoList();
     setTimeout(() => {
-      this.videoName = this.videoList[0].info
-    }, 1000)
+      this.videoName = this.videoList[0].info;
+    }, 1000);
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -90,8 +96,8 @@ export default {
         border-radius: 2px
         text-align: center
         &.btn-confirm
-          background: rgba(54,134,88,1)
+          background: rgba(54, 134, 88, 1)
         &.btn-cancle
-          background: rgba(74,204,129,0)
-          border: 1px solid rgba(74,204,129,1)
+          background: rgba(74, 204, 129, 0)
+          border: 1px solid rgba(74, 204, 129, 1)
 </style>

@@ -2,9 +2,20 @@
   <div>
     <div class="controller">
       <div class="forecast-tab">
-        <div class="tab-item" :class="{'active': index === currentTab}" v-for="(item, index) of tab" :key="item.id" @click="changeTab(index)">{{item.title}}</div>
+        <div
+          class="tab-item"
+          :class="{ active: index === currentTab }"
+          v-for="(item, index) of tab"
+          :key="item.id"
+          @click="changeTab(index)"
+        >
+          {{ item.title }}
+        </div>
       </div>
-      <DateType @getDateType="changeDate" v-show="this.currentTab === 0"></DateType>
+      <DateType
+        @getDateType="changeDate"
+        v-show="this.currentTab === 0"
+      ></DateType>
     </div>
     <div class="common-echarts-wrapper" v-show="currentTab === 0">
       <div class="common-echarts-box">
@@ -60,34 +71,34 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 export default {
-  name: 'Supthird',
+  name: "Supthird",
   components: {
-    Eline: () => import('@/common/echarts/Eline'),
-    Statistics: () => import('@/common/components/Statistics'),
-    Egauge: () => import('@/common/echarts/Egauge'),
-    DateType: () => import('@/common/components/DateType')
+    Eline: () => import("@/common/echarts/Eline"),
+    Statistics: () => import("@/common/components/Statistics"),
+    Egauge: () => import("@/common/echarts/Egauge"),
+    DateType: () => import("@/common/components/DateType")
   },
   props: {
     list: Object
   },
-  data () {
+  data() {
     return {
       tab: [
         {
-          id: '01',
-          title: '实时监测',
+          id: "01",
+          title: "实时监测",
           active: true
         },
         {
-          id: '02',
-          title: '未来24h预测',
+          id: "02",
+          title: "未来24h预测",
           active: false
         }
       ],
       currentTab: 0
-    }
+    };
   },
   computed: {
     ...mapState({
@@ -102,18 +113,18 @@ export default {
     })
   },
   methods: {
-    changeDate (code) {
-      this.$emit('changeDate3', code)
+    changeDate(code) {
+      this.$emit("changeDate3", code);
     },
-    changeTab (index) {
-      this.currentTab = index
+    changeTab(index) {
+      this.currentTab = index;
     }
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">
-@import "~@/assets/css/common.styl"
+@import '~@/assets/css/common.styl'
 .controller
   display: flex
   justify-content: space-between
@@ -131,7 +142,7 @@ export default {
       // font-size: 14px
       color: $green
       &.active
-        background: rgba(74,204,129,0.2)
+        background: rgba(74, 204, 129, 0.2)
 .common-echarts-box
   height: 19vh
 .gauge

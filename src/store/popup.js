@@ -1,3 +1,4 @@
+// 孔子各弹窗的状态
 const popup = {
   state: {
     videoPopupShow: false,
@@ -6,8 +7,8 @@ const popup = {
     facePopupShow: false,
     carPopupShow: false,
     alarmPopupShow: false,
-    changedVideoName: ''
+    changedVideoName: ""
   }
-}
+};
 
-export default popup
+export default popup;

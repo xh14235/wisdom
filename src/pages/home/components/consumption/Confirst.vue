@@ -23,15 +23,15 @@
 
 <script>
 export default {
-  name: 'Supfirst',
+  name: "Supfirst",
   components: {
-    Epie: () => import('@/common/echarts/Epie'),
-    Eline: () => import('@/common/echarts/Eline')
+    Epie: () => import("@/common/echarts/Epie"),
+    Eline: () => import("@/common/echarts/Eline")
   },
   props: {
     list: Object
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">

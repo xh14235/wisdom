@@ -22,20 +22,20 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations } from "vuex";
 export default {
-  name: 'Confirst',
+  name: "Confirst",
   components: {
-    Epie: () => import('@/common/echarts/Epie'),
-    Eline: () => import('@/common/echarts/Eline')
+    Epie: () => import("@/common/echarts/Epie"),
+    Eline: () => import("@/common/echarts/Eline")
   },
   props: {
     list: Object
   },
   methods: {
-    ...mapMutations(['showEchartsPopup'])
+    ...mapMutations(["showEchartsPopup"])
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">

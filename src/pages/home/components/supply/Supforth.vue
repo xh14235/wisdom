@@ -39,20 +39,20 @@
 
 <script>
 export default {
-  name: 'Supforth',
+  name: "Supforth",
   components: {
-    Eline: () => import('@/common/echarts/Eline'),
-    DateType: () => import('@/common/components/DateType')
+    Eline: () => import("@/common/echarts/Eline"),
+    DateType: () => import("@/common/components/DateType")
   },
   props: {
     list: Object
   },
   methods: {
-    changeDate (code) {
-      this.$emit('changeDate4', code)
+    changeDate(code) {
+      this.$emit("changeDate4", code);
     }
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">

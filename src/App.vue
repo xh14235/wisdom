@@ -1,43 +1,44 @@
 <template>
   <div id="app">
-    <audio muted loop ref='audio'>
-      <source src="./assets/video/test.mp3" type="audio/mpeg">
+    <!-- 报警声音 -->
+    <audio muted loop ref="audio">
+      <source src="./assets/video/test.mp3" type="audio/mpeg" />
     </audio>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 export default {
-  name: 'App',
-  data () {
+  name: "App",
+  data() {
     return {
       audio: null
-    }
+    };
   },
   computed: {
     ...mapState({
-      muted: state => state.audio.muted,
-      play: state => state.audio.play
+      muted: state => state.audio.muted, // 报警声音静音
+      play: state => state.audio.play // 报警声音停止
     })
   },
   watch: {
-    muted () {
-      this.audio.muted = this.muted
+    muted() {
+      this.audio.muted = this.muted;
     },
-    play () {
+    play() {
       if (this.play) {
-        this.audio.play()
+        this.audio.play();
       } else {
-        this.audio.pause()
+        this.audio.pause();
       }
     }
   },
-  mounted () {
-    this.audio = this.$refs.audio
+  mounted() {
+    this.audio = this.$refs.audio;
   }
-}
+};
 </script>
 
 <style></style>

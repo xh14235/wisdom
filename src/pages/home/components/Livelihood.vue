@@ -3,11 +3,12 @@
     <div class="right-tab">
       <span
         class="right-item"
-        :class="{'item-active': item.id === tab_right}"
+        :class="{ 'item-active': item.id === tab_right }"
         v-for="item of tabRight"
         :key="item.id"
         @click="changeTab(item.id)"
-      >{{item.info}}</span>
+        >{{ item.info }}</span
+      >
     </div>
     <div class="right-box">
       <transition name="fadeRight" mode="out-in">
@@ -20,93 +21,93 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations } from "vuex";
 export default {
-  name: 'Livelihood',
+  name: "Livelihood",
   components: {
-    Security: () => import('./Security'),
-    Environment: () => import('./Environment'),
-    Trip: () => import('./Trip'),
-    Culture: () => import('./Culture'),
-    Industry: () => import('./Industry'),
-    Athome: () => import('./Athome')
+    Security: () => import("./Security"),
+    Environment: () => import("./Environment"),
+    Trip: () => import("./Trip"),
+    Culture: () => import("./Culture"),
+    Industry: () => import("./Industry"),
+    Athome: () => import("./Athome")
   },
-  data () {
+  data() {
     return {
       isLoaded: false,
       tabRight: [
         {
-          id: '001',
-          info: '安防',
+          id: "001",
+          info: "安防",
           active: true
         },
         {
-          id: '002',
-          info: '生态',
+          id: "002",
+          info: "生态",
           active: false
         },
         {
-          id: '003',
-          info: '出行',
+          id: "003",
+          info: "出行",
           active: false
         },
         {
-          id: '004',
-          info: '文旅',
+          id: "004",
+          info: "文旅",
           active: false
         },
         {
-          id: '005',
-          info: '产业',
+          id: "005",
+          info: "产业",
           active: false
         },
         {
-          id: '006',
-          info: '家居',
+          id: "006",
+          info: "家居",
           active: false
         }
       ]
-    }
+    };
   },
   computed: {
     ...mapState({
       tab_right: state => state.tab_right
     }),
-    view () {
-      let component = ''
+    view() {
+      let component = "";
       switch (this.tab_right) {
-        case '001':
-          component = 'Security'
-          break
-        case '002':
-          component = 'Environment'
-          break
-        case '003':
-          component = 'Trip'
-          break
-        case '004':
-          component = 'Culture'
-          break
-        case '005':
-          component = 'Industry'
-          break
-        case '006':
-          component = 'Athome'
-          break
+        case "001":
+          component = "Security";
+          break;
+        case "002":
+          component = "Environment";
+          break;
+        case "003":
+          component = "Trip";
+          break;
+        case "004":
+          component = "Culture";
+          break;
+        case "005":
+          component = "Industry";
+          break;
+        case "006":
+          component = "Athome";
+          break;
         default:
-          break
+          break;
       }
-      return component
+      return component;
     }
   },
   methods: {
-    ...mapMutations(['change_right_tab', 'chooseRightTimer']),
-    changeTab (id) {
-      this.change_right_tab(id)
-      this.chooseRightTimer()
+    ...mapMutations(["change_right_tab", "chooseRightTimer"]),
+    changeTab(id) {
+      this.change_right_tab(id);
+      this.chooseRightTimer();
     }
   }
-}
+};
 </script>
 
 <style scoped lang='stylus'>

@@ -39,20 +39,20 @@
 
 <script>
 export default {
-  name: 'Consecond',
+  name: "Consecond",
   components: {
-    Eline: () => import('@/common/echarts/Eline'),
-    DateType: () => import('@/common/components/DateType')
+    Eline: () => import("@/common/echarts/Eline"),
+    DateType: () => import("@/common/components/DateType")
   },
   props: {
     list: Object
   },
   methods: {
-    changeDate (code) {
-      this.$emit('changeDate2', code)
+    changeDate(code) {
+      this.$emit("changeDate2", code);
     }
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">

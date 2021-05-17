@@ -14,9 +14,9 @@
           </div>
           <div class="table-body scroll">
             <p v-for="item of carList" :key="item.id">
-              <span>{{item.time}}</span>
-              <span><img :src="item.imgUrl" alt=""></span>
-              <span>{{item.carNum}}</span>
+              <span>{{ item.time }}</span>
+              <span><img :src="item.imgUrl" alt="" /></span>
+              <span>{{ item.carNum }}</span>
             </p>
           </div>
         </div>
@@ -26,37 +26,38 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+// 车辆抓拍详情组件
+import { mapMutations } from "vuex";
 export default {
-  name: 'CarPopup',
-  data () {
+  name: "CarPopup",
+  data() {
     return {
       carList: [
         {
-          id: '001',
-          time: '12:12:12',
-          imgUrl: require('@/assets/img/car.png'),
-          carNum: '沪A52634'
+          id: "001",
+          time: "12:12:12",
+          imgUrl: require("@/assets/img/car.png"),
+          carNum: "沪A52634"
         },
         {
-          id: '002',
-          time: '12:12:12',
-          imgUrl: require('@/assets/img/car.png'),
-          carNum: '沪A52634'
+          id: "002",
+          time: "12:12:12",
+          imgUrl: require("@/assets/img/car.png"),
+          carNum: "沪A52634"
         },
         {
-          id: '003',
-          time: '12:12:12',
-          imgUrl: require('@/assets/img/car.png'),
-          carNum: '沪A52634'
+          id: "003",
+          time: "12:12:12",
+          imgUrl: require("@/assets/img/car.png"),
+          carNum: "沪A52634"
         }
       ]
-    }
+    };
   },
   methods: {
-    ...mapMutations(['hideCarPopup'])
+    ...mapMutations(["hideCarPopup"])
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

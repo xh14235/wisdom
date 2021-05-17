@@ -5,8 +5,8 @@
     </div>
     <div class="statistics">
       <p v-for="item of list.abnormalType" :key="item.abnormalKey">
-        <span>{{item.abnormalReason}}</span>
-        <b>{{item.value}}</b>
+        <span>{{ item.abnormalReason }}</span>
+        <b>{{ item.value }}</b>
       </p>
     </div>
     <div class="common-table">
@@ -18,13 +18,24 @@
       </div>
       <div class="table-body">
         <p v-for="item of energyList" :key="item.id">
-          <span>{{getTime(item.time)}}</span>
+          <span>{{ getTime(item.time) }}</span>
           <span v-if="item.type === 'ELECTRICITY'">电</span>
           <span v-if="item.type === 'HOT_WATER'">热水</span>
           <span v-if="item.type === 'COLD'">冷</span>
           <span v-if="item.type === 'HOT'">热</span>
-          <span>{{item.buildingSubName}}</span>
-          <span>{{item.abnormalValue}}{{item.unit}}<span class="percent" :class="{'red': item.percentValue >= 0, 'green': item.percentValue < 0}">{{item.percentValue >= 0 ? '+' : '-'}}{{item.percentValue}}%</span></span>
+          <span>{{ item.buildingSubName }}</span>
+          <span
+            >{{ item.abnormalValue }}{{ item.unit
+            }}<span
+              class="percent"
+              :class="{
+                red: item.percentValue >= 0,
+                green: item.percentValue < 0
+              }"
+              >{{ item.percentValue >= 0 ? "+" : "-"
+              }}{{ item.percentValue }}%</span
+            ></span
+          >
         </p>
       </div>
     </div>
@@ -32,24 +43,43 @@
       <div>用能异常-消费个体</div>
     </div>
     <div class="select-add">
-      分析对象<Cascader :options="options" @changeValue="changeSelect1"></Cascader>
+      分析对象<Cascader
+        :options="options"
+        @changeValue="changeSelect1"
+      ></Cascader>
     </div>
     <div class="single-wrapper">
-      <div class="single-box" v-for="(item, index) of list.abnormalEnergy" :key='item.id'>
-        <div class="single-title">{{item.title}}</div>
+      <div
+        class="single-box"
+        v-for="(item, index) of list.abnormalEnergy"
+        :key="item.id"
+      >
+        <div class="single-title">{{ item.title }}</div>
         <div class="single-num">
-          <p class="single-time">{{item.time}}</p>
+          <p class="single-time">{{ item.time }}</p>
           <p>
-            <span class="single-basic"><b>{{item.basic}}</b>kW</span>
-            <span class="single-change">{{item.change}}</span>
+            <span class="single-basic"
+              ><b>{{ item.basic }}</b
+              >kW</span
+            >
+            <span class="single-change">{{ item.change }}</span>
           </p>
         </div>
         <div class="single-controller">
-          <div class="mut" :class="{'active': item.nownum > 1}" @click="mut(index, item.nownum)"></div>
+          <div
+            class="mut"
+            :class="{ active: item.nownum > 1 }"
+            @click="mut(index, item.nownum)"
+          ></div>
           <div class="num-detail">
-            <span class="num-order">{{item.nownum}}</span>/<span class="num-all">{{item.allnum}}</span>
+            <span class="num-order">{{ item.nownum }}</span
+            >/<span class="num-all">{{ item.allnum }}</span>
           </div>
-          <div class="add" :class="{'active': item.nownum < item.allnum}" @click="add(index, item.nownum)"></div>
+          <div
+            class="add"
+            :class="{ active: item.nownum < item.allnum }"
+            @click="add(index, item.nownum)"
+          ></div>
         </div>
       </div>
     </div>
@@ -57,89 +87,91 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { buildingSelect, venueSelect } from '@/request/select-api'
+import { mapState } from "vuex";
+import { buildingSelect, venueSelect } from "@/request/select-api";
 export default {
-  name: 'Anafirst',
+  name: "Anafirst",
   props: {
     list: Object
   },
   components: {
-    Cascader: () => import('@/common/components/Cascader')
+    Cascader: () => import("@/common/components/Cascader")
   },
   computed: {
     ...mapState({
       energyList: state => state.map.energyList
     })
   },
-  data () {
+  data() {
     return {
       select: [
         {
-          id: '001',
-          value: '1254300251431186436',
-          info: '能源管'
+          id: "001",
+          value: "1254300251431186436",
+          info: "能源管"
         },
         {
-          id: '002',
-          value: '1254300251431186436',
-          info: '光伏'
+          id: "002",
+          value: "1254300251431186436",
+          info: "光伏"
         }
       ],
       options: []
-    }
+    };
   },
-  watch: {
-    largeSelect () {
-      this.getVenueSelect(this.largeSelect[0].id)
-    }
-  },
+  // watch: {
+  //   largeSelect () {
+  //     this.getVenueSelect(this.largeSelect[0].id)
+  //   }
+  // },
   methods: {
-    mut (index, nownum) {
-      this.$emit('mut', index, nownum)
+    mut(index, nownum) {
+      this.$emit("mut", index, nownum);
     },
-    add (index, nownum) {
-      this.$emit('add', index, nownum)
+    add(index, nownum) {
+      this.$emit("add", index, nownum);
     },
-    getTime (date) {
-      let month = date.substring(5, 7)
-      let day = date.substring(8, 10)
-      let time = date.substring(11, 19)
-      let newTime = month + '月' + day + '日 ' + time
-      return newTime
+    // 改变时间格式
+    getTime(date) {
+      let month = date.substring(5, 7);
+      let day = date.substring(8, 10);
+      let time = date.substring(11, 19);
+      let newTime = month + "月" + day + "日 " + time;
+      return newTime;
     },
-    getBuildingSelect () {
-      buildingSelect().then((res) => {
-        let data = res.data
-        this.options = []
+    // 获取下拉框内容
+    getBuildingSelect() {
+      buildingSelect().then(res => {
+        let data = res.data;
+        this.options = [];
         for (let i = 0; i < data.length; i++) {
           this.options.push({
             value: data[i].facilityId,
             label: data[i].facilityName,
             children: []
-          })
+          });
           venueSelect({
             facilityId: data[i].facilityId
           }).then(res => {
-            let data = res.data
+            let data = res.data;
             for (let j = 0; j < data.length; j++) {
               this.options[i].children.push({
                 value: data[j].id,
                 label: data[j].name
-              })
+              });
             }
-          })
+          });
         }
-      })
+      });
     },
-    changeSelect1 (item) {
-      this.$emit('changeSelect1', item)
+    changeSelect1(item) {
+      this.$emit("changeSelect1", item);
     }
   },
-  mounted () {
-    this.getBuildingSelect()
+  mounted() {
+    this.getBuildingSelect();
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">

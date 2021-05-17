@@ -1,17 +1,20 @@
 <template>
-  <div class="echarts-kuang" @click="showEchartsPopup({data: barData, type: 'bar'})">
+  <div
+    class="echarts-kuang"
+    @click="showEchartsPopup({ data: barData, type: 'bar' })"
+  >
     <div :id="barData.id" class="echarts-id"></div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import green from '../../assets/img/icon-green.png'
-import yellow from '../../assets/img/icon-yellow.png'
-import blue from '../../assets/img/icon-blue.png'
-import red from '../../assets/img/icon-red.png'
+import { mapState, mapMutations } from "vuex";
+import green from "../../assets/img/icon-green.png";
+import yellow from "../../assets/img/icon-yellow.png";
+import blue from "../../assets/img/icon-blue.png";
+import red from "../../assets/img/icon-red.png";
 export default {
-  name: 'Ebar',
+  name: "Ebar",
   // data () {
   //   return {
   //     barData1: {
@@ -33,8 +36,8 @@ export default {
     enlarge: Boolean
   },
   computed: {
-    fatherData () {
-      return this.barData
+    fatherData() {
+      return this.barData;
     },
     ...mapState({
       green: state => state.color.green,
@@ -47,81 +50,83 @@ export default {
     })
   },
   watch: {
-    fatherData () {
-      this.drawBar(this.fatherData)
+    fatherData() {
+      this.drawBar(this.fatherData);
     }
   },
-  mounted () {
+  mounted() {
     if (this.barData) {
-      this.drawBar(this.barData)
+      this.drawBar(this.barData);
     }
   },
   methods: {
-    ...mapMutations(['showEchartsPopup']),
-    rgba (hex, opacity) {
-      return `rgba(${parseInt('0x' + hex.slice(1, 3))}, ${parseInt('0x' + hex.slice(3, 5))}, ${parseInt('0x' + hex.slice(5, 7))}, ${opacity})`
+    ...mapMutations(["showEchartsPopup"]),
+    rgba(hex, opacity) {
+      return `rgba(${parseInt("0x" + hex.slice(1, 3))}, ${parseInt(
+        "0x" + hex.slice(3, 5)
+      )}, ${parseInt("0x" + hex.slice(5, 7))}, ${opacity})`;
     },
-    drawBar (barData) {
-      let _this = this
-      let series = []
-      let data = []
-      let legendData = []
-      let itemWidth = 0
-      let itemHeight = 0
+    drawBar(barData) {
+      let _this = this;
+      let series = [];
+      let data = [];
+      let legendData = [];
+      let itemWidth = 0;
+      let itemHeight = 0;
       if (barData.legendIcon) {
         legendData = [
           {
-            name: '电',
-            icon: 'image://' + green
+            name: "电",
+            icon: "image://" + green
           },
           {
-            name: '热水',
-            icon: 'image://' + yellow
+            name: "热水",
+            icon: "image://" + yellow
           },
           {
-            name: '冷',
-            icon: 'image://' + blue
+            name: "冷",
+            icon: "image://" + blue
           },
           {
-            name: '热',
-            icon: 'image://' + red
+            name: "热",
+            icon: "image://" + red
           }
-        ]
-        itemWidth = 10
-        itemHeight = 10
+        ];
+        itemWidth = 10;
+        itemHeight = 10;
         if (this.enlarge) {
-          itemWidth = 20
-          itemHeight = 20
+          itemWidth = 20;
+          itemHeight = 20;
         }
       } else {
-        legendData = barData.legendData
-        itemWidth = 15
-        itemHeight = 5
+        legendData = barData.legendData;
+        itemWidth = 15;
+        itemHeight = 5;
         if (this.enlarge) {
-          itemWidth = 30
-          itemHeight = 10
+          itemWidth = 30;
+          itemHeight = 10;
         }
       }
-      let bodyWidth = document.body.offsetWidth
-      let fontTitle = bodyWidth <= 1920 ? 14 : 16
-      let fontXy = bodyWidth <= 1920 ? 9 : 12
-      let legendTop = '8%'
-      let legendLeft = '10%'
-      let barWidth = 10
-      let itemGap = 15
+      let bodyWidth = document.body.offsetWidth;
+      let fontTitle = bodyWidth <= 1920 ? 14 : 16;
+      let fontXy = bodyWidth <= 1920 ? 9 : 12;
+      let legendTop = "8%";
+      let legendLeft = "10%";
+      let barWidth = 10;
+      let itemGap = 15;
       // let verticalAlign = 'top'
       if (this.enlarge) {
-        fontTitle = 32
-        fontXy = 24
-        legendTop = '13%'
-        legendLeft = '15%'
-        barWidth = 20
-        itemGap = 30
+        fontTitle = 32;
+        fontXy = 24;
+        legendTop = "13%";
+        legendLeft = "15%";
+        barWidth = 20;
+        itemGap = 30;
         // verticalAlign = 'bottom'
       }
       // console.log(barData.data.length)
       for (let i = 0; i < barData.data.length; i++) {
-        data.push([])
+        data.push([]);
       }
       if (barData.itemStyle === 1) {
         for (let i = 0; i < barData.data.length; i++) {
@@ -135,7 +140,7 @@ export default {
                   borderWidth: 1
                 }
               }
-            })
+            });
           }
         }
       } else if (barData.itemStyle === 2) {
@@ -146,31 +151,31 @@ export default {
               itemStyle: {
                 normal: {
                   color: new _this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                    {offset: 0, color: this.rgba(barData.color[i], 1)},
-                    {offset: 0.05, color: this.rgba(barData.color[i], 1)},
-                    {offset: 0.06, color: this.rgba(barData.color[i], 0.5)},
-                    {offset: 1, color: this.rgba(barData.color[i], 0)}
+                    { offset: 0, color: this.rgba(barData.color[i], 1) },
+                    { offset: 0.05, color: this.rgba(barData.color[i], 1) },
+                    { offset: 0.06, color: this.rgba(barData.color[i], 0.5) },
+                    { offset: 1, color: this.rgba(barData.color[i], 0) }
                   ])
                 }
               }
-            })
+            });
           }
         }
       } else {
-        data = barData.data
+        data = barData.data;
       }
-      let seriesLength = barData.legendData.length
-      let stack = barData.stack || null
+      let seriesLength = barData.legendData.length;
+      let stack = barData.stack || null;
       for (let i = 0; i < seriesLength; i++) {
         series.push({
           name: barData.legendData[i],
           data: data[i],
-          type: 'bar',
+          type: "bar",
           stack: stack,
           barWidth: barWidth
-        })
+        });
       }
-      let myChart = this.$echarts.init(document.getElementById(barData.id))
+      let myChart = this.$echarts.init(document.getElementById(barData.id));
       let option = {
         title: {
           text: barData.title,
@@ -181,7 +186,7 @@ export default {
           }
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: "axis"
         },
         legend: {
           show: barData.legendShow,
@@ -189,7 +194,7 @@ export default {
             fontSize: fontXy,
             color: this.white
           },
-          icon: 'bar',
+          icon: "bar",
           itemWidth: itemWidth,
           itemHeight: itemHeight,
           itemGap: itemGap,
@@ -203,71 +208,71 @@ export default {
         //   return ['blue', 'red', 'yellow', 'green']
         // },
         xAxis: {
-          type: 'category',
+          type: "category",
           axisLabel: {
             show: true,
             textStyle: {
               fontSize: fontXy,
-              color: '#c3edd7'
+              color: "#c3edd7"
             }
           },
           axisLine: {
             lineStyle: {
-              color: '#33403E'
+              color: "#33403E"
             }
           },
           data: barData.xData
         },
         yAxis: {
-          type: 'value',
-          name: barData.yName || '',
-          nameLocation: 'end',
+          type: "value",
+          name: barData.yName || "",
+          nameLocation: "end",
           nameTextStyle: {
             color: this.lgreen,
             fontSize: fontXy,
-            align: 'right',
-            verticalAlign: 'middle'
+            align: "right",
+            verticalAlign: "middle"
           },
           axisLabel: {
             show: true,
             textStyle: {
               fontSize: fontXy,
-              color: '#c3edd7'
+              color: "#c3edd7"
             }
           },
           axisLine: {
             lineStyle: {
-              color: '#33403E'
+              color: "#33403E"
             }
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: '#33403E'
+              color: "#33403E"
             }
           }
         },
         grid: {
-          top: '20%',
-          left: '0',
-          right: '0',
-          bottom: '10%',
+          top: "20%",
+          left: "0",
+          right: "0",
+          bottom: "10%",
           containLabel: true
         },
         series: series
-      }
-      myChart.setOption(option)
+      };
+      myChart.setOption(option);
       // 只有页面最后一个echarts图会改变尺寸
       // window.onresize = function () {
       //   myChart.resize()
       // }
       // 多个echarts图都可以改变尺寸
-      window.addEventListener('resize', () => {
-        myChart.resize()
-      })
+      window.addEventListener("resize", () => {
+        myChart.resize();
+      });
     }
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">

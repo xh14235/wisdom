@@ -2,29 +2,40 @@
   <div class="control-wrapper">
     <div class="control-box">
       <div class="control-line"></div>
-      <div class="control-item" v-for="(item, index) of list1" :key="item.id" @click="changeTab1(index)">
-        <img class="control-img" :src="item.imgUrl" alt="">
-        <p class="control-icon" :class="{'active': index === tab1}"></p>
-        <div class="control-title">{{item.title}}</div>
+      <div
+        class="control-item"
+        v-for="(item, index) of list1"
+        :key="item.id"
+        @click="changeTab1(index)"
+      >
+        <img class="control-img" :src="item.imgUrl" alt="" />
+        <p class="control-icon" :class="{ active: index === tab1 }"></p>
+        <div class="control-title">{{ item.title }}</div>
       </div>
     </div>
-    <div class="control-center">动画<br/>演示</div>
+    <div class="control-center">动画<br />演示</div>
     <div class="control-box">
       <div class="control-line"></div>
-      <div class="control-item" v-for="(item, index) of list2" :key="item.id" @click="changeTab2(index)">
-        <img class="control-img" :src="item.imgUrl" alt="">
-        <p class="control-icon" :class="{'active': index === tab2}"></p>
-        <div class="control-title">{{item.title}}</div>
+      <div
+        class="control-item"
+        v-for="(item, index) of list2"
+        :key="item.id"
+        @click="changeTab2(index)"
+      >
+        <img class="control-img" :src="item.imgUrl" alt="" />
+        <p class="control-icon" :class="{ active: index === tab2 }"></p>
+        <div class="control-title">{{ item.title }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+// 天气控制按钮组件， ifr为地图iframe
+import { mapState } from "vuex";
 export default {
-  name: 'WeatherControl',
-  data () {
+  name: "WeatherControl",
+  data() {
     return {
       hour: 0,
       timeTimer: null,
@@ -32,49 +43,49 @@ export default {
       tab2: 0,
       list1: [
         {
-          id: '01',
-          imgUrl: require('@/assets/img/morning.png'),
-          title: '上午'
+          id: "01",
+          imgUrl: require("@/assets/img/morning.png"),
+          title: "上午"
         },
         {
-          id: '02',
-          imgUrl: require('@/assets/img/noon.png'),
-          title: '中午'
+          id: "02",
+          imgUrl: require("@/assets/img/noon.png"),
+          title: "中午"
         },
         {
-          id: '03',
-          imgUrl: require('@/assets/img/afternoon.png'),
-          title: '下午'
+          id: "03",
+          imgUrl: require("@/assets/img/afternoon.png"),
+          title: "下午"
         },
         {
-          id: '04',
-          imgUrl: require('@/assets/img/evening.png'),
-          title: '晚上'
+          id: "04",
+          imgUrl: require("@/assets/img/evening.png"),
+          title: "晚上"
         }
       ],
       list2: [
         {
-          id: '01',
-          imgUrl: require('@/assets/img/control-sun.png'),
-          title: '晴朗'
+          id: "01",
+          imgUrl: require("@/assets/img/control-sun.png"),
+          title: "晴朗"
         },
         {
-          id: '02',
-          imgUrl: require('@/assets/img/control-rain.png'),
-          title: '下雨'
+          id: "02",
+          imgUrl: require("@/assets/img/control-rain.png"),
+          title: "下雨"
         },
         {
-          id: '03',
-          imgUrl: require('@/assets/img/control-snow.png'),
-          title: '下雪'
+          id: "03",
+          imgUrl: require("@/assets/img/control-snow.png"),
+          title: "下雪"
         },
         {
-          id: '04',
-          imgUrl: require('@/assets/img/control-smog.png'),
-          title: '雾霾'
+          id: "04",
+          imgUrl: require("@/assets/img/control-smog.png"),
+          title: "雾霾"
         }
       ]
-    }
+    };
   },
   computed: {
     ...mapState({
@@ -82,80 +93,80 @@ export default {
     })
   },
   watch: {
-    hour () {
-      let time = this.hour.toString()
-      this.ifr.setDayTime(time)
+    hour() {
+      let time = this.hour.toString();
+      this.ifr.setDayTime(time);
     }
   },
   methods: {
-    changeTab1 (index) {
-      this.tab1 = index
-      this.tab2 = 0
+    changeTab1(index) {
+      this.tab1 = index;
+      this.tab2 = 0;
       switch (index) {
         case 0:
-          this.ifr.setDayTime('9')
-          this.ifr.activeLight('false')
-          break
+          this.ifr.setDayTime("9");
+          this.ifr.activeLight("false");
+          break;
         case 1:
-          this.ifr.setDayTime('12')
-          this.ifr.activeLight('false')
-          break
+          this.ifr.setDayTime("12");
+          this.ifr.activeLight("false");
+          break;
         case 2:
-          this.ifr.setDayTime('15')
-          this.ifr.activeLight('false')
-          break
+          this.ifr.setDayTime("15");
+          this.ifr.activeLight("false");
+          break;
         case 3:
-          this.ifr.setDayTime('24')
-          this.ifr.activeLight('true')
-          break
+          this.ifr.setDayTime("24");
+          this.ifr.activeLight("true");
+          break;
         default:
-          break
+          break;
       }
     },
-    changeTab2 (index) {
-      this.tab2 = index
+    changeTab2(index) {
+      this.tab2 = index;
       switch (index) {
         case 0:
-          this.ifr.setWeather('无')
-          break
+          this.ifr.setWeather("无");
+          break;
         case 1:
-          this.ifr.setWeather('雨')
-          break
+          this.ifr.setWeather("雨");
+          break;
         case 2:
-          this.ifr.setWeather('雪')
-          break
+          this.ifr.setWeather("雪");
+          break;
         case 3:
-          this.ifr.setWeather('雾霾')
-          break
+          this.ifr.setWeather("雾霾");
+          break;
         default:
-          break
+          break;
       }
     },
-    getHour () {
-      let time = new Date()
-      this.hour = time.getHours()
+    getHour() {
+      let time = new Date();
+      this.hour = time.getHours();
       if (this.hour >= 6 && this.hour < 11) {
-        this.tab1 = 0
+        this.tab1 = 0;
       } else if (this.hour >= 11 && this.hour < 14) {
-        this.tab1 = 1
+        this.tab1 = 1;
       } else if (this.hour >= 14 && this.hour < 18) {
-        this.tab1 = 2
+        this.tab1 = 2;
       } else {
-        this.tab1 = 3
+        this.tab1 = 3;
       }
     }
   },
-  mounted () {
-    this.getHour()
+  mounted() {
+    this.getHour();
     this.timeTimer = setInterval(() => {
-      this.getHour()
-    }, 120000)
+      this.getHour();
+    }, 120000);
   },
-  beforeDestroy () {
-    clearInterval(this.timeTimer)
-    this.timeTimer = null
+  beforeDestroy() {
+    clearInterval(this.timeTimer);
+    this.timeTimer = null;
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -170,7 +181,7 @@ export default {
   display: flex
   justify-content: space-between
   align-items: center
-  background: rgba(0, 0, 0, .3)
+  background: rgba(0, 0, 0, 0.3)
   border-radius: 30px
   .control-center
     flex: 0 0 7.6vh

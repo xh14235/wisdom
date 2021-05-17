@@ -2,7 +2,10 @@
   <div>
     <div class="controller-box">
       <div class="select1">
-        分析对象<Cascader :options="options" @changeValue="changeSelect3"></Cascader>
+        分析对象<Cascader
+          :options="options"
+          @changeValue="changeSelect3"
+        ></Cascader>
       </div>
       <DateType @getDateType="changeDate3"></DateType>
     </div>
@@ -30,65 +33,66 @@
 </template>
 
 <script>
-import { buildingSelect, venueSelect } from '@/request/select-api'
+import { buildingSelect, venueSelect } from "@/request/select-api";
 export default {
-  name: 'Supthird',
+  name: "Supthird",
   components: {
-    Eline: () => import('@/common/echarts/Eline'),
-    Ebar: () => import('@/common/echarts/Ebar'),
-    DateType: () => import('@/common/components/DateType'),
-    Cascader: () => import('@/common/components/Cascader')
+    Eline: () => import("@/common/echarts/Eline"),
+    Ebar: () => import("@/common/echarts/Ebar"),
+    DateType: () => import("@/common/components/DateType"),
+    Cascader: () => import("@/common/components/Cascader")
   },
-  data () {
+  data() {
     return {
-      value: '',
+      value: "",
       options: []
-    }
+    };
   },
   props: {
     list: Object
   },
-  watch: {
-    largeSelect () {
-      this.getVenueSelect(this.largeSelect[0].id)
-    }
-  },
+  // watch: {
+  //   largeSelect () {
+  //     this.getVenueSelect(this.largeSelect[0].id)
+  //   }
+  // },
   methods: {
-    getBuildingSelect () {
-      buildingSelect().then((res) => {
-        let data = res.data
-        this.options = []
+    // 获取下拉框内容
+    getBuildingSelect() {
+      buildingSelect().then(res => {
+        let data = res.data;
+        this.options = [];
         for (let i = 0; i < data.length; i++) {
           this.options.push({
             value: data[i].facilityId,
             label: data[i].facilityName,
             children: []
-          })
+          });
           venueSelect({
             facilityId: data[i].facilityId
           }).then(res => {
-            let data = res.data
+            let data = res.data;
             for (let j = 0; j < data.length; j++) {
               this.options[i].children.push({
                 value: data[j].id,
                 label: data[j].name
-              })
+              });
             }
-          })
+          });
         }
-      })
+      });
     },
-    changeSelect3 (item) {
-      this.$emit('changeSelect3', item)
+    changeSelect3(item) {
+      this.$emit("changeSelect3", item);
     },
-    changeDate3 (code) {
-      this.$emit('changeDate3', code)
+    changeDate3(code) {
+      this.$emit("changeDate3", code);
     }
   },
-  mounted () {
-    this.getBuildingSelect()
+  mounted() {
+    this.getBuildingSelect();
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">

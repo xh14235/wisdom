@@ -2,19 +2,27 @@
   <div>
     <div class="controller-box">
       <div class="select1">
-        分析对象<Cascader :options="options" @changeValue="changeSelect1"></Cascader>
+        分析对象<Cascader
+          :options="options"
+          @changeValue="changeSelect1"
+        ></Cascader>
       </div>
     </div>
     <div class="common-echarts-wrapper echarts-margin">
       <div class="common-echarts-box">
         <div class="report-title">初级分析报告</div>
         <div class="report-info">
-          <p>根据所采集的能源消费数据，智能分析用能趋势和变化，为用户的能源消费和设备使用提供建议，并能辅助监测用户用能设备的工作健康情况。</p>
+          <p>
+            根据所采集的能源消费数据，智能分析用能趋势和变化，为用户的能源消费和设备使用提供建议，并能辅助监测用户用能设备的工作健康情况。
+          </p>
         </div>
       </div>
       <div class="common-echarts-box">
         <div class="report-title">能源价格对比</div>
-        <Statistics v-if="statistics.length" :statistics="statistics"></Statistics>
+        <Statistics
+          v-if="statistics.length"
+          :statistics="statistics"
+        ></Statistics>
       </div>
     </div>
     <div class="common-echarts-wrapper">
@@ -47,57 +55,58 @@
 </template>
 
 <script>
-import { buildingSelect, venueSelect } from '@/request/select-api'
+import { buildingSelect, venueSelect } from "@/request/select-api";
 export default {
-  name: 'Optfirst',
+  name: "Optfirst",
   components: {
-    Statistics: () => import('@/common/components/Statistics'),
-    Eline: () => import('@/common/echarts/Eline'),
-    Cascader: () => import('@/common/components/Cascader')
+    Statistics: () => import("@/common/components/Statistics"),
+    Eline: () => import("@/common/echarts/Eline"),
+    Cascader: () => import("@/common/components/Cascader")
   },
-  data () {
+  data() {
     return {
-      value: '',
+      value: "",
       options: []
-    }
+    };
   },
   props: {
     list: Object,
     statistics: Array
   },
   methods: {
-    getBuildingSelect () {
-      buildingSelect().then((res) => {
-        let data = res.data
-        this.options = []
+    // 获取下拉框内容
+    getBuildingSelect() {
+      buildingSelect().then(res => {
+        let data = res.data;
+        this.options = [];
         for (let i = 0; i < data.length; i++) {
           this.options.push({
             value: data[i].facilityId,
             label: data[i].facilityName,
             children: []
-          })
+          });
           venueSelect({
             facilityId: data[i].facilityId
           }).then(res => {
-            let data = res.data
+            let data = res.data;
             for (let j = 0; j < data.length; j++) {
               this.options[i].children.push({
                 value: data[j].id,
                 label: data[j].name
-              })
+              });
             }
-          })
+          });
         }
-      })
+      });
     },
-    changeSelect1 (value) {
-      this.$emit('changeSelect1', value)
+    changeSelect1(value) {
+      this.$emit("changeSelect1", value);
     }
   },
-  mounted () {
-    this.getBuildingSelect()
+  mounted() {
+    this.getBuildingSelect();
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">

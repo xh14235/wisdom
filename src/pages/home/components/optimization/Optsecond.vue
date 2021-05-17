@@ -2,7 +2,10 @@
   <div>
     <div class="controller-box">
       <div class="select1">
-        分析对象<Cascader :options="options" @changeValue="changeSelect2"></Cascader>
+        分析对象<Cascader
+          :options="options"
+          @changeValue="changeSelect2"
+        ></Cascader>
       </div>
       <DateType @getDateType="changeDate"></DateType>
     </div>
@@ -10,12 +13,17 @@
       <div class="common-echarts-box">
         <div class="report-title">高级分析报告</div>
         <div class="report-info">
-          <p>根据所采集的能源消费数据，智能分析用能趋势和变化，为用户的能源消费和设备使用提供建议，并能辅助监测用户用能设备的工作健康情况。</p>
+          <p>
+            根据所采集的能源消费数据，智能分析用能趋势和变化，为用户的能源消费和设备使用提供建议，并能辅助监测用户用能设备的工作健康情况。
+          </p>
         </div>
       </div>
       <div class="common-echarts-box">
         <div class="report-title">能源价格比较</div>
-        <Statistics v-if="statistics.length" :statistics="statistics"></Statistics>
+        <Statistics
+          v-if="statistics.length"
+          :statistics="statistics"
+        ></Statistics>
       </div>
     </div>
     <div class="common-echarts-wrapper">
@@ -23,8 +31,13 @@
         <Eline v-if="list.echarts1.id" :lineData="list.echarts1"></Eline>
       </div>
       <div class="common-echarts-box">
-        <Statistics2 v-if="list.echarts2.length" :statistics="list.echarts2"></Statistics2>
-        <p class="all-num" v-if="list.echarts2.length">访客总数：{{list.echarts2[0].num + list.echarts2[1].num}}人</p>
+        <Statistics2
+          v-if="list.echarts2.length"
+          :statistics="list.echarts2"
+        ></Statistics2>
+        <p class="all-num" v-if="list.echarts2.length">
+          访客总数：{{ list.echarts2[0].num + list.echarts2[1].num }}人
+        </p>
       </div>
       <div class="common-echarts-box">
         <Eline v-if="list.echarts3.id" :lineData="list.echarts3"></Eline>
@@ -49,63 +62,64 @@
 </template>
 
 <script>
-import { buildingSelect, venueSelect } from '@/request/select-api'
+import { buildingSelect, venueSelect } from "@/request/select-api";
 export default {
-  name: 'Optsecond',
+  name: "Optsecond",
   components: {
-    Statistics: () => import('@/common/components/Statistics'),
-    Statistics2: () => import('@/common/components/Statistics2'),
-    DateType: () => import('@/common/components/DateType'),
-    Eline: () => import('@/common/echarts/Eline'),
-    Esex: () => import('@/common/echarts/Esex'),
-    Cascader: () => import('@/common/components/Cascader')
+    Statistics: () => import("@/common/components/Statistics"),
+    Statistics2: () => import("@/common/components/Statistics2"),
+    DateType: () => import("@/common/components/DateType"),
+    Eline: () => import("@/common/echarts/Eline"),
+    Esex: () => import("@/common/echarts/Esex"),
+    Cascader: () => import("@/common/components/Cascader")
   },
-  data () {
+  data() {
     return {
-      value: '',
+      value: "",
       options: []
-    }
+    };
   },
   props: {
     list: Object,
     statistics: Array
   },
   methods: {
-    getBuildingSelect () {
-      buildingSelect().then((res) => {
-        let data = res.data
-        this.options = []
+    // 获取下拉框内容
+    getBuildingSelect() {
+      buildingSelect().then(res => {
+        let data = res.data;
+        this.options = [];
         for (let i = 0; i < data.length; i++) {
           this.options.push({
             value: data[i].facilityId,
             label: data[i].facilityName,
             children: []
-          })
+          });
           venueSelect({
             facilityId: data[i].facilityId
           }).then(res => {
-            let data = res.data
+            let data = res.data;
             for (let j = 0; j < data.length; j++) {
               this.options[i].children.push({
                 value: data[j].id,
                 label: data[j].name
-              })
+              });
             }
-          })
+          });
         }
-      })
+      });
     },
-    changeSelect2 (value) {
-      this.$emit('changeSelect2', value)
+    changeSelect2(value) {
+      this.$emit("changeSelect2", value);
     },
-    changeDate (code) {
-      this.$emit('changeDate2', code)
+    changeDate(code) {
+      this.$emit("changeDate2", code);
     }
   },
-  mounted () {
-    this.getBuildingSelect()
+  mounted() {
+    this.getBuildingSelect();
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">

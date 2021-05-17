@@ -2,7 +2,10 @@
   <div>
     <div class="controller-box">
       <div class="select1">
-        分析对象<Cascader :options="options" @changeValue="changeSelect2"></Cascader>
+        分析对象<Cascader
+          :options="options"
+          @changeValue="changeSelect2"
+        ></Cascader>
       </div>
       <DateType @getDateType="changeDate"></DateType>
     </div>
@@ -41,73 +44,74 @@
 </template>
 
 <script>
-import { buildingSelect, venueSelect } from '@/request/select-api'
+import { buildingSelect, venueSelect } from "@/request/select-api";
 export default {
-  name: 'Anasecond',
+  name: "Anasecond",
   components: {
-    Eline: () => import('@/common/echarts/Eline'),
-    DateType: () => import('@/common/components/DateType'),
-    Cascader: () => import('@/common/components/Cascader')
+    Eline: () => import("@/common/echarts/Eline"),
+    DateType: () => import("@/common/components/DateType"),
+    Cascader: () => import("@/common/components/Cascader")
   },
   props: {
     list: Object
   },
   watch: {
-    largeSelect () {
-      this.getVenueSelect(this.largeSelect[0].id)
+    largeSelect() {
+      this.getVenueSelect(this.largeSelect[0].id);
     }
   },
   computed: {
-    levelActive () {
-      return this.nextlevel[2].active
+    levelActive() {
+      return this.nextlevel[2].active;
     }
   },
-  data () {
+  data() {
     return {
-      value: '',
+      value: "",
       options: []
-    }
+    };
   },
   methods: {
-    getBuildingSelect () {
-      buildingSelect().then((res) => {
-        let data = res.data
-        this.options = []
+    // 获取下拉框内容
+    getBuildingSelect() {
+      buildingSelect().then(res => {
+        let data = res.data;
+        this.options = [];
         for (let i = 0; i < data.length; i++) {
           this.options.push({
             value: data[i].facilityId,
             label: data[i].facilityName,
             children: []
-          })
+          });
           venueSelect({
             facilityId: data[i].facilityId
           }).then(res => {
-            let data = res.data
+            let data = res.data;
             for (let j = 0; j < data.length; j++) {
               this.options[i].children.push({
                 value: data[j].id,
                 label: data[j].name
-              })
+              });
             }
-          })
+          });
         }
-      })
+      });
     },
-    changeSelect2 (item) {
-      this.$emit('changeSelect2', item)
+    changeSelect2(item) {
+      this.$emit("changeSelect2", item);
     },
-    changeDate (code) {
-      this.$emit('changeDate2', code)
+    changeDate(code) {
+      this.$emit("changeDate2", code);
     }
   },
-  mounted () {
-    this.getBuildingSelect()
+  mounted() {
+    this.getBuildingSelect();
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">
-@import "~@/assets/css/common.styl"
+@import '~@/assets/css/common.styl'
 .common-echarts-box >>> .number-num
   greennum()
 .controller-box

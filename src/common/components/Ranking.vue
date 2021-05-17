@@ -3,39 +3,43 @@
   <ul class="ranking-ul">
     <li class="ranking-li" v-for="(item, index) of list" :key="index">
       <div class="ranking-img">
-        <img v-if="index === 0" src="../../assets/img/gold.png" alt="">
-        <img v-else-if="index === 1" src="../../assets/img/silver.png" alt="">
-        <img v-else-if="index === 2" src="../../assets/img/copper.png" alt="">
-        <span v-else>{{index + 1}}</span>
+        <img v-if="index === 0" src="../../assets/img/gold.png" alt="" />
+        <img v-else-if="index === 1" src="../../assets/img/silver.png" alt="" />
+        <img v-else-if="index === 2" src="../../assets/img/copper.png" alt="" />
+        <span v-else>{{ index + 1 }}</span>
       </div>
-      <div class="ranking-title">{{item.buildingFacilitySubName}}</div>
+      <div class="ranking-title">{{ item.buildingFacilitySubName }}</div>
       <div class="ranking-outer">
-        <div class="ranking-inner" :style="{width: item.value / max * 100 + '%'}"></div>
+        <div
+          class="ranking-inner"
+          :style="{ width: (item.value / max) * 100 + '%' }"
+        ></div>
       </div>
-      <div class="ranking-num">{{parseInt(item.value)}}</div>
+      <div class="ranking-num">{{ parseInt(item.value) }}</div>
     </li>
   </ul>
   <!-- </transition-group> -->
 </template>
 
 <script>
+// 排序组件
 export default {
-  name: 'Ranking',
+  name: "Ranking",
   props: {
     list: Array
   },
   computed: {
-    max () {
-      let max = 0
+    max() {
+      let max = 0;
       for (let i = 0; i < this.list.length; i++) {
         if (this.list[i].value > max) {
-          max = this.list[i].value
+          max = this.list[i].value;
         }
       }
-      return parseInt(max * 1.2)
+      return parseInt(max * 1.2);
     }
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">
@@ -53,10 +57,9 @@ export default {
     align-items: center
     height: 2.5vh
     line-height: 2.5vh
-    @media screen and (max-width: 1920px) {
+    @media screen and (max-width: 1920px)
       height: 2vh
       line-height: 2vh
-    }
     .ranking-img
       flex: 0 0 2vh
       width: 2vh
@@ -68,9 +71,8 @@ export default {
       img
         height: 2vh
         vertical-align: top
-        @media screen and (max-width: 1920px) {
+        @media screen and (max-width: 1920px)
           height: 1.5vh
-        }
     .ranking-title
       font-size: 12px
       overflow: hidden

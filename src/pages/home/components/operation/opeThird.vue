@@ -5,17 +5,21 @@
       <div class="opera-name">电气拓扑图</div>
     </div>
     <div class="opera-img">
-      <img :src="require('../../../../assets/img/gif/' + chosenImg)" alt="">
+      <img :src="require('../../../../assets/img/gif/' + chosenImg)" alt="" />
     </div>
     <div class="opera-echarts">
       <div class="common-echarts-title">
         <div class="sum" v-for="item of sumList" :key="item.id">
-          <span class="sum-title">{{item.title}}：</span>
-          <span class="sum-num">{{item.num}}</span>
-          <span class="sum-unit">{{item.unit}}</span>
+          <span class="sum-title">{{ item.title }}：</span>
+          <span class="sum-num">{{ item.num }}</span>
+          <span class="sum-unit">{{ item.unit }}</span>
         </div>
       </div>
-      <Eline class="echarts-with-title" v-if="echarts.id" :lineData="echarts"></Eline>
+      <Eline
+        class="echarts-with-title"
+        v-if="echarts.id"
+        :lineData="echarts"
+      ></Eline>
     </div>
     <div class="common-title">
       <div>信息中心</div>
@@ -29,11 +33,17 @@
       </div>
       <div class="table-body scroll">
         <p v-for="(item, index) of infoList" :key="item.id">
-          <span>{{index + 1}}</span>
-          <span>{{item.time}}</span>
-          <span>{{item.equipment}}</span>
+          <span>{{ index + 1 }}</span>
+          <span>{{ item.time }}</span>
+          <span>{{ item.equipment }}</span>
           <span>
-            <i :class="{'green': item.statue === 0, 'grey': item.statue === 1, 'red': item.statue === 2}"></i>
+            <i
+              :class="{
+                green: item.statue === 0,
+                grey: item.statue === 1,
+                red: item.statue === 2
+              }"
+            ></i>
             <b v-if="item.statue === 0">启动</b>
             <b v-else-if="item.statue === 1">闭合</b>
             <b v-else>报警</b>
@@ -46,66 +56,66 @@
 
 <script>
 export default {
-  name: 'Opethird',
+  name: "Opethird",
   components: {
-    Eline: () => import('@/common/echarts/Eline'),
-    Select: () => import('@/common/components/Select')
+    Eline: () => import("@/common/echarts/Eline"),
+    Select: () => import("@/common/components/Select")
   },
-  data () {
+  data() {
     return {
-      chosenImg: 'operation.gif',
+      chosenImg: "operation.gif",
       select: [
         {
-          value: '31',
-          label: '代运维'
+          value: "31",
+          label: "代运维"
         }
       ],
       sumList: []
-    }
+    };
   },
   props: {
     infoList: Array,
     echarts: Object
   },
   computed: {
-    echartsData () {
-      return this.echarts.data
+    echartsData() {
+      return this.echarts.data;
     }
   },
   watch: {
-    echartsData () {
-      this.sumList = []
-      let len = this.echarts.data[0].length
+    echartsData() {
+      this.sumList = [];
+      let len = this.echarts.data[0].length;
       for (let i = 0; i < this.echarts.data.length; i++) {
         this.sumList.push({
-          id: 'd0' + i,
+          id: "d0" + i,
           title: this.echarts.legendData[i],
           num: this.echarts.data[i][len - 1],
-          unit: 'kW'
-        })
+          unit: "kW"
+        });
       }
     }
   },
   methods: {
-    changeSelect (code) {
-      this.$emit('changeSelect3', code)
+    changeSelect(code) {
+      this.$emit("changeSelect3", code);
     }
   },
-  mounted () {
+  mounted() {
     if (this.echarts.data) {
-      this.sumList = []
-      let len = this.echarts.data[0].length
+      this.sumList = [];
+      let len = this.echarts.data[0].length;
       for (let i = 0; i < this.echarts.data.length; i++) {
         this.sumList.push({
-          id: 'd0' + i,
+          id: "d0" + i,
           title: this.echarts.legendData[i],
           num: this.echarts.data[i][len - 1],
-          unit: 'kW'
-        })
+          unit: "kW"
+        });
       }
     }
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">
@@ -129,11 +139,11 @@ export default {
       overflow: hidden
       text-align: center
     &:before
-      content: ""
+      content: ''
       flex: auto
       background-image: linear-gradient(left, rgba(54, 134, 88, 0), rgba(54, 134, 88, 1))
     &:after
-      content: ""
+      content: ''
       flex: auto
       background-image: linear-gradient(right, rgba(54, 134, 88, 0), rgba(54, 134, 88, 1))
   .opera-img
@@ -151,9 +161,8 @@ export default {
       font-weight: normal
       display: flex
       align-items: center
-      @media screen and (max-width: 1920px) {
+      @media screen and (max-width: 1920px)
         font-size: 14px
-      }
       .sum
         margin-right: 1vw
         span

@@ -11,52 +11,53 @@
 </template>
 
 <script>
+// 级联选择器，数据由父组件传入
 export default {
-  name: 'Cascader',
-  data () {
+  name: "Cascader",
+  data() {
     return {
       value: [],
       selected: {}
-    }
+    };
   },
   props: {
     options: Array,
     compare: Number
   },
   methods: {
-    handleChange () {
-      this.selected = this.recursion(this.options, this.value)
-      this.$emit('changeValue', this.selected)
+    handleChange() {
+      this.selected = this.recursion(this.options, this.value);
+      this.$emit("changeValue", this.selected);
     },
-    recursion (arr, val) {
-      let selected = {}
+    recursion(arr, val) {
+      let selected = {};
       arr.forEach(item => {
         if (item.value.includes(this.value[0])) {
           item.children.forEach(item => {
             if (item.value.includes(this.value[1])) {
-              selected = item
+              selected = item;
             }
-          })
+          });
         }
-      })
-      return selected
+      });
+      return selected;
     }
   },
-  mounted () {
+  mounted() {
     setTimeout(() => {
-      this.value = []
+      this.value = [];
       if (this.compare === 22) {
-        this.value.push(this.options[0].value)
-        this.value.push(this.options[0].children[1].value)
-        this.selected = this.options[0].children[1]
+        this.value.push(this.options[0].value);
+        this.value.push(this.options[0].children[1].value);
+        this.selected = this.options[0].children[1];
       } else {
-        this.value.push(this.options[0].value)
-        this.value.push(this.options[0].children[0].value)
-        this.selected = this.options[0].children[0]
+        this.value.push(this.options[0].value);
+        this.value.push(this.options[0].children[0].value);
+        this.selected = this.options[0].children[0];
       }
-    }, 1000)
+    }, 1000);
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

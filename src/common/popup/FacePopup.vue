@@ -16,11 +16,11 @@
           </div>
           <div class="table-body scroll">
             <p v-for="item of faceList" :key="item.id">
-              <span>{{item.time}}</span>
-              <span><img :src="item.imgUrl" alt=""></span>
-              <span>{{item.name}}</span>
-              <span>{{item.sex}}</span>
-              <span>{{item.birthday}}</span>
+              <span>{{ item.time }}</span>
+              <span><img :src="item.imgUrl" alt="" /></span>
+              <span>{{ item.name }}</span>
+              <span>{{ item.sex }}</span>
+              <span>{{ item.birthday }}</span>
             </p>
           </div>
         </div>
@@ -30,43 +30,44 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+// 人脸抓拍组件
+import { mapMutations } from "vuex";
 export default {
-  name: 'FacePopup',
-  data () {
+  name: "FacePopup",
+  data() {
     return {
       faceList: [
         {
-          id: '001',
-          time: '12:12:12',
-          imgUrl: require('@/assets/img/face.png'),
-          name: '奶茶妹',
-          sex: '女',
-          birthday: '1985年09月12号'
+          id: "001",
+          time: "12:12:12",
+          imgUrl: require("@/assets/img/face.png"),
+          name: "奶茶妹",
+          sex: "女",
+          birthday: "1985年09月12号"
         },
         {
-          id: '002',
-          time: '12:12:12',
-          imgUrl: require('@/assets/img/face.png'),
-          name: '奶茶妹',
-          sex: '女',
-          birthday: '1985年09月12号'
+          id: "002",
+          time: "12:12:12",
+          imgUrl: require("@/assets/img/face.png"),
+          name: "奶茶妹",
+          sex: "女",
+          birthday: "1985年09月12号"
         },
         {
-          id: '003',
-          time: '12:12:12',
-          imgUrl: require('@/assets/img/face.png'),
-          name: '奶茶妹',
-          sex: '女',
-          birthday: '1985年09月12号'
+          id: "003",
+          time: "12:12:12",
+          imgUrl: require("@/assets/img/face.png"),
+          name: "奶茶妹",
+          sex: "女",
+          birthday: "1985年09月12号"
         }
       ]
-    }
+    };
   },
   methods: {
-    ...mapMutations(['hideFacePopup'])
+    ...mapMutations(["hideFacePopup"])
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

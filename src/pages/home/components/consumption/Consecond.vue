@@ -10,7 +10,11 @@
     <div class="controller-box">
       <div class="controller-title">排行榜TOP10</div>
       <div class="select1">
-        分析类型<Select v-if="select" :options="select" @changeValue="changeSelect"></Select>
+        分析类型<Select
+          v-if="select"
+          :options="select"
+          @changeValue="changeSelect"
+        ></Select>
       </div>
     </div>
     <div class="common-echarts-wrapper">
@@ -35,55 +39,56 @@
 </template>
 
 <script>
-import { buildingSelect } from '@/request/select-api'
+import { buildingSelect } from "@/request/select-api";
 export default {
-  name: 'Supsecond',
+  name: "Supsecond",
   components: {
-    DateType: () => import('@/common/components/DateType'),
-    Select: () => import('@/common/components/Select'),
-    Ranking: () => import('@/common/components/Ranking'),
-    Ebar: () => import('@/common/echarts/Ebar')
+    DateType: () => import("@/common/components/DateType"),
+    Select: () => import("@/common/components/Select"),
+    Ranking: () => import("@/common/components/Ranking"),
+    Ebar: () => import("@/common/echarts/Ebar")
   },
-  data () {
+  data() {
     return {
       select: []
-    }
+    };
   },
   props: {
     list: Object
   },
   methods: {
-    changeSelect (chosen) {
-      this.$emit('changeSelect2', chosen)
+    changeSelect(chosen) {
+      this.$emit("changeSelect2", chosen);
     },
-    changeDate (code) {
-      this.$emit('changeDate2', code)
+    changeDate(code) {
+      this.$emit("changeDate2", code);
     },
-    getBuildingSelect () {
-      buildingSelect().then((res) => {
-        let data = res.data
-        this.select = []
+    // 获取下拉框内容
+    getBuildingSelect() {
+      buildingSelect().then(res => {
+        let data = res.data;
+        this.select = [];
         for (let i = 0; i < data.length; i++) {
           this.select.push({
             value: data[i].facilityId,
             label: data[i].facilityName
-          })
+          });
         }
-        this.$emit('changeSelect2', this.select[0])
-      })
+        this.$emit("changeSelect2", this.select[0]);
+      });
     }
   },
-  mounted () {
-    this.getBuildingSelect()
+  mounted() {
+    this.getBuildingSelect();
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">
 @import '~@/assets/css/common.styl'
 .select-box >>> select
-  flex: 0 0 50%!important
-  width: 50%!important
+  flex: 0 0 50% !important
+  width: 50% !important
 .single-echarts-box
   width: 100%
   height: 15vh
@@ -96,9 +101,8 @@ export default {
     font-size: 18px
     font-weight: 600
     color: $lgreen
-    @media screen and (max-width: 1920px) {
+    @media screen and (max-width: 1920px)
       font-size: 14px
-    }
   .select1
     flex: 0 0 50%
     width: 50%
@@ -115,9 +119,8 @@ export default {
     display: flex
     align-items: center
     justify-content: space-between
-    @media screen and (max-width: 1920px) {
+    @media screen and (max-width: 1920px)
       font-size: 14px
-    }
     span
       float: right
       font-size: 12px

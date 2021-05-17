@@ -1,54 +1,52 @@
 <template>
   <div class="header">
     <div class="header-title" @click="logout()">智慧大脑数字全景</div>
-    <div class="header-time">{{gettime}}</div>
+    <div class="header-time">{{ gettime }}</div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
 export default {
-  name: 'Header',
-  data () {
+  name: "Header",
+  data() {
     return {
-      gettime: ''
-    }
-  },
-  computed: {
-    ...mapState(['tab_left', 'tab_right', 'weather'])
+      gettime: ""
+    };
   },
   methods: {
-    logout () {
-      localStorage.token = ''
-      this.$store.state.token = ''
-      this.$router.push('/')
+    // 登出功能
+    logout() {
+      localStorage.token = "";
+      this.$store.state.token = "";
+      this.$router.push("/");
     },
-    getTime () {
-      var _this = this
-      let yy = new Date().getFullYear()
-      let mm = new Date().getMonth() + 1
-      let dd = new Date().getDate()
-      let hh = new Date().getHours()
+    // 获取相应格式的日期及时间
+    getTime() {
+      var _this = this;
+      let yy = new Date().getFullYear();
+      let mm = new Date().getMonth() + 1;
+      let dd = new Date().getDate();
+      let hh = new Date().getHours();
       let mf =
         new Date().getMinutes() < 10
-          ? '0' + new Date().getMinutes()
-          : new Date().getMinutes()
+          ? "0" + new Date().getMinutes()
+          : new Date().getMinutes();
       let ss =
         new Date().getSeconds() < 10
-          ? '0' + new Date().getSeconds()
-          : new Date().getSeconds()
-      _this.gettime = yy + '年' + mm + '月' + dd + '日  ' + hh + ':' + mf + ':' + ss
+          ? "0" + new Date().getSeconds()
+          : new Date().getSeconds();
+      _this.gettime =
+        yy + "年" + mm + "月" + dd + "日  " + hh + ":" + mf + ":" + ss;
     },
-    currentTime () {
-      this.getTime()
-      setInterval(this.getTime, 1000)
-    },
-    ...mapMutations(['change_left_tab', 'change_right_tab'])
+    currentTime() {
+      this.getTime();
+      setInterval(this.getTime, 1000);
+    }
   },
-  created () {
-    this.currentTime()
+  created() {
+    this.currentTime();
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">
@@ -57,7 +55,7 @@ export default {
   height: 11.16vh
   background-image: url('~@/assets/img/bg-top.png')
   background-size: 100% 100%
-  text-align center
+  text-align: center
   padding-top: 2.5vh
   @media screen and (max-width: 1366px)
     padding-top: 1vh

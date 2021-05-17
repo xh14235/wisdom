@@ -1,8 +1,16 @@
 <template>
   <div class="wrapper">
-    <video class="video-bg" src="../../assets/video/login.mp4" autoplay loop :muted="muted"></video>
+    <video
+      class="video-bg"
+      src="../../assets/video/login.mp4"
+      autoplay
+      loop
+      :muted="muted"
+    ></video>
     <Header></Header>
-    <div class="log-btn" @click="logToggle()" v-show="logBtnShow"><img src="../../assets/img/login.png" alt="">登录</div>
+    <div class="log-btn" @click="logToggle()" v-show="logBtnShow">
+      <img src="../../assets/img/login.png" alt="" />登录
+    </div>
     <div class="login-wrapper">
       <!-- <div class="tec-support">地址：上海市金都西路800号7幢 电话：021-67649809 网站：www.shregeon.com</div> -->
       <transition name="opacity">
@@ -15,17 +23,37 @@
           <div class="login-box">
             <div class="login-close" @click="logBoxClose()">&times;</div>
             <div class="login-line">
-              <input class="login-line" type="text" placeholder="请输入用户名" v-model="username" ref="username">
-              <img src="../../assets/img/user.png" alt="" class="icon">
+              <input
+                class="login-line"
+                type="text"
+                placeholder="请输入用户名"
+                v-model="username"
+                ref="username"
+              />
+              <img src="../../assets/img/user.png" alt="" class="icon" />
             </div>
             <div class="login-line">
-              <input class="login-line" type="password" placeholder="请输入密码" v-model="password" ref="password">
-              <img src="../../assets/img/password.png" alt="" class="icon">
+              <input
+                class="login-line"
+                type="password"
+                placeholder="请输入密码"
+                v-model="password"
+                ref="password"
+              />
+              <img src="../../assets/img/password.png" alt="" class="icon" />
             </div>
-            <p class="login-msg" v-show="msgShow">{{msgInfo}}</p>
+            <p class="login-msg" v-show="msgShow">{{ msgInfo }}</p>
             <div class="login-checkbox">
-              <input type="checkbox" v-model="checkbox" id="checkbox">
-              <img :src="checkbox ? require('../../assets/img/check2.png') : require('../../assets/img/check1.png')" alt="" class="icon">
+              <input type="checkbox" v-model="checkbox" id="checkbox" />
+              <img
+                :src="
+                  checkbox
+                    ? require('../../assets/img/check2.png')
+                    : require('../../assets/img/check1.png')
+                "
+                alt=""
+                class="icon"
+              />
               <label for="checkbox">记住密码</label>
             </div>
             <button class="login-btn" @click="login()">登录</button>
@@ -38,24 +66,24 @@
 
 <script>
 // import axios from 'axios'
-import { login } from '@/request/common-api'
-import { mapState, mapMutations } from 'vuex'
+import { login } from "@/request/common-api";
+import { mapState, mapMutations } from "vuex";
 export default {
-  name: 'Login',
-  data () {
+  name: "Login",
+  data() {
     return {
-      username: localStorage.username || '',
-      password: localStorage.password || '',
+      username: localStorage.username || "",
+      password: localStorage.password || "",
       checkbox: false,
-      msgInfo: '',
+      msgInfo: "",
       msgShow: false,
       timer: null,
       logShow: false,
       logBtnShow: true
-    }
+    };
   },
   components: {
-    Header: () => import('@/common/components/Header')
+    Header: () => import("@/common/components/Header")
   },
   computed: {
     ...mapState({
@@ -64,58 +92,60 @@ export default {
     })
   },
   methods: {
-    logToggle () {
-      this.logShow = true
-      this.logBtnShow = false
+    logToggle() {
+      this.logShow = true;
+      this.logBtnShow = false;
     },
-    logBoxClose () {
-      this.logShow = false
-      this.logBtnShow = true
+    logBoxClose() {
+      this.logShow = false;
+      this.logBtnShow = true;
     },
-    login () {
-      let _this = this
+    login() {
+      let _this = this;
       if (_this.timer) {
-        clearTimeout(_this.timer)
+        clearTimeout(_this.timer);
       }
       _this.timer = setTimeout(() => {
-        localStorage.username = _this.username
+        localStorage.username = _this.username;
         if (_this.checkbox) {
-          localStorage.password = _this.password
+          localStorage.password = _this.password;
         } else {
-          localStorage.password = ''
+          localStorage.password = "";
         }
         login({
           username: _this.username,
           password: _this.$getRsaCode(_this.password)
-        }).then((res) => {
-          if (res.code === 200) {
-            _this.msgShow = false
-            let token = res.data.tokenHead + res.data.token
-            _this.mutLogin(token)
-            setTimeout(() => {
-              _this.$router.push('/home')
-            }, 500)
-          } else {
-            _this.msgShow = true
-            _this.msgInfo = res.message
-          }
-        }).catch((error) => {
-          console.log(error)
-          console.log(_this.$getRsaCode(_this.password))
-          this.msgShow = true
-          this.msgInfo = '系统维护中...'
         })
-      }, 500)
+          .then(res => {
+            if (res.code === 200) {
+              _this.msgShow = false;
+              let token = res.data.tokenHead + res.data.token;
+              _this.mutLogin(token);
+              setTimeout(() => {
+                _this.$router.push("/home");
+              }, 500);
+            } else {
+              _this.msgShow = true;
+              _this.msgInfo = res.message;
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            console.log(_this.$getRsaCode(_this.password));
+            this.msgShow = true;
+            this.msgInfo = "系统维护中...";
+          });
+      }, 500);
     },
-    ...mapMutations(['mutLogin', 'fPlay', 'fMuted'])
+    ...mapMutations(["mutLogin", "fPlay", "fMuted"])
   },
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.fMuted()
-      vm.fPlay()
-    })
+      vm.fMuted();
+      vm.fPlay();
+    });
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">
@@ -176,15 +206,15 @@ export default {
         flex: 0 0 20vw
         width: 20vw
         height: 44vh
-        background: rgba(0, 0, 0, .5)
+        background: rgba(0, 0, 0, 0.5)
         text-align: center
         .login-welcome
           margin-top: 12.5vh
           font-size: 36px
           font-weight: 400
-          color: rgba(255,255,255,1)
+          color: rgba(255, 255, 255, 1)
           line-height: 24px
-          text-shadow: 0px 2px 2px rgba(49,54,60,0.75)
+          text-shadow: 0px 2px 2px rgba(49, 54, 60, 0.75)
           @media screen and (max-width: 1920px)
             margin-top: 15vh
             font-size: 28px
@@ -193,9 +223,9 @@ export default {
         .login-title
           margin-top: 3.6vh
           font-size: 48px
-          color: rgba(255,255,255,1)
+          color: rgba(255, 255, 255, 1)
           line-height: 27px
-          text-shadow: 0px 3px 3px rgba(49,54,60,0.75)
+          text-shadow: 0px 3px 3px rgba(49, 54, 60, 0.75)
           @media screen and (max-width: 1920px)
             font-size: 36px
           @media screen and (max-width: 1366px)
@@ -240,9 +270,8 @@ export default {
             outline: none
             border-bottom: 1px solid #a8a8a8
             text-indent: 1vw
-            &::-webkit-input-placeholder{
+            &::-webkit-input-placeholder
               color: #a8a8a8
-            }
           .icon
             position: absolute
             left: 0

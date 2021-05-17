@@ -1,21 +1,22 @@
 <template>
-  <div class='left-wrapper'>
+  <div class="left-wrapper">
     <!-- <audio muted loop ref='audio'>
       <source src="../../../assets/video/test.mp3" type="audio/mpeg">
     </audio> -->
-    <div class='left-tab'>
+    <div class="left-tab">
       <span
-        class='left-item'
-        :class='{"item-active": item.id === tab_left}'
-        v-for='item of tabLeft'
-        :key='item.id'
-        @click='changeTab(item.id)'
-      >{{item.info}}</span>
+        class="left-item"
+        :class="{ 'item-active': item.id === tab_left }"
+        v-for="item of tabLeft"
+        :key="item.id"
+        @click="changeTab(item.id)"
+        >{{ item.info }}</span
+      >
     </div>
-    <div class='left-box'>
-      <transition name='fade' mode='out-in'>
+    <div class="left-box">
+      <transition name="fade" mode="out-in">
         <keep-alive>
-          <component :is='view'></component>
+          <component :is="view"></component>
         </keep-alive>
       </transition>
     </div>
@@ -23,42 +24,42 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations } from "vuex";
 export default {
-  name: 'Energy',
+  name: "Energy",
   components: {
-    Monitor: () => import('./Monitor'),
-    Operation: () => import('./Operation'),
-    Optimization: () => import('./Optimization'),
-    Transaction: () => import('./Transaction')
+    Monitor: () => import("./Monitor"),
+    Operation: () => import("./Operation"),
+    Optimization: () => import("./Optimization"),
+    Transaction: () => import("./Transaction")
   },
-  data () {
+  data() {
     return {
       isLoaded: false,
       marker: [],
       tabLeft: [
         {
-          id: '001',
-          info: '运行监控',
+          id: "001",
+          info: "运行监控",
           active: true
         },
         {
-          id: '002',
-          info: '设备运维',
+          id: "002",
+          info: "设备运维",
           active: false
         },
         {
-          id: '003',
-          info: '用能优化',
+          id: "003",
+          info: "用能优化",
           active: false
         },
         {
-          id: '004',
-          info: '能源交易',
+          id: "004",
+          info: "能源交易",
           active: false
         }
       ]
-    }
+    };
   },
   computed: {
     ...mapState({
@@ -67,126 +68,133 @@ export default {
       monitorList: state => state.map.monitorList,
       energyList: state => state.map.energyList
     }),
-    monitor1 () {
+    monitor1() {
       if (this.monitorList.length) {
-        return this.monitorList[0].id
+        return this.monitorList[0].id;
       } else {
-        return '0'
+        return "0";
       }
     },
-    energy1 () {
+    energy1() {
       if (this.energyList.length) {
-        return this.energyList[0].id
+        return this.energyList[0].id;
       } else {
-        return '0'
+        return "0";
       }
     },
-    view () {
-      let component = ''
-      // 动态切换组件
+    // 动态切换组件
+    view() {
+      let component = "";
       switch (this.tab_left) {
-        case '001':
-          component = 'Monitor'
-          break
-        case '002':
-          component = 'Operation'
-          break
-        case '003':
-          component = 'Optimization'
-          break
-        case '004':
-          component = 'Transaction'
-          break
+        case "001":
+          component = "Monitor";
+          break;
+        case "002":
+          component = "Operation";
+          break;
+        case "003":
+          component = "Optimization";
+          break;
+        case "004":
+          component = "Transaction";
+          break;
         default:
-          break
+          break;
       }
-      return component
+      return component;
     }
   },
   methods: {
-    ...mapMutations(['change_left_tab', 'chooseLeftTimer', 'tPlay', 'fPlay', 'tMuted', 'fMuted']),
-    changeTab (id) {
-      this.change_left_tab(id)
-      this.chooseLeftTimer()
+    ...mapMutations([
+      "change_left_tab",
+      "chooseLeftTimer",
+      "tPlay",
+      "fPlay",
+      "tMuted",
+      "fMuted"
+    ]),
+    changeTab(id) {
+      this.change_left_tab(id);
+      this.chooseLeftTimer();
     },
     // 地图初始化路灯开关状态
-    lampStatus () {
-      let time = new Date()
-      let hour = time.getHours()
+    lampStatus() {
+      let time = new Date();
+      let hour = time.getHours();
       if (hour >= 18 || hour < 6) {
-        this.ifr.activeLight('true')
+        this.ifr.activeLight("true");
       } else {
-        this.ifr.activeLight('false')
+        this.ifr.activeLight("false");
       }
     },
     // 用能异常预警
-    alarmEnergy () {
-      this.fPlay()
-      this.tMuted()
-      this.marker = []
+    alarmEnergy() {
+      this.fPlay();
+      this.tMuted();
+      this.marker = [];
       // 加判断 异常监控
       if (this.monitorList.length) {
         this.monitorList.forEach(item => {
-          if (item.status === 'UNPROCESSED' && !this.marker.length) {
+          if (item.status === "UNPROCESSED" && !this.marker.length) {
             this.marker.push({
-              'Height': '0.01',
-              'Id': item.id,
-              'Latitude': '31.08739',
-              'Longitude': '121.685',
-              'Type': '民生报警',
-              'Value': '',
-              'Name': '民生报警',
-              'Other': []
-            })
+              Height: "0.01",
+              Id: item.id,
+              Latitude: "31.08739",
+              Longitude: "121.685",
+              Type: "民生报警",
+              Value: "",
+              Name: "民生报警",
+              Other: []
+            });
           }
-        })
+        });
       }
       if (this.energyList.length) {
         this.marker.push({
-          'Height': '0.01',
-          'Id': '450000',
-          'Latitude': '31.08718',
-          'Longitude': '121.6838',
-          'Type': '能源报警',
-          'Value': '',
-          'Name': '能源报警',
-          'Other': []
-        })
+          Height: "0.01",
+          Id: "450000",
+          Latitude: "31.08718",
+          Longitude: "121.6838",
+          Type: "能源报警",
+          Value: "",
+          Name: "能源报警",
+          Other: []
+        });
       }
-      sessionStorage.setItem('alarmMarkers', JSON.stringify(this.marker))
-      this.ifr.setMarkData(this.marker)
+      sessionStorage.setItem("alarmMarkers", JSON.stringify(this.marker));
+      this.ifr.setMarkData(this.marker);
       // this.fMuted()
-      this.tPlay()
+      this.tPlay();
     },
-    ifrMessage (e) {
-      this.isLoaded = e.data.isLoaded
+    ifrMessage(e) {
+      this.isLoaded = e.data.isLoaded;
     }
   },
   watch: {
-    isLoaded () {
+    isLoaded() {
       if (this.isLoaded) {
-        this.lampStatus()
-        this.alarmEnergy()
+        this.lampStatus();
+        this.alarmEnergy();
       }
     },
-    monitor1 () {
+    monitor1() {
       if (this.isLoaded) {
-        this.alarmEnergy()
+        this.alarmEnergy();
       }
     },
-    energy1 () {
+    energy1() {
       if (this.isLoaded) {
-        this.alarmEnergy()
+        this.alarmEnergy();
       }
     }
   },
-  mounted () {
-    window.addEventListener('message', this.ifrMessage, false)
+  mounted() {
+    window.addEventListener("message", this.ifrMessage, false);
   },
-  beforeDestroy () {
-    window.removeEventListener('message', this.ifrMessage, false)
+  beforeDestroy() {
+    window.removeEventListener("message", this.ifrMessage, false);
   }
-}
+};
 </script>
 
 <style scoped lang='stylus'>

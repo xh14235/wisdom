@@ -8,13 +8,35 @@
           <Eradar v-if="radarData.id" :radarData="radarData" key="radarData.id"></Eradar>
           <Eradar v-if="radarData.id" :radarData="radarData" key="radarData.id"></Eradar>
           <Eradar v-if="radarData.id" :radarData="radarData" key="radarData.id"></Eradar> -->
-          <Eradar v-if="list.echarts1.id && curRadar === 0" :radarData="list.echarts1" key="list.echarts1.id"></Eradar>
-          <Eradar v-if="list.echarts2.id && curRadar === 1" :radarData="list.echarts2" key="list.echarts2.id"></Eradar>
-          <Eradar v-if="list.echarts3.id && curRadar === 2" :radarData="list.echarts3" key="list.echarts3.id"></Eradar>
-          <Eradar v-if="list.echarts4.id && curRadar === 3" :radarData="list.echarts4" key="list.echarts4.id"></Eradar>
+          <Eradar
+            v-if="list.echarts1.id && curRadar === 0"
+            :radarData="list.echarts1"
+            key="list.echarts1.id"
+          ></Eradar>
+          <Eradar
+            v-if="list.echarts2.id && curRadar === 1"
+            :radarData="list.echarts2"
+            key="list.echarts2.id"
+          ></Eradar>
+          <Eradar
+            v-if="list.echarts3.id && curRadar === 2"
+            :radarData="list.echarts3"
+            key="list.echarts3.id"
+          ></Eradar>
+          <Eradar
+            v-if="list.echarts4.id && curRadar === 3"
+            :radarData="list.echarts4"
+            key="list.echarts4.id"
+          ></Eradar>
         </transition-group>
         <div class="radar-tab">
-          <span v-for="(item, index) of radarTab" :key="item.id" :class="{'radar-active': curRadar === index}" @click="changeTab(index)">{{item.name}}</span>
+          <span
+            v-for="(item, index) of radarTab"
+            :key="item.id"
+            :class="{ 'radar-active': curRadar === index }"
+            @click="changeTab(index)"
+            >{{ item.name }}</span
+          >
         </div>
       </div>
     </div>
@@ -22,53 +44,89 @@
       <div class="common-echarts-title">今年用能异常统计</div>
       <div class="type-wrapper">
         <div class="type-box">
-          <img src="../../../../assets/img/icon-dian.png" alt="" class="type-icon">
+          <img
+            src="../../../../assets/img/icon-dian.png"
+            alt=""
+            class="type-icon"
+          />
           <div class="type-name">电</div>
           <div class="type-outer">
-            <div class="type-inner" :style="{'width': list.statistics2.electric / abnormalMax * 100 + '%'}"></div>
+            <div
+              class="type-inner"
+              :style="{
+                width: (list.statistics2.electric / abnormalMax) * 100 + '%'
+              }"
+            ></div>
             <div class="type-last"></div>
           </div>
-          <div class="type-num">{{list.statistics2.electric}}</div>
+          <div class="type-num">{{ list.statistics2.electric }}</div>
         </div>
         <div class="type-box">
-          <img src="../../../../assets/img/icon-hotwater.png" alt="" class="type-icon">
+          <img
+            src="../../../../assets/img/icon-hotwater.png"
+            alt=""
+            class="type-icon"
+          />
           <div class="type-name">热水</div>
           <div class="type-outer">
-            <div class="type-inner" :style="{'width': list.statistics2.hotwater / abnormalMax * 100 + '%'}"></div>
+            <div
+              class="type-inner"
+              :style="{
+                width: (list.statistics2.hotwater / abnormalMax) * 100 + '%'
+              }"
+            ></div>
             <div class="type-last"></div>
           </div>
-          <div class="type-num">{{list.statistics2.hotwater}}</div>
+          <div class="type-num">{{ list.statistics2.hotwater }}</div>
         </div>
         <div class="type-box">
-          <img src="../../../../assets/img/icon-cold.png" alt="" class="type-icon">
+          <img
+            src="../../../../assets/img/icon-cold.png"
+            alt=""
+            class="type-icon"
+          />
           <div class="type-name">冷</div>
           <div class="type-outer">
-            <div class="type-inner" :style="{'width': list.statistics2.cold / abnormalMax * 100 + '%'}"></div>
+            <div
+              class="type-inner"
+              :style="{
+                width: (list.statistics2.cold / abnormalMax) * 100 + '%'
+              }"
+            ></div>
             <div class="type-last"></div>
           </div>
-          <div class="type-num">{{list.statistics2.cold}}</div>
+          <div class="type-num">{{ list.statistics2.cold }}</div>
         </div>
         <div class="type-box">
-          <img src="../../../../assets/img/icon-hot.png" alt="" class="type-icon">
+          <img
+            src="../../../../assets/img/icon-hot.png"
+            alt=""
+            class="type-icon"
+          />
           <div class="type-name">热</div>
           <div class="type-outer">
-            <div class="type-inner" :style="{'width': list.statistics2.hot / abnormalMax * 100 + '%'}"></div>
+            <div
+              class="type-inner"
+              :style="{
+                width: (list.statistics2.hot / abnormalMax) * 100 + '%'
+              }"
+            ></div>
             <div class="type-last"></div>
           </div>
-          <div class="type-num">{{list.statistics2.hot}}</div>
+          <div class="type-num">{{ list.statistics2.hot }}</div>
         </div>
       </div>
       <div class="num-box">
         <div class="num-line">
-          <b>{{list.statistics1.alluser}}</b>
+          <b>{{ list.statistics1.alluser }}</b>
           <div>总用户数</div>
         </div>
         <div class="num-line">
-          <b>{{list.statistics1.allnum}}</b>
+          <b>{{ list.statistics1.allnum }}</b>
           <div>总次数</div>
         </div>
         <div class="num-line">
-          <b>{{list.statistics1.average}}</b>
+          <b>{{ list.statistics1.average }}</b>
           <div>平均次数</div>
         </div>
       </div>
@@ -77,46 +135,46 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 export default {
-  name: 'Anahead',
+  name: "Anahead",
   components: {
-    Eline: () => import('@/common/echarts/Eline'),
-    Eradar: () => import('@/common/echarts/Eradar')
+    Eline: () => import("@/common/echarts/Eline"),
+    Eradar: () => import("@/common/echarts/Eradar")
   },
   props: {
     list: Object
   },
-  data () {
+  data() {
     return {
       abnormalMax: 5,
       curRadar: 0,
       radarTimer: null,
       radarTab: [
         {
-          id: '01',
-          name: '电'
+          id: "01",
+          name: "电"
         },
         {
-          id: '02',
-          name: '热水'
+          id: "02",
+          name: "热水"
         },
         {
-          id: '03',
-          name: '冷'
+          id: "03",
+          name: "冷"
         },
         {
-          id: '04',
-          name: '热'
+          id: "04",
+          name: "热"
         }
       ],
       radarData: {
-        id: 'anahead1',
-        name: '',
-        color: '',
+        id: "anahead1",
+        name: "",
+        color: "",
         data: []
       }
-    }
+    };
   },
   computed: {
     ...mapState({
@@ -127,44 +185,45 @@ export default {
     })
   },
   methods: {
-    changeTab (index) {
-      let _this = this
+    // 切换冷热水电，查看其雷达图
+    changeTab(index) {
+      let _this = this;
       if (_this.radarTimer) {
-        clearInterval(_this.radarTimer)
+        clearInterval(_this.radarTimer);
       }
-      _this.curRadar = index
+      _this.curRadar = index;
       _this.radarTimer = setInterval(() => {
-        _this.curRadar++
-        if (_this.curRadar === 4) _this.curRadar = 0
-      }, 5000)
+        _this.curRadar++;
+        if (_this.curRadar === 4) _this.curRadar = 0;
+      }, 5000);
     }
   },
-  mounted () {
-    let _this = this
+  mounted() {
+    let _this = this;
     _this.radarTimer = setInterval(() => {
-      _this.curRadar++
-      if (_this.curRadar === 4) _this.curRadar = 0
-    }, 5000)
+      _this.curRadar++;
+      if (_this.curRadar === 4) _this.curRadar = 0;
+    }, 5000);
   },
-  beforeDestroy () {
-    clearInterval(this.radarTimer)
+  beforeDestroy() {
+    clearInterval(this.radarTimer);
   },
-  deactivated () {
-    clearInterval(this.radarTimer)
-    this.radarTimer = null
+  deactivated() {
+    clearInterval(this.radarTimer);
+    this.radarTimer = null;
   },
-  activated () {
-    if (this.radarTimer) clearInterval(this.radarTimer)
+  activated() {
+    if (this.radarTimer) clearInterval(this.radarTimer);
     this.radarTimer = setInterval(() => {
-      this.curRadar++
-      if (this.curRadar === 4) this.curRadar = 0
-    }, 5000)
+      this.curRadar++;
+      if (this.curRadar === 4) this.curRadar = 0;
+    }, 5000);
   }
-}
+};
 </script>
 
 <style scoped lang="stylus">
-@import "~@/assets/css/common.styl"
+@import '~@/assets/css/common.styl'
 .common-echarts-box >>> .number-num
   greennum()
 .common-echarts-box
@@ -217,10 +276,9 @@ export default {
         font-size: 16px
         margin-top: 4vh
         margin-bottom: 1vh
-        @media screen and (max-width: 1920px) {
+        @media screen and (max-width: 1920px)
           margin-top: 3vh
           margin-bottom: 0vh
-        }
   .type-wrapper
     height: 12vh
     display: flex
@@ -263,25 +321,25 @@ export default {
       &:nth-child(1)
         .type-outer
           .type-inner
-            background-image: linear-gradient(to right, rgba(74, 204, 129, 0), rgba(74, 204, 129, .5))
+            background-image: linear-gradient(to right, rgba(74, 204, 129, 0), rgba(74, 204, 129, 0.5))
           .type-last
             background: $green
       &:nth-child(2)
         .type-outer
           .type-inner
-            background-image: linear-gradient(to right, rgba(255, 216, 0, 0), rgba(255, 216, 0, .5))
+            background-image: linear-gradient(to right, rgba(255, 216, 0, 0), rgba(255, 216, 0, 0.5))
           .type-last
             background: $yellow
       &:nth-child(3)
         .type-outer
           .type-inner
-            background-image: linear-gradient(to right, rgba(4, 174, 198, 0), rgba(4, 174, 198, .5))
+            background-image: linear-gradient(to right, rgba(4, 174, 198, 0), rgba(4, 174, 198, 0.5))
           .type-last
             background: $blue
       &:nth-child(4)
         .type-outer
           .type-inner
-            background-image: linear-gradient(to right, rgba(249, 105, 98, 0), rgba(249, 105, 98, .5))
+            background-image: linear-gradient(to right, rgba(249, 105, 98, 0), rgba(249, 105, 98, 0.5))
           .type-last
             background: $red
 </style>
